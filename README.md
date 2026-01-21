@@ -15,7 +15,6 @@ A web-based acoustic analysis and annotation tool for speech research. This is t
 ### Prerequisites
 
 - Node.js 18+
-- WASM package from [praatfan-core-rs](https://github.com/your-repo/praatfan-core-rs)
 
 ### Setup
 
@@ -23,8 +22,10 @@ A web-based acoustic analysis and annotation tool for speech research. This is t
 # Install dependencies
 npm install
 
-# Copy WASM package (required, not included in repo)
-cp -r ../praatfan-core-rs/wasm/pkg static/pkg
+# Download and extract WASM package
+# Get praatfan-core-wasm.zip from:
+# https://github.com/your-repo/praatfan-core-rs/releases
+unzip praatfan-core-wasm.zip -d static/
 
 # Start development server
 npm run dev

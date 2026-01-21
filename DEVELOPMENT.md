@@ -6,7 +6,6 @@ This guide covers setting up ozen-web for development and deployment.
 
 - [Node.js](https://nodejs.org/) 18+
 - [npm](https://www.npmjs.com/) 9+
-- Built WASM package from [praatfan-core-rs](https://github.com/your-repo/praatfan-core-rs)
 
 ## Project Structure
 
@@ -44,12 +43,27 @@ cd ozen-web
 npm install
 ```
 
-### 3. Copy WASM package
+### 3. Download WASM package
 
-The WASM package must be built from praatfan-core-rs and copied manually (it's gitignored due to size):
+The WASM package provides the acoustic analysis engine. Download it from the praatfan-core-rs releases:
+
+**Option A: Download from GitHub releases (recommended)**
+
+1. Go to [praatfan-core-rs releases](https://github.com/your-repo/praatfan-core-rs/releases)
+2. Download `praatfan-core-wasm.zip` from the latest release
+3. Extract to `static/`:
 
 ```bash
-# From the ozen-web directory
+unzip praatfan-core-wasm.zip -d static/
+```
+
+This creates `static/pkg/` with the WASM files.
+
+**Option B: Build from source**
+
+If you have praatfan-core-rs cloned locally:
+
+```bash
 cp -r ../praatfan-core-rs/wasm/pkg static/pkg
 ```
 
