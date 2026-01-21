@@ -1,3 +1,22 @@
+/**
+ * Acoustic Analysis Store
+ *
+ * Manages acoustic analysis state and provides functions to compute
+ * various acoustic features using the praatfan-core-wasm library.
+ *
+ * Computed features:
+ * - Pitch (F0): Fundamental frequency using autocorrelation
+ * - Formants (F1-F4): Vocal tract resonances via Burg's method
+ * - Intensity: Sound pressure level in dB
+ * - Harmonicity (HNR): Harmonics-to-noise ratio for voice quality
+ * - Spectrogram: Time-frequency power distribution
+ * - Center of Gravity (CoG): Spectral centroid indicating brightness
+ * - Spectral Tilt: Low vs high frequency energy balance
+ * - A1-P0: Nasality measure comparing F0 and nasal pole amplitudes
+ *
+ * @module stores/analysis
+ */
+
 import { writable, derived, get } from 'svelte/store';
 import { audioBuffer, sampleRate } from './audio';
 import { createSound, getWasm, wasmReady } from '$lib/wasm/acoustic';

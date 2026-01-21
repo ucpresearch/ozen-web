@@ -1,8 +1,29 @@
+/**
+ * Configuration Store
+ *
+ * Manages application configuration with support for:
+ * - Default Praat-style settings
+ * - Loading custom config from YAML files
+ * - Runtime configuration updates
+ *
+ * Configuration includes:
+ * - Color schemes for all visual elements
+ * - Formant presets (male/female/child)
+ * - Spectrogram display settings
+ * - Pitch display range
+ * - Default annotation tier names
+ *
+ * Config is loaded from ./config.yaml on startup if present,
+ * or can be loaded manually via the settings button.
+ *
+ * @module stores/config
+ */
+
 import { writable, get } from 'svelte/store';
 import yaml from 'js-yaml';
 
 /**
- * Application configuration with Praat-style defaults.
+ * Application configuration interface with Praat-style defaults.
  */
 export interface OzenConfig {
 	colors: {

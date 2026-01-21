@@ -1,9 +1,26 @@
+/**
+ * Audio Player
+ *
+ * Handles audio playback using the Web Audio API.
+ * Supports playing selections, visible window, or full file.
+ * Cursor position is updated in real-time during playback.
+ *
+ * Features:
+ * - Play from cursor or selection
+ * - Play visible window (Tab key)
+ * - Play entire file
+ * - Seek to specific time
+ * - Real-time cursor tracking during playback
+ *
+ * @module audio/player
+ */
+
 import { writable, get } from 'svelte/store';
 import { audioBuffer, sampleRate } from '$lib/stores/audio';
 import { cursorPosition, selection, timeRange } from '$lib/stores/view';
 
 /**
- * Playback state.
+ * Whether audio is currently playing.
  */
 export const isPlaying = writable<boolean>(false);
 

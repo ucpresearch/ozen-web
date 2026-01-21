@@ -1,7 +1,22 @@
+/**
+ * View Store
+ *
+ * Manages the viewport state for synchronized display across
+ * waveform, spectrogram, and annotation panels.
+ *
+ * Stores:
+ * - timeRange: Visible time window
+ * - cursorPosition: Current playback/editing position
+ * - selection: Selected time region (for playback/editing)
+ * - hoverPosition: Mouse hover position for coordinated cursors
+ *
+ * @module stores/view
+ */
+
 import { writable, derived } from 'svelte/store';
 
 /**
- * Visible time range in seconds.
+ * Visible time range in seconds { start, end }.
  */
 export const timeRange = writable<{ start: number; end: number }>({ start: 0, end: 5 });
 

@@ -1,3 +1,20 @@
+/**
+ * Annotation Store
+ *
+ * Manages annotation tiers and intervals for speech transcription.
+ * Supports TextGrid import/export for compatibility with Praat.
+ *
+ * Features:
+ * - Multiple annotation tiers (interval or point tiers)
+ * - Add/remove/rename tiers
+ * - Add/remove/move boundaries within tiers
+ * - Edit interval text labels
+ * - Full undo/redo support
+ * - TextGrid import and export
+ *
+ * @module stores/annotations
+ */
+
 import { writable, derived, get } from 'svelte/store';
 import type { Tier, Interval } from '$lib/types';
 import { parseTextGrid, exportTextGrid } from '$lib/textgrid/parser';

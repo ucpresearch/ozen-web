@@ -1,7 +1,47 @@
+/**
+ * TextGrid Parser
+ *
+ * Parses and exports Praat TextGrid files for speech annotation.
+ * Supports both short format (compact) and long format (human-readable).
+ *
+ * Short format example:
+ *   "ooTextFile"
+ *   "TextGrid"
+ *   0
+ *   1.5
+ *   <exists>
+ *   1
+ *   "IntervalTier"
+ *   "words"
+ *   0
+ *   1.5
+ *   2
+ *   0
+ *   0.5
+ *   "hello"
+ *   0.5
+ *   1.5
+ *   "world"
+ *
+ * Long format example:
+ *   File type = "ooTextFile"
+ *   Object class = "TextGrid"
+ *   xmin = 0
+ *   xmax = 1.5
+ *   ...
+ *
+ * @module textgrid/parser
+ */
+
 import type { Tier, Interval, Point } from '$lib/types';
 
 /**
- * Parse a Praat TextGrid file (both short and long formats).
+ * Parse a Praat TextGrid file content into structured tier data.
+ * Automatically detects short vs long format.
+ *
+ * @param content - Raw TextGrid file content as string
+ * @returns Object containing parsed tiers and time bounds
+ * @throws Error if parsing fails
  */
 export function parseTextGrid(content: string): { tiers: Tier[]; xmin: number; xmax: number } {
 	const lines = content.split(/\r?\n/);
