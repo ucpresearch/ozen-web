@@ -1,44 +1,82 @@
 # ozen-web
 
-Web-based acoustic analysis and annotation tool. Browser version of [Ozen](../ozen).
+A web-based acoustic analysis and annotation tool for speech research. This is the browser version of [Ozen](https://github.com/your-repo/ozen), providing Praat-compatible analysis entirely in the browser.
 
 ## Features
 
-- Load and analyze audio files (WAV, FLAC, MP3, OGG)
-- Waveform and spectrogram display
-- Acoustic overlays: Pitch, Intensity, Formants, HNR, CoG
-- Annotation editor with multiple tiers
-- TextGrid import/export (Praat compatible)
-- Data collection points with TSV export
-- Runs entirely in browser - no server required
+- **Audio Analysis**: Load WAV, FLAC, MP3, or OGG files for acoustic analysis
+- **Visualizations**: Synchronized waveform and spectrogram displays
+- **Acoustic Overlays**: Pitch (F0), Formants (F1-F4), Intensity, HNR, Center of Gravity, Spectral Tilt, A1-P0
+- **Annotations**: Multi-tier annotation editor with TextGrid import/export
+- **Offline**: Runs entirely in the browser - no server required after loading
 
-## Development
+## Quick Start
+
+### Prerequisites
+
+- Node.js 18+
+- WASM package from [praatfan-core-rs](https://github.com/your-repo/praatfan-core-rs)
+
+### Setup
 
 ```bash
 # Install dependencies
 npm install
 
-# Copy WASM package from praatfan-core-rs
+# Copy WASM package (required, not included in repo)
 cp -r ../praatfan-core-rs/wasm/pkg static/pkg
 
-# Start dev server
+# Start development server
 npm run dev
+```
 
-# Build for production
+### Production Build
+
+```bash
 npm run build
 ```
 
+Then copy `build/` and `static/pkg/` to your web server.
+
+See [DEVELOPMENT.md](DEVELOPMENT.md) for detailed setup, deployment, and architecture documentation.
+
+## Usage
+
+1. **Load audio**: Drag & drop an audio file or click to browse
+2. **Navigate**: Scroll to zoom, shift+drag to pan
+3. **Select**: Click and drag on the spectrogram to select a region
+4. **Play**: Press Space to play selection, Tab to play visible window
+5. **Annotate**: Double-click on a tier to add boundaries, click text to edit
+6. **Export**: Use the Export button to save annotations as TextGrid
+
+### Keyboard Shortcuts
+
+| Key | Action |
+|-----|--------|
+| Space | Play/pause selection |
+| Tab | Play visible window |
+| Escape | Stop, clear selection |
+| Scroll | Zoom in/out |
+| 1-5 | Select annotation tier |
+| Ctrl+Z | Undo |
+| Ctrl+Y | Redo |
+
+## Configuration
+
+Place a `config.yaml` file in the app directory to customize colors, formant presets, and display settings. See `static/config.yaml` for available options.
+
 ## Tech Stack
 
-- [SvelteKit](https://kit.svelte.dev/) - Framework
-- [praatfan-core-wasm](../praatfan-core-rs) - Acoustic analysis
-- Web Audio API - Playback
-- Canvas API - Visualization
+- [SvelteKit](https://kit.svelte.dev/) - Web framework
+- [praatfan-core-wasm](https://github.com/your-repo/praatfan-core-rs) - Acoustic analysis (Praat-compatible)
+- Web Audio API - Audio playback
+- Canvas API - Visualization rendering
 
-## Related
+## Related Projects
 
-- [ozen](../ozen) - Desktop version (Python/PyQt6)
-- [praatfan-core-rs](../praatfan-core-rs) - Rust acoustic analysis library
+- [Ozen](https://github.com/your-repo/ozen) - Desktop version (Python/PyQt6)
+- [praatfan-core-rs](https://github.com/your-repo/praatfan-core-rs) - Rust acoustic analysis library
+- [Praat](https://www.praat.org/) - The original speech analysis software
 
 ## License
 
