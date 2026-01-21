@@ -8,6 +8,7 @@ A web-based acoustic analysis and annotation tool for speech research. This is t
 - **Visualizations**: Synchronized waveform and spectrogram displays
 - **Acoustic Overlays**: Pitch (F0), Formants (F1-F4), Intensity, HNR, Center of Gravity, Spectral Tilt, A1-P0
 - **Annotations**: Multi-tier annotation editor with TextGrid import/export
+- **Mobile Viewer**: Touch-optimized view at `/viewer` with pinch-to-zoom and swipe gestures
 - **Offline**: Runs entirely in the browser - no server required after loading
 
 ## Quick Start

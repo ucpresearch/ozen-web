@@ -17,8 +17,11 @@ ozen-web/
 │   │   ├── components/     # UI components (Spectrogram, Waveform, etc.)
 │   │   ├── wasm/           # WASM integration
 │   │   ├── audio/          # Web Audio playback
-│   │   └── textgrid/       # TextGrid parser
-│   └── routes/             # SvelteKit pages
+│   │   ├── textgrid/       # TextGrid parser
+│   │   └── touch/          # Touch gesture handling for mobile
+│   └── routes/
+│       ├── +page.svelte    # Main desktop application
+│       └── viewer/         # Mobile viewer route (/viewer)
 ├── static/
 │   ├── pkg/                # WASM package (not in git, copy manually)
 │   └── config.yaml         # Optional configuration
@@ -235,6 +238,22 @@ Visualizations use layered HTML5 Canvas:
 
 **Spectrogram Zoom Enhancement:**
 When zoomed in >2x, the spectrogram automatically regenerates at higher resolution for the visible region (debounced 300ms after zoom stops). This prevents pixelation when examining detailed spectral features.
+
+### Mobile Viewer (`/viewer`)
+
+A touch-optimized view-only mode for phones and tablets at `/viewer`:
+
+- **Touch gestures** (`src/lib/touch/gestures.ts`):
+  - Tap: position cursor
+  - Single-finger drag: select region
+  - Two-finger drag: pan view
+  - Pinch: zoom in/out
+- **Layout**: Full viewport with safe area insets for notched phones
+- **Values bar**: Compact two-row display of acoustic measurements
+- **Settings drawer**: Slide-in panel for overlay toggles
+- **No editing**: Annotations and data points are view-only
+
+The viewer reuses existing components (Waveform, Spectrogram, TimeAxis) and stores, only adding touch gesture handling and mobile-optimized layout.
 
 ## Troubleshooting
 

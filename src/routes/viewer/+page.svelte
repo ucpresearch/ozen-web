@@ -602,6 +602,12 @@
 		min-height: 100px;
 	}
 
+	/* Hide desktop controls - mobile has FAB and touch gestures */
+	:global(.play-selection-btn),
+	:global(.zoom-controls) {
+		display: none !important;
+	}
+
 	.time-axis-panel {
 		height: 20px;
 		flex-shrink: 0;

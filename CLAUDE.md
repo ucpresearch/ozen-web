@@ -77,6 +77,8 @@ ozen-web/
 │   │   │   └── player.ts     # Play, pause, seek, selection playback
 │   │   ├── textgrid/         # TextGrid parser
 │   │   │   └── parser.ts     # Import/export Praat TextGrid
+│   │   ├── touch/            # Touch gesture handling
+│   │   │   └── gestures.ts   # Pan, zoom, selection for mobile
 │   │   ├── components/       # UI components
 │   │   │   ├── Waveform.svelte
 │   │   │   ├── Spectrogram.svelte
@@ -90,7 +92,10 @@ ozen-web/
 │   ├── routes/
 │   │   ├── +page.svelte      # Main application
 │   │   ├── +layout.svelte    # App shell
-│   │   └── +layout.ts        # Prerender config
+│   │   ├── +layout.ts        # Prerender config
+│   │   └── viewer/           # Mobile viewer route
+│   │       ├── +page.svelte  # Touch-optimized viewer
+│   │       └── +layout.ts    # Prerender config
 │   └── app.html
 ├── static/
 │   ├── pkg/                  # praatfan-core-wasm (copy from build)
@@ -232,6 +237,15 @@ Each point automatically captures:
 - [x] Values panel showing measurements at cursor
 - [x] Interval duration display
 - [x] Max frequency selector (5/7.5/10 kHz)
+
+### Mobile Viewer (`/viewer` route)
+- [x] Touch-optimized view-only mode
+- [x] Touch gestures: tap (cursor), drag (select), two-finger drag (pan), pinch (zoom)
+- [x] Compact two-row values bar (F0, Int, HNR, F1-F4, CoG)
+- [x] Settings drawer with overlay toggles
+- [x] Floating play button
+- [x] Landscape mode optimization
+- [x] Safe area support for notched phones
 
 ## Key Differences from Desktop Ozen
 
