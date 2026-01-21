@@ -1,0 +1,86 @@
+# Ozen-web configuration
+# Praat-style defaults for acoustic analysis and display
+
+colors:
+  # Waveform - black on white like Praat
+  waveform:
+    background: "#ffffff"
+    line: "#000000"
+    line_width: 1
+
+  # Spectrogram
+  spectrogram:
+    colormap: grayscale  # grayscale or viridis
+
+  # Cursor - Praat uses red
+  cursor: "#ff0000"
+  cursor_width: 1
+
+  # Selection - Praat uses pink/magenta
+  selection:
+    fill: "rgba(255, 192, 203, 0.4)"
+    border: "#ff0080"
+
+  # Pitch - blue
+  pitch: "#0000ff"
+  pitch_width: 2
+
+  # Intensity - green
+  intensity: "#008000"
+  intensity_width: 2
+
+  # Formants - red dots
+  formant:
+    f1: "#ff0000"
+    f2: "#ff8080"
+    f3: "#ff4040"
+    f4: "#ffc0c0"
+    size: 3
+
+  # Tiers
+  tier:
+    background: "#f5f5f5"
+    selected: "#dcdcff"
+    border: "#808080"
+    text: "#000000"
+
+  # Boundaries
+  boundary: "#0000ff"
+  boundary_hover: "#ff0000"
+  boundary_width: 2
+
+# Formant presets
+formant_presets:
+  female:
+    max_formant: 5500
+    num_formants: 5
+    pitch_floor: 100
+    pitch_ceiling: 500
+  male:
+    max_formant: 5000
+    num_formants: 5
+    pitch_floor: 75
+    pitch_ceiling: 300
+  child:
+    max_formant: 8000
+    num_formants: 5
+    pitch_floor: 150
+    pitch_ceiling: 600
+
+# Spectrogram settings
+spectrogram:
+  dynamic_range: 70.0
+  max_frequency: 5000
+  window_length: 0.005
+  time_step: 0.002
+
+# Pitch display range
+pitch:
+  display_floor: 75
+  display_ceiling: 500
+
+# Default annotation tiers
+annotation:
+  default_tiers:
+    - words
+    - phones

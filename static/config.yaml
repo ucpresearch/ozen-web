@@ -1,0 +1,81 @@
+# Ozen Web Configuration
+# This file is optional - defaults will be used if not present.
+# Only include the settings you want to override.
+
+colors:
+  # Cursor and selection
+  cursor: '#ff0000'
+  cursorWidth: 1
+  selection:
+    fill: 'rgba(255, 192, 203, 0.4)'
+    border: '#ff0080'
+
+  # Waveform display
+  waveform:
+    background: '#ffffff'
+    line: '#000000'
+    lineWidth: 1
+
+  # Pitch overlay (blue by default)
+  pitch: '#0000ff'
+  pitchWidth: 2
+
+  # Intensity overlay
+  intensity: '#008000'
+  intensityWidth: 2
+
+  # Formant colors (F1-F4)
+  formant:
+    f1: '#ff0000'
+    f2: '#ff8080'
+    f3: '#ff4040'
+    f4: '#ffc0c0'
+    size: 3
+
+  # Annotation tiers
+  tier:
+    background: '#f5f5f5'
+    selected: '#dcdcff'
+    border: '#808080'
+    text: '#000000'
+
+  # Boundary lines
+  boundary: '#0000ff'
+  boundaryHover: '#ff0000'
+  boundaryWidth: 2
+
+# Formant analysis presets
+formantPresets:
+  female:
+    maxFormant: 5500
+    numFormants: 5
+    pitchFloor: 100
+    pitchCeiling: 500
+  male:
+    maxFormant: 5000
+    numFormants: 5
+    pitchFloor: 75
+    pitchCeiling: 300
+  child:
+    maxFormant: 8000
+    numFormants: 5
+    pitchFloor: 150
+    pitchCeiling: 600
+
+# Spectrogram settings
+spectrogram:
+  dynamicRange: 70.0
+  maxFrequency: 5000
+  windowLength: 0.005
+  timeStep: 0.002
+
+# Pitch display range
+pitch:
+  displayFloor: 75
+  displayCeiling: 500
+
+# Default annotation tiers
+annotation:
+  defaultTiers:
+    - words
+    - phones

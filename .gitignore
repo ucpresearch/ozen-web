@@ -1,0 +1,28 @@
+# Dependencies
+node_modules/
+
+# Build output
+build/
+.svelte-kit/
+
+# Environment
+.env
+.env.*
+!.env.example
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# WASM package (copied from praatfan-core-rs, not committed)
+static/pkg/
+
+# Logs
+*.log
+npm-debug.log*
