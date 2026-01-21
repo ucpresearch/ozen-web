@@ -1,3 +1,18 @@
+<!--
+	Mobile Viewer Page (/viewer)
+
+	A touch-optimized, view-only version of Ozen for phones and tablets.
+	Supports loading audio files or recording directly from the microphone.
+
+	Features:
+	- Touch gestures: tap (cursor), drag (select), two-finger drag (pan), pinch (zoom)
+	- Microphone recording with MediaRecorder API
+	- Compact values bar showing acoustic measurements
+	- Floating play button (FAB)
+	- Settings drawer for overlay toggles
+
+	No editing features (annotations, data points, undo) - view only.
+-->
 <script lang="ts">
 	import { onMount, onDestroy } from 'svelte';
 	import FileDropZone from '$lib/components/FileDropZone.svelte';
@@ -11,36 +26,277 @@
 	import { isAnalyzing, analysisProgress, runAnalysis, clearAnalysis, analysisResults } from '$lib/stores/analysis';
 	import { attachGestureHandlers, type GestureCallbacks } from '$lib/touch/gestures';
 
+	// ─────────────────────────────────────────────────────────────────────────────
+	// Component State
+	// ─────────────────────────────────────────────────────────────────────────────
+
+	/** Container element for touch gesture handling */
 	let gestureContainer: HTMLDivElement;
+
+	/** Cleanup function returned by attachGestureHandlers */
 	let cleanupGestures: (() => void) | null = null;
 
-	// Overlay visibility state
-	let showPitch = true;
-	let showFormants = true;
-	let showIntensity = false;
-	let showHNR = false;
-	let showCoG = false;
-	let showSpectralTilt = false;
-	let showA1P0 = false;
+	// ─────────────────────────────────────────────────────────────────────────────
+	// Overlay Visibility
+	// ─────────────────────────────────────────────────────────────────────────────
+	// Controls which acoustic overlays are displayed on the spectrogram
 
-	// Settings drawer state
+	let showPitch = true;        // F0 (fundamental frequency)
+	let showFormants = true;     // F1-F4 resonant frequencies
+	let showIntensity = false;   // Sound pressure level (dB)
+	let showHNR = false;         // Harmonics-to-Noise Ratio
+	let showCoG = false;         // Center of Gravity (spectral centroid)
+	let showSpectralTilt = false; // High vs low frequency balance
+	let showA1P0 = false;        // Nasal measure (A1 minus P0)
+
+	// ─────────────────────────────────────────────────────────────────────────────
+	// UI State
+	// ─────────────────────────────────────────────────────────────────────────────
+
+	/** Whether the settings drawer is open */
 	let showSettings = false;
 
-	// Spectrogram settings
+	/** Maximum frequency for spectrogram display (Hz) */
 	let maxFrequency = 5000;
 
-	// Selection state for gestures
+	/** Start time for drag-to-select gesture */
 	let selectionStartTime: number | null = null;
 
+	// ─────────────────────────────────────────────────────────────────────────────
+	// Recording State
+	// ─────────────────────────────────────────────────────────────────────────────
+	// Microphone recording uses the MediaRecorder API
+
+	/** Whether currently recording from microphone */
+	let isRecording = false;
+
+	/** MediaRecorder instance for capturing audio */
+	let mediaRecorder: MediaRecorder | null = null;
+
+	/** Accumulated audio data chunks during recording */
+	let recordedChunks: Blob[] = [];
+
+	/** Elapsed recording time in seconds (for display) */
+	let recordingTime = 0;
+
+	/** Timer interval for updating recordingTime */
+	let recordingTimer: ReturnType<typeof setInterval> | null = null;
+
+	// ─────────────────────────────────────────────────────────────────────────────
+	// Lifecycle
+	// ─────────────────────────────────────────────────────────────────────────────
+
 	onMount(() => {
+		// Initialize the WASM acoustic analysis engine
 		initWasm();
 	});
+
+	onDestroy(() => {
+		// Clean up gesture handlers
+		if (cleanupGestures) {
+			cleanupGestures();
+		}
+		// Clean up recording resources
+		if (recordingTimer) {
+			clearInterval(recordingTimer);
+		}
+		if (mediaRecorder && isRecording) {
+			mediaRecorder.stop();
+		}
+	});
+
+	// ─────────────────────────────────────────────────────────────────────────────
+	// Recording Functions
+	// ─────────────────────────────────────────────────────────────────────────────
+
+	/**
+	 * Start recording audio from the device microphone.
+	 *
+	 * Uses MediaRecorder API with audio processing disabled for clean capture:
+	 * - echoCancellation: false - preserve natural sound
+	 * - noiseSuppression: false - don't filter out acoustic details
+	 * - autoGainControl: false - maintain consistent amplitude
+	 *
+	 * Recording is saved as WebM format, then decoded and converted
+	 * to Float64Array for acoustic analysis.
+	 */
+	async function startRecording() {
+		try {
+			// Request microphone access with processing disabled
+			const stream = await navigator.mediaDevices.getUserMedia({
+				audio: {
+					echoCancellation: false,
+					noiseSuppression: false,
+					autoGainControl: false
+				}
+			});
+
+			// Initialize recording state
+			recordedChunks = [];
+			mediaRecorder = new MediaRecorder(stream, { mimeType: 'audio/webm' });
+
+			// Collect audio data as it becomes available
+			mediaRecorder.ondataavailable = (e) => {
+				if (e.data.size > 0) {
+					recordedChunks.push(e.data);
+				}
+			};
+
+			// Process recording when stopped
+			mediaRecorder.onstop = async () => {
+				// Release microphone
+				stream.getTracks().forEach(track => track.stop());
+
+				// Convert recorded chunks to audio buffer
+				const blob = new Blob(recordedChunks, { type: 'audio/webm' });
+				await processRecordedAudio(blob);
+			};
+
+			// Start recording, collecting data every 100ms
+			mediaRecorder.start(100);
+			isRecording = true;
+			recordingTime = 0;
+
+			// Update recording time display
+			recordingTimer = setInterval(() => {
+				recordingTime += 0.1;
+			}, 100);
+
+		} catch (err) {
+			console.error('Failed to start recording:', err);
+			alert('Could not access microphone. Please allow microphone access.');
+		}
+	}
+
+	/**
+	 * Stop the current recording.
+	 * This triggers mediaRecorder.onstop which processes the audio.
+	 */
+	function stopRecording() {
+		if (mediaRecorder && isRecording) {
+			mediaRecorder.stop();
+			isRecording = false;
+
+			if (recordingTimer) {
+				clearInterval(recordingTimer);
+				recordingTimer = null;
+			}
+		}
+	}
+
+	/**
+	 * Process recorded audio blob and load it into the app.
+	 *
+	 * Converts the WebM blob to an AudioBuffer using Web Audio API,
+	 * then extracts samples as Float64Array for acoustic analysis.
+	 *
+	 * @param blob - The recorded audio as a Blob
+	 */
+	async function processRecordedAudio(blob: Blob) {
+		clearAnalysis();
+
+		// Decode the WebM audio
+		const arrayBuffer = await blob.arrayBuffer();
+		const audioContext = new AudioContext();
+		const decoded = await audioContext.decodeAudioData(arrayBuffer);
+
+		// Convert to Float64Array (mono, first channel)
+		const samples = new Float64Array(decoded.length);
+		const channelData = decoded.getChannelData(0);
+		for (let i = 0; i < decoded.length; i++) {
+			samples[i] = channelData[i];
+		}
+
+		// Load into app stores
+		audioBuffer.set(samples);
+		sampleRate.set(decoded.sampleRate);
+		fileName.set(`Recording ${new Date().toLocaleTimeString()}`);
+		duration.set(decoded.length / decoded.sampleRate);
+
+		// Set initial view to show full recording (max 10s visible)
+		const dur = decoded.length / decoded.sampleRate;
+		timeRange.set({ start: 0, end: Math.min(dur, 10) });
+		cursorPosition.set(0);
+		selection.set(null);
+
+		// Run acoustic analysis (pitch, formants, etc.)
+		runAnalysis().catch(e => console.error('Analysis failed:', e));
+	}
+
+	// ─────────────────────────────────────────────────────────────────────────────
+	// File Loading
+	// ─────────────────────────────────────────────────────────────────────────────
+
+	/**
+	 * Handle file input change event.
+	 * Extracts the selected file and passes it to handleFile.
+	 */
+	function handleFileInput(e: Event) {
+		const input = e.target as HTMLInputElement;
+		const file = input.files?.[0];
+		if (file) {
+			handleFile(file);
+		}
+		input.value = ''; // Reset so same file can be selected again
+	}
+
+	/**
+	 * Load an audio file and prepare it for analysis.
+	 *
+	 * Decodes the audio using Web Audio API and converts to Float64Array
+	 * format required by the WASM acoustic analysis engine.
+	 *
+	 * @param file - The audio file to load
+	 */
+	async function handleFile(file: File) {
+		clearAnalysis();
+
+		// Decode audio file
+		const arrayBuffer = await file.arrayBuffer();
+		const audioContext = new AudioContext();
+		const decoded = await audioContext.decodeAudioData(arrayBuffer);
+
+		// Convert to Float64Array (mono, first channel)
+		const samples = new Float64Array(decoded.length);
+		const channelData = decoded.getChannelData(0);
+		for (let i = 0; i < decoded.length; i++) {
+			samples[i] = channelData[i];
+		}
+
+		// Load into app stores
+		audioBuffer.set(samples);
+		sampleRate.set(decoded.sampleRate);
+		fileName.set(file.name);
+		duration.set(decoded.length / decoded.sampleRate);
+
+		// Set initial view (max 10s visible)
+		const dur = decoded.length / decoded.sampleRate;
+		timeRange.set({ start: 0, end: Math.min(dur, 10) });
+		cursorPosition.set(0);
+		selection.set(null);
+
+		// Run acoustic analysis
+		runAnalysis().catch(e => console.error('Analysis failed:', e));
+	}
+
+	// ─────────────────────────────────────────────────────────────────────────────
+	// Touch Gesture Handling
+	// ─────────────────────────────────────────────────────────────────────────────
 
 	// Attach gesture handlers when container and audio are ready
 	$: if (gestureContainer && $audioBuffer) {
 		attachGestures();
 	}
 
+	/**
+	 * Set up touch gesture handlers for the viewer.
+	 *
+	 * Gestures supported:
+	 * - Tap: Position cursor at tap location
+	 * - Single-finger drag: Select a time region
+	 * - Two-finger drag: Pan the view
+	 * - Pinch: Zoom in/out centered on gesture
+	 */
 	function attachGestures() {
 		// Clean up previous handlers
 		if (cleanupGestures) {
@@ -52,6 +308,10 @@
 		const audioDuration = $audioBuffer.length / $sampleRate;
 
 		const callbacks: GestureCallbacks = {
+			/**
+			 * Handle two-finger pan gesture.
+			 * Shifts the visible time range by deltaTime.
+			 */
 			onPan: (deltaTime: number) => {
 				const { start, end } = $timeRange;
 				const visibleDuration = end - start;
@@ -72,6 +332,10 @@
 				timeRange.set({ start: newStart, end: newEnd });
 			},
 
+			/**
+			 * Handle pinch-to-zoom gesture.
+			 * Zooms centered on the gesture's center point.
+			 */
 			onZoom: (scale: number, centerTime: number) => {
 				const { start, end } = $timeRange;
 				const currentDuration = end - start;
@@ -97,18 +361,27 @@
 				timeRange.set({ start: newStart, end: newEnd });
 			},
 
+			/**
+			 * Handle tap gesture.
+			 * Positions cursor at tap location and clears selection.
+			 */
 			onTap: (time: number) => {
-				// Position cursor, clear selection
 				cursorPosition.set(time);
 				selection.set(null);
 			},
 
+			/**
+			 * Handle start of single-finger drag (selection).
+			 */
 			onSelectionStart: (time: number) => {
 				selectionStartTime = time;
 				cursorPosition.set(time);
 				selection.set(null);
 			},
 
+			/**
+			 * Handle drag movement (updates selection).
+			 */
 			onSelectionMove: (time: number) => {
 				if (selectionStartTime !== null) {
 					const start = Math.min(selectionStartTime, time);
@@ -120,10 +393,17 @@
 				}
 			},
 
+			/**
+			 * Handle end of drag (selection complete).
+			 */
 			onSelectionEnd: () => {
 				selectionStartTime = null;
 			},
 
+			/**
+			 * Convert screen X coordinate to time.
+			 * Accounts for the 45px margins on each side of the plot area.
+			 */
 			getTimeFromX: (clientX: number) => {
 				const rect = gestureContainer.getBoundingClientRect();
 				const x = clientX - rect.left;
@@ -136,6 +416,9 @@
 				return start + (relX / plotWidth) * (end - start);
 			},
 
+			/**
+			 * Get the currently visible time duration.
+			 */
 			getVisibleDuration: () => {
 				const { start, end } = $timeRange;
 				return end - start;
@@ -145,41 +428,16 @@
 		cleanupGestures = attachGestureHandlers(gestureContainer, callbacks);
 	}
 
-	onDestroy(() => {
-		if (cleanupGestures) {
-			cleanupGestures();
-		}
-	});
+	// ─────────────────────────────────────────────────────────────────────────────
+	// Playback Controls
+	// ─────────────────────────────────────────────────────────────────────────────
 
-	async function handleFile(file: File) {
-		clearAnalysis();
-
-		const arrayBuffer = await file.arrayBuffer();
-		const audioContext = new AudioContext();
-		const decoded = await audioContext.decodeAudioData(arrayBuffer);
-
-		// Convert to Float64Array (mono)
-		const samples = new Float64Array(decoded.length);
-		const channelData = decoded.getChannelData(0);
-		for (let i = 0; i < decoded.length; i++) {
-			samples[i] = channelData[i];
-		}
-
-		audioBuffer.set(samples);
-		sampleRate.set(decoded.sampleRate);
-		fileName.set(file.name);
-		duration.set(decoded.length / decoded.sampleRate);
-
-		// Set initial time range to full file (max 10s visible)
-		const dur = decoded.length / decoded.sampleRate;
-		timeRange.set({ start: 0, end: Math.min(dur, 10) });
-		cursorPosition.set(0);
-		selection.set(null);
-
-		// Start analysis in background
-		runAnalysis().catch(e => console.error('Analysis failed:', e));
-	}
-
+	/**
+	 * Toggle audio playback.
+	 * - If playing: stop
+	 * - If selection exists: play selection
+	 * - Otherwise: play visible window
+	 */
 	function togglePlay() {
 		if ($isPlaying) {
 			stop();
@@ -190,25 +448,53 @@
 		}
 	}
 
+	/** Close the settings drawer. */
 	function closeSettings() {
 		showSettings = false;
 	}
 
+	// ─────────────────────────────────────────────────────────────────────────────
+	// Value Formatting Helpers
+	// ─────────────────────────────────────────────────────────────────────────────
+
+	/**
+	 * Format time value for display (3 decimal places).
+	 * @param seconds - Time in seconds
+	 * @returns Formatted string like "1.234"
+	 */
 	function formatTime(seconds: number): string {
 		return seconds.toFixed(3);
 	}
 
+	/**
+	 * Format frequency value for display (rounded Hz).
+	 * @param hz - Frequency in Hz, or null if unavailable
+	 * @returns Formatted string like "440" or "-" if null
+	 */
 	function formatHz(hz: number | null): string {
 		if (hz === null) return '-';
 		return Math.round(hz).toString();
 	}
 
+	/**
+	 * Format decibel value for display (1 decimal place).
+	 * @param db - Value in dB, or null if unavailable
+	 * @returns Formatted string like "75.3" or "-" if null
+	 */
 	function formatDb(db: number | null): string {
 		if (db === null) return '-';
 		return db.toFixed(1);
 	}
 
-	// Get values at cursor position
+	// ─────────────────────────────────────────────────────────────────────────────
+	// Reactive Computations
+	// ─────────────────────────────────────────────────────────────────────────────
+
+	/**
+	 * Computed acoustic values at the current cursor position.
+	 * Updates reactively when cursor moves or analysis results change.
+	 * Returns null if no analysis available.
+	 */
 	$: cursorValues = (() => {
 		if (!$analysisResults) return null;
 
@@ -241,19 +527,75 @@
 	})();
 </script>
 
+<!-- ═══════════════════════════════════════════════════════════════════════════
+     HEAD CONFIGURATION
+     Mobile viewport settings and PWA-like appearance
+     ═══════════════════════════════════════════════════════════════════════════ -->
 <svelte:head>
+	<!-- Prevent user zoom, fill notched phone screens -->
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
+	<!-- Enable fullscreen mode when added to home screen -->
 	<meta name="mobile-web-app-capable" content="yes" />
 	<meta name="apple-mobile-web-app-capable" content="yes" />
+	<!-- Status bar styling for iOS -->
 	<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 </svelte:head>
 
+<!-- ═══════════════════════════════════════════════════════════════════════════
+     MAIN LAYOUT
+     Fixed viewport container with safe area insets for notched phones
+     ═══════════════════════════════════════════════════════════════════════════ -->
 <main class="viewer-main">
+	<!-- ─────────────────────────────────────────────────────────────────────────
+	     STATE 1: WASM Loading
+	     ─────────────────────────────────────────────────────────────────────────── -->
 	{#if !$wasmReady}
 		<div class="loading">Loading acoustic analysis engine...</div>
+
+	<!-- ─────────────────────────────────────────────────────────────────────────
+	     STATE 2: Start Screen (No Audio Loaded)
+	     Shows Load File and Record buttons, or recording indicator
+	     ─────────────────────────────────────────────────────────────────────────── -->
 	{:else if !$audioBuffer}
-		<FileDropZone onFile={handleFile} />
+		<div class="start-screen">
+			{#if isRecording}
+				<div class="recording-indicator">
+					<div class="recording-pulse"></div>
+					<span class="recording-time">{recordingTime.toFixed(1)}s</span>
+				</div>
+				<button class="stop-record-btn" on:click={stopRecording}>
+					<svg viewBox="0 0 24 24" fill="currentColor" width="32" height="32">
+						<rect x="6" y="6" width="12" height="12" rx="2"/>
+					</svg>
+					<span>Stop</span>
+				</button>
+			{:else}
+				<h2>Ozen Viewer</h2>
+				<div class="start-buttons">
+					<label class="start-btn load-btn">
+						<input type="file" accept="audio/*" on:change={handleFileInput} />
+						<svg viewBox="0 0 24 24" fill="currentColor" width="32" height="32">
+							<path d="M9 16h6v-6h4l-7-7-7 7h4v6zm-4 2h14v2H5v-2z"/>
+						</svg>
+						<span>Load File</span>
+					</label>
+					<button class="start-btn record-btn" on:click={startRecording}>
+						<svg viewBox="0 0 24 24" fill="currentColor" width="32" height="32">
+							<circle cx="12" cy="12" r="8"/>
+						</svg>
+						<span>Record</span>
+					</button>
+				</div>
+				<p class="start-hint">Load an audio file or record from microphone</p>
+			{/if}
+		</div>
+
+	<!-- ─────────────────────────────────────────────────────────────────────────
+	     STATE 3: Main Viewer (Audio Loaded)
+	     Header, values bar, visualization panels, FAB play button, settings drawer
+	     ─────────────────────────────────────────────────────────────────────────── -->
 	{:else}
+		<!-- Header: filename, analysis progress, settings toggle -->
 		<header class="viewer-header">
 			<span class="filename">{$fileName}</span>
 			{#if $isAnalyzing}
@@ -271,7 +613,9 @@
 			</button>
 		</header>
 
-		<!-- Compact values bar - two rows -->
+		<!-- Values Bar: Compact two-row display of acoustic measurements at cursor
+		     Row 1: Time, Pitch, Intensity, HNR, Selection duration
+		     Row 2: Formants (F1-F4), Center of Gravity -->
 		<div class="values-bar">
 			<div class="values-row">
 				<span class="value-item">
@@ -352,7 +696,9 @@
 			</div>
 		</div>
 
-		<!-- Floating play button -->
+		<!-- Floating Action Button (FAB) for Play/Pause
+		     - Bottom-right position with safe area offset
+		     - Blue when ready to play, red when playing -->
 		<button
 			class="fab-play"
 			class:playing={$isPlaying}
@@ -437,6 +783,10 @@
 </main>
 
 <style>
+	/* ═══════════════════════════════════════════════════════════════════════════
+	   MAIN CONTAINER
+	   Fixed viewport with safe area insets for notched phones (iPhone X, etc.)
+	   ═══════════════════════════════════════════════════════════════════════════ */
 	.viewer-main {
 		position: fixed;
 		top: 0;
@@ -466,6 +816,155 @@
 		color: var(--color-text-muted);
 	}
 
+	/* ═══════════════════════════════════════════════════════════════════════════
+	   START SCREEN
+	   Centered layout with Load File / Record buttons
+	   ═══════════════════════════════════════════════════════════════════════════ */
+	.start-screen {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		height: 100%;
+		padding: 2rem;
+		text-align: center;
+	}
+
+	.start-screen h2 {
+		font-size: 1.5rem;
+		font-weight: 600;
+		margin: 0 0 2rem 0;
+		color: var(--color-text);
+	}
+
+	.start-buttons {
+		display: flex;
+		gap: 1.5rem;
+		margin-bottom: 1.5rem;
+	}
+
+	.start-btn {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		gap: 0.75rem;
+		width: 120px;
+		height: 120px;
+		border: 2px solid var(--color-border);
+		border-radius: 16px;
+		background: var(--color-surface);
+		color: var(--color-text);
+		cursor: pointer;
+		transition: all 0.2s;
+	}
+
+	.start-btn:hover {
+		border-color: var(--color-primary);
+		background: rgba(74, 158, 255, 0.1);
+	}
+
+	.start-btn:active {
+		transform: scale(0.95);
+	}
+
+	.start-btn input[type="file"] {
+		display: none;
+	}
+
+	.start-btn span {
+		font-size: 0.9rem;
+		font-weight: 500;
+	}
+
+	.load-btn {
+		color: var(--color-primary);
+	}
+
+	.load-btn svg {
+		color: var(--color-primary);
+	}
+
+	.record-btn {
+		color: #ef4444;
+		border: none;
+	}
+
+	.record-btn svg {
+		color: #ef4444;
+	}
+
+	.record-btn:hover {
+		background: rgba(239, 68, 68, 0.1);
+		border-color: #ef4444;
+	}
+
+	.start-hint {
+		font-size: 0.8rem;
+		color: var(--color-text-muted);
+		margin: 0;
+	}
+
+	/* ═══════════════════════════════════════════════════════════════════════════
+	   RECORDING INDICATOR
+	   Pulsing red circle and timer display while recording
+	   ═══════════════════════════════════════════════════════════════════════════ */
+	.recording-indicator {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 1rem;
+		margin-bottom: 2rem;
+	}
+
+	.recording-pulse {
+		width: 80px;
+		height: 80px;
+		border-radius: 50%;
+		background: #ef4444;
+		animation: pulse 1s ease-in-out infinite;
+	}
+
+	@keyframes pulse {
+		0%, 100% { transform: scale(1); opacity: 1; }
+		50% { transform: scale(1.1); opacity: 0.8; }
+	}
+
+	.recording-time {
+		font-size: 2rem;
+		font-weight: 600;
+		font-family: monospace;
+		color: #ef4444;
+	}
+
+	.stop-record-btn {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 0.5rem;
+		padding: 1rem 2rem;
+		border: none;
+		border-radius: 12px;
+		background: #ef4444;
+		color: white;
+		font-size: 1rem;
+		font-weight: 500;
+		cursor: pointer;
+		transition: all 0.2s;
+	}
+
+	.stop-record-btn:hover {
+		background: #dc2626;
+	}
+
+	.stop-record-btn:active {
+		transform: scale(0.95);
+	}
+
+	/* ═══════════════════════════════════════════════════════════════════════════
+	   VIEWER HEADER
+	   Filename display and settings toggle
+	   ═══════════════════════════════════════════════════════════════════════════ */
 	.viewer-header {
 		display: flex;
 		align-items: center;
@@ -517,7 +1016,10 @@
 		color: var(--color-text);
 	}
 
-	/* Values bar */
+	/* ═══════════════════════════════════════════════════════════════════════════
+	   VALUES BAR
+	   Compact acoustic measurement display in two rows
+	   ═══════════════════════════════════════════════════════════════════════════ */
 	.values-bar {
 		display: flex;
 		flex-direction: column;
@@ -581,6 +1083,10 @@
 		color: var(--color-primary);
 	}
 
+	/* ═══════════════════════════════════════════════════════════════════════════
+	   VISUALIZATION PANELS
+	   Waveform, Spectrogram, and Time Axis containers
+	   ═══════════════════════════════════════════════════════════════════════════ */
 	.gesture-container {
 		flex: 1;
 		display: flex;
@@ -602,7 +1108,9 @@
 		min-height: 100px;
 	}
 
-	/* Hide desktop controls - mobile has FAB and touch gestures */
+	/* Hide desktop controls from Spectrogram/Waveform components
+	   Mobile viewer uses FAB for playback and touch gestures for zoom
+	   :global() is required to target elements inside child components */
 	:global(.play-selection-btn),
 	:global(.zoom-controls) {
 		display: none !important;
@@ -613,7 +1121,10 @@
 		flex-shrink: 0;
 	}
 
-	/* Floating Action Button for Play */
+	/* ═══════════════════════════════════════════════════════════════════════════
+	   FLOATING ACTION BUTTON (FAB)
+	   Circular play/pause button positioned at bottom-right
+	   ═══════════════════════════════════════════════════════════════════════════ */
 	.fab-play {
 		position: fixed;
 		bottom: calc(16px + env(safe-area-inset-bottom));
@@ -645,7 +1156,10 @@
 		background: #ef4444;
 	}
 
-	/* Settings drawer */
+	/* ═══════════════════════════════════════════════════════════════════════════
+	   SETTINGS DRAWER
+	   Slide-in panel from right edge with overlay toggles
+	   ═══════════════════════════════════════════════════════════════════════════ */
 	.settings-backdrop {
 		position: fixed;
 		top: 0;
@@ -810,7 +1324,11 @@
 		color: var(--color-text);
 	}
 
-	/* Landscape adjustments */
+	/* ═══════════════════════════════════════════════════════════════════════════
+	   RESPONSIVE ADJUSTMENTS
+	   Landscape mode: Compact layout for limited vertical space
+	   Touch devices: Larger touch targets (44px minimum)
+	   ═══════════════════════════════════════════════════════════════════════════ */
 	@media (orientation: landscape) and (max-height: 500px) {
 		.viewer-header {
 			min-height: 28px;
