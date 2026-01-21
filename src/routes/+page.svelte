@@ -11,14 +11,18 @@
 	import { wasmReady, initWasm } from '$lib/wasm/acoustic';
 	import { isPlaying, togglePlayPause, playVisible, stop } from '$lib/audio/player';
 	import { isAnalyzing, analysisProgress, runAnalysis, clearAnalysis } from '$lib/stores/analysis';
-	import { undo, redo, selectedTierIndex, tiers } from '$lib/stores/annotations';
+	import { selectedTierIndex, tiers } from '$lib/stores/annotations';
 	import { loadConfigFromYaml } from '$lib/stores/config';
+	import { dataPoints, exportDataPointsTSV, importDataPointsTSV, clearDataPoints } from '$lib/stores/dataPoints';
+	import { initUndoManager, undo, redo } from '$lib/stores/undoManager';
 
 	let isDarkTheme = true;
 	let configInput: HTMLInputElement;
+	let pointsInput: HTMLInputElement;
 
 	onMount(() => {
 		initWasm();
+		initUndoManager(tiers, dataPoints);
 
 		// Check for saved theme preference
 		const savedTheme = localStorage.getItem('ozen-theme');
@@ -138,6 +142,7 @@
 	let showCoG = false;
 	let showSpectralTilt = false;
 	let showA1P0 = false;
+	let showDataPoints = true;
 
 	// Spectrogram settings
 	let maxFrequency = 5000;
@@ -171,6 +176,62 @@
 		}
 		target.value = '';
 	}
+
+	async function handleExportDataPoints() {
+		const content = exportDataPointsTSV();
+
+		// Generate default filename from audio file name
+		let defaultName = 'data_points.tsv';
+		if ($fileName) {
+			const baseName = $fileName.replace(/\.[^/.]+$/, '');
+			defaultName = baseName + '_points.tsv';
+		}
+
+		// Try File System Access API (shows native Save As dialog)
+		if ('showSaveFilePicker' in window) {
+			try {
+				const handle = await (window as any).showSaveFilePicker({
+					suggestedName: defaultName,
+					types: [{
+						description: 'Tab-Separated Values',
+						accept: { 'text/tab-separated-values': ['.tsv'] }
+					}]
+				});
+				const writable = await handle.createWritable();
+				await writable.write(content);
+				await writable.close();
+				return;
+			} catch (err: any) {
+				if (err.name === 'AbortError') return;
+			}
+		}
+
+		// Fallback: traditional download
+		const blob = new Blob([content], { type: 'text/tab-separated-values' });
+		const url = URL.createObjectURL(blob);
+		const a = document.createElement('a');
+		a.href = url;
+		a.download = defaultName;
+		a.click();
+		URL.revokeObjectURL(url);
+	}
+
+	function openPointsImportDialog() {
+		pointsInput.click();
+	}
+
+	async function handlePointsImport(e: Event) {
+		const target = e.target as HTMLInputElement;
+		const file = target.files?.[0];
+		if (file) {
+			const content = await file.text();
+			const count = importDataPointsTSV(content);
+			if (count === -1) {
+				console.error('Failed to import data points: invalid TSV format (need time and frequency columns)');
+			}
+		}
+		target.value = '';
+	}
 </script>
 
 <input
@@ -186,6 +247,14 @@
 	accept=".yaml,.yml"
 	bind:this={configInput}
 	on:change={handleConfigInput}
+	style="display: none"
+/>
+
+<input
+	type="file"
+	accept=".tsv,.txt"
+	bind:this={pointsInput}
+	on:change={handlePointsImport}
 	style="display: none"
 />
 
@@ -296,6 +365,27 @@
 					<span class="toggle-label a1p0">A1-P0</span>
 				</label>
 				<span class="controls-separator"></span>
+				<label class="overlay-toggle" title="Data collection points - double-click to add, right-click to remove">
+					<input type="checkbox" bind:checked={showDataPoints} />
+					<span class="toggle-label points">Points</span>
+				</label>
+				<button
+					class="import-points-btn"
+					on:click={openPointsImportDialog}
+					title="Import data points from TSV"
+				>
+					Import
+				</button>
+				{#if $dataPoints.length > 0}
+					<button
+						class="export-points-btn"
+						on:click={handleExportDataPoints}
+						title="Export data points to TSV"
+					>
+						Export ({$dataPoints.length})
+					</button>
+				{/if}
+				<span class="controls-separator"></span>
 				<label class="freq-selector">
 					<span class="freq-label">Max Freq:</span>
 					<select bind:value={maxFrequency}>
@@ -312,7 +402,7 @@
 						<Waveform />
 					</div>
 					<div class="display-panel spectrogram-panel">
-						<Spectrogram {showPitch} {showFormants} {showIntensity} {showHNR} {showCoG} {showSpectralTilt} {showA1P0} maxFreq={maxFrequency} />
+						<Spectrogram {showPitch} {showFormants} {showIntensity} {showHNR} {showCoG} {showSpectralTilt} {showA1P0} {showDataPoints} maxFreq={maxFrequency} />
 					</div>
 					<div class="time-axis-panel">
 						<TimeAxis />
@@ -528,6 +618,44 @@
 	.toggle-label.a1p0 {
 		color: #fb7185;
 		background: rgba(251, 113, 133, 0.15);
+	}
+
+	.toggle-label.points {
+		color: #ffcc00;
+		background: rgba(255, 204, 0, 0.15);
+	}
+
+	.export-points-btn {
+		padding: 0.15rem 0.5rem;
+		border: 1px solid rgba(255, 204, 0, 0.4);
+		border-radius: 3px;
+		background: rgba(255, 204, 0, 0.1);
+		color: #ffcc00;
+		font-size: 0.75rem;
+		cursor: pointer;
+		transition: background 0.15s, border-color 0.15s;
+	}
+
+	.export-points-btn:hover {
+		background: rgba(255, 204, 0, 0.2);
+		border-color: rgba(255, 204, 0, 0.6);
+	}
+
+	.import-points-btn {
+		padding: 0.15rem 0.5rem;
+		border: 1px solid var(--color-border);
+		border-radius: 3px;
+		background: transparent;
+		color: var(--color-text-muted);
+		font-size: 0.75rem;
+		cursor: pointer;
+		transition: background 0.15s, border-color 0.15s, color 0.15s;
+	}
+
+	.import-points-btn:hover {
+		background: rgba(255, 204, 0, 0.1);
+		border-color: rgba(255, 204, 0, 0.4);
+		color: #ffcc00;
 	}
 
 	.controls-separator {

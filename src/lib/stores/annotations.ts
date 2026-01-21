@@ -19,6 +19,8 @@ import { writable, derived, get } from 'svelte/store';
 import type { Tier, Interval } from '$lib/types';
 import { parseTextGrid, exportTextGrid } from '$lib/textgrid/parser';
 import { audioBuffer, sampleRate } from './audio';
+import { saveUndo } from './undoManager';
+import { config } from './config';
 
 /**
  * All annotation tiers.
@@ -42,56 +44,6 @@ export const selectedTier = derived(
  * Currently selected interval index within the selected tier.
  */
 export const selectedIntervalIndex = writable<number | null>(null);
-
-/**
- * Undo stack for annotation changes.
- */
-const undoStack = writable<Tier[][]>([]);
-const redoStack = writable<Tier[][]>([]);
-
-/**
- * Save current state to undo stack.
- */
-function saveUndo() {
-	const currentTiers = get(tiers);
-	undoStack.update(stack => {
-		const newStack = [...stack, JSON.parse(JSON.stringify(currentTiers))];
-		// Limit undo stack size
-		if (newStack.length > 50) newStack.shift();
-		return newStack;
-	});
-	redoStack.set([]);
-}
-
-/**
- * Undo last change.
- */
-export function undo() {
-	const stack = get(undoStack);
-	if (stack.length === 0) return;
-
-	const currentTiers = get(tiers);
-	redoStack.update(rs => [...rs, JSON.parse(JSON.stringify(currentTiers))]);
-
-	const prevState = stack[stack.length - 1];
-	undoStack.update(s => s.slice(0, -1));
-	tiers.set(prevState);
-}
-
-/**
- * Redo last undone change.
- */
-export function redo() {
-	const stack = get(redoStack);
-	if (stack.length === 0) return;
-
-	const currentTiers = get(tiers);
-	undoStack.update(us => [...us, JSON.parse(JSON.stringify(currentTiers))]);
-
-	const nextState = stack[stack.length - 1];
-	redoStack.update(s => s.slice(0, -1));
-	tiers.set(nextState);
-}
 
 /**
  * Load TextGrid from string content.
@@ -122,9 +74,9 @@ export function exportTiers(): string {
 
 /**
  * Create a new empty tier.
+ * Note: Tier creation is not undoable - users can remove tiers explicitly.
  */
 export function addTier(name: string, type: 'interval' | 'point' = 'interval'): void {
-	saveUndo();
 	const buffer = get(audioBuffer);
 	const sr = get(sampleRate);
 	const duration = buffer ? buffer.length / sr : 1;
@@ -140,9 +92,9 @@ export function addTier(name: string, type: 'interval' | 'point' = 'interval'): 
 
 /**
  * Remove a tier by index.
+ * Note: Tier removal is not undoable.
  */
 export function removeTier(index: number): void {
-	saveUndo();
 	tiers.update(t => t.filter((_, i) => i !== index));
 	const idx = get(selectedTierIndex);
 	if (idx >= index && idx > 0) {
@@ -152,9 +104,9 @@ export function removeTier(index: number): void {
 
 /**
  * Rename a tier.
+ * Note: Tier renaming is not undoable.
  */
 export function renameTier(index: number, newName: string): void {
-	saveUndo();
 	tiers.update(t => t.map((tier, i) =>
 		i === index ? { ...tier, name: newName } : tier
 	));
@@ -273,6 +225,14 @@ export function removeBoundary(intervalIndex: number): void {
  * Update text of an interval.
  */
 export function updateIntervalText(tierIdx: number, intervalIdx: number, text: string): void {
+	// Check if text actually changed before saving undo
+	const currentTiers = get(tiers);
+	if (tierIdx < currentTiers.length && intervalIdx < currentTiers[tierIdx].intervals.length) {
+		const currentText = currentTiers[tierIdx].intervals[intervalIdx].text;
+		if (currentText === text) return; // No change, skip
+		saveUndo();
+	}
+
 	tiers.update(t => {
 		const newTiers = [...t];
 		if (tierIdx < newTiers.length && intervalIdx < newTiers[tierIdx].intervals.length) {
@@ -334,11 +294,15 @@ export function clearAnnotations(): void {
 }
 
 /**
- * Initialize with a default empty tier if no tiers exist.
+ * Initialize with default empty tiers if no tiers exist.
+ * Uses tier names from config.annotation.defaultTiers.
  */
 export function initializeDefaultTier(): void {
 	const currentTiers = get(tiers);
 	if (currentTiers.length === 0) {
-		addTier('Tier 1');
+		const cfg = get(config);
+		for (const tierName of cfg.annotation.defaultTiers) {
+			addTier(tierName);
+		}
 	}
 }

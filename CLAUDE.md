@@ -43,43 +43,44 @@ npm run build
 ozen-web/
 ├── src/
 │   ├── lib/
-│   │   ├── stores/         # Svelte stores for shared state
-│   │   │   ├── audio.ts    # Audio buffer, sample rate
-│   │   │   ├── view.ts     # Time range, zoom, cursor position
-│   │   │   ├── selection.ts # Selection state
-│   │   │   ├── analysis.ts # Computed acoustic features
-│   │   │   └── annotations.ts # Tiers, intervals, boundaries
-│   │   ├── wasm/           # praatfan-core-wasm integration
-│   │   │   └── acoustic.ts # Wrapper functions for WASM calls
-│   │   ├── audio/          # Web Audio playback
-│   │   │   └── player.ts   # Play, pause, seek, selection playback
-│   │   ├── textgrid/       # TextGrid parser
-│   │   │   └── parser.ts   # Import/export Praat TextGrid
-│   │   ├── canvas/         # Canvas rendering utilities
-│   │   │   ├── spectrogram.ts  # Spectrogram image rendering
-│   │   │   ├── waveform.ts     # Waveform rendering
-│   │   │   └── overlays.ts     # Pitch, formant tracks
-│   │   └── types.ts        # TypeScript type definitions
-│   ├── components/
-│   │   ├── Waveform.svelte
-│   │   ├── Spectrogram.svelte
-│   │   ├── AnnotationEditor.svelte
-│   │   ├── Tier.svelte
-│   │   ├── DataPoint.svelte
-│   │   ├── Toolbar.svelte
-│   │   ├── OverlayControls.svelte
-│   │   └── FileDropZone.svelte
+│   │   ├── stores/           # Svelte stores for shared state
+│   │   │   ├── audio.ts      # Audio buffer, sample rate, filename
+│   │   │   ├── view.ts       # Time range, zoom, cursor, selection
+│   │   │   ├── analysis.ts   # Computed acoustic features
+│   │   │   ├── annotations.ts # Tiers, intervals, boundaries
+│   │   │   ├── dataPoints.ts # Data collection points
+│   │   │   ├── undoManager.ts # Unified undo/redo system
+│   │   │   └── config.ts     # Application configuration
+│   │   ├── wasm/             # praatfan-core-wasm integration
+│   │   │   └── acoustic.ts   # Wrapper functions for WASM calls
+│   │   ├── audio/            # Web Audio playback
+│   │   │   └── player.ts     # Play, pause, seek, selection playback
+│   │   ├── textgrid/         # TextGrid parser
+│   │   │   └── parser.ts     # Import/export Praat TextGrid
+│   │   ├── components/       # UI components
+│   │   │   ├── Waveform.svelte
+│   │   │   ├── Spectrogram.svelte
+│   │   │   ├── AnnotationEditor.svelte
+│   │   │   ├── Tier.svelte
+│   │   │   ├── TimeAxis.svelte
+│   │   │   ├── ValuesPanel.svelte
+│   │   │   ├── Modal.svelte
+│   │   │   └── FileDropZone.svelte
+│   │   └── types.ts          # TypeScript type definitions
 │   ├── routes/
-│   │   ├── +page.svelte    # Main application
-│   │   └── +layout.svelte  # App shell
+│   │   ├── +page.svelte      # Main application
+│   │   └── +layout.svelte    # App shell
 │   └── app.html
 ├── static/
-│   └── pkg/                # praatfan-core-wasm (copy from build)
+│   ├── pkg/                  # praatfan-core-wasm (copy from build)
+│   └── config.yaml           # Optional configuration
 ├── package.json
 ├── svelte.config.js
 ├── vite.config.ts
 ├── tsconfig.json
-└── CLAUDE.md
+├── CLAUDE.md
+├── DEVELOPMENT.md
+└── README.md
 ```
 
 ## Architecture
@@ -89,84 +90,126 @@ ozen-web/
 All shared state lives in `src/lib/stores/`. Components subscribe to stores and react to changes.
 
 Key stores:
-- `audioBuffer` - Raw audio samples (Float32Array)
-- `sampleRate` - Audio sample rate
-- `timeRange` - Visible time window { start, end }
-- `cursorPosition` - Current cursor time in seconds
-- `selection` - Selected region { start, end } or null
-- `analysisResults` - Computed pitch, formants, etc.
-- `annotations` - Tier data with intervals and boundaries
+- `audio.ts` - Audio buffer (Float64Array), sample rate, filename
+- `view.ts` - Time range, cursor position, selection, hover position
+- `analysis.ts` - Computed pitch, formants, intensity, HNR, CoG, spectral tilt
+- `annotations.ts` - Annotation tiers with intervals and boundaries
+- `dataPoints.ts` - Data collection points with acoustic measurements
+- `undoManager.ts` - Unified undo/redo for annotations and data points
+- `config.ts` - Application colors, formant presets, display settings
+
+### Unified Undo System
+
+The undo system (`src/lib/stores/undoManager.ts`) provides a single undo/redo stack for both annotation changes and data point operations:
+
+**Architecture:**
+- State-snapshot approach: captures entire state (tiers + dataPoints) before each change
+- Single stack ensures chronological undo order across all operation types
+- Uses JSON deep-copy for state isolation
+
+**Undoable Operations:**
+- Adding/removing annotation boundaries
+- Moving annotation boundaries
+- Editing interval text labels
+- Adding/removing/moving data points
+
+**Non-Undoable Operations (by design):**
+- Adding/removing/renaming tiers
+- Loading audio/TextGrid files
+
+**Usage Pattern:**
+```typescript
+import { saveUndo } from '$lib/stores/undoManager';
+
+export function someOperation(): void {
+    saveUndo();  // Always call BEFORE mutation
+    tiers.update(t => { ... });
+}
+```
 
 ### Canvas Rendering Strategy
 
 **Spectrogram:**
 1. Compute once via WASM `to_spectrogram()`
-2. Apply colormap → ImageData
-3. Cache as ImageBitmap
+2. Apply grayscale colormap → ImageData
+3. Cache to off-screen canvas
 4. Redraw visible portion on zoom/pan
-5. Overlay tracks (pitch, formants) drawn separately
+5. Overlay tracks (pitch, formants, data points) drawn on top
 
 **Waveform:**
 1. Downsample for display (min/max per pixel column)
-2. Draw as path on canvas
+2. Draw as filled path on canvas
 3. Redraw on zoom/pan
 
-**Overlays:**
-- Cursor: Vertical line, updated via requestAnimationFrame during playback
-- Selection: Semi-transparent rectangle
-- Pitch/Formants: SVG paths or canvas paths on overlay canvas
+**Overlays (drawn on spectrogram):**
+- Pitch: Blue line with dots
+- Formants: Red dots (F1-F4)
+- Intensity: Green line
+- HNR/CoG/Spectral Tilt: Additional colored tracks
+- Data Points: Yellow dashed lines with markers
+- Cursor: Red vertical line
+- Selection: Semi-transparent blue rectangle
 
-### Layer Structure (per display widget)
+### Data Points
 
-```
-┌─────────────────────────────────┐
-│ Cursor layer (animated)         │  z-index: 3
-├─────────────────────────────────┤
-│ Selection layer                 │  z-index: 2
-├─────────────────────────────────┤
-│ Overlay tracks (pitch, etc.)    │  z-index: 1
-├─────────────────────────────────┤
-│ Base image (spectrogram/wave)   │  z-index: 0
-└─────────────────────────────────┘
-```
+Data points allow collecting acoustic measurements at specific time/frequency locations:
 
-## Features to Implement
+- **Add:** Double-click on spectrogram
+- **Remove:** Right-click → Remove
+- **Move:** Click and drag
+- **Export:** TSV file with time, frequency, all acoustic values, and annotation labels
 
-### Phase 1: Core Viewing
-- [ ] Load audio file (drag & drop)
-- [ ] Waveform display
-- [ ] Spectrogram display
-- [ ] Synchronized zoom/scroll (wheel + drag)
-- [ ] Audio playback (selection, visible window)
-- [ ] Cursor tracking during playback
+Each point automatically captures:
+- Time and frequency position
+- Pitch, Intensity, F1-F4, B1-B4, HNR, CoG, Spectral Tilt, A1-P0
+- Text from all annotation tiers at that time
 
-### Phase 2: Acoustic Overlays
-- [ ] Pitch (F0) track
-- [ ] Intensity track
-- [ ] Formants (F1-F4) with bandwidth coloring
-- [ ] Toggle checkboxes for each overlay
-- [ ] HNR, CoG, Spectral tilt
+## Implemented Features
 
-### Phase 3: Annotations
-- [ ] TextGrid import
-- [ ] Tier display with intervals
-- [ ] Text editing (click to select, type to edit)
-- [ ] Add/remove boundaries (double-click, right-click)
-- [ ] TextGrid export
-- [ ] Undo system
+### Core Viewing
+- [x] Load audio file (drag & drop or file picker)
+- [x] Waveform display with amplitude visualization
+- [x] Spectrogram display (grayscale, Praat-style)
+- [x] Synchronized zoom/scroll (wheel to zoom, horizontal scroll to pan)
+- [x] Audio playback (selection or visible window)
+- [x] Real-time cursor tracking during playback
 
-### Phase 4: Data Points
-- [ ] Add points (double-click on spectrogram)
-- [ ] Display as vertical lines with markers
-- [ ] Drag to move
-- [ ] Right-click to remove
-- [ ] TSV export with acoustic values + annotations
+### Acoustic Overlays
+- [x] Pitch (F0) track with dots
+- [x] Intensity track
+- [x] Formants (F1-F4)
+- [x] Toggle checkboxes for each overlay
+- [x] HNR (Harmonics-to-Noise Ratio)
+- [x] CoG (Center of Gravity)
+- [x] Spectral Tilt
+- [x] A1-P0 (nasal measure)
 
-### Phase 5: Polish
-- [ ] Keyboard shortcuts (Space, Tab, Escape, 1-5, Ctrl+Z, etc.)
-- [ ] Configuration (colors, pitch range, formant presets)
-- [ ] Responsive layout
-- [ ] PWA support (offline)
+### Annotations
+- [x] TextGrid import (short and long formats)
+- [x] Tier display with intervals
+- [x] Text editing (double-click to edit, Enter to save)
+- [x] Add boundaries (double-click on tier)
+- [x] Remove boundaries (right-click context menu)
+- [x] Move boundaries (drag)
+- [x] Boundary snapping to upper tiers
+- [x] TextGrid export with native Save dialog (File System Access API)
+- [x] Unified undo/redo (Ctrl+Z / Ctrl+Y)
+
+### Data Points
+- [x] Add points (double-click on spectrogram)
+- [x] Display as vertical dashed lines with markers
+- [x] Drag to move
+- [x] Right-click to remove
+- [x] TSV export with all acoustic values + annotations
+- [x] TSV import
+
+### UI/UX
+- [x] Keyboard shortcuts (Space, Tab, Escape, 1-5, Ctrl+Z, etc.)
+- [x] Configuration via YAML file
+- [x] Dark/light theme toggle
+- [x] Values panel showing measurements at cursor
+- [x] Interval duration display
+- [x] Max frequency selector (5/7.5/10 kHz)
 
 ## Key Differences from Desktop Ozen
 
@@ -176,9 +219,9 @@ Key stores:
 | Audio playback | sounddevice | Web Audio API |
 | Rendering | pyqtgraph | Canvas API |
 | File access | Direct filesystem | File API (user selects) |
-| Save | Direct to disk | Download / localStorage |
+| Save | Direct to disk | Download / File System Access API |
 
-## Keyboard Shortcuts (Target)
+## Keyboard Shortcuts
 
 | Key | Action |
 |-----|--------|
@@ -186,14 +229,14 @@ Key stores:
 | Escape | Stop playback / deselect |
 | Tab | Play visible window |
 | Scroll wheel | Zoom (centered on cursor) |
-| Shift + drag | Pan view |
-| Double-click (annotation) | Add boundary |
+| Horizontal scroll | Pan view |
+| Double-click (tier) | Add boundary |
 | Double-click (spectrogram) | Add data point |
-| Delete | Remove hovered boundary |
+| Right-click (boundary) | Remove boundary menu |
+| Right-click (data point) | Remove point menu |
 | Ctrl+Z / Cmd+Z | Undo |
+| Ctrl+Y / Ctrl+Shift+Z | Redo |
 | 1-5 | Switch annotation tier |
-| Ctrl+S | Download annotations |
-| Ctrl+O | Open file dialog |
 
 ## WASM Integration
 

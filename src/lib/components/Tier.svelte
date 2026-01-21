@@ -151,6 +151,7 @@
 
 	function finishEditing() {
 		if (editingIndex !== null) {
+			// updateIntervalText handles saveUndo internally
 			updateIntervalText(index, editingIndex, editText);
 			editingIndex = null;
 			editText = '';

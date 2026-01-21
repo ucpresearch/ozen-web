@@ -6,7 +6,17 @@
 	import { analysisResults } from '$lib/stores/analysis';
 	import { config } from '$lib/stores/config';
 	import { playRange, isPlaying, stop } from '$lib/audio/player';
-	import type { SpectrogramData } from '$lib/types';
+	import {
+		dataPoints,
+		hoveredPointId,
+		draggingPointId,
+		addDataPoint,
+		removeDataPoint,
+		moveDataPoint,
+		getPointAtPosition
+	} from '$lib/stores/dataPoints';
+	import { saveUndo } from '$lib/stores/undoManager';
+	import type { SpectrogramData, DataPoint } from '$lib/types';
 
 	// Overlay visibility props
 	export let showPitch = true;
@@ -16,6 +26,7 @@
 	export let showCoG = false;
 	export let showSpectralTilt = false;
 	export let showA1P0 = false;
+	export let showDataPoints = true;
 	export let maxFreq = 5000;
 
 	let container: HTMLDivElement;
@@ -33,6 +44,13 @@
 	// Interaction state
 	let isSelecting = false;
 	let selectionStart = 0;
+
+	// Data point dragging state
+	let isDraggingPoint = false;
+	let dragPointId: number | null = null;
+
+	// Data point context menu state
+	let pointContextMenu: { x: number; y: number; pointId: number } | null = null;
 
 	// Display settings
 	const dynamicRange = 70; // dB
@@ -58,6 +76,9 @@
 		$cursorPosition,
 		$hoverPosition,
 		$analysisResults,
+		$dataPoints,
+		$hoveredPointId,
+		$draggingPointId,
 		maxFreq,
 		showPitch,
 		showFormants,
@@ -65,7 +86,8 @@
 		showHNR,
 		showCoG,
 		showSpectralTilt,
-		showA1P0
+		showA1P0,
+		showDataPoints
 	];
 
 	$: if (drawDeps && ctx && spectrogramCanvas && width > 0) {
@@ -116,20 +138,34 @@
 				nTimes: spec.num_frames
 			};
 
-			// Pre-compute full ImageData
-			spectrogramImageData = createSpectrogramImage(spectrogramData);
+			// Pre-compute full ImageData and cached canvas
+			// Assign spectrogramCanvas at top level so Svelte can track the change
+			const result = createSpectrogramImage(spectrogramData);
+			spectrogramImageData = result.imageData;
+			spectrogramCanvas = result.canvas;
 
 			spec.free();
 
-			// Ensure Svelte processes state changes, then draw
+			// Ensure Svelte processes state changes
 			await tick();
-			draw();
+
+			// Use requestAnimationFrame to ensure browser has completed layout
+			// This fixes the issue where draw() is called before canvas has dimensions
+			const tryDraw = () => {
+				if (width > 0 && ctx) {
+					draw();
+				} else {
+					// Canvas not ready yet, try again next frame
+					requestAnimationFrame(tryDraw);
+				}
+			};
+			requestAnimationFrame(tryDraw);
 		} finally {
 			sound.free();
 		}
 	}
 
-	function createSpectrogramImage(data: SpectrogramData): ImageData {
+	function createSpectrogramImage(data: SpectrogramData): { imageData: ImageData; canvas: HTMLCanvasElement } {
 		const { values, nFreqs, nTimes } = data;
 		const imageData = new ImageData(nTimes, nFreqs);
 
@@ -159,13 +195,13 @@
 		}
 
 		// Pre-render to a cached canvas for fast drawing
-		spectrogramCanvas = document.createElement('canvas');
-		spectrogramCanvas.width = nTimes;
-		spectrogramCanvas.height = nFreqs;
-		const tempCtx = spectrogramCanvas.getContext('2d')!;
+		const canvas = document.createElement('canvas');
+		canvas.width = nTimes;
+		canvas.height = nFreqs;
+		const tempCtx = canvas.getContext('2d')!;
 		tempCtx.putImageData(imageData, 0, 0);
 
-		return imageData;
+		return { imageData, canvas };
 	}
 
 	function draw() {
@@ -264,6 +300,11 @@
 			if (showA1P0) {
 				drawA1P0Overlay(start, end);
 			}
+		}
+
+		// Draw data points
+		if (showDataPoints) {
+			drawDataPointsOverlay(start, end);
 		}
 
 		// Draw left Y-axis (Frequency)
@@ -601,8 +642,55 @@
 		ctx.stroke();
 	}
 
+	function drawDataPointsOverlay(start: number, end: number) {
+		if (!ctx) return;
+
+		const points = $dataPoints;
+
+		for (const point of points) {
+			if (point.time < start || point.time > end) continue;
+
+			const x = timeToXPlot(point.time, start, end);
+			const y = freqToY(point.frequency);
+			const isHovered = $hoveredPointId === point.id;
+
+			// Draw vertical line
+			ctx.strokeStyle = isHovered ? '#ff6b6b' : '#ffcc00';
+			ctx.lineWidth = isHovered ? 2 : 1;
+			ctx.setLineDash([3, 3]);
+			ctx.beginPath();
+			ctx.moveTo(x, 0);
+			ctx.lineTo(x, height);
+			ctx.stroke();
+			ctx.setLineDash([]);
+
+			// Draw marker dot at the click position
+			ctx.fillStyle = isHovered ? '#ff6b6b' : '#ffcc00';
+			ctx.beginPath();
+			ctx.arc(x, y, isHovered ? 6 : 4, 0, Math.PI * 2);
+			ctx.fill();
+
+			// Draw outline
+			ctx.strokeStyle = '#000';
+			ctx.lineWidth = 1;
+			ctx.beginPath();
+			ctx.arc(x, y, isHovered ? 6 : 4, 0, Math.PI * 2);
+			ctx.stroke();
+
+			// Draw point ID label
+			ctx.fillStyle = '#ffcc00';
+			ctx.font = '10px sans-serif';
+			ctx.textAlign = 'center';
+			ctx.fillText(`P${point.id}`, x, 12);
+		}
+	}
+
 	function freqToY(freq: number): number {
 		return height - (freq / maxFreq) * height;
+	}
+
+	function yToFreq(y: number): number {
+		return (1 - y / height) * maxFreq;
 	}
 
 	function pitchToY(pitch: number): number {
@@ -627,13 +715,32 @@
 	}
 
 	function handleMouseDown(e: MouseEvent) {
+		// Blur any active input (closes annotation text editors)
+		if (document.activeElement instanceof HTMLInputElement) {
+			document.activeElement.blur();
+		}
+
 		const rect = canvas.getBoundingClientRect();
 		const x = e.clientX - rect.left;
+		const y = e.clientY - rect.top;
 
 		// Only start selection if clicking in the plot area
 		if (x < leftMargin || x > width - rightMargin) return;
 
 		const time = xPlotToTime(x, $timeRange.start, $timeRange.end);
+		const freq = yToFreq(y);
+
+		// Check if clicking on a data point to start dragging
+		if (showDataPoints) {
+			const point = getPointAtPosition(time, freq, 0.02, maxFreq * 0.05);
+			if (point) {
+				saveUndo(); // Save state before drag starts
+				isDraggingPoint = true;
+				dragPointId = point.id;
+				draggingPointId.set(point.id);
+				return;
+			}
+		}
 
 		isSelecting = true;
 		selectionStart = time;
@@ -644,17 +751,35 @@
 	function handleMouseMove(e: MouseEvent) {
 		const rect = canvas.getBoundingClientRect();
 		const x = e.clientX - rect.left;
+		const y = e.clientY - rect.top;
 
 		// Only track hover in plot area
 		if (x < leftMargin || x > width - rightMargin) {
 			hoverPosition.set(null);
+			if (!isDraggingPoint) {
+				hoveredPointId.set(null);
+			}
 			return;
 		}
 
 		const time = xPlotToTime(x, $timeRange.start, $timeRange.end);
+		const freq = yToFreq(y);
 
 		// Update hover position for coordinated cursor
 		hoverPosition.set(time);
+
+		// Handle data point dragging
+		if (isDraggingPoint && dragPointId !== null) {
+			// Update point position in real-time
+			moveDataPoint(dragPointId, time, freq);
+			return;
+		}
+
+		// Check if hovering over a data point
+		if (showDataPoints) {
+			const point = getPointAtPosition(time, freq, 0.02, maxFreq * 0.05);
+			hoveredPointId.set(point?.id ?? null);
+		}
 
 		if (!isSelecting) return;
 
@@ -668,12 +793,80 @@
 	}
 
 	function handleMouseUp() {
+		if (isDraggingPoint) {
+			isDraggingPoint = false;
+			dragPointId = null;
+			draggingPointId.set(null);
+		}
 		isSelecting = false;
 	}
 
 	function handleMouseLeave() {
+		if (isDraggingPoint) {
+			isDraggingPoint = false;
+			dragPointId = null;
+			draggingPointId.set(null);
+		}
 		isSelecting = false;
 		hoverPosition.set(null);
+		hoveredPointId.set(null);
+	}
+
+	function handleDoubleClick(e: MouseEvent) {
+		if (!showDataPoints) return;
+
+		const rect = canvas.getBoundingClientRect();
+		const x = e.clientX - rect.left;
+		const y = e.clientY - rect.top;
+
+		// Only allow in plot area
+		if (x < leftMargin || x > width - rightMargin) return;
+
+		const time = xPlotToTime(x, $timeRange.start, $timeRange.end);
+		const freq = yToFreq(y);
+
+		// Check if clicking on existing point (don't add new one)
+		const existingPoint = getPointAtPosition(time, freq, 0.02, maxFreq * 0.05);
+		if (existingPoint) return;
+
+		// Add new data point
+		addDataPoint(time, freq);
+	}
+
+	function handleContextMenu(e: MouseEvent) {
+		if (!showDataPoints) return;
+
+		const rect = canvas.getBoundingClientRect();
+		const x = e.clientX - rect.left;
+		const y = e.clientY - rect.top;
+
+		// Only allow in plot area
+		if (x < leftMargin || x > width - rightMargin) return;
+
+		const time = xPlotToTime(x, $timeRange.start, $timeRange.end);
+		const freq = yToFreq(y);
+
+		// Check if right-clicking on a data point
+		const point = getPointAtPosition(time, freq, 0.02, maxFreq * 0.05);
+		if (point) {
+			e.preventDefault();
+			pointContextMenu = {
+				x: e.clientX,
+				y: e.clientY,
+				pointId: point.id
+			};
+		}
+	}
+
+	function closePointContextMenu() {
+		pointContextMenu = null;
+	}
+
+	function handleRemovePoint() {
+		if (pointContextMenu) {
+			removeDataPoint(pointContextMenu.pointId);
+			pointContextMenu = null;
+		}
 	}
 
 	function handleWheel(e: WheelEvent) {
@@ -784,16 +977,22 @@
 	}
 </script>
 
+<svelte:window on:keydown={(e) => e.key === 'Escape' && pointContextMenu && closePointContextMenu()} />
+
 <div
 	class="spectrogram-container"
+	class:grabbing={isDraggingPoint}
+	class:can-grab={$hoveredPointId !== null && !isDraggingPoint}
 	bind:this={container}
 	on:mousedown={handleMouseDown}
 	on:mousemove={handleMouseMove}
 	on:mouseup={handleMouseUp}
 	on:mouseleave={handleMouseLeave}
+	on:dblclick={handleDoubleClick}
+	on:contextmenu={handleContextMenu}
 	on:wheel={handleWheel}
 	role="application"
-	aria-label="Spectrogram - click and drag to select, scroll to zoom"
+	aria-label="Spectrogram - click and drag to select, scroll to zoom, double-click to add data point"
 >
 	{#if !spectrogramData}
 		<div class="computing">Computing spectrogram...</div>
@@ -867,6 +1066,19 @@
 	</div>
 </div>
 
+<!-- Data point context menu -->
+{#if pointContextMenu}
+	<div class="context-menu-backdrop" on:click={closePointContextMenu}></div>
+	<div
+		class="context-menu"
+		style="left: {pointContextMenu.x}px; top: {pointContextMenu.y}px;"
+	>
+		<button class="context-menu-item" on:click={handleRemovePoint}>
+			Remove data point
+		</button>
+	</div>
+{/if}
+
 <style>
 	.spectrogram-container {
 		position: relative;
@@ -874,6 +1086,14 @@
 		height: 100%;
 		cursor: crosshair;
 		background: var(--color-bg);
+	}
+
+	.spectrogram-container.can-grab {
+		cursor: grab;
+	}
+
+	.spectrogram-container.grabbing {
+		cursor: grabbing;
 	}
 
 	canvas {
@@ -950,5 +1170,42 @@
 
 	.zoom-btn:active {
 		transform: scale(0.95);
+	}
+
+	.context-menu {
+		position: fixed;
+		background: var(--color-surface);
+		border: 1px solid var(--color-border);
+		border-radius: 4px;
+		box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+		z-index: 1000;
+		min-width: 140px;
+		padding: 4px 0;
+	}
+
+	.context-menu-item {
+		display: block;
+		width: 100%;
+		padding: 6px 12px;
+		border: none;
+		background: transparent;
+		color: var(--color-text);
+		font-size: 12px;
+		text-align: left;
+		cursor: pointer;
+	}
+
+	.context-menu-item:hover {
+		background: var(--color-primary);
+		color: white;
+	}
+
+	.context-menu-backdrop {
+		position: fixed;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		z-index: 999;
 	}
 </style>

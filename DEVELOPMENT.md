@@ -142,8 +142,58 @@ All shared state is managed through Svelte stores in `src/lib/stores/`:
 - `audio.ts` - Loaded audio buffer and metadata
 - `view.ts` - Viewport state (time range, cursor, selection)
 - `analysis.ts` - Computed acoustic features
-- `annotations.ts` - Annotation tiers with undo/redo
+- `annotations.ts` - Annotation tiers and intervals
+- `dataPoints.ts` - Data collection points with acoustic values
+- `undoManager.ts` - Unified undo/redo for annotations and data points
 - `config.ts` - Application configuration
+
+### Unified Undo System
+
+The undo system (`undoManager.ts`) provides a single chronological stack for all undoable operations:
+
+**Undoable operations:**
+- Adding/removing annotation boundaries
+- Moving annotation boundaries
+- Editing interval text labels
+- Adding/removing/moving data points
+
+**Non-undoable operations (by design):**
+- Adding/removing/renaming tiers
+- Loading audio or TextGrid files
+
+**Usage pattern:**
+```typescript
+import { saveUndo } from '$lib/stores/undoManager';
+
+// In store functions that modify state:
+export function myMutation() {
+    saveUndo();  // Save state BEFORE the change
+    tiers.update(t => { ... });
+}
+```
+
+**Initialization:**
+```typescript
+// In +page.svelte onMount:
+import { initUndoManager } from '$lib/stores/undoManager';
+initUndoManager(tiers, dataPoints);
+```
+
+### Data Points
+
+Data points allow collecting acoustic measurements at specific spectrogram locations:
+
+- **Add point:** Double-click on spectrogram (outside existing points)
+- **Move point:** Drag an existing point
+- **Remove point:** Right-click on a point
+- **Export:** Export to TSV with all acoustic values and annotation labels
+- **Import:** Import TSV with time/frequency columns
+
+Acoustic values collected at each point:
+- Pitch (F0), Intensity, HNR
+- Formants (F1-F4) and bandwidths (B1-B4)
+- Center of gravity (CoG), Spectral tilt
+- A1-P0 (harmonics-to-noise measure)
 
 ### WASM Integration
 

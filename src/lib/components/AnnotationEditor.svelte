@@ -9,10 +9,9 @@
 		renameTier,
 		loadTextGrid,
 		exportTiers,
-		undo,
-		redo,
 		initializeDefaultTier
 	} from '$lib/stores/annotations';
+	import { undo, redo } from '$lib/stores/undoManager';
 	import { fileName } from '$lib/stores/audio';
 	import { onMount } from 'svelte';
 
@@ -158,7 +157,7 @@
 	</div>
 
 	<div class="tiers-container">
-		{#each $tiers as tier, i (tier.name + '-' + tier.intervals.length)}
+		{#each $tiers as tier, i (tier.name + '-' + tier.intervals.map(int => int.text).join('|'))}
 			<div class="tier-row" style="height: {Math.max(40, 100 / $tiers.length)}px;">
 				<Tier {tier} index={i} isSelected={i === $selectedTierIndex} />
 			</div>

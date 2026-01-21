@@ -36,6 +36,7 @@ export interface DataPoint {
 	time: number;
 	frequency: number;
 	acousticValues: Record<string, number | null>;
+	annotationIntervals: Record<string, string>;
 }
 
 /**

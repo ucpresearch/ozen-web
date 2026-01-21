@@ -213,6 +213,11 @@
 	}
 
 	function handleMouseDown(e: MouseEvent) {
+		// Blur any active input (closes annotation text editors)
+		if (document.activeElement instanceof HTMLInputElement) {
+			document.activeElement.blur();
+		}
+
 		const rect = canvas.getBoundingClientRect();
 		const x = e.clientX - rect.left;
 
