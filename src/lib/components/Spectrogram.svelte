@@ -66,7 +66,10 @@
 	const leftMargin = 45;
 	const rightMargin = 45;
 
-	$: if ($audioBuffer && $wasmReady && !spectrogramData) {
+	// Track the maxFreq used for the current spectrogram
+	let spectrogramMaxFreq: number | null = null;
+
+	$: if ($audioBuffer && $wasmReady && (!spectrogramData || maxFreq !== spectrogramMaxFreq)) {
 		computeSpectrogram();
 	}
 
@@ -231,6 +234,13 @@
 				nFreqs: spec.num_freq_bins,
 				nTimes: spec.num_frames
 			};
+
+			// Track the maxFreq used for this spectrogram
+			spectrogramMaxFreq = maxFreq;
+
+			// Clear zoomed cache since base spectrogram changed
+			zoomedSpectrogramCanvas = null;
+			zoomedTimeRange = null;
 
 			// Pre-compute full ImageData and cached canvas
 			// Assign spectrogramCanvas at top level so Svelte can track the change

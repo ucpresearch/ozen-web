@@ -158,7 +158,7 @@
 
 	<div class="tiers-container">
 		{#each $tiers as tier, i (i)}
-			<div class="tier-row" style="height: {Math.max(40, 100 / $tiers.length)}px;">
+			<div class="tier-row">
 				<Tier {tier} index={i} isSelected={i === $selectedTierIndex} />
 			</div>
 		{/each}
@@ -291,8 +291,15 @@
 	}
 
 	.tier-row {
-		flex-shrink: 0;
-		min-height: 35px;
+		flex: 1;
+		min-height: 28px;
+	}
+
+	/* On larger screens, give tiers more space */
+	@media (min-height: 600px) {
+		.tier-row {
+			min-height: 35px;
+		}
 	}
 
 	.empty-message {

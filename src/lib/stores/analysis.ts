@@ -20,6 +20,7 @@
 import { writable, derived, get } from 'svelte/store';
 import { audioBuffer, sampleRate } from './audio';
 import { createSound, getWasm, wasmReady } from '$lib/wasm/acoustic';
+import { getCurrentPreset } from './config';
 import type { AnalysisResults, SpectrogramData } from '$lib/types';
 
 /**
@@ -66,6 +67,7 @@ export async function runAnalysis(): Promise<void> {
 
 	try {
 		const params = get(analysisParams);
+		const preset = getCurrentPreset();
 		const wasm = getWasm();
 		const sound = new wasm.Sound(buffer, sr);
 
@@ -78,12 +80,12 @@ export async function runAnalysis(): Promise<void> {
 			analysisProgress.set(25);
 			const intensity = sound.to_intensity(params.pitchFloor, params.timeStep);
 
-			// Formant analysis
+			// Formant analysis - use preset's maxFormant for voice type
 			analysisProgress.set(40);
 			const formant = sound.to_formant_burg(
 				params.timeStep,
 				params.numFormants,
-				params.maxFormant,
+				preset.maxFormant,
 				0.025,
 				50.0
 			);

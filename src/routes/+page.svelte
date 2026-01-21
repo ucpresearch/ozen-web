@@ -12,7 +12,7 @@
 	import { isPlaying, togglePlayPause, playVisible, stop } from '$lib/audio/player';
 	import { isAnalyzing, analysisProgress, runAnalysis, clearAnalysis } from '$lib/stores/analysis';
 	import { selectedTierIndex, tiers } from '$lib/stores/annotations';
-	import { loadConfigFromYaml } from '$lib/stores/config';
+	import { loadConfigFromYaml, selectedPreset } from '$lib/stores/config';
 	import { dataPoints, exportDataPointsTSV, importDataPointsTSV, clearDataPoints } from '$lib/stores/dataPoints';
 	import { initUndoManager, undo, redo } from '$lib/stores/undoManager';
 
@@ -386,6 +386,14 @@
 					</button>
 				{/if}
 				<span class="controls-separator"></span>
+				<label class="freq-selector">
+					<span class="freq-label">Voice:</span>
+					<select bind:value={$selectedPreset}>
+						<option value="female">Female</option>
+						<option value="male">Male</option>
+						<option value="child">Child</option>
+					</select>
+				</label>
 				<label class="freq-selector">
 					<span class="freq-label">Max Freq:</span>
 					<select bind:value={maxFrequency}>

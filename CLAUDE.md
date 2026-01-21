@@ -15,7 +15,7 @@ Built with Svelte/SvelteKit, using [praatfan-core-wasm](../praatfan-core-rs) for
 
 ## Tech Stack
 
-- **SvelteKit** - Framework
+- **SvelteKit** - Framework (prerendered static build)
 - **TypeScript** - Type safety
 - **praatfan-core-wasm** - Acoustic analysis (Pitch, Formants, Intensity, HNR, Spectrogram, etc.)
 - **Web Audio API** - Audio playback
@@ -36,6 +36,26 @@ npm run dev
 # Build for production
 npm run build
 ```
+
+## Build & Deployment
+
+The app uses **prerendering** (Static Site Generation) instead of SPA mode:
+
+- All routes are prerendered at build time
+- Uses relative paths for portable deployment to any subdirectory
+- A post-build script (`scripts/fix-relative-paths.js`) ensures dynamic base path detection
+- No server required - works from any static file host
+
+**Deploy to subdirectory:**
+```bash
+# Build produces ./build/ folder
+npm run build
+
+# Copy to any location, e.g., S3 bucket subdirectory
+aws s3 sync build/ s3://bucket/path/to/app/
+```
+
+The app will automatically detect its base path at runtime.
 
 ## Directory Structure
 
@@ -69,7 +89,8 @@ ozen-web/
 │   │   └── types.ts          # TypeScript type definitions
 │   ├── routes/
 │   │   ├── +page.svelte      # Main application
-│   │   └── +layout.svelte    # App shell
+│   │   ├── +layout.svelte    # App shell
+│   │   └── +layout.ts        # Prerender config
 │   └── app.html
 ├── static/
 │   ├── pkg/                  # praatfan-core-wasm (copy from build)
@@ -130,11 +151,12 @@ export function someOperation(): void {
 ### Canvas Rendering Strategy
 
 **Spectrogram:**
-1. Compute once via WASM `to_spectrogram()`
+1. Compute full spectrogram once via WASM `to_spectrogram()`
 2. Apply grayscale colormap → ImageData
 3. Cache to off-screen canvas
 4. Redraw visible portion on zoom/pan
-5. Overlay tracks (pitch, formants, data points) drawn on top
+5. When zoomed >2x, regenerate high-resolution spectrogram for visible region (debounced 300ms)
+6. Overlay tracks (pitch, formants, data points) drawn on top
 
 **Waveform:**
 1. Downsample for display (min/max per pixel column)

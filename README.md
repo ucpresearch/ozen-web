@@ -37,7 +37,18 @@ npm run dev
 npm run build
 ```
 
-Then copy `build/` and `static/pkg/` to your web server.
+The `build/` folder contains everything needed. Deploy to any static file host - the app uses relative paths and works from any subdirectory:
+
+```bash
+# Deploy to root
+cp -r build/* /var/www/html/
+
+# Or deploy to subdirectory
+cp -r build/* /var/www/html/apps/ozen/
+
+# Or upload to S3
+aws s3 sync build/ s3://bucket/path/to/app/
+```
 
 See [DEVELOPMENT.md](DEVELOPMENT.md) for detailed setup, deployment, and architecture documentation.
 

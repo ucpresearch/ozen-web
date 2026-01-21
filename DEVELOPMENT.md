@@ -88,28 +88,38 @@ The app will be available at `http://localhost:5173`.
 npm run build
 ```
 
-This creates optimized output in the `build/` directory.
+This creates optimized output in the `build/` directory. The build process:
+1. Prerenders all routes (Static Site Generation)
+2. Runs a post-build script to enable portable deployment
+3. Outputs relative paths so the app works from any subdirectory
 
 ### Deploy
 
-For static hosting (no server required):
+The `build/` directory contains everything needed for deployment. The app uses relative paths and automatically detects its base URL at runtime, so it can be deployed to any location:
 
-1. Copy the `build/` directory to your web server
-2. Copy `static/pkg/` to `build/pkg/` (WASM files)
-3. Optionally copy `static/config.yaml` to `build/config.yaml`
+```bash
+# Deploy to server root
+cp -r build/* /var/www/html/
 
-Example deployment structure:
+# Deploy to subdirectory
+cp -r build/* /var/www/html/tools/ozen/
+
+# Deploy to S3/CDN subdirectory
+aws s3 sync build/ s3://my-bucket/resources/ozen/
 ```
-your-server/
+
+Example deployment structure (at root or any subdirectory):
+```
+your-path/
 ├── index.html
-├── _app/              # SvelteKit assets
+├── _app/              # SvelteKit assets (JS, CSS)
 ├── pkg/               # WASM package
 │   ├── praat_core_wasm.js
 │   └── praat_core_wasm_bg.wasm
 └── config.yaml        # Optional custom config
 ```
 
-The app can be served from any static file host (Nginx, Apache, Netlify, Vercel, GitHub Pages, etc.).
+The app can be served from any static file host (Nginx, Apache, S3, Netlify, Vercel, GitHub Pages, etc.) at any URL path.
 
 ## Configuration
 
@@ -129,10 +139,18 @@ Users can also load a custom config file at runtime via the settings button.
 | Command | Description |
 |---------|-------------|
 | `npm run dev` | Start development server |
-| `npm run build` | Build for production |
+| `npm run build` | Build for production (includes post-processing) |
 | `npm run preview` | Preview production build |
 | `npm run check` | Run Svelte type checking |
 | `npm run lint` | Run ESLint |
+
+### Build Process Details
+
+The `npm run build` command:
+1. Runs `vite build` to prerender routes
+2. Runs `scripts/fix-relative-paths.js` to enable portable deployment
+
+The post-build script converts paths for runtime base detection, allowing the app to work from any URL path without rebuild.
 
 ## Architecture Notes
 
@@ -214,6 +232,9 @@ Visualizations use layered HTML5 Canvas:
 2. Overlay layer: Pitch, formants, intensity tracks
 3. Selection layer: Time selection highlight
 4. Cursor layer: Playback position (animated)
+
+**Spectrogram Zoom Enhancement:**
+When zoomed in >2x, the spectrogram automatically regenerates at higher resolution for the visible region (debounced 300ms after zoom stops). This prevents pixelation when examining detailed spectral features.
 
 ## Troubleshooting
 
