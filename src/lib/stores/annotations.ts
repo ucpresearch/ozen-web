@@ -250,6 +250,9 @@ export function updateIntervalText(tierIdx: number, intervalIdx: number, text: s
 /**
  * Move a boundary to a new time.
  * Snaps to nearby boundaries in upper tiers.
+ *
+ * Note: saveUndo is NOT called here because this function may be called
+ * continuously during drag. The caller should call saveUndo when the drag starts.
  */
 export function moveBoundary(intervalIndex: number, newTime: number): void {
 	const tierIdx = get(selectedTierIndex);
@@ -268,8 +271,6 @@ export function moveBoundary(intervalIndex: number, newTime: number): void {
 
 	// Ensure new time is within bounds
 	if (finalTime <= prev.start || finalTime >= current.end) return;
-
-	saveUndo();
 
 	tiers.update(t => {
 		const newTiers = [...t];

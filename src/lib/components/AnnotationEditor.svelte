@@ -157,7 +157,7 @@
 	</div>
 
 	<div class="tiers-container">
-		{#each $tiers as tier, i (tier.name + '-' + tier.intervals.map(int => int.text).join('|'))}
+		{#each $tiers as tier, i (i)}
 			<div class="tier-row" style="height: {Math.max(40, 100 / $tiers.length)}px;">
 				<Tier {tier} index={i} isSelected={i === $selectedTierIndex} />
 			</div>

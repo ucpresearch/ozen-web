@@ -6,8 +6,10 @@
 		selectedIntervalIndex,
 		addBoundary,
 		removeBoundary,
-		updateIntervalText
+		updateIntervalText,
+		moveBoundary
 	} from '$lib/stores/annotations';
+	import { saveUndo } from '$lib/stores/undoManager';
 	import type { Tier as TierType } from '$lib/types';
 
 	export let tier: TierType;
@@ -24,8 +26,21 @@
 	let editingIndex: number | null = null;
 	let editText = '';
 
+	// Boundary dragging state
+	let isDraggingBoundary = false;
+	let dragBoundaryIndex: number | null = null;
+
 	// Context menu state
 	let contextMenu: { x: number; y: number; intervalIndex: number } | null = null;
+
+	function handleBoundaryMouseDown(e: MouseEvent, intervalIndex: number) {
+		e.preventDefault();
+		e.stopPropagation();
+		selectedTierIndex.set(index);
+		saveUndo();
+		isDraggingBoundary = true;
+		dragBoundaryIndex = intervalIndex;
+	}
 
 	function handleBoundaryContextMenu(e: MouseEvent, intervalIndex: number) {
 		e.preventDefault();
@@ -90,15 +105,31 @@
 		// Only track hover in plot area
 		if (x < leftMargin || x > width - rightMargin) {
 			hoverPosition.set(null);
-			return;
+			if (!isDraggingBoundary) return;
 		}
 
 		const time = xToTime(x);
 		hoverPosition.set(time);
+
+		// Handle boundary dragging
+		if (isDraggingBoundary && dragBoundaryIndex !== null) {
+			moveBoundary(dragBoundaryIndex, time);
+		}
+	}
+
+	function handleMouseUp() {
+		if (isDraggingBoundary) {
+			isDraggingBoundary = false;
+			dragBoundaryIndex = null;
+		}
 	}
 
 	function handleMouseLeave() {
 		hoverPosition.set(null);
+		if (isDraggingBoundary) {
+			isDraggingBoundary = false;
+			dragBoundaryIndex = null;
+		}
 	}
 
 	function handleIntervalClick(e: MouseEvent, intervalIndex: number) {
@@ -167,21 +198,24 @@
 		}
 	}
 
-	function getVisibleIntervals() {
+	// Make visible intervals reactive to tier and timeRange changes
+	$: visibleIntervals = (() => {
 		const { start, end } = $timeRange;
 		return tier.intervals
 			.map((int, i) => ({ ...int, index: i }))
 			.filter(int => int.end > start && int.start < end);
-	}
+	})();
 </script>
 
 <div
 	class="tier-container"
 	class:selected={isSelected}
+	class:dragging={isDraggingBoundary}
 	bind:this={container}
 	on:click={handleTierClick}
 	on:dblclick={handleBackgroundDoubleClick}
 	on:mousemove={handleMouseMove}
+	on:mouseup={handleMouseUp}
 	on:mouseleave={handleMouseLeave}
 	role="button"
 	tabindex="0"
@@ -196,7 +230,7 @@
 	<div class="tier-label">{tier.name}</div>
 
 	<div class="intervals" style="left: {leftMargin}px; right: {rightMargin}px;">
-		{#each getVisibleIntervals() as interval (interval.index)}
+		{#each visibleIntervals as interval (interval.index)}
 			{@const x1 = Math.max(leftMargin, timeToX(interval.start))}
 			{@const x2 = Math.min(plotRight, timeToX(interval.end))}
 			{@const intervalWidth = x2 - x1}
@@ -251,21 +285,12 @@
 					<div
 						class="boundary"
 						style="left: {relativeX1}px;"
-						title="Click to edit, right-click to remove"
-						on:click|stopPropagation={() => {
-							selectedTierIndex.set(index);
-							selectedIntervalIndex.set(interval.index);
-							// Select the interval
-							selection.set({
-								start: interval.start,
-								end: interval.end
-							});
-							cursorPosition.set(interval.start);
-							startEditing(interval.index);
-						}}
+						title="Drag to move, right-click to remove"
+						on:mousedown={(e) => handleBoundaryMouseDown(e, interval.index)}
 						on:contextmenu={(e) => handleBoundaryContextMenu(e, interval.index)}
-						role="button"
+						role="slider"
 						tabindex="0"
+						aria-valuenow={interval.start}
 						on:keydown={(e) => e.key === 'Enter' && startEditing(interval.index)}
 					></div>
 				{/if}
@@ -284,7 +309,10 @@
 	{/if}
 </div>
 
-<svelte:window on:keydown={(e) => e.key === 'Escape' && contextMenu && closeContextMenu()} />
+<svelte:window
+	on:keydown={(e) => e.key === 'Escape' && contextMenu && closeContextMenu()}
+	on:mouseup={handleMouseUp}
+/>
 
 <!-- Context menu -->
 {#if contextMenu}
@@ -311,6 +339,10 @@
 
 	.tier-container.selected {
 		background: rgba(74, 158, 255, 0.05);
+	}
+
+	.tier-container.dragging {
+		cursor: ew-resize;
 	}
 
 	.margin-area {
