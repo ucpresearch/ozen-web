@@ -33,21 +33,15 @@ export function parseTextGrid(content: string): { tiers: Tier[]; xmin: number; x
 
 	// Detect format (short vs long)
 	const firstLine = nextLine();
-	console.log('TextGrid first line:', JSON.stringify(firstLine));
 	const isShortFormat = firstLine === '"ooTextFile"' || !firstLine.includes('=');
-	console.log('Detected format:', isShortFormat ? 'short' : 'long');
 
 	// Reset
 	i = 0;
 
 	if (isShortFormat) {
-		const result = parseShortFormat(lines);
-		console.log('Parsed tiers:', result.tiers.length);
-		return result;
+		return parseShortFormat(lines);
 	} else {
-		const result = parseLongFormat(lines);
-		console.log('Parsed tiers:', result.tiers.length);
-		return result;
+		return parseLongFormat(lines);
 	}
 }
 

@@ -81,15 +81,7 @@ export function redo() {
  */
 export function loadTextGrid(content: string): void {
 	try {
-		const { tiers: parsedTiers, xmin, xmax } = parseTextGrid(content);
-		console.log('Loaded TextGrid:', { xmin, xmax, numTiers: parsedTiers.length });
-		parsedTiers.forEach((t, i) => {
-			console.log(`Tier ${i}: "${t.name}", ${t.intervals.length} intervals`);
-			if (t.intervals.length > 0) {
-				console.log('  First interval:', t.intervals[0]);
-				console.log('  Last interval:', t.intervals[t.intervals.length - 1]);
-			}
-		});
+		const { tiers: parsedTiers } = parseTextGrid(content);
 		saveUndo();
 		tiers.set(parsedTiers);
 		selectedTierIndex.set(0);

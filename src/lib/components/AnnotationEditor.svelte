@@ -47,9 +47,7 @@
 
 		try {
 			const content = await file.text();
-			console.log('TextGrid file content (first 500 chars):', content.substring(0, 500));
 			loadTextGrid(content);
-			console.log('TextGrid loaded successfully');
 		} catch (err) {
 			console.error('Failed to load TextGrid:', err);
 			showAlert('Failed to parse TextGrid file: ' + (err instanceof Error ? err.message : String(err)));
