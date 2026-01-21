@@ -15,8 +15,8 @@ const config = {
 			strict: true
 		}),
 		paths: {
-			// Set base path if deploying to subdirectory
-			// base: '/ozen-web'
+			// Use relative paths so app works from any directory
+			relative: true
 		}
 	}
 };
