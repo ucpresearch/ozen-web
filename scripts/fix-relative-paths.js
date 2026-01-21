@@ -31,6 +31,13 @@ function fixHtmlFile(filePath) {
 	content = content.replace(/href="\/pkg\//g, 'href="./pkg/');
 	content = content.replace(/src="\/pkg\//g, 'src="./pkg/');
 
+	// Replace static base: "" with dynamic base path detection
+	// This allows the app to work from any subdirectory
+	content = content.replace(
+		/base:\s*""/g,
+		'base: new URL(".", location.href).pathname.slice(0, -1)'
+	);
+
 	if (content !== originalContent) {
 		writeFileSync(filePath, content);
 		console.log(`Fixed: ${filePath}`);

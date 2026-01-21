@@ -1,4 +1,5 @@
 import { writable, get } from 'svelte/store';
+import { base } from '$app/paths';
 
 /**
  * Whether the WASM module has been initialized.
@@ -15,7 +16,8 @@ let wasmModule: any = null;
 export async function initWasm(): Promise<void> {
 	try {
 		// Fetch and initialize WASM module (web build)
-		const wasmUrl = '/pkg/praat_core_wasm.js';
+		// Use base path for portable deployment to subdirectories
+		const wasmUrl = `${base}/pkg/praat_core_wasm.js`;
 		const wasm = await import(/* @vite-ignore */ wasmUrl);
 		await wasm.default();
 		wasmModule = wasm;

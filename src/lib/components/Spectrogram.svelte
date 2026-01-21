@@ -36,10 +36,15 @@
 	let height = 0;
 	let resizeObserver: ResizeObserver;
 
-	// Cached spectrogram data
+	// Cached spectrogram data (full resolution for entire audio)
 	let spectrogramData: SpectrogramData | null = null;
 	let spectrogramImageData: ImageData | null = null;
 	let spectrogramCanvas: HTMLCanvasElement | null = null;
+
+	// Zoomed spectrogram cache (high resolution for visible region)
+	let zoomedSpectrogramCanvas: HTMLCanvasElement | null = null;
+	let zoomedTimeRange: { start: number; end: number } | null = null;
+	let zoomDebounceTimer: ReturnType<typeof setTimeout> | null = null;
 
 	// Interaction state
 	let isSelecting = false;
@@ -70,6 +75,7 @@
 	$: drawDeps = [
 		ctx,
 		spectrogramCanvas,
+		zoomedSpectrogramCanvas,
 		width,
 		$timeRange,
 		$selection,
@@ -92,6 +98,91 @@
 
 	$: if (drawDeps && ctx && spectrogramCanvas && width > 0) {
 		draw();
+	}
+
+	// Debounced zoom spectrogram regeneration
+	// When zoomed in significantly, regenerate at higher resolution after user stops zooming
+	$: if ($timeRange && spectrogramData && $audioBuffer && $wasmReady && plotWidth > 0) {
+		scheduleZoomedSpectrogram($timeRange.start, $timeRange.end);
+	}
+
+	function scheduleZoomedSpectrogram(start: number, end: number) {
+		// Clear any pending regeneration
+		if (zoomDebounceTimer) {
+			clearTimeout(zoomDebounceTimer);
+		}
+
+		// Check if we're zoomed in enough to benefit from regeneration
+		if (!spectrogramData) return;
+		const fullDuration = spectrogramData.timeMax - spectrogramData.timeMin;
+		const visibleDuration = end - start;
+		const zoomRatio = fullDuration / visibleDuration;
+
+		// Only regenerate if zoomed in at least 2x and view changed significantly
+		if (zoomRatio < 2) {
+			zoomedSpectrogramCanvas = null;
+			zoomedTimeRange = null;
+			return;
+		}
+
+		// Check if current zoomed cache is still valid (within 10% of current view)
+		if (zoomedTimeRange) {
+			const overlap = Math.min(end, zoomedTimeRange.end) - Math.max(start, zoomedTimeRange.start);
+			const coverage = overlap / visibleDuration;
+			if (coverage > 0.9) return; // Cache is still good enough
+		}
+
+		// Schedule regeneration after 300ms of no changes
+		zoomDebounceTimer = setTimeout(() => {
+			computeZoomedSpectrogram(start, end);
+		}, 300);
+	}
+
+	async function computeZoomedSpectrogram(start: number, end: number) {
+		if (!$audioBuffer || !$wasmReady || !spectrogramData) return;
+
+		const wasm = getWasm();
+
+		// Add small padding to avoid edge artifacts
+		const padding = (end - start) * 0.05;
+		const paddedStart = Math.max(0, start - padding);
+		const paddedEnd = Math.min($audioBuffer.length / $sampleRate, end + padding);
+
+		// Extract the visible portion of audio
+		const startSample = Math.floor(paddedStart * $sampleRate);
+		const endSample = Math.ceil(paddedEnd * $sampleRate);
+		const visibleSamples = $audioBuffer.slice(startSample, endSample);
+
+		const sound = new wasm.Sound(visibleSamples, $sampleRate);
+
+		try {
+			// Compute higher resolution spectrogram for visible region
+			// Use smaller time step for better resolution when zoomed
+			const timeStep = Math.max(0.001, (paddedEnd - paddedStart) / (plotWidth * 2));
+			const spec = sound.to_spectrogram(0.005, maxFreq, timeStep, 20.0, 'gaussian');
+
+			const zoomedData: SpectrogramData = {
+				values: spec.values(),
+				freqMin: spec.freq_min,
+				freqMax: spec.freq_max,
+				timeMin: paddedStart,
+				timeMax: paddedStart + (spec.num_frames - 1) * spec.time_step,
+				nFreqs: spec.num_freq_bins,
+				nTimes: spec.num_frames
+			};
+
+			// Create zoomed canvas
+			const result = createSpectrogramImage(zoomedData);
+			zoomedSpectrogramCanvas = result.canvas;
+			zoomedTimeRange = { start: paddedStart, end: paddedEnd };
+
+			spec.free();
+
+			// Trigger redraw with new zoomed spectrogram
+			draw();
+		} finally {
+			sound.free();
+		}
 	}
 
 	// Computed plot area
@@ -117,6 +208,9 @@
 
 	onDestroy(() => {
 		resizeObserver?.disconnect();
+		if (zoomDebounceTimer) {
+			clearTimeout(zoomDebounceTimer);
+		}
 	});
 
 	async function computeSpectrogram() {
@@ -221,23 +315,46 @@
 		// Draw right Y-axis background
 		ctx.fillRect(width - rightMargin, 0, rightMargin, height);
 
-		// Calculate source region based on maxFreq
-		const { timeMin, timeMax, nTimes, nFreqs, freqMax: specFreqMax } = spectrogramData;
-		const srcX = Math.floor(((start - timeMin) / (timeMax - timeMin)) * nTimes);
-		const srcWidth = Math.ceil(((end - start) / (timeMax - timeMin)) * nTimes);
+		// Check if we have a valid zoomed spectrogram for the current view
+		const useZoomed = zoomedSpectrogramCanvas && zoomedTimeRange &&
+			start >= zoomedTimeRange.start && end <= zoomedTimeRange.end;
 
-		// Calculate how much of the spectrogram height to show based on maxFreq
-		const freqRatio = Math.min(1, maxFreq / specFreqMax);
-		const srcFreqBins = Math.floor(nFreqs * freqRatio);
-		const srcY = nFreqs - srcFreqBins; // Start from top (high freq in image is at top after flip)
+		if (useZoomed && zoomedSpectrogramCanvas && zoomedTimeRange) {
+			// Use high-resolution zoomed spectrogram
+			const zCanvas = zoomedSpectrogramCanvas;
+			const zStart = zoomedTimeRange.start;
+			const zEnd = zoomedTimeRange.end;
+			const zWidth = zCanvas.width;
+			const zHeight = zCanvas.height;
 
-		// Draw the visible portion scaled to plot area (using cached canvas)
-		ctx.imageSmoothingEnabled = false;
-		ctx.drawImage(
-			spectrogramCanvas,
-			Math.max(0, srcX), srcY, Math.min(srcWidth, nTimes - srcX), srcFreqBins,
-			leftMargin, 0, plotWidth, height
-		);
+			const srcX = Math.floor(((start - zStart) / (zEnd - zStart)) * zWidth);
+			const srcWidth = Math.ceil(((end - start) / (zEnd - zStart)) * zWidth);
+
+			ctx.imageSmoothingEnabled = true;
+			ctx.drawImage(
+				zCanvas,
+				Math.max(0, srcX), 0, Math.min(srcWidth, zWidth - srcX), zHeight,
+				leftMargin, 0, plotWidth, height
+			);
+		} else {
+			// Use full spectrogram (may be pixelated when zoomed)
+			const { timeMin, timeMax, nTimes, nFreqs, freqMax: specFreqMax } = spectrogramData;
+			const srcX = Math.floor(((start - timeMin) / (timeMax - timeMin)) * nTimes);
+			const srcWidth = Math.ceil(((end - start) / (timeMax - timeMin)) * nTimes);
+
+			// Calculate how much of the spectrogram height to show based on maxFreq
+			const freqRatio = Math.min(1, maxFreq / specFreqMax);
+			const srcFreqBins = Math.floor(nFreqs * freqRatio);
+			const srcY = nFreqs - srcFreqBins; // Start from top (high freq in image is at top after flip)
+
+			// Draw the visible portion scaled to plot area (using cached canvas)
+			ctx.imageSmoothingEnabled = false;
+			ctx.drawImage(
+				spectrogramCanvas,
+				Math.max(0, srcX), srcY, Math.min(srcWidth, nTimes - srcX), srcFreqBins,
+				leftMargin, 0, plotWidth, height
+			);
+		}
 
 		// Draw selection if present
 		if ($selection) {
