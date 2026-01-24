@@ -84,7 +84,7 @@ export async function computeAcoustics(
 		const pitch = sound.to_pitch(timeStep, pitchFloor, pitchCeiling);
 		const intensity = sound.to_intensity(pitchFloor, timeStep);
 		const formant = sound.to_formant_burg(timeStep, 5, maxFormant, 0.025, 50.0);
-		const harmonicity = sound.to_harmonicity_cc(timeStep, pitchFloor, 0.1, 1.0);
+		const harmonicity = sound.to_harmonicity_ac(timeStep, pitchFloor, 0.1, 4.5);
 		const spectrogram = sound.to_spectrogram(0.005, 5000, 0.005, 20.0, 'gaussian');
 
 		// Extract values

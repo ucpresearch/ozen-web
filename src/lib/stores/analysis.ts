@@ -92,7 +92,7 @@ export async function runAnalysis(): Promise<void> {
 
 			// Harmonicity analysis
 			analysisProgress.set(55);
-			const harmonicity = sound.to_harmonicity_cc(params.timeStep, params.pitchFloor, 0.1, 1.0);
+			const harmonicity = sound.to_harmonicity_ac(params.timeStep, params.pitchFloor, 0.1, 4.5);
 
 			// Spectrogram
 			analysisProgress.set(70);
