@@ -8,7 +8,8 @@
 	import ValuesPanel from '$lib/components/ValuesPanel.svelte';
 	import { audioBuffer, sampleRate, fileName } from '$lib/stores/audio';
 	import { timeRange, selection, cursorPosition } from '$lib/stores/view';
-	import { wasmReady, initWasm } from '$lib/wasm/acoustic';
+	import { wasmReady, initWasm, currentBackend } from '$lib/wasm/acoustic';
+	import { selectedBackend, type AcousticBackend } from '$lib/stores/config';
 	import { isPlaying, togglePlayPause, playVisible, stop } from '$lib/audio/player';
 	import { isAnalyzing, analysisProgress, runAnalysis, clearAnalysis } from '$lib/stores/analysis';
 	import { selectedTierIndex, tiers } from '$lib/stores/annotations';
@@ -21,7 +22,14 @@
 	let pointsInput: HTMLInputElement;
 
 	onMount(() => {
-		initWasm();
+		// Load saved backend preference
+		const savedBackend = localStorage.getItem('ozen-backend') as AcousticBackend | null;
+		if (savedBackend === 'praatfan-core' || savedBackend === 'praatfan' || savedBackend === 'praatfan-local') {
+			selectedBackend.set(savedBackend);
+		}
+
+		// Initialize WASM with selected backend
+		initWasm($selectedBackend);
 		initUndoManager(tiers, dataPoints);
 
 		// Check for saved theme preference
@@ -35,6 +43,28 @@
 		window.addEventListener('keydown', handleKeydown);
 		return () => window.removeEventListener('keydown', handleKeydown);
 	});
+
+	// Handle backend change
+	async function handleBackendChange(event: Event) {
+		const target = event.target as HTMLSelectElement;
+		const newBackend = target.value as AcousticBackend;
+
+		selectedBackend.set(newBackend);
+		localStorage.setItem('ozen-backend', newBackend);
+
+		// Reinitialize WASM with new backend
+		try {
+			await initWasm(newBackend);
+
+			// Re-run analysis if audio is loaded
+			if ($audioBuffer) {
+				clearAnalysis();
+				runAnalysis().catch(e => console.error('Analysis failed:', e));
+			}
+		} catch (e) {
+			console.error('Failed to switch backend:', e);
+		}
+	}
 
 	function toggleTheme() {
 		isDarkTheme = !isDarkTheme;
@@ -172,7 +202,23 @@
 		const file = target.files?.[0];
 		if (file) {
 			const text = await file.text();
-			loadConfigFromYaml(text);
+			const newConfig = loadConfigFromYaml(text);
+
+			// If config specifies a different backend, switch to it
+			if (newConfig && newConfig.backend !== $currentBackend) {
+				try {
+					await initWasm(newConfig.backend);
+					localStorage.setItem('ozen-backend', newConfig.backend);
+
+					// Re-run analysis if audio is loaded
+					if ($audioBuffer) {
+						clearAnalysis();
+						runAnalysis().catch(e => console.error('Analysis failed:', e));
+					}
+				} catch (err) {
+					console.error('Failed to switch backend:', err);
+				}
+			}
 		}
 		target.value = '';
 	}
@@ -402,6 +448,14 @@
 						<option value={10000}>10 kHz</option>
 					</select>
 				</label>
+				<label class="freq-selector" title="Acoustic analysis backend">
+					<span class="freq-label">Backend:</span>
+					<select value={$selectedBackend} on:change={handleBackendChange}>
+						<option value="praatfan-local">praatfan (local)</option>
+						<option value="praatfan">praatfan (remote)</option>
+						<option value="praatfan-core">praatfan-core (remote)</option>
+					</select>
+				</label>
 			</div>
 
 			<div class="main-content">
@@ -570,7 +624,8 @@
 
 	.overlay-controls {
 		display: flex;
-		gap: 1rem;
+		flex-wrap: wrap;
+		gap: 0.5rem 1rem;
 		padding: 0.35rem 1rem;
 		background: var(--color-surface);
 		border-bottom: 1px solid var(--color-border);

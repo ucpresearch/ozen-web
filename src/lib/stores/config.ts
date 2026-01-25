@@ -25,7 +25,19 @@ import yaml from 'js-yaml';
 /**
  * Application configuration interface with Praat-style defaults.
  */
+/**
+ * Backend options for acoustic analysis.
+ * - 'praatfan-core': Full Praat reimplementation (GPL, from praatfan-core-rs CDN)
+ * - 'praatfan': Clean-room implementation (MIT/Apache, from praatfan-core-clean CDN)
+ * - 'praatfan-local': Clean-room implementation bundled locally (no network required)
+ */
+export type AcousticBackend = 'praatfan-core' | 'praatfan' | 'praatfan-local';
+
 export interface OzenConfig {
+	/**
+	 * Which WASM backend to use for acoustic analysis.
+	 */
+	backend: AcousticBackend;
 	colors: {
 		waveform: {
 			background: string;
@@ -93,6 +105,7 @@ export interface FormantPreset {
  * Default Praat-style configuration.
  */
 export const defaultConfig: OzenConfig = {
+	backend: 'praatfan-local',
 	colors: {
 		waveform: {
 			background: '#ffffff',
@@ -175,6 +188,11 @@ export const config = writable<OzenConfig>(defaultConfig);
 export const selectedPreset = writable<'female' | 'male' | 'child'>('female');
 
 /**
+ * Currently selected acoustic analysis backend.
+ */
+export const selectedBackend = writable<AcousticBackend>('praatfan-local');
+
+/**
  * Get the current formant preset settings.
  */
 export function getCurrentPreset(): FormantPreset {
@@ -214,17 +232,27 @@ function deepMerge<T extends Record<string, unknown>>(target: T, source: Partial
 
 /**
  * Load configuration from a YAML string and merge with defaults.
+ * Returns the parsed config or null if parsing failed.
  */
-export function loadConfigFromYaml(yamlContent: string): void {
+export function loadConfigFromYaml(yamlContent: string): OzenConfig | null {
 	try {
 		const parsed = yaml.load(yamlContent) as Partial<OzenConfig>;
 		if (parsed && typeof parsed === 'object') {
 			const merged = deepMerge(defaultConfig, parsed);
 			config.set(merged);
+
+			// Sync backend setting with selectedBackend store
+			if (merged.backend) {
+				selectedBackend.set(merged.backend);
+			}
+
 			console.log('Configuration loaded from YAML');
+			return merged;
 		}
+		return null;
 	} catch (e) {
 		console.warn('Failed to parse YAML config:', e);
+		return null;
 	}
 }
 

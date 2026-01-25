@@ -2,7 +2,11 @@
  * Acoustic Analysis Store
  *
  * Manages acoustic analysis state and provides functions to compute
- * various acoustic features using the praatfan-core-wasm library.
+ * various acoustic features using the praatfan WASM libraries.
+ *
+ * Supports two backends:
+ * - praatfan-core: Full Praat reimplementation (GPL)
+ * - praatfan: Clean-room implementation (MIT/Apache)
  *
  * Computed features:
  * - Pitch (F0): Fundamental frequency using autocorrelation
@@ -19,7 +23,24 @@
 
 import { writable, derived, get } from 'svelte/store';
 import { audioBuffer, sampleRate } from './audio';
-import { createSound, getWasm, wasmReady } from '$lib/wasm/acoustic';
+import {
+	createSound,
+	getWasm,
+	wasmReady,
+	computePitch,
+	computeIntensity,
+	computeFormant,
+	computeHarmonicity,
+	computeSpectrogram,
+	computeSpectrum,
+	getPitchTimes,
+	getPitchValues,
+	getIntensityAtTime,
+	getFormantAtTime,
+	getBandwidthAtTime,
+	getHarmonicityAtTime,
+	getSpectrogramInfo
+} from '$lib/wasm/acoustic';
 import { getCurrentPreset } from './config';
 import type { AnalysisResults, SpectrogramData } from '$lib/types';
 
@@ -74,15 +95,16 @@ export async function runAnalysis(): Promise<void> {
 		try {
 			// Pitch analysis
 			analysisProgress.set(10);
-			const pitch = sound.to_pitch(params.timeStep, params.pitchFloor, params.pitchCeiling);
+			const pitch = computePitch(sound, params.timeStep, params.pitchFloor, params.pitchCeiling);
 
 			// Intensity analysis
 			analysisProgress.set(25);
-			const intensity = sound.to_intensity(params.pitchFloor, params.timeStep);
+			const intensity = computeIntensity(sound, params.pitchFloor, params.timeStep);
 
 			// Formant analysis - use preset's maxFormant for voice type
 			analysisProgress.set(40);
-			const formant = sound.to_formant_burg(
+			const formant = computeFormant(
+				sound,
 				params.timeStep,
 				params.numFormants,
 				preset.maxFormant,
@@ -92,52 +114,47 @@ export async function runAnalysis(): Promise<void> {
 
 			// Harmonicity analysis
 			analysisProgress.set(55);
-			const harmonicity = sound.to_harmonicity_ac(params.timeStep, params.pitchFloor, 0.1, 4.5);
+			const harmonicity = computeHarmonicity(sound, params.timeStep, params.pitchFloor, 0.1, 4.5);
 
 			// Spectrogram
 			analysisProgress.set(70);
-			const spectrogram = sound.to_spectrogram(0.005, 5000, 0.002, 20.0, 'gaussian');
+			const spectrogram = computeSpectrogram(sound, 0.005, 5000, 0.002, 20.0);
 
-			// Extract values
+			// Extract values using abstraction layer
 			analysisProgress.set(80);
-			const times: number[] = Array.from(pitch.times() as Float64Array);
-			const pitchValues: number[] = Array.from(pitch.values() as Float64Array);
+			const times: number[] = Array.from(getPitchTimes(pitch));
+			const pitchValues: number[] = Array.from(getPitchValues(pitch));
 
 			// Compute spectral measures (CoG, Spectral Tilt, A1-P0)
 			analysisProgress.set(85);
 			const spectralMeasures = computeSpectralMeasures(buffer, sr, times, pitchValues, wasm);
+
+			// Get spectrogram info
+			const spectrogramInfo = getSpectrogramInfo(spectrogram);
 
 			analysisProgress.set(95);
 			const results: AnalysisResults = {
 				times,
 				pitch: pitchValues.map((v: number) => (isNaN(v) || v === 0 ? null : v)),
 				intensity: times.map((t: number) => {
-					const v = intensity.get_value_at_time(t, 'cubic');
+					const v = getIntensityAtTime(intensity, t);
 					return isNaN(v) ? null : v;
 				}),
 				formants: {
-					f1: times.map(t => nullIfNaN(formant.get_value_at_time(1, t, 'hertz', 'linear'))),
-					f2: times.map(t => nullIfNaN(formant.get_value_at_time(2, t, 'hertz', 'linear'))),
-					f3: times.map(t => nullIfNaN(formant.get_value_at_time(3, t, 'hertz', 'linear'))),
-					f4: times.map(t => nullIfNaN(formant.get_value_at_time(4, t, 'hertz', 'linear'))),
-					b1: times.map(t => nullIfNaN(formant.get_bandwidth_at_time(1, t, 'hertz', 'linear'))),
-					b2: times.map(t => nullIfNaN(formant.get_bandwidth_at_time(2, t, 'hertz', 'linear'))),
-					b3: times.map(t => nullIfNaN(formant.get_bandwidth_at_time(3, t, 'hertz', 'linear'))),
-					b4: times.map(t => nullIfNaN(formant.get_bandwidth_at_time(4, t, 'hertz', 'linear')))
+					f1: times.map(t => nullIfNaN(getFormantAtTime(formant, 1, t))),
+					f2: times.map(t => nullIfNaN(getFormantAtTime(formant, 2, t))),
+					f3: times.map(t => nullIfNaN(getFormantAtTime(formant, 3, t))),
+					f4: times.map(t => nullIfNaN(getFormantAtTime(formant, 4, t))),
+					b1: times.map(t => nullIfNaN(getBandwidthAtTime(formant, 1, t))),
+					b2: times.map(t => nullIfNaN(getBandwidthAtTime(formant, 2, t))),
+					b3: times.map(t => nullIfNaN(getBandwidthAtTime(formant, 3, t))),
+					b4: times.map(t => nullIfNaN(getBandwidthAtTime(formant, 4, t)))
 				},
-				harmonicity: times.map(t => nullIfNaN(harmonicity.get_value_at_time(t, 'linear'))),
+				harmonicity: times.map(t => nullIfNaN(getHarmonicityAtTime(harmonicity, t))),
 				cog: spectralMeasures.cog,
 				spectralTilt: spectralMeasures.spectralTilt,
 				a1p0: spectralMeasures.a1p0,
-				spectrogram: {
-					values: spectrogram.values(),
-					freqMin: spectrogram.freq_min,
-					freqMax: spectrogram.freq_max,
-					timeMin: spectrogram.start_time,
-					timeMax: spectrogram.start_time + (spectrogram.num_frames - 1) * spectrogram.time_step,
-					nFreqs: spectrogram.num_freq_bins,
-					nTimes: spectrogram.num_frames
-				}
+				spectrogram: spectrogramInfo
 			};
 
 			// Free WASM objects
@@ -207,7 +224,7 @@ function computeSpectralMeasures(
 			const segmentSound = new wasm.Sound(segment, sr);
 
 			// Get spectrum (fast=true for power-of-2 FFT)
-			const spectrum = segmentSound.to_spectrum(true);
+			const spectrum = computeSpectrum(segmentSound, true);
 
 			// Compute Center of Gravity (power = 2 for standard CoG)
 			const cogValue = spectrum.get_center_of_gravity(2.0);

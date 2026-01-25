@@ -2,7 +2,7 @@
 	import { onMount, onDestroy, tick } from 'svelte';
 	import { audioBuffer, sampleRate } from '$lib/stores/audio';
 	import { timeRange, cursorPosition, selection, hoverPosition } from '$lib/stores/view';
-	import { createSound, getWasm, wasmReady } from '$lib/wasm/acoustic';
+	import { createSound, getWasm, wasmReady, computeSpectrogram as computeSpec, getSpectrogramInfo } from '$lib/wasm/acoustic';
 	import { analysisResults } from '$lib/stores/analysis';
 	import { config } from '$lib/stores/config';
 	import { playRange, isPlaying, stop } from '$lib/audio/player';
@@ -223,16 +223,18 @@
 		const sound = new wasm.Sound($audioBuffer, $sampleRate);
 
 		try {
-			const spec = sound.to_spectrogram(0.005, maxFreq, 0.002, 20.0, 'gaussian');
+			// Use abstraction layer for backend compatibility
+			const spec = computeSpec(sound, 0.005, maxFreq, 0.002, 20.0);
+			const info = getSpectrogramInfo(spec);
 
 			spectrogramData = {
-				values: spec.values(),
-				freqMin: spec.freq_min,
-				freqMax: spec.freq_max,
-				timeMin: spec.start_time,
-				timeMax: spec.start_time + (spec.num_frames - 1) * spec.time_step,
-				nFreqs: spec.num_freq_bins,
-				nTimes: spec.num_frames
+				values: info.values,
+				freqMin: info.freqMin,
+				freqMax: info.freqMax,
+				timeMin: info.timeMin,
+				timeMax: info.timeMax,
+				nFreqs: info.nFreqs,
+				nTimes: info.nTimes
 			};
 
 			// Track the maxFreq used for this spectrogram
