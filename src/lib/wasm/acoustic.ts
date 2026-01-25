@@ -1,5 +1,4 @@
-import { writable, get } from 'svelte/store';
-import { base } from '$app/paths';
+import { writable } from 'svelte/store';
 
 /**
  * Whether the WASM module has been initialized.
@@ -10,19 +9,21 @@ export const wasmReady = writable<boolean>(false);
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 let wasmModule: any = null;
 
+// WASM module URL - loaded from praatfan-core-rs GitHub Pages
+const WASM_CDN_URL = 'https://ucpresearch.github.io/praatfan-core-rs/pkg/praatfan_core_wasm.js';
+
 /**
  * Initialize the WASM module. Call once at app startup.
+ * Loads from GitHub Pages CDN (praatfan-core-rs).
  */
 export async function initWasm(): Promise<void> {
 	try {
-		// Fetch and initialize WASM module (web build)
-		// Use base path for portable deployment to subdirectories
-		const wasmUrl = `${base}/pkg/praat_core_wasm.js`;
-		const wasm = await import(/* @vite-ignore */ wasmUrl);
+		// Load WASM module from GitHub Pages CDN
+		const wasm = await import(/* @vite-ignore */ WASM_CDN_URL);
 		await wasm.default();
 		wasmModule = wasm;
 		wasmReady.set(true);
-		console.log('WASM acoustic analysis module initialized');
+		console.log('WASM acoustic analysis module initialized from CDN');
 	} catch (e) {
 		console.error('Failed to initialize WASM module:', e);
 		throw e;
