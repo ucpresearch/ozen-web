@@ -97,8 +97,6 @@ export interface OzenConfig {
 export interface FormantPreset {
 	maxFormant: number;
 	numFormants: number;
-	pitchFloor: number;
-	pitchCeiling: number;
 }
 
 /**
@@ -145,21 +143,15 @@ export const defaultConfig: OzenConfig = {
 	formantPresets: {
 		female: {
 			maxFormant: 5500,
-			numFormants: 5,
-			pitchFloor: 100,
-			pitchCeiling: 500
+			numFormants: 5
 		},
 		male: {
 			maxFormant: 5000,
-			numFormants: 5,
-			pitchFloor: 75,
-			pitchCeiling: 300
+			numFormants: 5
 		},
 		child: {
 			maxFormant: 8000,
-			numFormants: 5,
-			pitchFloor: 150,
-			pitchCeiling: 600
+			numFormants: 5
 		}
 	},
 	spectrogram: {

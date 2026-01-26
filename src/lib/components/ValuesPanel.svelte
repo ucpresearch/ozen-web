@@ -31,6 +31,55 @@
 		return values[lo];
 	}
 
+	// Log-scale interpolation for pitch (pitch perception is logarithmic)
+	function getPitchAtTime(values: (number | null)[], times: number[], t: number): number | null {
+		if (!values || !times || times.length === 0) return null;
+
+		// Binary search to find the frame at or before t
+		let lo = 0;
+		let hi = times.length - 1;
+
+		while (lo < hi) {
+			const mid = Math.floor((lo + hi + 1) / 2);
+			if (times[mid] <= t) {
+				lo = mid;
+			} else {
+				hi = mid - 1;
+			}
+		}
+
+		const i = lo;
+		const t0 = times[i];
+		const v0 = values[i];
+
+		// If at or beyond the last frame, return that value
+		if (i >= times.length - 1) {
+			return v0;
+		}
+
+		const t1 = times[i + 1];
+		const v1 = values[i + 1];
+
+		// Check voicing status
+		const v0Voiced = v0 !== null && v0 > 0;
+		const v1Voiced = v1 !== null && v1 > 0;
+
+		if (v0Voiced && v1Voiced) {
+			// Both voiced: interpolate in log space
+			const frac = (t - t0) / (t1 - t0);
+			return Math.exp(Math.log(v0) + frac * (Math.log(v1) - Math.log(v0)));
+		} else if (v0Voiced) {
+			// Only first voiced: return it
+			return v0;
+		} else if (v1Voiced) {
+			// Only second voiced: return it
+			return v1;
+		} else {
+			// Both unvoiced
+			return null;
+		}
+	}
+
 	// Get interval text at time for all tiers
 	function getIntervalsAtTime(t: number): { tierName: string; text: string }[] {
 		if (!$tiers || $tiers.length === 0) return [];
@@ -60,7 +109,7 @@
 		return `${val.toFixed(1)} dB`;
 	}
 
-	$: pitch = $analysisResults ? getValueAtTime($analysisResults.pitch, $analysisResults.times, time) : null;
+	$: pitch = $analysisResults ? getPitchAtTime($analysisResults.pitch, $analysisResults.times, time) : null;
 	$: intensity = $analysisResults ? getValueAtTime($analysisResults.intensity, $analysisResults.times, time) : null;
 	$: f1 = $analysisResults ? getValueAtTime($analysisResults.formants.f1, $analysisResults.times, time) : null;
 	$: f2 = $analysisResults ? getValueAtTime($analysisResults.formants.f2, $analysisResults.times, time) : null;

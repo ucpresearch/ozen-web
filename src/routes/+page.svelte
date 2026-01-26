@@ -66,6 +66,16 @@
 		}
 	}
 
+	// Re-run analysis when formant preset changes (affects maxFormant for formant analysis)
+	let previousPreset = $selectedPreset;
+	$: if ($selectedPreset !== previousPreset) {
+		previousPreset = $selectedPreset;
+		if ($audioBuffer && $wasmReady) {
+			clearAnalysis();
+			runAnalysis().catch(e => console.error('Analysis failed:', e));
+		}
+	}
+
 	function toggleTheme() {
 		isDarkTheme = !isDarkTheme;
 		if (isDarkTheme) {
