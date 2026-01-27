@@ -18,7 +18,7 @@ let wasmModule: any = null;
 
 // WASM module URLs for each backend (remote backends)
 const REMOTE_BACKEND_URLS: Record<string, string> = {
-	'praatfan-core': 'https://ucpresearch.github.io/praatfan-core-rs/pkg/praatfan_core_wasm.js',
+	'praatfan-core': 'https://ucpresearch.github.io/praatfan-core-rs/pkg/praatfan_gpl.js',
 	'praatfan': 'https://ucpresearch.github.io/praatfan-core-clean/pkg/praatfan.js'
 };
 
