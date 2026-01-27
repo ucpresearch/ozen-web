@@ -8,8 +8,11 @@ A web-based acoustic analysis and annotation tool for speech research. This is t
 - **Visualizations**: Synchronized waveform and spectrogram displays
 - **Acoustic Overlays**: Pitch (F0), Formants (F1-F4), Intensity, HNR, Center of Gravity, Spectral Tilt, A1-P0
 - **Annotations**: Multi-tier annotation editor with TextGrid import/export
+- **Data Points**: Collect acoustic measurements at specific time/frequency locations
 - **Mobile Viewer**: Touch-optimized view at `/viewer` with pinch-to-zoom and swipe gestures
-- **Offline**: Runs entirely in the browser - no server required after loading
+- **Long Audio Support**: Files >60s defer analysis until zoomed in, preventing UI hangs
+- **Multiple Backends**: Choose between local WASM or remote CDN-hosted analysis engines
+- **Offline/PWA Ready**: Runs entirely in the browser with app icons for home screen installation
 
 ## Quick Start
 
@@ -77,6 +80,32 @@ See [DEVELOPMENT.md](DEVELOPMENT.md) for detailed setup, deployment, and archite
 ## Configuration
 
 Place a `config.yaml` file in the app directory to customize colors, formant presets, and display settings. See `static/config.yaml` for available options.
+
+## Analysis Backends
+
+The app supports multiple acoustic analysis backends, selectable from the dropdown in the UI:
+
+| Backend | Description | License |
+|---------|-------------|---------|
+| **praatfan-local** (default) | Local WASM bundled with app | MIT/Apache-2.0 |
+| **praatfan** | Remote CDN (praatfan-core-clean) | MIT/Apache-2.0 |
+| **praatfan-gpl** | Remote CDN (full Praat reimplementation) | GPL |
+
+- **praatfan-local**: Uses the WASM files in `static/wasm/praatfan/`. Best for offline use and fastest loading.
+- **praatfan**: Clean-room Rust implementation loaded from GitHub Pages CDN.
+- **praatfan-gpl**: Full Praat algorithm reimplementation, GPL-licensed, loaded from CDN.
+
+All backends provide Praat-compatible acoustic analysis (pitch, formants, intensity, harmonicity, spectrogram).
+
+## Long Audio Handling
+
+For audio files longer than 60 seconds, the app defers full analysis to prevent UI freezing:
+
+1. **On load**: Waveform displays immediately, spectrogram shows "Zoom in for spectrogram"
+2. **When zoomed**: Once the visible window is ≤60s, analysis runs for that region only
+3. **On-demand**: Analysis results update as you pan/zoom through the file
+
+This allows working with arbitrarily long recordings while maintaining responsive UI.
 
 ## Tech Stack
 

@@ -4,14 +4,15 @@
 
 **ozen-web** - A web-based acoustic analysis and annotation tool, the browser version of [Ozen](../ozen).
 
-Built with Svelte/SvelteKit, using [praatfan-core-wasm](../praatfan-core-rs) for Praat-accurate acoustic analysis.
+Built with Svelte/SvelteKit, supporting multiple WASM backends for Praat-accurate acoustic analysis.
 
 ## Goals
 
 - Feature parity with desktop Ozen
 - Runs entirely in browser (no server required)
-- Uses praatfan-core-wasm for all acoustic analysis
+- Multiple analysis backends (local WASM or remote CDN)
 - Works offline after initial load
+- Handles long audio files (>60s) without UI freezing
 
 ## Tech Stack
 
@@ -27,8 +28,9 @@ Built with Svelte/SvelteKit, using [praatfan-core-wasm](../praatfan-core-rs) for
 # Install dependencies
 npm install
 
-# Copy WASM package from praatfan-core-rs
-cp -r ../praatfan-core-rs/wasm/pkg static/pkg
+# Copy local WASM package from praatfan-core-clean
+mkdir -p static/wasm/praatfan
+cp -r ../praatfan-core-clean/rust/pkg/* static/wasm/praatfan/
 
 # Start dev server
 npm run dev
@@ -98,7 +100,13 @@ ozen-web/
 │   │       └── +layout.ts    # Prerender config
 │   └── app.html
 ├── static/
-│   ├── pkg/                  # praatfan-core-wasm (copy from build)
+│   ├── wasm/
+│   │   └── praatfan/         # Local WASM package (MIT/Apache-2.0)
+│   ├── favicon.png           # App icon source (1024x1024)
+│   ├── favicon-32.png        # Browser tab icon
+│   ├── icon-192.png          # PWA icon
+│   ├── icon-512.png          # PWA splash icon
+│   ├── apple-touch-icon.png  # iOS home screen icon
 │   └── config.yaml           # Optional configuration
 ├── package.json
 ├── svelte.config.js
@@ -191,6 +199,28 @@ Each point automatically captures:
 - Pitch, Intensity, F1-F4, B1-B4, HNR, CoG, Spectral Tilt, A1-P0
 - Text from all annotation tiers at that time
 
+### Analysis Backends
+
+The app supports multiple WASM backends (`src/lib/wasm/acoustic.ts`):
+
+| Backend | Source | License |
+|---------|--------|---------|
+| `praatfan-local` | `static/wasm/praatfan/` | MIT/Apache-2.0 (default) |
+| `praatfan` | GitHub Pages CDN | MIT/Apache-2.0 |
+| `praatfan-gpl` | GitHub Pages CDN | GPL |
+
+The abstraction layer in `acoustic.ts` handles API differences between backends. Always use wrapper functions (`computePitch()`, `getSpectrogramInfo()`, etc.) instead of direct WASM calls.
+
+### Long Audio Handling
+
+For files >60 seconds (`MAX_ANALYSIS_DURATION` in `analysis.ts`):
+
+1. **On load**: Waveform displays, spectrogram shows "Zoom in for spectrogram"
+2. **When zoomed** to ≤60s visible window: `runAnalysisForRange()` computes analysis for that region
+3. **Debounced**: 300ms delay prevents excessive recomputation during zoom/pan
+
+This allows working with arbitrarily long recordings without UI freezing.
+
 ## Implemented Features
 
 ### Core Viewing
@@ -237,6 +267,9 @@ Each point automatically captures:
 - [x] Values panel showing measurements at cursor
 - [x] Interval duration display
 - [x] Max frequency selector (5/7.5/10 kHz)
+- [x] Backend selector (praatfan-local, praatfan, praatfan-gpl)
+- [x] Long audio support (>60s files: on-demand analysis when zoomed)
+- [x] PWA icons for home screen installation
 
 ### Mobile Viewer (`/viewer` route)
 - [x] Touch-optimized view-only mode
@@ -276,32 +309,40 @@ Each point automatically captures:
 
 ## WASM Integration
 
-The praatfan-core-wasm package provides:
+Use the abstraction layer in `src/lib/wasm/acoustic.ts` for cross-backend compatibility:
 
 ```typescript
-import init, { Sound, Pitch, Formant, Intensity, Harmonicity, Spectrum, Spectrogram } from './pkg/praatfan_core_wasm.js';
+import {
+  initWasm, wasmReady, getWasm,
+  computePitch, computeFormant, computeIntensity, computeSpectrogram,
+  getPitchTimes, getPitchValues, getSpectrogramInfo
+} from '$lib/wasm/acoustic';
 
-// Initialize WASM (once at startup)
-await init();
+// Initialize WASM with selected backend (default: 'praatfan-local')
+await initWasm('praatfan-local');
 
 // Create Sound from samples
-const sound = new Sound(samples, sampleRate);
+const wasm = getWasm();
+const sound = new wasm.Sound(samples, sampleRate);
 
-// Compute analyses
-const pitch = sound.to_pitch(0.01, 75, 600);
-const formant = sound.to_formant_burg(0.01, 5, 5500, 0.025, 50);
-const intensity = sound.to_intensity(75, 0.01);
-const spectrogram = sound.to_spectrogram(0.005, 5000, 0.005, 20, 'gaussian');
+// Compute analyses using abstraction layer
+const pitch = computePitch(sound, 0.01, 75, 600);
+const formant = computeFormant(sound, 0.01, 5, 5500, 0.025, 50);
+const intensity = computeIntensity(sound, 75, 0.01);
+const spectrogram = computeSpectrogram(sound, 0.005, 5000, 0.002, 20);
 
-// Get values
-const f0Values = pitch.values();       // Float64Array
-const times = pitch.times();           // Float64Array
-const f1 = formant.get_value_at_time(1, time, 'hertz', 'linear');
+// Get values using abstraction layer
+const times = getPitchTimes(pitch);    // Float64Array
+const values = getPitchValues(pitch);  // Float64Array
+const info = getSpectrogramInfo(spectrogram);  // { nTimes, nFreqs, values, ... }
 
 // IMPORTANT: Free WASM objects when done
 sound.free();
 pitch.free();
+spectrogram.free();
 ```
+
+**Important:** Always use the abstraction functions (`computePitch`, `getSpectrogramInfo`, etc.) instead of calling WASM methods directly. This ensures compatibility across all backends.
 
 ## Related Projects
 

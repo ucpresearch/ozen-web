@@ -23,7 +23,13 @@ ozen-web/
 │       ├── +page.svelte    # Main desktop application
 │       └── viewer/         # Mobile viewer route (/viewer)
 ├── static/
-│   ├── pkg/                # WASM package (not in git, copy manually)
+│   ├── wasm/
+│   │   └── praatfan/       # Local WASM package (copy from praatfan-core-clean)
+│   ├── favicon.png         # App icon (1024x1024 source)
+│   ├── favicon-32.png      # Browser tab icon
+│   ├── icon-192.png        # PWA icon
+│   ├── icon-512.png        # PWA splash icon
+│   ├── apple-touch-icon.png # iOS home screen icon
 │   └── config.yaml         # Optional configuration
 ├── package.json
 ├── svelte.config.js
@@ -46,34 +52,29 @@ cd ozen-web
 npm install
 ```
 
-### 3. Download WASM package
+### 3. Set up WASM package
 
-The WASM package provides the acoustic analysis engine. Download it from the praatfan-core-rs releases:
+The local WASM package provides the acoustic analysis engine. Copy from a praatfan build:
 
-**Option A: Download from GitHub releases (recommended)**
-
-1. Go to [praatfan-core-rs releases](https://github.com/your-repo/praatfan-core-rs/releases)
-2. Download `praatfan-core-wasm.zip` from the latest release
-3. Extract to `static/`:
+**Option A: Copy from praatfan-core-clean (recommended)**
 
 ```bash
-unzip praatfan-core-wasm.zip -d static/
+mkdir -p static/wasm/praatfan
+cp -r ../praatfan-core-clean/rust/pkg/* static/wasm/praatfan/
 ```
 
-This creates `static/pkg/` with the WASM files.
+**Option B: Download from GitHub releases**
 
-**Option B: Build from source**
+1. Go to [praatfan-core-clean releases](https://github.com/UCPresearch/praatfan-core-clean/releases)
+2. Download the WASM package
+3. Extract to `static/wasm/praatfan/`
 
-If you have praatfan-core-rs cloned locally:
+The `static/wasm/praatfan/` directory should contain:
+- `praatfan.js` - JavaScript bindings
+- `praatfan_bg.wasm` - WebAssembly binary
+- `praatfan.d.ts` - TypeScript definitions
 
-```bash
-cp -r ../praatfan-core-rs/wasm/pkg static/pkg
-```
-
-The `static/pkg/` directory should contain:
-- `praat_core_wasm.js` - JavaScript bindings
-- `praat_core_wasm_bg.wasm` - WebAssembly binary
-- `praat_core_wasm.d.ts` - TypeScript definitions
+**Note**: The app can also load WASM from remote CDN (praatfan or praatfan-gpl backends), so local WASM is optional if you have internet connectivity.
 
 ### 4. Start development server
 
@@ -227,6 +228,50 @@ The praatfan-core-wasm library provides Praat-accurate acoustic analysis:
 - Spectral measures (CoG, spectral tilt)
 
 WASM objects must be manually freed after use to prevent memory leaks.
+
+### Analysis Backends
+
+The app supports multiple analysis backends (`src/lib/wasm/acoustic.ts`):
+
+| Backend | Source | License | Notes |
+|---------|--------|---------|-------|
+| `praatfan-local` | `static/wasm/praatfan/` | MIT/Apache-2.0 | Default, bundled with app |
+| `praatfan` | GitHub Pages CDN | MIT/Apache-2.0 | Clean-room Rust implementation |
+| `praatfan-gpl` | GitHub Pages CDN | GPL | Full Praat algorithm reimplementation |
+
+**Backend abstraction layer** (`src/lib/wasm/acoustic.ts`):
+
+The abstraction layer handles API differences between backends:
+- `computePitch()`, `computeFormant()`, `computeIntensity()`, etc.
+- `getSpectrogramInfo()` - extracts spectrogram metadata uniformly
+- `getPitchTimes()`, `getPitchValues()` - handles different return types
+
+Always use these wrapper functions instead of calling WASM methods directly to ensure cross-backend compatibility.
+
+**Adding a new backend:**
+1. Add URL to `REMOTE_BACKEND_URLS` or path to `LOCAL_BACKEND_PATHS`
+2. Update `AcousticBackend` type in `src/lib/stores/config.ts`
+3. Add any API differences to the abstraction layer functions
+
+### Long Audio Optimization
+
+For audio files >60 seconds (`MAX_ANALYSIS_DURATION` in `analysis.ts`), the app defers analysis:
+
+**On file load:**
+1. Audio buffer loads normally
+2. `runAnalysis()` checks duration and returns early if >60s
+3. Spectrogram displays "Zoom in for spectrogram" message
+
+**When user zooms in:**
+1. Spectrogram component detects visible window ≤60s
+2. Calls `runAnalysisForRange(start, end)` with debounce (300ms)
+3. Extracts audio slice, runs full analysis on that region
+4. Updates `analysisResults` store with range-specific data
+
+This approach:
+- Prevents UI freezing on large files
+- Allows working with arbitrarily long recordings
+- Computes high-resolution spectrograms for zoomed regions
 
 ### Canvas Rendering
 
