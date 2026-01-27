@@ -26,10 +26,9 @@ A web-based acoustic analysis and annotation tool for speech research. This is t
 # Install dependencies
 npm install
 
-# Download and extract WASM package
-# Get praatfan-core-wasm.zip from:
-# https://github.com/your-repo/praatfan-core-rs/releases
-unzip praatfan-core-wasm.zip -d static/
+# Copy WASM package from praatfan-core-clean
+mkdir -p static/wasm/praatfan
+cp -r ../praatfan-core-clean/rust/pkg/* static/wasm/praatfan/
 
 # Start development server
 npm run dev
@@ -110,14 +109,14 @@ This allows working with arbitrarily long recordings while maintaining responsiv
 ## Tech Stack
 
 - [SvelteKit](https://kit.svelte.dev/) - Web framework
-- [praatfan-core-wasm](https://github.com/your-repo/praatfan-core-rs) - Acoustic analysis (Praat-compatible)
+- [praatfan](https://github.com/UCPresearch/praatfan-core-clean) - Acoustic analysis (Praat-compatible)
 - Web Audio API - Audio playback
 - Canvas API - Visualization rendering
 
 ## Related Projects
 
 - [Ozen](https://github.com/your-repo/ozen) - Desktop version (Python/PyQt6)
-- [praatfan-core-rs](https://github.com/your-repo/praatfan-core-rs) - Rust acoustic analysis library
+- [praatfan-core-rs](https://github.com/UCPresearch/praatfan-core-rs) - Rust acoustic analysis library (GPL)
 - [Praat](https://www.praat.org/) - The original speech analysis software
 
 ## License

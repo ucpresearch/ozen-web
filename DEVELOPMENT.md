@@ -219,7 +219,7 @@ Acoustic values collected at each point:
 
 ### WASM Integration
 
-The praatfan-core-wasm library provides Praat-accurate acoustic analysis:
+The praatfan library provides Praat-accurate acoustic analysis:
 - Pitch extraction (autocorrelation method)
 - Formant tracking (Burg's method)
 - Intensity calculation

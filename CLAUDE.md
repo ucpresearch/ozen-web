@@ -18,7 +18,7 @@ Built with Svelte/SvelteKit, supporting multiple WASM backends for Praat-accurat
 
 - **SvelteKit** - Framework (prerendered static build)
 - **TypeScript** - Type safety
-- **praatfan-core-wasm** - Acoustic analysis (Pitch, Formants, Intensity, HNR, Spectrogram, etc.)
+- **praatfan** - Acoustic analysis (Pitch, Formants, Intensity, HNR, Spectrogram, etc.)
 - **Web Audio API** - Audio playback
 - **Canvas API** - Visualization rendering
 
@@ -73,7 +73,7 @@ ozen-web/
 │   │   │   ├── dataPoints.ts # Data collection points
 │   │   │   ├── undoManager.ts # Unified undo/redo system
 │   │   │   └── config.ts     # Application configuration
-│   │   ├── wasm/             # praatfan-core-wasm integration
+│   │   ├── wasm/             # praatfan WASM integration
 │   │   │   └── acoustic.ts   # Wrapper functions for WASM calls
 │   │   ├── audio/            # Web Audio playback
 │   │   │   └── player.ts     # Play, pause, seek, selection playback
@@ -284,7 +284,7 @@ This allows working with arbitrarily long recordings without UI freezing.
 
 | Aspect | Desktop (PyQt6) | Web (Svelte) |
 |--------|-----------------|--------------|
-| Acoustic analysis | parselmouth | praatfan-core-wasm |
+| Acoustic analysis | parselmouth | praatfan |
 | Audio playback | sounddevice | Web Audio API |
 | Rendering | pyqtgraph | Canvas API |
 | File access | Direct filesystem | File API (user selects) |
