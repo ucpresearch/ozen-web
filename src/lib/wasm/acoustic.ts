@@ -44,7 +44,7 @@ const BACKEND_TYPE: Record<AcousticBackend, 'praatfan-gpl' | 'praatfan'> = {
  * Initialize the WASM module for a specific backend.
  * If already initialized with a different backend, will reload.
  */
-export async function initWasm(backend: AcousticBackend = 'praatfan-gpl'): Promise<void> {
+export async function initWasm(backend: AcousticBackend = 'praatfan-local'): Promise<void> {
 	const current = get(currentBackend);
 
 	// If same backend is already loaded, do nothing
