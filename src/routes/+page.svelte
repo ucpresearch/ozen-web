@@ -24,7 +24,7 @@
 	onMount(() => {
 		// Load saved backend preference
 		const savedBackend = localStorage.getItem('ozen-backend') as AcousticBackend | null;
-		if (savedBackend === 'praatfan-core' || savedBackend === 'praatfan' || savedBackend === 'praatfan-local') {
+		if (savedBackend === 'praatfan-gpl' || savedBackend === 'praatfan' || savedBackend === 'praatfan-local') {
 			selectedBackend.set(savedBackend);
 		}
 
@@ -463,7 +463,7 @@
 					<select value={$selectedBackend} on:change={handleBackendChange}>
 						<option value="praatfan-local">praatfan (local)</option>
 						<option value="praatfan">praatfan (remote)</option>
-						<option value="praatfan-core">praatfan-gpl (remote)</option>
+						<option value="praatfan-gpl">praatfan-gpl (remote)</option>
 					</select>
 				</label>
 			</div>

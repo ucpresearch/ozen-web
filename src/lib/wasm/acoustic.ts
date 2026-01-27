@@ -18,7 +18,7 @@ let wasmModule: any = null;
 
 // WASM module URLs for each backend (remote backends)
 const REMOTE_BACKEND_URLS: Record<string, string> = {
-	'praatfan-core': 'https://ucpresearch.github.io/praatfan-core-rs/pkg/praatfan_gpl.js',
+	'praatfan-gpl': 'https://ucpresearch.github.io/praatfan-core-rs/pkg/praatfan_gpl.js',
 	'praatfan': 'https://ucpresearch.github.io/praatfan-core-clean/pkg/praatfan.js'
 };
 
@@ -34,8 +34,8 @@ function getBackendUrl(backend: AcousticBackend): string {
 }
 
 // Map backend to its "type" for API compatibility
-const BACKEND_TYPE: Record<AcousticBackend, 'praatfan-core' | 'praatfan'> = {
-	'praatfan-core': 'praatfan-core',
+const BACKEND_TYPE: Record<AcousticBackend, 'praatfan-gpl' | 'praatfan'> = {
+	'praatfan-gpl': 'praatfan-gpl',
 	'praatfan': 'praatfan',
 	'praatfan-local': 'praatfan'  // local uses same API as praatfan
 };
@@ -44,7 +44,7 @@ const BACKEND_TYPE: Record<AcousticBackend, 'praatfan-core' | 'praatfan'> = {
  * Initialize the WASM module for a specific backend.
  * If already initialized with a different backend, will reload.
  */
-export async function initWasm(backend: AcousticBackend = 'praatfan-core'): Promise<void> {
+export async function initWasm(backend: AcousticBackend = 'praatfan-gpl'): Promise<void> {
 	const current = get(currentBackend);
 
 	// If same backend is already loaded, do nothing
@@ -104,7 +104,7 @@ export function getBackend(): AcousticBackend {
  * Get the backend type for API compatibility.
  * praatfan-local uses the same API as praatfan.
  */
-export function getBackendType(): 'praatfan-core' | 'praatfan' {
+export function getBackendType(): 'praatfan-gpl' | 'praatfan' {
 	const backend = getBackend();
 	return BACKEND_TYPE[backend];
 }
@@ -129,8 +129,8 @@ export function createSound(samples: Float64Array, sampleRate: number) {
 export function computePitch(sound: any, timeStep: number, pitchFloor: number, pitchCeiling: number) {
 	const backend = getBackendType();
 
-	if (backend === 'praatfan-core') {
-		// praatfan-core uses to_pitch()
+	if (backend === 'praatfan-gpl') {
+		// praatfan-gpl uses to_pitch()
 		return sound.to_pitch(timeStep, pitchFloor, pitchCeiling);
 	} else {
 		// praatfan uses to_pitch_ac()
@@ -173,8 +173,8 @@ export function computeHarmonicity(sound: any, timeStep: number, minPitch: numbe
 export function computeSpectrogram(sound: any, windowLength: number, maxFrequency: number, timeStep: number, freqStep: number) {
 	const backend = getBackendType();
 
-	if (backend === 'praatfan-core') {
-		// praatfan-core has window shape parameter
+	if (backend === 'praatfan-gpl') {
+		// praatfan-gpl has window shape parameter
 		return sound.to_spectrogram(windowLength, maxFrequency, timeStep, freqStep, 'gaussian');
 	} else {
 		// praatfan doesn't have window shape parameter
@@ -214,8 +214,8 @@ export function getPitchValues(pitch: any): Float64Array {
 export function getIntensityAtTime(intensity: any, time: number): number {
 	const backend = getBackendType();
 
-	if (backend === 'praatfan-core') {
-		// praatfan-core has get_value_at_time with interpolation
+	if (backend === 'praatfan-gpl') {
+		// praatfan-gpl has get_value_at_time with interpolation
 		return intensity.get_value_at_time(time, 'cubic');
 	} else {
 		// praatfan uses frame-based access, find nearest frame
@@ -248,8 +248,8 @@ export function getIntensityTimes(intensity: any): Float64Array {
 export function getFormantAtTime(formant: any, formantNum: number, time: number): number {
 	const backend = getBackendType();
 
-	if (backend === 'praatfan-core') {
-		// praatfan-core has get_value_at_time
+	if (backend === 'praatfan-gpl') {
+		// praatfan-gpl has get_value_at_time
 		return formant.get_value_at_time(formantNum, time, 'hertz', 'linear');
 	} else {
 		// praatfan uses formant_values() arrays
@@ -266,8 +266,8 @@ export function getFormantAtTime(formant: any, formantNum: number, time: number)
 export function getBandwidthAtTime(formant: any, formantNum: number, time: number): number {
 	const backend = getBackendType();
 
-	if (backend === 'praatfan-core') {
-		// praatfan-core has get_bandwidth_at_time
+	if (backend === 'praatfan-gpl') {
+		// praatfan-gpl has get_bandwidth_at_time
 		return formant.get_bandwidth_at_time(formantNum, time, 'hertz', 'linear');
 	} else {
 		// praatfan uses bandwidth_values() arrays
@@ -284,8 +284,8 @@ export function getBandwidthAtTime(formant: any, formantNum: number, time: numbe
 export function getHarmonicityAtTime(harmonicity: any, time: number): number {
 	const backend = getBackendType();
 
-	if (backend === 'praatfan-core') {
-		// praatfan-core has get_value_at_time
+	if (backend === 'praatfan-gpl') {
+		// praatfan-gpl has get_value_at_time
 		return harmonicity.get_value_at_time(time, 'linear');
 	} else {
 		// praatfan uses values() array
@@ -310,8 +310,8 @@ export function getSpectrogramInfo(spectrogram: any): {
 } {
 	const backend = getBackendType();
 
-	if (backend === 'praatfan-core') {
-		// praatfan-core has properties
+	if (backend === 'praatfan-gpl') {
+		// praatfan-gpl has properties
 		return {
 			values: spectrogram.values(),
 			freqMin: spectrogram.freq_min,

@@ -27,11 +27,11 @@ import yaml from 'js-yaml';
  */
 /**
  * Backend options for acoustic analysis.
- * - 'praatfan-core': praatfan-gpl - Full Praat reimplementation (GPL, from praatfan-core-rs CDN)
+ * - 'praatfan-gpl': Full Praat reimplementation (GPL, from praatfan-core-rs CDN)
  * - 'praatfan': Clean-room implementation (MIT/Apache, from praatfan-core-clean CDN)
  * - 'praatfan-local': Clean-room implementation bundled locally (no network required)
  */
-export type AcousticBackend = 'praatfan-core' | 'praatfan' | 'praatfan-local';
+export type AcousticBackend = 'praatfan-gpl' | 'praatfan' | 'praatfan-local';
 
 export interface OzenConfig {
 	/**
