@@ -22,7 +22,7 @@
  */
 
 import { writable, derived, get } from 'svelte/store';
-import { audioBuffer, sampleRate } from './audio';
+import { audioBuffer, sampleRate, duration } from './audio';
 import {
 	createSound,
 	getWasm,
@@ -116,21 +116,33 @@ export async function runAnalysis(): Promise<void> {
 			analysisProgress.set(55);
 			const harmonicity = computeHarmonicity(sound, params.timeStep, params.pitchFloor, 0.1, 4.5);
 
-			// Spectrogram
-			analysisProgress.set(70);
-			const spectrogram = computeSpectrogram(sound, 0.005, 5000, 0.002, 20.0);
-
 			// Extract values using abstraction layer
-			analysisProgress.set(80);
+			analysisProgress.set(70);
 			const times: number[] = Array.from(getPitchTimes(pitch));
 			const pitchValues: number[] = Array.from(getPitchValues(pitch));
 
-			// Compute spectral measures (CoG, Spectral Tilt, A1-P0)
-			analysisProgress.set(85);
-			const spectralMeasures = computeSpectralMeasures(buffer, sr, times, pitchValues, wasm);
+			// Skip spectrogram and spectral measures for long audio (>60s)
+			const audioDuration = get(duration);
+			const isLongAudio = audioDuration > 60;
 
-			// Get spectrogram info
-			const spectrogramInfo = getSpectrogramInfo(spectrogram);
+			let spectrogram = null;
+			let spectrogramInfo = null;
+			let spectralMeasures = { cog: null, spectralTilt: null, a1p0: null };
+
+			if (!isLongAudio) {
+				// Spectrogram
+				analysisProgress.set(75);
+				spectrogram = computeSpectrogram(sound, 0.005, 5000, 0.002, 20.0);
+
+				// Compute spectral measures (CoG, Spectral Tilt, A1-P0)
+				analysisProgress.set(85);
+				spectralMeasures = computeSpectralMeasures(buffer, sr, times, pitchValues, wasm);
+
+				// Get spectrogram info
+				spectrogramInfo = getSpectrogramInfo(spectrogram);
+			} else {
+				analysisProgress.set(85);
+			}
 
 			analysisProgress.set(95);
 			const results: AnalysisResults = {
@@ -162,7 +174,9 @@ export async function runAnalysis(): Promise<void> {
 			intensity.free();
 			formant.free();
 			harmonicity.free();
-			spectrogram.free();
+			if (spectrogram) {
+				spectrogram.free();
+			}
 
 			analysisProgress.set(100);
 			analysisResults.set(results);

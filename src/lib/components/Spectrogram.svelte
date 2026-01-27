@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { onMount, onDestroy, tick } from 'svelte';
-	import { audioBuffer, sampleRate } from '$lib/stores/audio';
+	import { audioBuffer, sampleRate, duration } from '$lib/stores/audio';
 	import { timeRange, cursorPosition, selection, hoverPosition } from '$lib/stores/view';
 	import { createSound, getWasm, wasmReady, computeSpectrogram as computeSpec, getSpectrogramInfo } from '$lib/wasm/acoustic';
 	import { analysisResults } from '$lib/stores/analysis';
@@ -69,7 +69,15 @@
 	// Track the maxFreq used for the current spectrogram
 	let spectrogramMaxFreq: number | null = null;
 
-	$: if ($audioBuffer && $wasmReady && (!spectrogramData || maxFreq !== spectrogramMaxFreq)) {
+	// Maximum duration for spectrogram computation (seconds)
+	const MAX_SPECTROGRAM_DURATION = 60;
+
+	// Check if current view is too long for spectrogram
+	$: visibleDuration = $timeRange.end - $timeRange.start;
+	$: isLongAudio = $duration > MAX_SPECTROGRAM_DURATION;
+	$: showZoomMessage = isLongAudio && visibleDuration > MAX_SPECTROGRAM_DURATION;
+
+	$: if ($audioBuffer && $wasmReady && !isLongAudio && (!spectrogramData || maxFreq !== spectrogramMaxFreq)) {
 		computeSpectrogram();
 	}
 
@@ -96,16 +104,18 @@
 		showCoG,
 		showSpectralTilt,
 		showA1P0,
-		showDataPoints
+		showDataPoints,
+		showZoomMessage
 	];
 
-	$: if (drawDeps && ctx && spectrogramCanvas && width > 0) {
+	$: if (drawDeps && ctx && width > 0 && (spectrogramCanvas || showZoomMessage || zoomedSpectrogramCanvas)) {
 		draw();
 	}
 
 	// Debounced zoom spectrogram regeneration
 	// When zoomed in significantly, regenerate at higher resolution after user stops zooming
-	$: if ($timeRange && spectrogramData && $audioBuffer && $wasmReady && plotWidth > 0) {
+	// Also triggers for long audio when zoomed in to <60s visible range
+	$: if ($timeRange && $audioBuffer && $wasmReady && plotWidth > 0 && (spectrogramData || isLongAudio)) {
 		scheduleZoomedSpectrogram($timeRange.start, $timeRange.end);
 	}
 
@@ -115,10 +125,34 @@
 			clearTimeout(zoomDebounceTimer);
 		}
 
+		const visibleDuration = end - start;
+
+		// For long audio without base spectrogram: compute on-demand when zoomed in enough
+		if (isLongAudio && !spectrogramData) {
+			// Only compute if visible duration is within limit
+			if (visibleDuration > MAX_SPECTROGRAM_DURATION) {
+				zoomedSpectrogramCanvas = null;
+				zoomedTimeRange = null;
+				return;
+			}
+
+			// Check if current zoomed cache is still valid (within 10% of current view)
+			if (zoomedTimeRange) {
+				const overlap = Math.min(end, zoomedTimeRange.end) - Math.max(start, zoomedTimeRange.start);
+				const coverage = overlap / visibleDuration;
+				if (coverage > 0.9) return; // Cache is still good enough
+			}
+
+			// Schedule regeneration after 300ms of no changes
+			zoomDebounceTimer = setTimeout(() => {
+				computeZoomedSpectrogram(start, end);
+			}, 300);
+			return;
+		}
+
 		// Check if we're zoomed in enough to benefit from regeneration
 		if (!spectrogramData) return;
 		const fullDuration = spectrogramData.timeMax - spectrogramData.timeMin;
-		const visibleDuration = end - start;
 		const zoomRatio = fullDuration / visibleDuration;
 
 		// Only regenerate if zoomed in at least 2x and view changed significantly
@@ -142,7 +176,9 @@
 	}
 
 	async function computeZoomedSpectrogram(start: number, end: number) {
-		if (!$audioBuffer || !$wasmReady || !spectrogramData) return;
+		if (!$audioBuffer || !$wasmReady) return;
+		// For normal audio, require spectrogramData; for long audio, allow on-demand computation
+		if (!spectrogramData && !isLongAudio) return;
 
 		const wasm = getWasm();
 
@@ -311,7 +347,7 @@
 	}
 
 	function draw() {
-		if (!ctx || !spectrogramData || !spectrogramCanvas || width === 0) return;
+		if (!ctx || width === 0) return;
 
 		const { start, end } = $timeRange;
 		const cfg = $config.colors;
@@ -331,7 +367,17 @@
 		const useZoomed = zoomedSpectrogramCanvas && zoomedTimeRange &&
 			start >= zoomedTimeRange.start && end <= zoomedTimeRange.end;
 
-		if (useZoomed && zoomedSpectrogramCanvas && zoomedTimeRange) {
+		// Determine if we should show the "zoom in" message
+		const shouldShowZoomMessage = showZoomMessage && !useZoomed;
+
+		if (shouldShowZoomMessage) {
+			// Draw "Zoom in for spectrogram" message
+			ctx.fillStyle = 'rgba(255, 255, 255, 0.6)';
+			ctx.font = '14px sans-serif';
+			ctx.textAlign = 'center';
+			ctx.textBaseline = 'middle';
+			ctx.fillText('Zoom in for spectrogram', leftMargin + plotWidth / 2, height / 2);
+		} else if (useZoomed && zoomedSpectrogramCanvas && zoomedTimeRange) {
 			// Use high-resolution zoomed spectrogram
 			const zCanvas = zoomedSpectrogramCanvas;
 			const zStart = zoomedTimeRange.start;
@@ -348,7 +394,7 @@
 				Math.max(0, srcX), 0, Math.min(srcWidth, zWidth - srcX), zHeight,
 				leftMargin, 0, plotWidth, height
 			);
-		} else {
+		} else if (spectrogramData && spectrogramCanvas) {
 			// Use full spectrogram (may be pixelated when zoomed)
 			const { timeMin, timeMax, nTimes, nFreqs, freqMax: specFreqMax } = spectrogramData;
 			const srcX = Math.floor(((start - timeMin) / (timeMax - timeMin)) * nTimes);
