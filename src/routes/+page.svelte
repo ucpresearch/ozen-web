@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
+	import { onMount, onDestroy } from 'svelte';
 	import FileDropZone from '$lib/components/FileDropZone.svelte';
 	import Waveform from '$lib/components/Waveform.svelte';
 	import Spectrogram from '$lib/components/Spectrogram.svelte';
@@ -20,6 +20,13 @@
 	let isDarkTheme = true;
 	let configInput: HTMLInputElement;
 	let pointsInput: HTMLInputElement;
+
+	// Recording state
+	let isRecording = false;
+	let mediaRecorder: MediaRecorder | null = null;
+	let recordedChunks: Blob[] = [];
+	let recordingTime = 0;
+	let recordingTimer: ReturnType<typeof setInterval> | null = null;
 
 	onMount(() => {
 		// Load saved backend preference
@@ -42,6 +49,16 @@
 		// Global keyboard shortcuts
 		window.addEventListener('keydown', handleKeydown);
 		return () => window.removeEventListener('keydown', handleKeydown);
+	});
+
+	onDestroy(() => {
+		// Clean up recording resources
+		if (recordingTimer) {
+			clearInterval(recordingTimer);
+		}
+		if (mediaRecorder && isRecording) {
+			mediaRecorder.stop();
+		}
 	});
 
 	// Handle backend change
@@ -167,6 +184,187 @@
 
 		// Start analysis in background
 		runAnalysis().catch(e => console.error('Analysis failed:', e));
+	}
+
+	/**
+	 * Process recorded audio blob and load it into the app.
+	 * Converts the WebM blob to an AudioBuffer using Web Audio API,
+	 * then extracts samples as Float64Array for acoustic analysis.
+	 */
+	async function processRecordedAudio(blob: Blob) {
+		// Clear previous analysis
+		clearAnalysis();
+
+		// Decode the WebM audio
+		const arrayBuffer = await blob.arrayBuffer();
+		const audioContext = new AudioContext();
+		const decoded = await audioContext.decodeAudioData(arrayBuffer);
+
+		// Convert to Float64Array (mono, first channel)
+		const samples = new Float64Array(decoded.length);
+		const channelData = decoded.getChannelData(0);
+		for (let i = 0; i < decoded.length; i++) {
+			samples[i] = channelData[i];
+		}
+
+		// Load into app stores
+		audioBuffer.set(samples);
+		sampleRate.set(decoded.sampleRate);
+		fileName.set(`Recording ${new Date().toLocaleTimeString()}`);
+
+		// Set duration and initial time range
+		const audioDuration = decoded.length / decoded.sampleRate;
+		duration.set(audioDuration);
+		timeRange.set({ start: 0, end: Math.min(audioDuration, 10) });
+		cursorPosition.set(0);
+		selection.set(null);
+
+		// Start analysis in background
+		runAnalysis().catch(e => console.error('Analysis failed:', e));
+	}
+
+	/**
+	 * Start recording audio from the device microphone.
+	 */
+	async function startRecording() {
+		try {
+			// Request microphone access with processing disabled for clean capture
+			const stream = await navigator.mediaDevices.getUserMedia({
+				audio: {
+					echoCancellation: false,
+					noiseSuppression: false,
+					autoGainControl: false
+				}
+			});
+
+			// Initialize recording state
+			recordedChunks = [];
+			mediaRecorder = new MediaRecorder(stream, { mimeType: 'audio/webm' });
+
+			// Collect audio data as it becomes available
+			mediaRecorder.ondataavailable = (e) => {
+				if (e.data.size > 0) {
+					recordedChunks.push(e.data);
+				}
+			};
+
+			// Process recording when stopped
+			mediaRecorder.onstop = async () => {
+				// Release microphone
+				stream.getTracks().forEach(track => track.stop());
+
+				// Convert recorded chunks to blob and process
+				const blob = new Blob(recordedChunks, { type: 'audio/webm' });
+				await processRecordedAudio(blob);
+			};
+
+			// Start recording, collecting data every 100ms
+			mediaRecorder.start(100);
+			isRecording = true;
+			recordingTime = 0;
+
+			// Update recording time display
+			recordingTimer = setInterval(() => {
+				recordingTime += 0.1;
+			}, 100);
+
+		} catch (err) {
+			console.error('Failed to start recording:', err);
+			alert('Could not access microphone. Please allow microphone access.');
+		}
+	}
+
+	/**
+	 * Stop the current recording.
+	 */
+	function stopRecording() {
+		if (mediaRecorder && isRecording) {
+			mediaRecorder.stop();
+			isRecording = false;
+
+			if (recordingTimer) {
+				clearInterval(recordingTimer);
+				recordingTimer = null;
+			}
+		}
+	}
+
+	/**
+	 * Save the current audio as a WAV file.
+	 * Converts the Float64Array audio buffer to 16-bit PCM WAV format.
+	 */
+	async function saveAudio() {
+		if (!$audioBuffer || !$sampleRate) return;
+
+		// Convert Float64Array to 16-bit PCM
+		const numSamples = $audioBuffer.length;
+		const buffer = new ArrayBuffer(44 + numSamples * 2);
+		const view = new DataView(buffer);
+
+		// WAV header
+		const writeString = (offset: number, string: string) => {
+			for (let i = 0; i < string.length; i++) {
+				view.setUint8(offset + i, string.charCodeAt(i));
+			}
+		};
+
+		writeString(0, 'RIFF');
+		view.setUint32(4, 36 + numSamples * 2, true);
+		writeString(8, 'WAVE');
+		writeString(12, 'fmt ');
+		view.setUint32(16, 16, true); // Subchunk1Size
+		view.setUint16(20, 1, true); // AudioFormat (PCM)
+		view.setUint16(22, 1, true); // NumChannels (mono)
+		view.setUint32(24, $sampleRate, true); // SampleRate
+		view.setUint32(28, $sampleRate * 2, true); // ByteRate
+		view.setUint16(32, 2, true); // BlockAlign
+		view.setUint16(34, 16, true); // BitsPerSample
+		writeString(36, 'data');
+		view.setUint32(40, numSamples * 2, true);
+
+		// Convert samples to 16-bit PCM
+		let offset = 44;
+		for (let i = 0; i < numSamples; i++) {
+			const sample = Math.max(-1, Math.min(1, $audioBuffer[i]));
+			view.setInt16(offset, sample < 0 ? sample * 0x8000 : sample * 0x7FFF, true);
+			offset += 2;
+		}
+
+		const blob = new Blob([buffer], { type: 'audio/wav' });
+
+		// Generate default filename
+		let defaultName = 'audio.wav';
+		if ($fileName) {
+			const baseName = $fileName.replace(/\.[^/.]+$/, '');
+			defaultName = baseName + '.wav';
+		}
+
+		// Try File System Access API (shows native Save As dialog)
+		if ('showSaveFilePicker' in window) {
+			try {
+				const handle = await (window as any).showSaveFilePicker({
+					suggestedName: defaultName,
+					types: [{
+						description: 'WAV Audio',
+						accept: { 'audio/wav': ['.wav'] }
+					}]
+				});
+				const writable = await handle.createWritable();
+				await writable.write(blob);
+				await writable.close();
+				return;
+			} catch (err: any) {
+				if (err.name === 'AbortError') return;
+			}
+		}
+
+		// Fallback: traditional download
+		const url = URL.createObjectURL(blob);
+		const a = document.createElement('a');
+		a.href = url;
+		a.download = defaultName;
+		a.click();
+		URL.revokeObjectURL(url);
 	}
 
 	function formatTime(seconds: number): string {
@@ -319,7 +517,7 @@
 	{#if !$wasmReady}
 		<div class="loading">Loading acoustic analysis engine...</div>
 	{:else if !$audioBuffer}
-		<FileDropZone onFile={handleFile} />
+		<FileDropZone onFile={handleFile} onRecordedBlob={processRecordedAudio} />
 	{:else}
 		<div class="app-container">
 			<header class="toolbar">
@@ -353,6 +551,25 @@
 					<button class="stop-btn" on:click={stop} title="Stop (Escape)">
 						<svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16">
 							<rect x="6" y="6" width="12" height="12"/>
+						</svg>
+					</button>
+					{#if isRecording}
+						<button class="record-btn recording" on:click={stopRecording} title="Stop recording">
+							<svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16">
+								<rect x="6" y="6" width="12" height="12" rx="2"/>
+							</svg>
+							<span class="recording-time">{recordingTime.toFixed(1)}s</span>
+						</button>
+					{:else}
+						<button class="record-btn" on:click={startRecording} title="Record from microphone">
+							<svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16">
+								<circle cx="12" cy="12" r="6"/>
+							</svg>
+						</button>
+					{/if}
+					<button class="save-btn" on:click={saveAudio} title="Save audio as WAV">
+						<svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16">
+							<path d="M19 12v7H5v-7H3v7c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2v-7h-2zm-6 .67l2.59-2.58L17 11.5l-5 5-5-5 1.41-1.41L11 12.67V3h2v9.67z"/>
 						</svg>
 					</button>
 					<span class="filename">{$fileName}</span>
@@ -545,7 +762,8 @@
 
 	.open-btn,
 	.play-btn,
-	.stop-btn {
+	.stop-btn,
+	.save-btn {
 		display: flex;
 		align-items: center;
 		justify-content: center;
@@ -561,12 +779,50 @@
 
 	.open-btn:hover,
 	.play-btn:hover,
-	.stop-btn:hover {
+	.stop-btn:hover,
+	.save-btn:hover {
 		background: var(--color-primary);
 	}
 
 	.play-btn.playing {
 		background: var(--color-primary);
+	}
+
+	.record-btn {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		gap: 0.35rem;
+		min-width: 32px;
+		height: 32px;
+		padding: 0 0.5rem;
+		border: none;
+		border-radius: 4px;
+		background: var(--color-border);
+		color: #ef4444;
+		transition: background 0.15s;
+		cursor: pointer;
+	}
+
+	.record-btn:hover {
+		background: rgba(239, 68, 68, 0.2);
+	}
+
+	.record-btn.recording {
+		background: #ef4444;
+		color: white;
+		animation: pulse-record 1s ease-in-out infinite;
+	}
+
+	.record-btn .recording-time {
+		font-family: monospace;
+		font-size: 0.75rem;
+		font-weight: 500;
+	}
+
+	@keyframes pulse-record {
+		0%, 100% { opacity: 1; }
+		50% { opacity: 0.7; }
 	}
 
 	.filename {
