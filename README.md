@@ -5,6 +5,7 @@ A web-based acoustic analysis and annotation tool for speech research. This is t
 ## Features
 
 - **Audio Analysis**: Load WAV, FLAC, MP3, or OGG files for acoustic analysis
+- **Microphone Recording**: Record audio directly from your microphone with save to WAV
 - **Visualizations**: Synchronized waveform and spectrogram displays
 - **Acoustic Overlays**: Pitch (F0), Formants (F1-F4), Intensity, HNR, Center of Gravity, Spectral Tilt, A1-P0
 - **Annotations**: Multi-tier annotation editor with TextGrid import/export
@@ -57,7 +58,7 @@ See [DEVELOPMENT.md](DEVELOPMENT.md) for detailed setup, deployment, and archite
 
 ## Usage
 
-1. **Load audio**: Drag & drop an audio file or click to browse
+1. **Load audio**: Drag & drop an audio file, click to browse, or record from microphone
 2. **Navigate**: Scroll to zoom, shift+drag to pan
 3. **Select**: Click and drag on the spectrogram to select a region
 4. **Play**: Press Space to play selection, Tab to play visible window

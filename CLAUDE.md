@@ -225,6 +225,8 @@ This allows working with arbitrarily long recordings without UI freezing.
 
 ### Core Viewing
 - [x] Load audio file (drag & drop or file picker)
+- [x] Microphone recording (MediaRecorder API)
+- [x] Save audio as WAV (16-bit PCM)
 - [x] Waveform display with amplitude visualization
 - [x] Spectrogram display (grayscale, Praat-style)
 - [x] Synchronized zoom/scroll (wheel to zoom, horizontal scroll to pan)
