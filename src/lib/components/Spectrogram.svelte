@@ -3,7 +3,7 @@
 	import { audioBuffer, sampleRate, duration } from '$lib/stores/audio';
 	import { timeRange, cursorPosition, selection, hoverPosition } from '$lib/stores/view';
 	import { createSound, getWasm, wasmReady, computeSpectrogram as computeSpec, getSpectrogramInfo } from '$lib/wasm/acoustic';
-	import { analysisResults } from '$lib/stores/analysis';
+	import { analysisResults, MAX_ANALYSIS_DURATION, runAnalysisForRange, isAnalyzing } from '$lib/stores/analysis';
 	import { config } from '$lib/stores/config';
 	import { playRange, isPlaying, stop } from '$lib/audio/player';
 	import {
@@ -69,13 +69,10 @@
 	// Track the maxFreq used for the current spectrogram
 	let spectrogramMaxFreq: number | null = null;
 
-	// Maximum duration for spectrogram computation (seconds)
-	const MAX_SPECTROGRAM_DURATION = 60;
-
 	// Check if current view is too long for spectrogram
 	$: visibleDuration = $timeRange.end - $timeRange.start;
-	$: isLongAudio = $duration > MAX_SPECTROGRAM_DURATION;
-	$: showZoomMessage = isLongAudio && visibleDuration > MAX_SPECTROGRAM_DURATION;
+	$: isLongAudio = $duration > MAX_ANALYSIS_DURATION;
+	$: showZoomMessage = isLongAudio && visibleDuration > MAX_ANALYSIS_DURATION;
 
 	$: if ($audioBuffer && $wasmReady && !isLongAudio && (!spectrogramData || maxFreq !== spectrogramMaxFreq)) {
 		computeSpectrogram();
@@ -130,7 +127,7 @@
 		// For long audio without base spectrogram: compute on-demand when zoomed in enough
 		if (isLongAudio && !spectrogramData) {
 			// Only compute if visible duration is within limit
-			if (visibleDuration > MAX_SPECTROGRAM_DURATION) {
+			if (visibleDuration > MAX_ANALYSIS_DURATION) {
 				zoomedSpectrogramCanvas = null;
 				zoomedTimeRange = null;
 				return;
@@ -143,8 +140,11 @@
 				if (coverage > 0.9) return; // Cache is still good enough
 			}
 
-			// Schedule regeneration after 300ms of no changes
-			zoomDebounceTimer = setTimeout(() => {
+			// Schedule analysis and spectrogram computation after 300ms of no changes
+			zoomDebounceTimer = setTimeout(async () => {
+				// Run full analysis for the visible range (includes spectrogram)
+				await runAnalysisForRange(start, end);
+				// Also compute zoomed spectrogram for display
 				computeZoomedSpectrogram(start, end);
 			}, 300);
 			return;
@@ -198,22 +198,25 @@
 			// Compute higher resolution spectrogram for visible region
 			// Use smaller time step for better resolution when zoomed
 			const timeStep = Math.max(0.001, (paddedEnd - paddedStart) / (plotWidth * 2));
-			const spec = sound.to_spectrogram(0.005, maxFreq, timeStep, 20.0, 'gaussian');
+			const spec = computeSpec(sound, 0.005, maxFreq, timeStep, 20.0);
+			const info = getSpectrogramInfo(spec);
 
 			const zoomedData: SpectrogramData = {
-				values: spec.values(),
-				freqMin: spec.freq_min,
-				freqMax: spec.freq_max,
+				values: info.values,
+				freqMin: info.freqMin,
+				freqMax: info.freqMax,
 				timeMin: paddedStart,
-				timeMax: paddedStart + (spec.num_frames - 1) * spec.time_step,
-				nFreqs: spec.num_freq_bins,
-				nTimes: spec.num_frames
+				timeMax: info.timeMax,
+				nFreqs: info.nFreqs,
+				nTimes: info.nTimes
 			};
 
 			// Create zoomed canvas
 			const result = createSpectrogramImage(zoomedData);
-			zoomedSpectrogramCanvas = result.canvas;
-			zoomedTimeRange = { start: paddedStart, end: paddedEnd };
+			if (result) {
+				zoomedSpectrogramCanvas = result.canvas;
+				zoomedTimeRange = { start: paddedStart, end: paddedEnd };
+			}
 
 			spec.free();
 
@@ -283,8 +286,10 @@
 			// Pre-compute full ImageData and cached canvas
 			// Assign spectrogramCanvas at top level so Svelte can track the change
 			const result = createSpectrogramImage(spectrogramData);
-			spectrogramImageData = result.imageData;
-			spectrogramCanvas = result.canvas;
+			if (result) {
+				spectrogramImageData = result.imageData;
+				spectrogramCanvas = result.canvas;
+			}
 
 			spec.free();
 
@@ -307,8 +312,15 @@
 		}
 	}
 
-	function createSpectrogramImage(data: SpectrogramData): { imageData: ImageData; canvas: HTMLCanvasElement } {
+	function createSpectrogramImage(data: SpectrogramData): { imageData: ImageData; canvas: HTMLCanvasElement } | null {
 		const { values, nFreqs, nTimes } = data;
+
+		// Validate dimensions to prevent ImageData error
+		if (nTimes <= 0 || nFreqs <= 0 || !values || values.length === 0) {
+			console.warn('Invalid spectrogram data:', { nTimes, nFreqs, valuesLength: values?.length });
+			return null;
+		}
+
 		const imageData = new ImageData(nTimes, nFreqs);
 
 		// Find max value for normalization

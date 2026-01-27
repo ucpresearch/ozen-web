@@ -6,7 +6,7 @@
 	import TimeAxis from '$lib/components/TimeAxis.svelte';
 	import AnnotationEditor from '$lib/components/AnnotationEditor.svelte';
 	import ValuesPanel from '$lib/components/ValuesPanel.svelte';
-	import { audioBuffer, sampleRate, fileName } from '$lib/stores/audio';
+	import { audioBuffer, sampleRate, fileName, duration } from '$lib/stores/audio';
 	import { timeRange, selection, cursorPosition } from '$lib/stores/view';
 	import { wasmReady, initWasm, currentBackend } from '$lib/wasm/acoustic';
 	import { selectedBackend, type AcousticBackend } from '$lib/stores/config';
@@ -158,9 +158,10 @@
 		sampleRate.set(decoded.sampleRate);
 		fileName.set(file.name);
 
-		// Set initial time range to full file (max 10s visible)
-		const duration = decoded.length / decoded.sampleRate;
-		timeRange.set({ start: 0, end: Math.min(duration, 10) });
+		// Set duration and initial time range
+		const audioDuration = decoded.length / decoded.sampleRate;
+		duration.set(audioDuration);
+		timeRange.set({ start: 0, end: Math.min(audioDuration, 10) });
 		cursorPosition.set(0);
 		selection.set(null);
 

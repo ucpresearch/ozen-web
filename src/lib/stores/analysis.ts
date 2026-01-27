@@ -73,6 +73,12 @@ export const analysisParams = writable({
 /**
  * Run full acoustic analysis on loaded audio.
  */
+/**
+ * Maximum duration for full analysis (seconds).
+ * Longer audio skips upfront analysis to avoid hanging.
+ */
+export const MAX_ANALYSIS_DURATION = 60;
+
 export async function runAnalysis(): Promise<void> {
 	const buffer = get(audioBuffer);
 	const sr = get(sampleRate);
@@ -80,6 +86,14 @@ export async function runAnalysis(): Promise<void> {
 
 	if (!buffer || !ready) {
 		console.warn('Cannot run analysis: audio or WASM not ready');
+		return;
+	}
+
+	// Skip all analysis for long audio (>60s) - will compute on-demand when zoomed
+	const audioDuration = get(duration);
+	if (audioDuration > MAX_ANALYSIS_DURATION) {
+		console.log(`Audio duration ${audioDuration.toFixed(1)}s exceeds ${MAX_ANALYSIS_DURATION}s limit, skipping analysis`);
+		analysisResults.set(null);
 		return;
 	}
 
@@ -121,28 +135,16 @@ export async function runAnalysis(): Promise<void> {
 			const times: number[] = Array.from(getPitchTimes(pitch));
 			const pitchValues: number[] = Array.from(getPitchValues(pitch));
 
-			// Skip spectrogram and spectral measures for long audio (>60s)
-			const audioDuration = get(duration);
-			const isLongAudio = audioDuration > 60;
+			// Spectrogram
+			analysisProgress.set(75);
+			const spectrogram = computeSpectrogram(sound, 0.005, 5000, 0.002, 20.0);
 
-			let spectrogram = null;
-			let spectrogramInfo = null;
-			let spectralMeasures = { cog: null, spectralTilt: null, a1p0: null };
+			// Compute spectral measures (CoG, Spectral Tilt, A1-P0)
+			analysisProgress.set(85);
+			const spectralMeasures = computeSpectralMeasures(buffer, sr, times, pitchValues, wasm);
 
-			if (!isLongAudio) {
-				// Spectrogram
-				analysisProgress.set(75);
-				spectrogram = computeSpectrogram(sound, 0.005, 5000, 0.002, 20.0);
-
-				// Compute spectral measures (CoG, Spectral Tilt, A1-P0)
-				analysisProgress.set(85);
-				spectralMeasures = computeSpectralMeasures(buffer, sr, times, pitchValues, wasm);
-
-				// Get spectrogram info
-				spectrogramInfo = getSpectrogramInfo(spectrogram);
-			} else {
-				analysisProgress.set(85);
-			}
+			// Get spectrogram info
+			const spectrogramInfo = getSpectrogramInfo(spectrogram);
 
 			analysisProgress.set(95);
 			const results: AnalysisResults = {
@@ -174,9 +176,7 @@ export async function runAnalysis(): Promise<void> {
 			intensity.free();
 			formant.free();
 			harmonicity.free();
-			if (spectrogram) {
-				spectrogram.free();
-			}
+			spectrogram.free();
 
 			analysisProgress.set(100);
 			analysisResults.set(results);
@@ -193,6 +193,132 @@ export async function runAnalysis(): Promise<void> {
 
 function nullIfNaN(v: number): number | null {
 	return isNaN(v) || v === 0 ? null : v;
+}
+
+/**
+ * Run analysis for a specific time range (used for long audio when zoomed in).
+ * Computes all acoustic features for just the visible portion.
+ */
+export async function runAnalysisForRange(startTime: number, endTime: number): Promise<void> {
+	const buffer = get(audioBuffer);
+	const sr = get(sampleRate);
+	const ready = get(wasmReady);
+
+	if (!buffer || !ready) {
+		console.warn('Cannot run analysis: audio or WASM not ready');
+		return;
+	}
+
+	const rangeDuration = endTime - startTime;
+	if (rangeDuration > MAX_ANALYSIS_DURATION) {
+		console.log(`Range ${rangeDuration.toFixed(1)}s exceeds ${MAX_ANALYSIS_DURATION}s limit`);
+		return;
+	}
+
+	isAnalyzing.set(true);
+	analysisProgress.set(0);
+
+	try {
+		const params = get(analysisParams);
+		const preset = getCurrentPreset();
+		const wasm = getWasm();
+
+		// Extract just the portion of audio we need
+		const padding = 0.1; // Small padding for edge effects
+		const paddedStart = Math.max(0, startTime - padding);
+		const paddedEnd = Math.min(buffer.length / sr, endTime + padding);
+		const startSample = Math.floor(paddedStart * sr);
+		const endSample = Math.ceil(paddedEnd * sr);
+		const rangeBuffer = buffer.slice(startSample, endSample);
+
+		const sound = new wasm.Sound(rangeBuffer, sr);
+
+		try {
+			// Pitch analysis
+			analysisProgress.set(15);
+			const pitch = computePitch(sound, params.timeStep, params.pitchFloor, params.pitchCeiling);
+
+			// Intensity analysis
+			analysisProgress.set(30);
+			const intensity = computeIntensity(sound, params.pitchFloor, params.timeStep);
+
+			// Formant analysis
+			analysisProgress.set(45);
+			const formant = computeFormant(
+				sound,
+				params.timeStep,
+				params.numFormants,
+				preset.maxFormant,
+				0.025,
+				50.0
+			);
+
+			// Harmonicity analysis
+			analysisProgress.set(60);
+			const harmonicity = computeHarmonicity(sound, params.timeStep, params.pitchFloor, 0.1, 4.5);
+
+			// Extract values - adjust times to absolute positions
+			analysisProgress.set(75);
+			const relativeTimes: number[] = Array.from(getPitchTimes(pitch));
+			const times = relativeTimes.map(t => t + paddedStart);
+			const pitchValues: number[] = Array.from(getPitchValues(pitch));
+
+			// Spectrogram
+			analysisProgress.set(85);
+			const spectrogram = computeSpectrogram(sound, 0.005, 5000, 0.002, 20.0);
+
+			// Spectral measures
+			const spectralMeasures = computeSpectralMeasures(rangeBuffer, sr, relativeTimes, pitchValues, wasm);
+
+			// Get spectrogram info and adjust time range
+			const spectrogramInfo = getSpectrogramInfo(spectrogram);
+			spectrogramInfo.timeMin = paddedStart;
+			spectrogramInfo.timeMax = paddedEnd;
+
+			analysisProgress.set(95);
+			const results: AnalysisResults = {
+				times,
+				pitch: pitchValues.map((v: number) => (isNaN(v) || v === 0 ? null : v)),
+				intensity: times.map((t: number, i: number) => {
+					const v = getIntensityAtTime(intensity, relativeTimes[i]);
+					return isNaN(v) ? null : v;
+				}),
+				formants: {
+					f1: relativeTimes.map(t => nullIfNaN(getFormantAtTime(formant, 1, t))),
+					f2: relativeTimes.map(t => nullIfNaN(getFormantAtTime(formant, 2, t))),
+					f3: relativeTimes.map(t => nullIfNaN(getFormantAtTime(formant, 3, t))),
+					f4: relativeTimes.map(t => nullIfNaN(getFormantAtTime(formant, 4, t))),
+					b1: relativeTimes.map(t => nullIfNaN(getBandwidthAtTime(formant, 1, t))),
+					b2: relativeTimes.map(t => nullIfNaN(getBandwidthAtTime(formant, 2, t))),
+					b3: relativeTimes.map(t => nullIfNaN(getBandwidthAtTime(formant, 3, t))),
+					b4: relativeTimes.map(t => nullIfNaN(getBandwidthAtTime(formant, 4, t)))
+				},
+				harmonicity: relativeTimes.map(t => nullIfNaN(getHarmonicityAtTime(harmonicity, t))),
+				cog: spectralMeasures.cog,
+				spectralTilt: spectralMeasures.spectralTilt,
+				a1p0: spectralMeasures.a1p0,
+				spectrogram: spectrogramInfo
+			};
+
+			// Free WASM objects
+			pitch.free();
+			intensity.free();
+			formant.free();
+			harmonicity.free();
+			spectrogram.free();
+
+			analysisProgress.set(100);
+			analysisResults.set(results);
+			console.log(`Analysis completed for range ${startTime.toFixed(1)}s - ${endTime.toFixed(1)}s`);
+		} finally {
+			sound.free();
+		}
+	} catch (e) {
+		console.error('Range analysis failed:', e);
+		throw e;
+	} finally {
+		isAnalyzing.set(false);
+	}
 }
 
 /**

@@ -9,7 +9,7 @@
 	let height = 24;
 	let resizeObserver: ResizeObserver;
 
-	$: if (ctx && width > 0) {
+	$: if (ctx && width > 0 && $timeRange) {
 		draw();
 	}
 
