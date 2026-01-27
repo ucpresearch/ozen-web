@@ -5,7 +5,7 @@
  * various acoustic features using the praatfan WASM libraries.
  *
  * Supports two backends:
- * - praatfan-core: Full Praat reimplementation (GPL)
+ * - praatfan-gpl: Full Praat reimplementation (GPL)
  * - praatfan: Clean-room implementation (MIT/Apache)
  *
  * Computed features:

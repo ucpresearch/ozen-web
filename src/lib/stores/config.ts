@@ -27,7 +27,7 @@ import yaml from 'js-yaml';
  */
 /**
  * Backend options for acoustic analysis.
- * - 'praatfan-core': Full Praat reimplementation (GPL, from praatfan-core-rs CDN)
+ * - 'praatfan-core': praatfan-gpl - Full Praat reimplementation (GPL, from praatfan-core-rs CDN)
  * - 'praatfan': Clean-room implementation (MIT/Apache, from praatfan-core-clean CDN)
  * - 'praatfan-local': Clean-room implementation bundled locally (no network required)
  */

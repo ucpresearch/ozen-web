@@ -463,7 +463,7 @@
 					<select value={$selectedBackend} on:change={handleBackendChange}>
 						<option value="praatfan-local">praatfan (local)</option>
 						<option value="praatfan">praatfan (remote)</option>
-						<option value="praatfan-core">praatfan-core (remote)</option>
+						<option value="praatfan-core">praatfan-gpl (remote)</option>
 					</select>
 				</label>
 			</div>
