@@ -60,8 +60,8 @@ create_embedded_viewer <- function(audio_path, overlays = "pitch,formants", view
   # Calculate relative path from viewer to audio
   audio_relative <- calculate_relative_path(audio_path, viewer_url)
 
-  # URL encode
-  encoded <- URLencode(audio_relative, reserved = TRUE)
+  # URL encode (keep slashes for readability)
+  encoded <- URLencode(audio_relative, reserved = FALSE)
 
   # Create iframe
   iframe <- sprintf(

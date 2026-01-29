@@ -71,8 +71,8 @@ def create_embedded_viewer(audio_path, overlays="pitch,formants", viewer_url="./
     # Calculate relative path from viewer to audio
     audio_relative = calculate_relative_path(audio_path, viewer_url)
 
-    # URL encode the path
-    encoded_path = quote(audio_relative, safe='')
+    # URL encode the path (keep slashes for readability)
+    encoded_path = quote(audio_relative, safe='/')
 
     # Create iframe
     iframe = f'''<iframe
