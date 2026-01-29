@@ -90,12 +90,20 @@ export function playRange(start: number, end: number): void {
 
 	const ctx = getAudioContext();
 
-	// Create audio buffer from Float64Array
-	const audioBufferNode = ctx.createBuffer(1, buffer.length, sr);
+	// Add 300ms silent padding at the end to prevent mobile browser clipping
+	const PADDING_DURATION = 0.3; // 300ms
+	const paddingSamples = Math.ceil(PADDING_DURATION * sr);
+	const paddedLength = buffer.length + paddingSamples;
+
+	// Create audio buffer with padding
+	const audioBufferNode = ctx.createBuffer(1, paddedLength, sr);
 	const channelData = audioBufferNode.getChannelData(0);
+
+	// Copy original samples
 	for (let i = 0; i < buffer.length; i++) {
 		channelData[i] = buffer[i];
 	}
+	// Padding samples remain 0 (silent)
 
 	// Create source node
 	sourceNode = ctx.createBufferSource();
