@@ -33,9 +33,17 @@ function fixHtmlFile(filePath) {
 
 	// Replace static base: "" with dynamic base path detection
 	// This allows the app to work from any subdirectory
+	// Handle data: URLs gracefully (return empty string)
 	content = content.replace(
 		/base:\s*""/g,
-		'base: new URL(".", location.href).pathname.slice(0, -1)'
+		'base: location.protocol === "data:" ? "" : new URL(".", location.href).pathname.slice(0, -1)'
+	);
+
+	// Also fix existing base path detection that uses location without .href
+	// This pattern appears when rebuild occurs after a previous build
+	content = content.replace(
+		/base:\s*new URL\("\."\s*,\s*location\)\.pathname\.slice\(0,\s*-1\)/g,
+		'base: location.protocol === "data:" ? "" : new URL(".", location).pathname.slice(0, -1)'
 	);
 
 	if (content !== originalContent) {
