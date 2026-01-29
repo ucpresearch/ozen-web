@@ -398,7 +398,15 @@
 
 			console.log(`Audio loaded: ${dur.toFixed(2)}s at ${decoded.sampleRate}Hz`);
 
-			await runAnalysis();
+			// Wait for WASM to be ready before analyzing
+			// (WASM initialization and audio loading race against each other)
+			if ($wasmReady) {
+				await runAnalysis();
+			} else {
+				console.log('Waiting for WASM to initialize before analysis...');
+				// Analysis will be triggered by the reactive statement
+				// that watches for both $audioBuffer and $wasmReady to be true
+			}
 
 		} catch (error) {
 			console.error('Failed to load audio from URL:', error);
@@ -514,6 +522,12 @@
 	// Attach gesture handlers when container and audio are ready
 	$: if (gestureContainer && $audioBuffer) {
 		attachGestures();
+	}
+
+	// Run analysis when both WASM and audio are ready
+	// (handles race condition between WASM init and URL audio loading)
+	$: if ($wasmReady && $audioBuffer && !$isAnalyzing) {
+		runAnalysis().catch(e => console.error('Analysis failed:', e));
 	}
 
 	/**
