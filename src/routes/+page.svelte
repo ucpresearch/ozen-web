@@ -106,6 +106,7 @@
 
 	/**
 	 * Copy all data points as TSV to clipboard.
+	 * Only includes columns for currently visible overlays.
 	 */
 	async function copyDataPointsToClipboard() {
 		if ($dataPoints.length === 0) {
@@ -113,7 +114,15 @@
 			return;
 		}
 
-		const tsv = exportDataPointsTSV();
+		const tsv = exportDataPointsTSV({
+			showPitch,
+			showFormants,
+			showIntensity,
+			showHNR,
+			showCoG,
+			showSpectralTilt,
+			showA1P0
+		});
 
 		try {
 			await navigator.clipboard.writeText(tsv);
@@ -456,7 +465,15 @@
 	}
 
 	async function handleExportDataPoints() {
-		const content = exportDataPointsTSV();
+		const content = exportDataPointsTSV({
+			showPitch,
+			showFormants,
+			showIntensity,
+			showHNR,
+			showCoG,
+			showSpectralTilt,
+			showA1P0
+		});
 
 		// Generate default filename from audio file name
 		let defaultName = 'data_points.tsv';

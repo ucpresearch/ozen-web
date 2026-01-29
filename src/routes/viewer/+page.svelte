@@ -760,7 +760,8 @@
 
 	/**
 	 * Copy acoustic values at cursor to clipboard.
-	 * Format: "F0: 100, F1: 350, F2: 650, ..."
+	 * Only includes values for currently visible overlays.
+	 * Format: "T: 1.234s, F0: 100, F1: 350, F2: 650, ..."
 	 */
 	async function copyValuesToClipboard() {
 		if (!cursorValues) {
@@ -769,36 +770,55 @@
 		}
 
 		// Build formatted string with labels and values
+		// Only include values for visible overlays
 		const parts: string[] = [];
 
-		if (cursorValues.pitch !== null && cursorValues.pitch !== undefined) {
+		// Always include time
+		parts.push(`T: ${formatTime($cursorPosition)}s`);
+
+		// Only include pitch if visible
+		if (showPitch && cursorValues.pitch !== null && cursorValues.pitch !== undefined) {
 			parts.push(`F0: ${cursorValues.pitch.toFixed(1)} Hz`);
 		}
-		if (cursorValues.intensity !== null && cursorValues.intensity !== undefined) {
+
+		// Only include intensity if visible
+		if (showIntensity && cursorValues.intensity !== null && cursorValues.intensity !== undefined) {
 			parts.push(`Intensity: ${cursorValues.intensity.toFixed(1)} dB`);
 		}
-		if (cursorValues.f1 !== null && cursorValues.f1 !== undefined) {
-			parts.push(`F1: ${cursorValues.f1.toFixed(0)} Hz`);
+
+		// Only include formants if visible
+		if (showFormants) {
+			if (cursorValues.f1 !== null && cursorValues.f1 !== undefined) {
+				parts.push(`F1: ${cursorValues.f1.toFixed(0)} Hz`);
+			}
+			if (cursorValues.f2 !== null && cursorValues.f2 !== undefined) {
+				parts.push(`F2: ${cursorValues.f2.toFixed(0)} Hz`);
+			}
+			if (cursorValues.f3 !== null && cursorValues.f3 !== undefined) {
+				parts.push(`F3: ${cursorValues.f3.toFixed(0)} Hz`);
+			}
+			if (cursorValues.f4 !== null && cursorValues.f4 !== undefined) {
+				parts.push(`F4: ${cursorValues.f4.toFixed(0)} Hz`);
+			}
 		}
-		if (cursorValues.f2 !== null && cursorValues.f2 !== undefined) {
-			parts.push(`F2: ${cursorValues.f2.toFixed(0)} Hz`);
-		}
-		if (cursorValues.f3 !== null && cursorValues.f3 !== undefined) {
-			parts.push(`F3: ${cursorValues.f3.toFixed(0)} Hz`);
-		}
-		if (cursorValues.f4 !== null && cursorValues.f4 !== undefined) {
-			parts.push(`F4: ${cursorValues.f4.toFixed(0)} Hz`);
-		}
-		if (cursorValues.hnr !== null && cursorValues.hnr !== undefined) {
+
+		// Only include HNR if visible
+		if (showHNR && cursorValues.hnr !== null && cursorValues.hnr !== undefined) {
 			parts.push(`HNR: ${cursorValues.hnr.toFixed(1)} dB`);
 		}
-		if (cursorValues.cog !== null && cursorValues.cog !== undefined) {
+
+		// Only include CoG if visible
+		if (showCoG && cursorValues.cog !== null && cursorValues.cog !== undefined) {
 			parts.push(`CoG: ${cursorValues.cog.toFixed(0)} Hz`);
 		}
-		if (cursorValues.spectralTilt !== null && cursorValues.spectralTilt !== undefined) {
+
+		// Only include spectral tilt if visible
+		if (showSpectralTilt && cursorValues.spectralTilt !== null && cursorValues.spectralTilt !== undefined) {
 			parts.push(`Spectral Tilt: ${cursorValues.spectralTilt.toFixed(1)} dB`);
 		}
-		if (cursorValues.a1p0 !== null && cursorValues.a1p0 !== undefined) {
+
+		// Only include A1-P0 if visible
+		if (showA1P0 && cursorValues.a1p0 !== null && cursorValues.a1p0 !== undefined) {
 			parts.push(`A1-P0: ${cursorValues.a1p0.toFixed(1)} dB`);
 		}
 

@@ -234,7 +234,63 @@ function collectAnnotationIntervals(time: number): Record<string, string> {
  *
  * @returns TSV string content
  */
-export function exportDataPointsTSV(): string {
+/**
+ * Options for filtering exported acoustic values based on visibility.
+ */
+export interface ExportOptions {
+	showPitch?: boolean;
+	showFormants?: boolean;
+	showIntensity?: boolean;
+	showHNR?: boolean;
+	showCoG?: boolean;
+	showSpectralTilt?: boolean;
+	showA1P0?: boolean;
+}
+
+/**
+ * Filter acoustic keys based on visibility options.
+ * If no options provided, includes all keys (backward compatible).
+ */
+function filterAcousticKeys(allKeys: string[], options?: ExportOptions): string[] {
+	// If no options, include everything (backward compatible)
+	if (!options) {
+		return allKeys;
+	}
+
+	const filtered: string[] = [];
+
+	for (const key of allKeys) {
+		const keyLower = key.toLowerCase();
+
+		// Check each overlay type
+		if (keyLower === 'pitch' || keyLower === 'f0') {
+			if (options.showPitch) filtered.push(key);
+		} else if (keyLower.startsWith('f') && /^f[1-4]$/.test(keyLower)) {
+			// F1, F2, F3, F4
+			if (options.showFormants) filtered.push(key);
+		} else if (keyLower.startsWith('b') && /^b[1-4]$/.test(keyLower)) {
+			// B1, B2, B3, B4 (bandwidths - part of formants)
+			if (options.showFormants) filtered.push(key);
+		} else if (keyLower === 'intensity') {
+			if (options.showIntensity) filtered.push(key);
+		} else if (keyLower === 'hnr' || keyLower === 'harmonicity') {
+			if (options.showHNR) filtered.push(key);
+		} else if (keyLower === 'cog' || keyLower === 'centerofgravity') {
+			if (options.showCoG) filtered.push(key);
+		} else if (keyLower === 'spectraltilt' || keyLower === 'tilt') {
+			if (options.showSpectralTilt) filtered.push(key);
+		} else if (keyLower === 'a1p0' || keyLower === 'a1-p0') {
+			if (options.showA1P0) filtered.push(key);
+		} else {
+			// Unknown key - include if any overlay is visible (safe default)
+			filtered.push(key);
+		}
+	}
+
+	return filtered;
+}
+
+export function exportDataPointsTSV(options?: ExportOptions): string {
 	const points = get(dataPoints);
 	const allTiers = get(tiers);
 
@@ -249,11 +305,14 @@ export function exportDataPointsTSV(): string {
 	}
 	const sortedAcousticKeys = Array.from(acousticKeys).sort();
 
+	// Filter based on visibility options
+	const filteredAcousticKeys = filterAcousticKeys(sortedAcousticKeys, options);
+
 	// Get tier names
 	const tierNames = allTiers.map(t => t.name);
 
 	// Build header
-	const header = ['time', 'frequency', ...sortedAcousticKeys, ...tierNames];
+	const header = ['time', 'frequency', ...filteredAcousticKeys, ...tierNames];
 
 	// Build rows (sorted by time)
 	const sortedPoints = [...points].sort((a, b) => a.time - b.time);
@@ -264,8 +323,8 @@ export function exportDataPointsTSV(): string {
 			point.frequency.toFixed(1)
 		];
 
-		// Acoustic values
-		for (const key of sortedAcousticKeys) {
+		// Acoustic values (only filtered keys)
+		for (const key of filteredAcousticKeys) {
 			const val = point.acousticValues[key];
 			row.push(val !== null && val !== undefined ? val.toFixed(2) : '');
 		}
