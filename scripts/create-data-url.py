@@ -6,6 +6,12 @@ Usage:
     python create-data-url.py audio.wav
     python create-data-url.py audio.wav --overlays pitch,formants,hnr
     python create-data-url.py audio.wav --overlays all --viewer-url https://mysite.com/viewer.html
+
+IMPORTANT: To view the generated HTML locally, you must serve it over HTTP:
+    python -m http.server 8000
+    # Or use: python scripts/serve-quarto.py
+
+Browsers block file:// iframes for security, so double-clicking the HTML won't work.
 """
 
 import base64

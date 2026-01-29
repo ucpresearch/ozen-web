@@ -10,6 +10,12 @@
 #'   source("scripts/create-data-url.R")
 #'   html <- create_embedded_viewer("audio.wav", overlays = "pitch,formants,hnr")
 #'   htmltools::HTML(html)
+#'
+#' IMPORTANT: To view the generated HTML locally, you must serve it over HTTP:
+#'   source("scripts/serve-quarto.R")
+#'   serve_quarto()  # Serves on http://localhost:8000
+#'
+#' Browsers block file:// iframes for security, so double-clicking the HTML won't work.
 
 create_embedded_viewer <- function(audio_path, overlays = "pitch,formants", viewer_url = "viewer.html") {
   if (!requireNamespace("base64enc", quietly = TRUE)) {

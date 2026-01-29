@@ -225,12 +225,47 @@ If audio fails to load:
 
 User can still toggle overlays via settings drawer regardless of URL configuration.
 
+### Important: Serving Quarto/R Markdown Documents
+
+**Browser Security Restriction**: Browsers block `file://` URLs from loading iframes for security reasons. When you open a Quarto-rendered HTML file directly (double-click), embedded viewer iframes will fail with:
+```
+Not allowed to load local resource: file:///...
+```
+
+**Solution**: Serve the document over HTTP instead:
+
+**Python:**
+```bash
+# Using the provided helper script
+python scripts/serve-quarto.py [directory] [port]
+
+# Or using Python's built-in server
+python -m http.server 8000
+
+# Then open: http://localhost:8000/your-document.html
+```
+
+**R:**
+```r
+# Using the provided helper script
+source("scripts/serve-quarto.R")
+serve_quarto()  # Serves current directory on port 8000
+
+# Or using servr package directly
+servr::httd(port = 8000)
+
+# Then open: http://localhost:8000/your-document.html
+```
+
+**Alternative**: Deploy to a web server (GitHub Pages, Netlify, etc.) where HTTP is automatic.
+
 ### Limitations
 
 - **Remote files**: Recommended <100MB (browser memory)
 - **Data URLs**: Maximum ~1.5MB raw audio (~2MB base64) due to browser URL length limits
 - **HTTPS**: Remote URLs require HTTPS on HTTPS pages (data URLs work on both)
 - **URL length**: Data URLs count toward ~2MB browser URL limit
+- **Local viewing**: Must use HTTP server, not `file://` URLs (browsers block file:// iframes)
 
 ## Configuration
 
