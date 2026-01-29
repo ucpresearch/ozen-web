@@ -19,7 +19,7 @@ import sys
 from urllib.parse import quote
 from pathlib import Path
 
-def create_embedded_viewer(audio_path, overlays="pitch,formants", viewer_url="viewer.html"):
+def create_embedded_viewer(audio_path, overlays="pitch,formants", viewer_url="./ozen-web/viewer.html"):
     """Create self-contained iframe HTML with embedded audio."""
     audio_file = Path(audio_path)
 
@@ -55,7 +55,7 @@ def create_embedded_viewer(audio_path, overlays="pitch,formants", viewer_url="vi
 
 if __name__ == "__main__":
     if len(sys.argv) < 2:
-        print("Usage: python create-data-url.py <audio-file> [--overlays pitch,formants] [--viewer-url viewer.html]")
+        print("Usage: python create-data-url.py <audio-file> [--overlays pitch,formants] [--viewer-url ./ozen-web/viewer.html]")
         sys.exit(1)
 
     audio_path = sys.argv[1]

@@ -17,7 +17,7 @@
 #'
 #' Browsers block file:// iframes for security, so double-clicking the HTML won't work.
 
-create_embedded_viewer <- function(audio_path, overlays = "pitch,formants", viewer_url = "viewer.html") {
+create_embedded_viewer <- function(audio_path, overlays = "pitch,formants", viewer_url = "./ozen-web/viewer.html") {
   if (!requireNamespace("base64enc", quietly = TRUE)) {
     stop("Package 'base64enc' required. Install with: install.packages('base64enc')")
   }
@@ -66,7 +66,7 @@ if (sys.nframe() == 0) {
 
   if (length(args) < 1) {
     cat("Usage: Rscript create-data-url.R <audio-file> [overlays] [viewer-url]\n")
-    cat("Example: Rscript create-data-url.R audio.wav 'pitch,formants,hnr' 'viewer.html'\n")
+    cat("Example: Rscript create-data-url.R audio.wav 'pitch,formants,hnr' './ozen-web/viewer.html'\n")
     quit(status = 1)
   }
 

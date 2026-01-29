@@ -81,11 +81,29 @@ See [DEVELOPMENT.md](DEVELOPMENT.md) for detailed setup, deployment, and archite
 
 The viewer page (`viewer.html` in the static build) supports URL parameters for iframe embedding with pre-configured audio and overlays.
 
+### Directory Structure
+
+For Quarto/R Markdown projects, the recommended structure is:
+
+```
+your-project/
+├── your-document.qmd          # Your Quarto source
+├── your-document.html         # Rendered output
+├── audio.wav                  # Your audio files
+├── ozen-web/                  # Copy of build/ directory
+│   ├── viewer.html
+│   ├── _app/
+│   ├── wasm/
+│   └── ... (all build contents)
+└── scripts/
+    └── create-data-url.R      # Helper scripts (optional)
+```
+
 ### Basic Usage
 
 ```html
 <iframe
-  src="https://yoursite.com/viewer.html?audio=https://cdn.example.com/audio.wav&overlays=pitch,formants,hnr"
+  src="./ozen-web/viewer.html?audio=https://cdn.example.com/audio.wav&overlays=pitch,formants,hnr"
   width="100%"
   height="600"
   frameborder="0">
@@ -153,10 +171,10 @@ with open('audio.wav', 'rb') as f:
 b64 = base64.b64encode(audio_data).decode('ascii')
 data_url = f"data:audio/wav;base64,{b64}"
 
-# Create iframe HTML
+# Create iframe HTML (assumes ozen-web/ directory with build contents)
 iframe_html = f'''
 <iframe
-  src="viewer.html?audio={quote(data_url, safe='')}&overlays=pitch,formants"
+  src="./ozen-web/viewer.html?audio={quote(data_url, safe='')}&overlays=pitch,formants"
   width="100%"
   height="600"
   frameborder="0">
@@ -173,9 +191,9 @@ audio_data <- readBin("audio.wav", "raw", file.info("audio.wav")$size)
 b64 <- base64encode(audio_data)
 data_url <- paste0("data:audio/wav;base64,", b64)
 
-# Create iframe HTML
+# Create iframe HTML (assumes ozen-web/ directory with build contents)
 iframe_html <- sprintf(
-  '<iframe src="viewer.html?audio=%s&overlays=pitch,formants" width="100%%" height="600" frameborder="0"></iframe>',
+  '<iframe src="./ozen-web/viewer.html?audio=%s&overlays=pitch,formants" width="100%%" height="600" frameborder="0"></iframe>',
   URLencode(data_url, reserved = TRUE)
 )
 
@@ -192,27 +210,27 @@ iframe_html <- sprintf(
 
 **Minimal** (defaults):
 ```html
-<iframe src="viewer.html?audio=audio.wav"></iframe>
+<iframe src="./ozen-web/viewer.html?audio=audio.wav"></iframe>
 ```
 
 **Custom overlays**:
 ```html
-<iframe src="viewer.html?audio=audio.wav&overlays=pitch,formants,intensity,hnr"></iframe>
+<iframe src="./ozen-web/viewer.html?audio=audio.wav&overlays=pitch,formants,intensity,hnr"></iframe>
 ```
 
 **All overlays**:
 ```html
-<iframe src="viewer.html?audio=audio.wav&overlays=all"></iframe>
+<iframe src="./ozen-web/viewer.html?audio=audio.wav&overlays=all"></iframe>
 ```
 
 **Remote CDN**:
 ```html
-<iframe src="viewer.html?audio=https://cdn.example.com/sample.wav&overlays=pitch,formants"></iframe>
+<iframe src="./ozen-web/viewer.html?audio=https://cdn.example.com/sample.wav&overlays=pitch,formants"></iframe>
 ```
 
 **Self-contained (data URL)**:
 ```html
-<iframe src="viewer.html?audio=data:audio/wav;base64,UklGRiQAAABXQVZF...&overlays=pitch,formants"></iframe>
+<iframe src="./ozen-web/viewer.html?audio=data:audio/wav;base64,UklGRiQAAABXQVZF...&overlays=pitch,formants"></iframe>
 ```
 (Full base64 data truncated for readability)
 
