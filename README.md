@@ -118,11 +118,13 @@ Load audio from a URL on page load.
 
 **Supported URL types:**
 - Remote HTTPS: `?audio=https://example.com/audio.wav`
-- Relative path: `?audio=samples/demo.wav`
+- Relative path: `?audio=samples/demo.wav` or `?audio=../audio.wav`
 - Same-origin: `?audio=/static/audio/demo.wav`
-- **Data URL (embedded)**: `?audio=data:audio/wav;base64,UklGRiQAAABXQVZF...`
+- Data URL (legacy): `?audio=data:audio/wav;base64,UklGRiQAAABXQVZF...`
 
-**CORS Requirement**: Remote URLs must send `Access-Control-Allow-Origin` header. Data URLs don't need CORS (they're embedded).
+**Recommended**: Use the helper scripts (`scripts/create-iframe.py` or `scripts/create-iframe.R`) to generate iframes with correct relative paths automatically.
+
+**CORS Requirement**: Remote URLs must send `Access-Control-Allow-Origin` header.
 
 **Example Apache config** (`.htaccess`):
 ```apache
@@ -156,55 +158,45 @@ Control which acoustic overlays are displayed.
 ?audio=file.wav&overlays=pitch
 ```
 
-### Data URL Embedding (Self-Contained HTML)
+### Helper Scripts for Quarto/R Markdown
 
-**For Quarto/R Markdown documents** that need single-file output:
+**For Quarto/R Markdown documents**, use the provided helper scripts to generate iframe HTML with correct relative paths:
 
-**Python example:**
+**Python (Command line):**
+```bash
+python scripts/create-iframe.py audio.wav
+python scripts/create-iframe.py audio.wav --overlays pitch,formants,hnr
+python scripts/create-iframe.py samples/audio.wav --viewer-url ./ozen-web/viewer.html
+```
+
+**Python (In Jupyter/Quarto):**
 ```python
-import base64
-from urllib.parse import quote
+import sys
+sys.path.append('scripts')
+from create_iframe import create_embedded_viewer
 
-# Read and encode audio
-with open('audio.wav', 'rb') as f:
-    audio_data = f.read()
-b64 = base64.b64encode(audio_data).decode('ascii')
-data_url = f"data:audio/wav;base64,{b64}"
-
-# Create iframe HTML (assumes ozen-web/ directory with build contents)
-iframe_html = f'''
-<iframe
-  src="./ozen-web/viewer.html?audio={quote(data_url, safe='')}&overlays=pitch,formants"
-  width="100%"
-  height="600"
-  frameborder="0">
-</iframe>
-'''
+# Generate iframe HTML
+html = create_embedded_viewer("audio.wav", overlays="pitch,formants,hnr")
+print(html)
 ```
 
-**R example:**
+**R (Command line):**
+```bash
+Rscript scripts/create-iframe.R audio.wav
+Rscript scripts/create-iframe.R audio.wav "pitch,formants,hnr"
+Rscript scripts/create-iframe.R samples/audio.wav "pitch,formants" "./ozen-web/viewer.html"
+```
+
+**R (In R Markdown/Quarto):**
 ```r
-library(base64enc)
+source("scripts/create-iframe.R")
 
-# Read and encode audio
-audio_data <- readBin("audio.wav", "raw", file.info("audio.wav")$size)
-b64 <- base64encode(audio_data)
-data_url <- paste0("data:audio/wav;base64,", b64)
-
-# Create iframe HTML (assumes ozen-web/ directory with build contents)
-iframe_html <- sprintf(
-  '<iframe src="./ozen-web/viewer.html?audio=%s&overlays=pitch,formants" width="100%%" height="600" frameborder="0"></iframe>',
-  URLencode(data_url, reserved = TRUE)
-)
-
-# In R Markdown: htmltools::HTML(iframe_html)
+# Generate iframe HTML
+html <- create_embedded_viewer("audio.wav", overlays = "pitch,formants,hnr")
+htmltools::HTML(html)
 ```
 
-**Size Limitations:**
-- Maximum data URL size: ~2MB (browser URL length limit)
-- Base64 encoding adds ~33% size overhead
-- Practical audio limit: ~1.5MB of raw audio data
-- For larger files, use remote URL hosting instead
+The scripts automatically calculate the correct relative path from the viewer to the audio file, handling any directory structure.
 
 ### Complete Examples
 
@@ -228,11 +220,10 @@ iframe_html <- sprintf(
 <iframe src="./ozen-web/viewer.html?audio=https://cdn.example.com/sample.wav&overlays=pitch,formants"></iframe>
 ```
 
-**Self-contained (data URL)**:
+**Relative path (use helper scripts for correct calculation)**:
 ```html
-<iframe src="./ozen-web/viewer.html?audio=data:audio/wav;base64,UklGRiQAAABXQVZF...&overlays=pitch,formants"></iframe>
+<iframe src="./ozen-web/viewer.html?audio=../audio.wav&overlays=pitch,formants"></iframe>
 ```
-(Full base64 data truncated for readability)
 
 ### Error Handling
 
@@ -280,10 +271,9 @@ servr::httd(port = 8000)
 ### Limitations
 
 - **Remote files**: Recommended <100MB (browser memory)
-- **Data URLs**: Maximum ~1.5MB raw audio (~2MB base64) due to browser URL length limits
-- **HTTPS**: Remote URLs require HTTPS on HTTPS pages (data URLs work on both)
-- **URL length**: Data URLs count toward ~2MB browser URL limit
+- **HTTPS**: Remote URLs require HTTPS on HTTPS pages
 - **Local viewing**: Must use HTTP server, not `file://` URLs (browsers block file:// iframes)
+- **CORS**: Remote audio URLs must send `Access-Control-Allow-Origin` header
 
 ## Configuration
 
