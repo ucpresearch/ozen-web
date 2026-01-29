@@ -525,7 +525,114 @@
 			a1p0: a1p0 ? a1p0[closestIdx] : null
 		};
 	})();
+
+	// ─────────────────────────────────────────────────────────────────────────────
+	// Clipboard Copy Functions
+	// ─────────────────────────────────────────────────────────────────────────────
+
+	/**
+	 * Copy acoustic values at cursor to clipboard.
+	 * Format: "F0: 100, F1: 350, F2: 650, ..."
+	 */
+	async function copyValuesToClipboard() {
+		if (!cursorValues) {
+			console.log('No values at cursor');
+			return;
+		}
+
+		// Build formatted string with labels and values
+		const parts: string[] = [];
+
+		if (cursorValues.pitch !== null && cursorValues.pitch !== undefined) {
+			parts.push(`F0: ${cursorValues.pitch.toFixed(1)} Hz`);
+		}
+		if (cursorValues.intensity !== null && cursorValues.intensity !== undefined) {
+			parts.push(`Intensity: ${cursorValues.intensity.toFixed(1)} dB`);
+		}
+		if (cursorValues.f1 !== null && cursorValues.f1 !== undefined) {
+			parts.push(`F1: ${cursorValues.f1.toFixed(0)} Hz`);
+		}
+		if (cursorValues.f2 !== null && cursorValues.f2 !== undefined) {
+			parts.push(`F2: ${cursorValues.f2.toFixed(0)} Hz`);
+		}
+		if (cursorValues.f3 !== null && cursorValues.f3 !== undefined) {
+			parts.push(`F3: ${cursorValues.f3.toFixed(0)} Hz`);
+		}
+		if (cursorValues.f4 !== null && cursorValues.f4 !== undefined) {
+			parts.push(`F4: ${cursorValues.f4.toFixed(0)} Hz`);
+		}
+		if (cursorValues.hnr !== null && cursorValues.hnr !== undefined) {
+			parts.push(`HNR: ${cursorValues.hnr.toFixed(1)} dB`);
+		}
+		if (cursorValues.cog !== null && cursorValues.cog !== undefined) {
+			parts.push(`CoG: ${cursorValues.cog.toFixed(0)} Hz`);
+		}
+		if (cursorValues.spectralTilt !== null && cursorValues.spectralTilt !== undefined) {
+			parts.push(`Spectral Tilt: ${cursorValues.spectralTilt.toFixed(1)} dB`);
+		}
+		if (cursorValues.a1p0 !== null && cursorValues.a1p0 !== undefined) {
+			parts.push(`A1-P0: ${cursorValues.a1p0.toFixed(1)} dB`);
+		}
+
+		const text = parts.join(', ');
+
+		try {
+			await navigator.clipboard.writeText(text);
+			console.log('Copied values to clipboard:', text);
+		} catch (err) {
+			console.error('Failed to copy to clipboard:', err);
+		}
+	}
+
+	/**
+	 * Handle keyboard shortcuts.
+	 */
+	function handleKeydown(e: KeyboardEvent) {
+		// Ctrl+C / Cmd+C: Copy acoustic values
+		if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'c') {
+			e.preventDefault();
+			copyValuesToClipboard();
+		}
+	}
+
+	// ─────────────────────────────────────────────────────────────────────────────
+	// Long Press Detection for Mobile
+	// ─────────────────────────────────────────────────────────────────────────────
+
+	let longPressTimer: number | null = null;
+	const LONG_PRESS_DURATION = 500; // ms
+
+	/**
+	 * Start long press timer on touch start.
+	 */
+	function handleTouchStart(e: TouchEvent) {
+		// Only trigger on single finger touch
+		if (e.touches.length !== 1) return;
+
+		longPressTimer = window.setTimeout(() => {
+			copyValuesToClipboard();
+			longPressTimer = null;
+		}, LONG_PRESS_DURATION);
+	}
+
+	/**
+	 * Cancel long press timer on touch end/move.
+	 */
+	function handleTouchEnd() {
+		if (longPressTimer !== null) {
+			clearTimeout(longPressTimer);
+			longPressTimer = null;
+		}
+	}
+
+	onDestroy(() => {
+		if (longPressTimer !== null) {
+			clearTimeout(longPressTimer);
+		}
+	});
 </script>
+
+<svelte:window on:keydown={handleKeydown} />
 
 <!-- ═══════════════════════════════════════════════════════════════════════════
      HEAD CONFIGURATION
@@ -674,6 +781,10 @@
 		<div
 			class="gesture-container"
 			bind:this={gestureContainer}
+			on:touchstart={handleTouchStart}
+			on:touchend={handleTouchEnd}
+			on:touchcancel={handleTouchEnd}
+			on:touchmove={handleTouchEnd}
 		>
 			<div class="waveform-panel">
 				<Waveform />

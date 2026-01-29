@@ -104,6 +104,25 @@
 		}
 	}
 
+	/**
+	 * Copy all data points as TSV to clipboard.
+	 */
+	async function copyDataPointsToClipboard() {
+		if ($dataPoints.length === 0) {
+			console.log('No data points to copy');
+			return;
+		}
+
+		const tsv = exportDataPointsTSV();
+
+		try {
+			await navigator.clipboard.writeText(tsv);
+			console.log(`Copied ${$dataPoints.length} data points to clipboard`);
+		} catch (err) {
+			console.error('Failed to copy to clipboard:', err);
+		}
+	}
+
 	function handleKeydown(e: KeyboardEvent) {
 		// Ignore if typing in an input
 		if (e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement) {
@@ -124,6 +143,10 @@
 				case 'y':
 					e.preventDefault();
 					redo();
+					return;
+				case 'c':
+					e.preventDefault();
+					copyDataPointsToClipboard();
 					return;
 			}
 		}
