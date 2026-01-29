@@ -281,6 +281,12 @@ This allows working with arbitrarily long recordings without UI freezing.
 - [x] Floating play button
 - [x] Landscape mode optimization
 - [x] Safe area support for notched phones
+- [x] URL-based audio loading (`?audio=` parameter)
+- [x] URL-based overlay configuration (`?overlays=` parameter)
+- [x] Iframe embedding support with pre-configuration
+- [x] CORS-enabled remote file loading
+- [x] Data URL support for self-contained embeds
+- [x] Loading state UI with retry and error handling
 
 ## Key Differences from Desktop Ozen
 

@@ -15,6 +15,7 @@
 -->
 <script lang="ts">
 	import { onMount, onDestroy } from 'svelte';
+	import { page } from '$app/stores';
 	import FileDropZone from '$lib/components/FileDropZone.svelte';
 	import Waveform from '$lib/components/Waveform.svelte';
 	import Spectrogram from '$lib/components/Spectrogram.svelte';
@@ -83,12 +84,38 @@
 	let recordingTimer: ReturnType<typeof setInterval> | null = null;
 
 	// ─────────────────────────────────────────────────────────────────────────────
+	// URL Loading State
+	// ─────────────────────────────────────────────────────────────────────────────
+
+	/** Whether currently loading audio from URL */
+	let isLoadingUrl = false;
+
+	/** Error message from URL loading attempt */
+	let urlLoadError: string | null = null;
+
+	/** Whether auto-load from URL parameter has been attempted */
+	let autoLoadAttempted = false;
+
+	// ─────────────────────────────────────────────────────────────────────────────
 	// Lifecycle
 	// ─────────────────────────────────────────────────────────────────────────────
 
 	onMount(() => {
 		// Initialize the WASM acoustic analysis engine
 		initWasm();
+
+		// Apply overlay configuration from URL parameter
+		const overlaysParam = $page.url.searchParams.get('overlays');
+		if (overlaysParam) {
+			applyOverlayConfiguration(overlaysParam);
+		}
+
+		// Auto-load audio from URL parameter
+		const audioUrl = getAudioUrlFromParams();
+		if (audioUrl && !autoLoadAttempted) {
+			autoLoadAttempted = true;
+			loadAudioFromUrl(audioUrl);
+		}
 	});
 
 	onDestroy(() => {
@@ -277,6 +304,207 @@
 
 		// Run acoustic analysis
 		runAnalysis().catch(e => console.error('Analysis failed:', e));
+	}
+
+	// ─────────────────────────────────────────────────────────────────────────────
+	// URL Parameter Handling
+	// ─────────────────────────────────────────────────────────────────────────────
+
+	/**
+	 * Extract audio URL from query parameters.
+	 */
+	function getAudioUrlFromParams(): string | null {
+		const audioUrl = $page.url.searchParams.get('audio');
+		if (!audioUrl || audioUrl.trim() === '') {
+			return null;
+		}
+		return audioUrl.trim();
+	}
+
+	/**
+	 * Load audio from a URL (remote, relative, or data URL).
+	 * Handles fetch, decode, and store loading with error handling.
+	 *
+	 * Data URLs are supported automatically - fetch() handles them natively.
+	 */
+	async function loadAudioFromUrl(url: string): Promise<void> {
+		isLoadingUrl = true;
+		urlLoadError = null;
+		clearAnalysis();
+
+		try {
+			// Detect URL type for logging
+			const isDataUrl = url.startsWith('data:');
+			const logUrl = isDataUrl ? `data URL (${(url.length / 1024).toFixed(1)}KB)` : url;
+			console.log(`Fetching audio from: ${logUrl}`);
+
+			// Optional: Warn about very long URLs
+			if (url.length > 2_000_000) {
+				console.warn(`Warning: URL is ${(url.length / 1024 / 1024).toFixed(1)}MB. Some browsers limit URLs to ~2MB.`);
+			}
+
+			const response = await fetch(url, {
+				method: 'GET',
+				mode: 'cors',
+				cache: 'default'
+			});
+
+			if (!response.ok) {
+				throw new Error(
+					`Failed to fetch audio: ${response.status} ${response.statusText}`
+				);
+			}
+
+			const arrayBuffer = await response.arrayBuffer();
+
+			if (arrayBuffer.byteLength === 0) {
+				throw new Error('Audio file is empty (0 bytes)');
+			}
+
+			console.log(`Fetched ${arrayBuffer.byteLength} bytes, decoding...`);
+
+			const audioContext = new AudioContext();
+			const decoded = await audioContext.decodeAudioData(arrayBuffer);
+
+			// Convert to Float64Array (mono, first channel)
+			const samples = new Float64Array(decoded.length);
+			const channelData = decoded.getChannelData(0);
+			for (let i = 0; i < decoded.length; i++) {
+				samples[i] = channelData[i];
+			}
+
+			// Load into stores
+			audioBuffer.set(samples);
+			sampleRate.set(decoded.sampleRate);
+
+			// Extract filename from URL
+			let filename = 'audio.wav';
+			if (url.startsWith('data:')) {
+				filename = 'embedded-audio.wav';
+			} else {
+				const urlObj = new URL(url, window.location.href);
+				const pathParts = urlObj.pathname.split('/');
+				filename = pathParts[pathParts.length - 1] || 'audio.wav';
+			}
+			fileName.set(filename);
+
+			duration.set(decoded.length / decoded.sampleRate);
+
+			// Set initial view (max 10s visible)
+			const dur = decoded.length / decoded.sampleRate;
+			timeRange.set({ start: 0, end: Math.min(dur, 10) });
+			cursorPosition.set(0);
+			selection.set(null);
+
+			console.log(`Audio loaded: ${dur.toFixed(2)}s at ${decoded.sampleRate}Hz`);
+
+			await runAnalysis();
+
+		} catch (error) {
+			console.error('Failed to load audio from URL:', error);
+
+			let errorMessage = 'Failed to load audio from URL.';
+
+			if (error instanceof TypeError && error.message.includes('Failed to fetch')) {
+				errorMessage = 'Network error: Could not fetch audio. Check CORS settings.';
+			} else if (error instanceof DOMException && error.name === 'EncodingError') {
+				errorMessage = 'Audio decoding failed: Unsupported format or corrupted file.';
+			} else if (error instanceof Error) {
+				errorMessage = `Error: ${error.message}`;
+			}
+
+			urlLoadError = errorMessage;
+		} finally {
+			isLoadingUrl = false;
+		}
+	}
+
+	/**
+	 * Retry loading audio from the URL parameter.
+	 */
+	function retryUrlLoad(): void {
+		const audioUrl = getAudioUrlFromParams();
+		if (audioUrl) {
+			urlLoadError = null;
+			loadAudioFromUrl(audioUrl);
+		}
+	}
+
+	/**
+	 * Parse and apply overlay configuration from URL parameters.
+	 *
+	 * Format: ?overlays=pitch,formants,hnr
+	 * Special: ?overlays=all (enables all)
+	 * Default (no param): pitch + formants only
+	 */
+	function applyOverlayConfiguration(overlaysParam: string): void {
+		const param = overlaysParam.toLowerCase().trim();
+
+		// Handle special "all" value
+		if (param === 'all') {
+			showPitch = true;
+			showFormants = true;
+			showIntensity = true;
+			showHNR = true;
+			showCoG = true;
+			showSpectralTilt = true;
+			showA1P0 = true;
+			console.log('Overlays: all enabled');
+			return;
+		}
+
+		// Parse comma-separated list
+		const overlays = param.split(',').map(s => s.trim()).filter(s => s.length > 0);
+
+		if (overlays.length === 0) {
+			console.warn('Empty overlays parameter, using defaults');
+			return;
+		}
+
+		// Reset all to false, then enable specified
+		showPitch = false;
+		showFormants = false;
+		showIntensity = false;
+		showHNR = false;
+		showCoG = false;
+		showSpectralTilt = false;
+		showA1P0 = false;
+
+		// Enable specified overlays
+		for (const overlay of overlays) {
+			switch (overlay) {
+				case 'pitch':
+				case 'f0':
+					showPitch = true;
+					break;
+				case 'formants':
+				case 'formant':
+					showFormants = true;
+					break;
+				case 'intensity':
+				case 'int':
+					showIntensity = true;
+					break;
+				case 'hnr':
+					showHNR = true;
+					break;
+				case 'cog':
+					showCoG = true;
+					break;
+				case 'spectraltilt':
+				case 'tilt':
+					showSpectralTilt = true;
+					break;
+				case 'a1p0':
+				case 'a1-p0':
+					showA1P0 = true;
+					break;
+				default:
+					console.warn(`Unknown overlay: ${overlay}`);
+			}
+		}
+
+		console.log(`Overlays configured: ${overlays.join(', ')}`);
 	}
 
 	// ─────────────────────────────────────────────────────────────────────────────
@@ -661,11 +889,47 @@
 
 	<!-- ─────────────────────────────────────────────────────────────────────────
 	     STATE 2: Start Screen (No Audio Loaded)
-	     Shows Load File and Record buttons, or recording indicator
+	     Shows Load File and Record buttons, or recording indicator, or URL loading states
 	     ─────────────────────────────────────────────────────────────────────────── -->
 	{:else if !$audioBuffer}
 		<div class="start-screen">
-			{#if isRecording}
+			{#if isLoadingUrl}
+				<!-- Loading from URL -->
+				<div class="loading-url">
+					<div class="spinner"></div>
+					<p class="loading-text">Loading audio from URL...</p>
+				</div>
+			{:else if urlLoadError}
+				<!-- Error state -->
+				<div class="error-message">
+					<svg viewBox="0 0 24 24" fill="currentColor" width="48" height="48" class="error-icon">
+						<path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
+					</svg>
+					<h3>Failed to Load Audio</h3>
+					<p class="error-detail">{urlLoadError}</p>
+					<button class="retry-btn" on:click={retryUrlLoad}>Retry</button>
+				</div>
+				<!-- Fallback options -->
+				<div class="fallback-options">
+					<p class="or-text">or load a different file:</p>
+					<div class="start-buttons">
+						<label class="start-btn load-btn">
+							<input type="file" accept="audio/*" on:change={handleFileInput} />
+							<svg viewBox="0 0 24 24" fill="currentColor" width="32" height="32">
+								<path d="M9 16h6v-6h4l-7-7-7 7h4v6zm-4 2h14v2H5v-2z"/>
+							</svg>
+							<span>Load File</span>
+						</label>
+						<button class="start-btn record-btn" on:click={startRecording}>
+							<svg viewBox="0 0 24 24" fill="currentColor" width="32" height="32">
+								<circle cx="12" cy="12" r="8"/>
+							</svg>
+							<span>Record</span>
+						</button>
+					</div>
+				</div>
+			{:else if isRecording}
+				<!-- Recording state -->
 				<div class="recording-indicator">
 					<div class="recording-pulse"></div>
 					<span class="recording-time">{recordingTime.toFixed(1)}s</span>
@@ -677,6 +941,7 @@
 					<span>Stop</span>
 				</button>
 			{:else}
+				<!-- Start screen -->
 				<h2>Ozen Viewer</h2>
 				<div class="start-buttons">
 					<label class="start-btn load-btn">
@@ -1014,6 +1279,100 @@
 		font-size: 0.8rem;
 		color: var(--color-text-muted);
 		margin: 0;
+	}
+
+	/* ═══════════════════════════════════════════════════════════════════════════
+	   URL LOADING STATES
+	   Loading spinner, error messages, and retry UI
+	   ═══════════════════════════════════════════════════════════════════════════ */
+	.loading-url {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 1.5rem;
+		padding: 2rem;
+	}
+
+	.spinner {
+		width: 60px;
+		height: 60px;
+		border: 4px solid var(--color-border);
+		border-top-color: var(--color-primary);
+		border-radius: 50%;
+		animation: spin 0.8s linear infinite;
+	}
+
+	@keyframes spin {
+		to { transform: rotate(360deg); }
+	}
+
+	.loading-text {
+		font-size: 1rem;
+		color: var(--color-text);
+		margin: 0;
+	}
+
+	.error-message {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 1rem;
+		padding: 2rem;
+		max-width: 400px;
+		text-align: center;
+	}
+
+	.error-icon {
+		color: #ef4444;
+	}
+
+	.error-message h3 {
+		font-size: 1.25rem;
+		font-weight: 600;
+		margin: 0;
+		color: var(--color-text);
+	}
+
+	.error-detail {
+		font-size: 0.9rem;
+		color: var(--color-text-muted);
+		margin: 0;
+		line-height: 1.5;
+	}
+
+	.retry-btn {
+		padding: 0.75rem 1.5rem;
+		border: 2px solid var(--color-primary);
+		border-radius: 8px;
+		background: transparent;
+		color: var(--color-primary);
+		font-size: 0.9rem;
+		font-weight: 500;
+		cursor: pointer;
+		transition: all 0.2s;
+	}
+
+	.retry-btn:hover {
+		background: rgba(74, 158, 255, 0.1);
+	}
+
+	.retry-btn:active {
+		transform: scale(0.98);
+	}
+
+	.fallback-options {
+		margin-top: 2rem;
+		padding-top: 2rem;
+		border-top: 1px solid var(--color-border);
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+	}
+
+	.or-text {
+		font-size: 0.85rem;
+		color: var(--color-text-muted);
+		margin: 0 0 1rem 0;
 	}
 
 	/* ═══════════════════════════════════════════════════════════════════════════

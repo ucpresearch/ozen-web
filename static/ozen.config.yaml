@@ -2,7 +2,7 @@
 # Praat-style defaults for acoustic analysis and display
 
 colors:
-  # Waveform - black on white like Praat
+  # Waveform - black on white
   waveform:
     background: "#ffffff"
     line: "#000000"
@@ -12,24 +12,24 @@ colors:
   spectrogram:
     colormap: grayscale  # grayscale or viridis
 
-  # Cursor - Praat uses red
+  # Cursor (red)
   cursor: "#ff0000"
   cursor_width: 1
 
-  # Selection - Praat uses pink/magenta
+  # Selection (magenta)
   selection:
     fill: "rgba(255, 192, 203, 0.4)"
     border: "#ff0080"
 
-  # Pitch - blue
+  # Pitch (blue)
   pitch: "#0000ff"
   pitch_width: 2
 
-  # Intensity - green
+  # Intensity (green)
   intensity: "#008000"
   intensity_width: 2
 
-  # Formants - red dots
+  # Formants (red dots)
   formant:
     f1: "#ff0000"
     f2: "#ff8080"

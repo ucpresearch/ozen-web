@@ -77,6 +77,161 @@ See [DEVELOPMENT.md](DEVELOPMENT.md) for detailed setup, deployment, and archite
 | Ctrl+Z | Undo |
 | Ctrl+Y | Redo |
 
+## Embedding with Pre-loaded Audio
+
+The viewer page (`viewer.html` in the static build) supports URL parameters for iframe embedding with pre-configured audio and overlays.
+
+### Basic Usage
+
+```html
+<iframe
+  src="https://yoursite.com/viewer.html?audio=https://cdn.example.com/audio.wav&overlays=pitch,formants,hnr"
+  width="100%"
+  height="600"
+  frameborder="0">
+</iframe>
+```
+
+### URL Parameters
+
+#### `audio` - Audio File URL
+
+Load audio from a URL on page load.
+
+**Supported URL types:**
+- Remote HTTPS: `?audio=https://example.com/audio.wav`
+- Relative path: `?audio=samples/demo.wav`
+- Same-origin: `?audio=/static/audio/demo.wav`
+- **Data URL (embedded)**: `?audio=data:audio/wav;base64,UklGRiQAAABXQVZF...`
+
+**CORS Requirement**: Remote URLs must send `Access-Control-Allow-Origin` header. Data URLs don't need CORS (they're embedded).
+
+**Example Apache config** (`.htaccess`):
+```apache
+<FilesMatch "\.(wav|mp3|ogg|flac)$">
+  Header set Access-Control-Allow-Origin "*"
+</FilesMatch>
+```
+
+#### `overlays` - Phonetic Property Visibility
+
+Control which acoustic overlays are displayed.
+
+**Format**: Comma-separated list (case-insensitive)
+
+**Supported values:**
+- `pitch` or `f0` - Fundamental frequency (F0)
+- `formants` - Resonant frequencies (F1-F4)
+- `intensity` - Sound pressure level
+- `hnr` - Harmonics-to-Noise Ratio
+- `cog` - Center of Gravity
+- `spectraltilt` - Spectral tilt
+- `a1p0` - A1-P0 nasal measure
+- `all` - Enable all overlays
+
+**Default** (no parameter): `pitch,formants`
+
+**Examples:**
+```
+?audio=file.wav&overlays=pitch,formants,hnr
+?audio=file.wav&overlays=all
+?audio=file.wav&overlays=pitch
+```
+
+### Data URL Embedding (Self-Contained HTML)
+
+**For Quarto/R Markdown documents** that need single-file output:
+
+**Python example:**
+```python
+import base64
+from urllib.parse import quote
+
+# Read and encode audio
+with open('audio.wav', 'rb') as f:
+    audio_data = f.read()
+b64 = base64.b64encode(audio_data).decode('ascii')
+data_url = f"data:audio/wav;base64,{b64}"
+
+# Create iframe HTML
+iframe_html = f'''
+<iframe
+  src="viewer.html?audio={quote(data_url, safe='')}&overlays=pitch,formants"
+  width="100%"
+  height="600"
+  frameborder="0">
+</iframe>
+'''
+```
+
+**R example:**
+```r
+library(base64enc)
+
+# Read and encode audio
+audio_data <- readBin("audio.wav", "raw", file.info("audio.wav")$size)
+b64 <- base64encode(audio_data)
+data_url <- paste0("data:audio/wav;base64,", b64)
+
+# Create iframe HTML
+iframe_html <- sprintf(
+  '<iframe src="viewer.html?audio=%s&overlays=pitch,formants" width="100%%" height="600" frameborder="0"></iframe>',
+  URLencode(data_url, reserved = TRUE)
+)
+
+# In R Markdown: htmltools::HTML(iframe_html)
+```
+
+**Size Limitations:**
+- Maximum data URL size: ~2MB (browser URL length limit)
+- Base64 encoding adds ~33% size overhead
+- Practical audio limit: ~1.5MB of raw audio data
+- For larger files, use remote URL hosting instead
+
+### Complete Examples
+
+**Minimal** (defaults):
+```html
+<iframe src="viewer.html?audio=audio.wav"></iframe>
+```
+
+**Custom overlays**:
+```html
+<iframe src="viewer.html?audio=audio.wav&overlays=pitch,formants,intensity,hnr"></iframe>
+```
+
+**All overlays**:
+```html
+<iframe src="viewer.html?audio=audio.wav&overlays=all"></iframe>
+```
+
+**Remote CDN**:
+```html
+<iframe src="viewer.html?audio=https://cdn.example.com/sample.wav&overlays=pitch,formants"></iframe>
+```
+
+**Self-contained (data URL)**:
+```html
+<iframe src="viewer.html?audio=data:audio/wav;base64,UklGRiQAAABXQVZF...&overlays=pitch,formants"></iframe>
+```
+(Full base64 data truncated for readability)
+
+### Error Handling
+
+If audio fails to load:
+1. Error message displays with details
+2. "Retry" button attempts reload
+3. Manual file load/record options remain available
+
+User can still toggle overlays via settings drawer regardless of URL configuration.
+
+### Limitations
+
+- **Remote files**: Recommended <100MB (browser memory)
+- **Data URLs**: Maximum ~1.5MB raw audio (~2MB base64) due to browser URL length limits
+- **HTTPS**: Remote URLs require HTTPS on HTTPS pages (data URLs work on both)
+- **URL length**: Data URLs count toward ~2MB browser URL limit
+
 ## Configuration
 
 Place a `config.yaml` file in the app directory to customize colors, formant presets, and display settings. See `static/config.yaml` for available options.
