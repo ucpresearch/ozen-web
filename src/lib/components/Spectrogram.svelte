@@ -260,6 +260,9 @@
 		if (!$audioBuffer || !$wasmReady) return;
 
 		isComputingSpectrogram = true;
+		// Allow Svelte to render the "Computing..." message before blocking with computation
+		await tick();
+
 		const wasm = getWasm();
 		const sound = new wasm.Sound($audioBuffer, $sampleRate);
 
@@ -1185,7 +1188,7 @@
 	role="application"
 	aria-label="Spectrogram - click and drag to select, scroll to zoom, double-click to add data point"
 >
-	{#if isComputingSpectrogram}
+	{#if isComputingSpectrogram || (!spectrogramData && !showZoomMessage)}
 		<div class="computing">Computing spectrogram...</div>
 	{/if}
 	<canvas bind:this={canvas}></canvas>
