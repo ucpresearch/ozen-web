@@ -138,9 +138,6 @@
 			return;
 		}
 
-		// Debug logging
-		console.log('Key pressed:', e.code, e.key);
-
 		// Handle Ctrl/Cmd shortcuts
 		if (e.ctrlKey || e.metaKey) {
 			switch (e.key.toLowerCase()) {
@@ -179,22 +176,18 @@
 				break;
 			// Arrow keys for navigation
 			case 'ArrowLeft':
-				console.log('ArrowLeft: panning left');
 				e.preventDefault();
 				panView(-0.1); // Pan left (10% of visible window)
 				break;
 			case 'ArrowRight':
-				console.log('ArrowRight: panning right');
 				e.preventDefault();
 				panView(0.1); // Pan right (10% of visible window)
 				break;
 			case 'ArrowUp':
-				console.log('ArrowUp: zooming in');
 				e.preventDefault();
 				zoomView(0.91, true); // Zoom in centered on visible window
 				break;
 			case 'ArrowDown':
-				console.log('ArrowDown: zooming out');
 				e.preventDefault();
 				zoomView(1.1, true); // Zoom out centered on visible window
 				break;
@@ -217,11 +210,7 @@
 	 * @param fraction - Fraction of current window to pan (negative = left, positive = right)
 	 */
 	function panView(fraction: number) {
-		console.log('panView called with fraction:', fraction);
-		if (!$audioBuffer) {
-			console.log('panView: no audio buffer');
-			return;
-		}
+		if (!$audioBuffer) return;
 
 		const duration = $audioBuffer.length / $sampleRate;
 		const { start, end } = $timeRange;
@@ -230,7 +219,6 @@
 
 		let newStart = start + panAmount;
 		let newEnd = end + panAmount;
-		console.log('panView: moving from', start, '-', end, 'to', newStart, '-', newEnd);
 
 		// Clamp to audio bounds
 		if (newStart < 0) {
@@ -251,11 +239,7 @@
 	 * @param centerOnWindow - If true, center on middle of visible window; if false, center on cursor
 	 */
 	function zoomView(factor: number, centerOnWindow: boolean = false) {
-		console.log('zoomView called with factor:', factor, 'centerOnWindow:', centerOnWindow);
-		if (!$audioBuffer) {
-			console.log('zoomView: no audio buffer');
-			return;
-		}
+		if (!$audioBuffer) return;
 
 		const duration = $audioBuffer.length / $sampleRate;
 		const { start, end } = $timeRange;
@@ -266,7 +250,6 @@
 
 		// Calculate new duration
 		const newDuration = Math.max(0.01, Math.min(duration, currentDuration * factor));
-		console.log('zoomView: current duration', currentDuration, '→ new duration', newDuration, 'centered on', centerTime);
 
 		// Zoom centered on cursor position
 		const ratio = (centerTime - start) / currentDuration;
