@@ -1,0 +1,316 @@
+---
+title: "Embedding Guide"
+subtitle: "Embed ozen-web in websites and documents"
+---
+
+## Introduction
+
+ozen-web's mobile viewer can be embedded in websites, Quarto documents, R Markdown, Jupyter notebooks, and any web page via iframes. This allows creating interactive acoustic visualizations in:
+
+- Research papers and presentations
+- Course materials and textbooks
+- Blog posts and tutorials
+- Data analysis notebooks
+
+## Quick Start
+
+**Basic embedding:**
+
+```html
+<iframe
+  data-external="1"
+  src="./ozen-web/viewer.html?audio=audio.wav&overlays=pitch,formants"
+  width="100%"
+  height="600"
+  frameborder="0">
+</iframe>
+```
+
+**Key points:**
+
+- `data-external="1"` is **required** for Quarto with `embed-resources: true`
+- `?audio=` parameter specifies audio file path
+- `?overlays=` parameter configures which features to display
+- Viewer works from any subdirectory
+
+**See:** [URL Parameters Reference](url-parameters.qmd) for all available options
+
+## Directory Structure
+
+**Recommended setup for Quarto/R Markdown projects:**
+
+```
+my-project/
+├── document.qmd                # Your Quarto document
+├── document.html               # Rendered output
+├── audio/                      # Your audio files
+│   ├── sample1.wav
+│   └── sample2.wav
+├── ozen-web/                   # Copy of build/ directory
+│   ├── viewer.html
+│   ├── _app/
+│   ├── wasm/
+│   └── ... (all build contents)
+└── scripts/
+    ├── create-iframe.R         # Helper script (R)
+    └── create-iframe.py        # Helper script (Python)
+```
+
+## Helper Scripts
+
+**Use helper scripts for automatic path calculation:**
+
+### Python
+
+**Command line:**
+
+```bash
+python scripts/create-iframe.py audio/sample.wav
+python scripts/create-iframe.py audio/sample.wav --overlays pitch,formants,hnr
+python scripts/create-iframe.py audio/sample.wav --height 800
+```
+
+**In Jupyter/Quarto:**
+
+```python
+import sys
+sys.path.append('scripts')
+from create_iframe import create_embedded_viewer
+
+# Generate iframe HTML
+html = create_embedded_viewer("audio/sample.wav",
+                              overlays="pitch,formants,hnr",
+                              height=600)
+print(html)
+```
+
+### R
+
+**Command line:**
+
+```bash
+Rscript scripts/create-iframe.R audio/sample.wav
+Rscript scripts/create-iframe.R audio/sample.wav "pitch,formants,hnr"
+Rscript scripts/create-iframe.R audio/sample.wav "pitch,formants" "./ozen-web/viewer.html" 800
+```
+
+**In R Markdown/Quarto:**
+
+```r
+source("scripts/create-iframe.R")
+
+# Generate iframe HTML
+html <- create_embedded_viewer("audio/sample.wav",
+                               overlays = "pitch,formants,hnr",
+                               height = 600)
+htmltools::HTML(html)
+```
+
+**See:** [Helper Scripts Documentation](basic-usage.qmd#helper-scripts)
+
+## Use Cases
+
+### Research Papers (Quarto)
+
+Embed interactive spectrograms in academic papers:
+
+````markdown
+---
+title: "Vowel Duration in Stress-Timed Languages"
+format:
+  html:
+    embed-resources: true
+---
+
+## Results
+
+Figure 1 shows the acoustic properties of the target vowel:
+
+```{r}
+#| eval: false
+#| echo: true
+source("../scripts/create-iframe.R")
+html <- create_embedded_viewer("data/vowel-example.wav",
+                               overlays = "pitch,formants,intensity")
+htmltools::HTML(html)
+```
+
+Readers can zoom, play, and explore the audio interactively.
+````
+
+### Course Materials
+
+Create interactive phonetics exercises:
+
+```html
+<h3>Exercise 1: Identify the vowel</h3>
+<p>Listen to the audio and examine F1 and F2:</p>
+
+<iframe
+  data-external="1"
+  src="./ozen-web/viewer.html?audio=exercises/vowel1.wav&overlays=formants"
+  width="100%"
+  height="500">
+</iframe>
+
+<details>
+<summary>Answer</summary>
+The vowel is [i] (high front), with F1≈300 Hz and F2≈2300 Hz.
+</details>
+```
+
+### Blog Posts
+
+Share audio examples with readers:
+
+```html
+<p>Here's what a rising intonation pattern looks like:</p>
+
+<iframe
+  data-external="1"
+  src="https://yoursite.com/ozen-web/viewer.html?audio=https://cdn.example.com/question.wav&overlays=pitch"
+  width="100%"
+  height="600">
+</iframe>
+```
+
+### Jupyter Notebooks
+
+Analyze data with embedded visualizations:
+
+```python
+from IPython.display import IFrame
+
+# Display embedded viewer
+IFrame(src='./ozen-web/viewer.html?audio=data/recording.wav&overlays=all',
+       width='100%',
+       height=600)
+```
+
+**See:** [Examples Page](examples.qmd) for more use cases
+
+## Deployment
+
+### GitHub Pages
+
+1. Build ozen-web: `npm run build`
+2. Copy `build/` to your project as `ozen-web/`
+3. Push to GitHub
+4. Enable GitHub Pages in repository settings
+5. Your documents with embedded viewers are live!
+
+### Netlify/Vercel
+
+Same as GitHub Pages — just include the `ozen-web/` directory in your project.
+
+### Static Site Generators
+
+ozen-web works with all static site generators:
+
+- Hugo
+- Jekyll
+- Gatsby
+- Eleventy
+- Docusaurus
+
+Just include the `ozen-web/` directory in your static files.
+
+**See:** [Getting Started: Deployment](../getting-started.qmd#option-3-deploy-your-own-instance)
+
+## Important Considerations
+
+### Quarto `embed-resources: true`
+
+**CRITICAL:** When using Quarto with `embed-resources: true`, you **must** include `data-external="1"` in all iframe tags:
+
+```html
+<iframe
+  data-external="1"    <!-- REQUIRED -->
+  src="./ozen-web/viewer.html?audio=audio.wav">
+</iframe>
+```
+
+**Why?** Quarto's `embed-resources: true` converts iframe sources to data URLs. However, the viewer uses ES6 module imports which cannot resolve in data URL contexts (browser limitation).
+
+Without `data-external="1"`, you'll see console errors:
+
+```
+Failed to resolve module specifier './_app/immutable/entry/start.js'
+```
+
+**The helper scripts automatically include this attribute.**
+
+### File Protocol Restrictions
+
+Browsers block `file://` URLs from loading iframes for security. When you open a rendered HTML file directly (double-click), iframes fail with:
+
+```
+Not allowed to load local resource: file:///...
+```
+
+**Solution:** Serve over HTTP:
+
+```bash
+# Python
+python -m http.server 8000
+
+# R
+servr::httd(port = 8000)
+
+# Then open: http://localhost:8000/document.html
+```
+
+**Or deploy to a web server** where HTTP is automatic.
+
+**See:** [Basic Usage: Serving Documents](basic-usage.qmd#serving-documents)
+
+### CORS for Remote Audio
+
+Remote audio URLs must send `Access-Control-Allow-Origin` header.
+
+**Apache (`.htaccess`):**
+
+```apache
+<FilesMatch "\.(wav|mp3|ogg|flac)$">
+  Header set Access-Control-Allow-Origin "*"
+</FilesMatch>
+```
+
+**Nginx:**
+
+```nginx
+location ~* \.(wav|mp3|ogg|flac)$ {
+    add_header Access-Control-Allow-Origin *;
+}
+```
+
+**See:** [URL Parameters: CORS](url-parameters.qmd#cors-requirements)
+
+## Next Steps
+
+- **[Basic Usage](basic-usage.qmd)** — Detailed embedding instructions
+- **[Quarto Integration](quarto-integration.qmd)** — Quarto-specific guide
+- **[URL Parameters](url-parameters.qmd)** — Complete parameter reference
+- **[Examples](examples.qmd)** — Working examples for all use cases
+
+## FAQ
+
+**Q: Can I embed the main app (not just viewer)?**
+
+A: The main app works in iframes but is designed for desktop use. The `/viewer` route is optimized for embedding and mobile.
+
+**Q: Does the embedded viewer support annotations?**
+
+A: The embedded viewer is view-only. For editing, link to the full app or deploy both versions.
+
+**Q: Can I customize the appearance?**
+
+A: Yes, via `config.yaml` file in the `ozen-web/` directory. See [Configuration Reference](../reference/configuration.qmd).
+
+**Q: How large can embedded audio files be?**
+
+A: Recommended <100MB for browser memory limits. The viewer handles long files via on-demand analysis.
+
+**Q: Can I embed on Medium, WordPress, etc.?**
+
+A: Yes, if the platform allows custom HTML/iframes. Some platforms block iframes for security.
