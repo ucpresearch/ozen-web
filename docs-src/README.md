@@ -1,6 +1,6 @@
-# ozen-web Documentation
+# Ozen-web Documentation
 
-This directory contains the Quarto-based documentation site for ozen-web.
+This directory contains the Quarto-based documentation site for Ozen-web.
 
 ## Quick Start
 
@@ -21,17 +21,17 @@ This directory contains the Quarto-based documentation site for ozen-web.
      ```
 
 2. **Node.js** 18+ (for screenshot automation)
-   - Already required for main ozen-web project
+   - Already required for main Ozen-web project
 
 ### Building Documentation
 
 ```bash
-# From ozen-web root directory
+# From Ozen-web root directory
 ./scripts/docs/build-docs.sh
 ```
 
 This script will:
-1. Build the ozen-web app
+1. Build the Ozen-web app
 2. Install screenshot dependencies (Playwright)
 3. Start preview server and capture screenshots
 4. Render Quarto documentation
@@ -40,7 +40,7 @@ This script will:
 ### Previewing Documentation
 
 ```bash
-# From ozen-web root directory
+# From Ozen-web root directory
 ./scripts/docs/serve-docs.sh
 ```
 
@@ -58,7 +58,7 @@ Opens a live preview server at http://localhost:8080 with auto-reload.
 If you want to update screenshots without rebuilding everything:
 
 ```bash
-# Start ozen-web preview server (Terminal 1)
+# Start Ozen-web preview server (Terminal 1)
 npm run build
 npm run preview
 
@@ -297,7 +297,7 @@ brew install quarto  # macOS
 ### Screenshot capture fails
 
 ```bash
-# Check ozen-web preview server is running
+# Check Ozen-web preview server is running
 npm run preview
 
 # Ensure Playwright browsers are installed

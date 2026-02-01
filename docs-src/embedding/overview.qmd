@@ -1,11 +1,11 @@
 ---
 title: "Embedding Guide"
-subtitle: "Embed ozen-web in websites and documents"
+subtitle: "Embed Ozen-web in websites and documents"
 ---
 
 ## Introduction
 
-ozen-web's mobile viewer can be embedded in websites, Quarto documents, R Markdown, Jupyter notebooks, and any web page via iframes. This allows creating interactive acoustic visualizations in:
+Ozen-web's mobile viewer can be embedded in websites, Quarto documents, R Markdown, Jupyter notebooks, and any web page via iframes. This allows creating interactive acoustic visualizations in:
 
 - Research papers and presentations
 - Course materials and textbooks
@@ -193,7 +193,7 @@ IFrame(src='./ozen-web/viewer.html?audio=data/recording.wav&overlays=all',
 
 ### GitHub Pages
 
-1. Build ozen-web: `npm run build`
+1. Build Ozen-web: `npm run build`
 2. Copy `build/` to your project as `ozen-web/`
 3. Push to GitHub
 4. Enable GitHub Pages in repository settings
@@ -205,7 +205,7 @@ Same as GitHub Pages — just include the `ozen-web/` directory in your project.
 
 ### Static Site Generators
 
-ozen-web works with all static site generators:
+Ozen-web works with all static site generators:
 
 - Hugo
 - Jekyll

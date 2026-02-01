@@ -5,7 +5,7 @@ subtitle: "Complete reference for viewer URL parameters"
 
 ## Overview
 
-The ozen-web viewer supports URL parameters for pre-loading audio and configuring the interface. This enables creation of shareable links, embedded examples, and pre-configured analysis views.
+The Ozen-web viewer supports URL parameters for pre-loading audio and configuring the interface. This enables creation of shareable links, embedded examples, and pre-configured analysis views.
 
 ## Base URL
 

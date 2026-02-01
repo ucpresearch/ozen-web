@@ -3,7 +3,7 @@ project:
   output-dir: ../docs
 
 website:
-  title: "ozen-web"
+  title: "Ozen-web"
   site-url: "https://ucpresearch.github.io/ozen-web"
   repo-url: "https://github.com/ucpresearch/ozen-web"
   repo-actions: [edit, issue]

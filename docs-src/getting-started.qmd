@@ -1,11 +1,11 @@
 ---
 title: "Getting Started"
-subtitle: "Install and run ozen-web in 5 minutes"
+subtitle: "Install and run Ozen-web in 5 minutes"
 ---
 
 ## Overview
 
-ozen-web is a static web application that runs entirely in your browser. You can:
+Ozen-web is a static web application that runs entirely in your browser. You can:
 
 1. **Use the hosted version** (easiest) — No setup required
 2. **Run locally for development** — Full control and offline access
@@ -52,7 +52,7 @@ Don't have an audio file handy? Record directly in the browser by clicking the m
 
 ## Option 2: Run Locally
 
-For development or offline use, run ozen-web on your machine.
+For development or offline use, run Ozen-web on your machine.
 
 ### Prerequisites
 
@@ -89,7 +89,7 @@ Just upload the `build/` folder's contents.
 
 ### Backend Selection
 
-ozen-web supports multiple WASM backends:
+Ozen-web supports multiple WASM backends:
 
 | Backend | Source | License | Speed | Offline |
 |---------|--------|---------|-------|---------|
@@ -148,7 +148,7 @@ Ready to dive deeper? Try the:
 
 - **[Complete Tutorial](tutorial/index.html)** — Guided walkthrough from loading audio to exporting data
 - **[Features Overview](features/overview.html)** — Detailed documentation of all features
-- **[Embedding Guide](embedding/overview.html)** — Embed ozen-web in your websites or documents
+- **[Embedding Guide](embedding/overview.html)** — Embed Ozen-web in your websites or documents
 
 ---
 

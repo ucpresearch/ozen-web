@@ -34,7 +34,7 @@ GitHub will automatically deploy from the `/docs` folder whenever you push HTML 
 
 The `.github/workflows/deploy-docs.yml` workflow automatically:
 
-1. Builds the ozen-web app
+1. Builds the Ozen-web app
 2. Copies `build/` → `docs/live/` (for embedded examples)
 3. Captures screenshots with Playwright
 4. Renders Quarto documentation to `docs/`
@@ -91,7 +91,7 @@ ozen-web/
     ├── site_libs/               # Bootstrap, jQuery, etc.
     ├── assets/                  # CSS, images (copied from source)
     ├── screenshots/             # Generated screenshots
-    └── live/                    # Built ozen-web app (for embedding examples)
+    └── live/                    # Built Ozen-web app (for embedding examples)
 ```
 
 This keeps source (`.qmd`) separate from generated (`.html`) files.

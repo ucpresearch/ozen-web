@@ -5,7 +5,7 @@ subtitle: "Multi-tier TextGrid annotation system"
 
 ## Overview
 
-ozen-web provides a complete TextGrid-compatible annotation system for transcription, labeling, and segmentation. Create multi-tiered annotations with interval and point tiers, compatible with Praat.
+Ozen-web provides a complete TextGrid-compatible annotation system for transcription, labeling, and segmentation. Create multi-tiered annotations with interval and point tiers, compatible with Praat.
 
 ![Multi-tier annotation example](../screenshots/tutorial-04-multitiered.png)
 
@@ -156,7 +156,7 @@ See [Keyboard Shortcuts Reference](../reference/keyboard-shortcuts.html) for com
 
 ## Undo System
 
-ozen-web features a unified undo/redo system for annotation operations:
+Ozen-web features a unified undo/redo system for annotation operations:
 
 **Undoable operations:**
 - Adding boundaries

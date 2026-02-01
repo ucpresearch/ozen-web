@@ -1,6 +1,6 @@
 # Documentation Completion Checklist
 
-Use this checklist to track progress on completing the ozen-web documentation site.
+Use this checklist to track progress on completing the Ozen-web documentation site.
 
 ## 🚀 Pre-Launch (Required for First Deployment)
 

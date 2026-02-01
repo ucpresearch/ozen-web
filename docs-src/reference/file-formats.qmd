@@ -5,7 +5,7 @@ subtitle: "Supported file formats and specifications"
 
 ## Overview
 
-ozen-web supports multiple file formats for audio input, annotation import/export, and data export. This page documents format specifications and compatibility.
+Ozen-web supports multiple file formats for audio input, annotation import/export, and data export. This page documents format specifications and compatibility.
 
 ## Audio Formats
 
@@ -104,7 +104,7 @@ ffmpeg -i input.wav -b:a 192k output.mp3
 
 **Description:**
 
-TextGrid is Praat's native annotation format, widely used in phonetics research. ozen-web supports both short and long TextGrid formats.
+TextGrid is Praat's native annotation format, widely used in phonetics research. Ozen-web supports both short and long TextGrid formats.
 
 **Format variants:**
 
@@ -165,7 +165,7 @@ Object class = "TextGrid"
 ""
 ```
 
-**ozen-web support:**
+**Ozen-web support:**
 
 | Feature | Import | Export |
 |---------|--------|--------|
@@ -204,7 +204,7 @@ tg.write('output.TextGrid')
 ::: {.callout-warning}
 ## Point Tiers Not Supported
 
-ozen-web currently does not support point tiers. Convert point tiers to interval tiers in Praat before importing:
+Ozen-web currently does not support point tiers. Convert point tiers to interval tiers in Praat before importing:
 
 ```praat
 # In Praat
@@ -283,7 +283,7 @@ table = Read Table from tab-separated file: "data-points.tsv"
 
 **Support:** ✅ Save audio
 
-ozen-web can save the loaded audio as WAV file:
+Ozen-web can save the loaded audio as WAV file:
 
 - **Format:** 16-bit PCM WAV
 - **Sample rate:** Original (preserved from input)

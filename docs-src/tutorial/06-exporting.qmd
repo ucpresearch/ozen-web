@@ -11,7 +11,7 @@ After annotating audio and collecting data points, you'll want to export your wo
 - **Further analysis** (statistical analysis in R, Python, Praat)
 - **Sharing** (collaborate with colleagues)
 
-ozen-web supports three export formats:
+Ozen-web supports three export formats:
 
 1. **TextGrid** (Praat format) — For annotations
 2. **TSV** (Tab-Separated Values) — For data points + measurements
@@ -98,7 +98,7 @@ Keep audio and TextGrid files in the same directory with matching names (e.g., `
 
 ## Importing TextGrids
 
-You can also import existing TextGrid files into ozen-web:
+You can also import existing TextGrid files into Ozen-web:
 
 ::: {.tutorial-steps}
 1. **Load an audio file** first (section 1)
@@ -107,7 +107,7 @@ You can also import existing TextGrid files into ozen-web:
 
 3. **Select a TextGrid file**
 
-4. The tiers and annotations appear in ozen-web
+4. The tiers and annotations appear in Ozen-web
 :::
 
 ::: {.callout-note}
@@ -247,7 +247,7 @@ Exported audio is always in WAV format (16-bit PCM, original sample rate). This 
 
 ## File System Access API vs. Downloads
 
-ozen-web uses two methods for saving files, depending on browser support:
+Ozen-web uses two methods for saving files, depending on browser support:
 
 **File System Access API** (Chrome, Edge):
 
@@ -339,7 +339,7 @@ data = pd.concat([pd.read_csv(f, sep='\t') for f in files])
 :::
 
 ::: {.callout-note}
-ozen-web doesn't have built-in batch processing. For large corpora, consider using the desktop version [ozen](https://github.com/ucpresearch/ozen) or scripting with Praat.
+Ozen-web doesn't have built-in batch processing. For large corpora, consider using the desktop version [ozen](https://github.com/ucpresearch/ozen) or scripting with Praat.
 :::
 
 ## Practice Exercises
@@ -390,7 +390,7 @@ ozen-web doesn't have built-in batch processing. For large corpora, consider usi
 
 - Ensure the file extension is `.TextGrid` (not `.txt`)
 - Check that the file isn't empty (open in text editor)
-- Try re-exporting from ozen-web
+- Try re-exporting from Ozen-web
 
 **TSV columns are misaligned in Excel:**
 
@@ -411,7 +411,7 @@ ozen-web doesn't have built-in batch processing. For large corpora, consider usi
 
 ## What's Next?
 
-**Congratulations!** 🎉 You've completed the ozen-web tutorial. You now know how to:
+**Congratulations!** 🎉 You've completed the Ozen-web tutorial. You now know how to:
 
 - ✅ Load audio files
 - ✅ Navigate and explore audio
@@ -425,7 +425,7 @@ ozen-web doesn't have built-in batch processing. For large corpora, consider usi
 - **[Features Documentation](../features/overview.html)** — Deep dive into all features
 - **[Keyboard Shortcuts Reference](../reference/keyboard-shortcuts.html)** — Speed up your workflow
 - **[Configuration Guide](../reference/configuration.html)** — Customize default settings
-- **[Embedding Guide](../embedding/overview.html)** — Embed ozen-web in websites or documents
+- **[Embedding Guide](../embedding/overview.html)** — Embed Ozen-web in websites or documents
 
 ### Get Involved
 

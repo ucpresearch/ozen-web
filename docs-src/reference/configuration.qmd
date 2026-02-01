@@ -1,11 +1,11 @@
 ---
 title: "Configuration"
-subtitle: "Customize ozen-web with config.yaml"
+subtitle: "Customize Ozen-web with config.yaml"
 ---
 
 ## Overview
 
-ozen-web can be customized using an optional `config.yaml` file placed in the same directory as the application. This file allows you to override default colors, formant presets, spectrogram settings, and more.
+Ozen-web can be customized using an optional `config.yaml` file placed in the same directory as the application. This file allows you to override default colors, formant presets, spectrogram settings, and more.
 
 ## Configuration File Location
 

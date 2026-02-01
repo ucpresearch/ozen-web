@@ -5,7 +5,7 @@ subtitle: "Enable and interpret acoustic overlays"
 
 ## Overview
 
-ozen-web can display multiple acoustic features overlaid on the spectrogram:
+Ozen-web can display multiple acoustic features overlaid on the spectrogram:
 
 - **Pitch (F0)** — Fundamental frequency (blue line and dots)
 - **Formants (F1-F4)** — Resonance frequencies (red dots)

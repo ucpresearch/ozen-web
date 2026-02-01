@@ -1,11 +1,11 @@
 ---
 title: "1. Loading Audio"
-subtitle: "Three ways to load audio files into ozen-web"
+subtitle: "Three ways to load audio files into Ozen-web"
 ---
 
 ## Overview
 
-In this section, you'll learn how to load audio files into ozen-web using three different methods:
+In this section, you'll learn how to load audio files into Ozen-web using three different methods:
 
 1. **Drag and drop** (fastest)
 2. **File picker** (traditional)
@@ -13,7 +13,7 @@ In this section, you'll learn how to load audio files into ozen-web using three 
 
 ## Before You Start
 
-Make sure ozen-web is running in your browser:
+Make sure Ozen-web is running in your browser:
 
 - **Hosted version**: [https://ucpresearch.github.io/ozen-web/](https://ucpresearch.github.io/ozen-web/)
 - **Local server**: [http://localhost:5173](http://localhost:5173)
@@ -29,7 +29,7 @@ The fastest way to load audio is drag-and-drop:
 ::: {.tutorial-steps}
 1. **Find an audio file** on your computer (WAV, MP3, or OGG format)
 
-2. **Drag the file** over the ozen-web window
+2. **Drag the file** over the Ozen-web window
 
    The drop zone will highlight with a blue border
 
@@ -112,15 +112,14 @@ After loading audio successfully, you should see:
 
 ## Supported Audio Formats
 
-ozen-web supports most common audio formats via the Web Audio API:
+Ozen-web supports most common audio formats via the Web Audio API:
 
 | Format | Extension | Notes |
 |--------|-----------|-------|
-| **WAV** | `.wav` | ✅ Recommended, lossless, 16/24-bit PCM |
-| **MP3** | `.mp3` | ✅ Widely supported, lossy compression |
-| **OGG** | `.ogg`, `.oga` | ✅ Open format, good quality |
-| **M4A** | `.m4a` | ⚠️ Browser-dependent (works in Safari/Chrome) |
-| **FLAC** | `.flac` | ⚠️ Browser-dependent (Chrome/Edge only) |
+| **WAV** | `.wav` |  Recommended, lossless, 16/24-bit PCM |
+| **FLAC** | `.flac` | Compressed and lossless |
+| **MP3** | `.mp3` |  Widely supported, lossy compression |
+| **OGG** | `.ogg`, `.oga` | Open lossy compression format, good quality |
 
 ::: {.callout-tip}
 For phonetic research, use **16-bit WAV files at 44.1kHz or 48kHz** sampling rate for best compatibility and quality.

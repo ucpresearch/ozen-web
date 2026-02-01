@@ -1,11 +1,11 @@
 ---
 title: "Basic Embedding"
-subtitle: "Embed the ozen-web viewer in web pages and documents"
+subtitle: "Embed the Ozen-web viewer in web pages and documents"
 ---
 
 ## Overview
 
-ozen-web can be embedded in web pages, documentation, and presentations using standard HTML iframes. The viewer supports URL parameters for pre-loading audio and configuring overlays, making it ideal for interactive examples and educational materials.
+Ozen-web can be embedded in web pages, documentation, and presentations using standard HTML iframes. The viewer supports URL parameters for pre-loading audio and configuring overlays, making it ideal for interactive examples and educational materials.
 
 ## Simple iframe Embedding
 
@@ -206,7 +206,7 @@ data_url <- paste0("data:audio/wav;base64,", base64encode(audio_data))
 
 ## Helper Scripts
 
-ozen-web includes helper scripts for generating embed code:
+Ozen-web includes helper scripts for generating embed code:
 
 ### R Script (create-iframe.R)
 

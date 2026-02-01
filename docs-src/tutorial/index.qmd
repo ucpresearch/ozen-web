@@ -6,7 +6,7 @@ subtitle: "From audio loading to data export in 30 minutes"
 ## Overview
 
 This tutorial will guide you through the complete workflow of using
-ozen-web for acoustic analysis and annotation. By the end, you'll know
+Ozen-web for acoustic analysis and annotation. By the end, you'll know
 how to:
 
 - Load and explore audio files

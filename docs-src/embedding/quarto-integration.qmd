@@ -1,11 +1,11 @@
 ---
 title: "Quarto Integration"
-subtitle: "Embed ozen-web in Quarto and R Markdown documents"
+subtitle: "Embed Ozen-web in Quarto and R Markdown documents"
 ---
 
 ## Overview
 
-Quarto and R Markdown documents can embed the ozen-web viewer using the helper script `create-iframe.R`. This enables interactive acoustic examples in research papers, teaching materials, and blog posts.
+Quarto and R Markdown documents can embed the Ozen-web viewer using the helper script `create-iframe.R`. This enables interactive acoustic examples in research papers, teaching materials, and blog posts.
 
 ## Setup
 
@@ -17,7 +17,7 @@ install.packages(c("htmltools", "base64enc"))
 
 ### 2. Copy Helper Script
 
-The script is located at `scripts/create-iframe.R` in the ozen-web repository:
+The script is located at `scripts/create-iframe.R` in the Ozen-web repository:
 
 ```bash
 # Copy to your project
@@ -113,7 +113,7 @@ html <- create_embedded_viewer(
 ```
 
 **Pros:**
-- No local ozen-web build needed
+- No local Ozen-web build needed
 - Always up-to-date
 - Smaller project size
 
@@ -123,11 +123,11 @@ html <- create_embedded_viewer(
 
 ### Strategy 2: Local Viewer Build
 
-Build ozen-web locally and include in project:
+Build Ozen-web locally and include in project:
 
 ```bash
-# Build ozen-web
-cd path/to/ozen-web
+# Build Ozen-web
+cd path/to/Ozen-web
 npm run build
 
 # Copy build to your project

@@ -5,7 +5,7 @@ subtitle: "Web Audio API-based playback system"
 
 ## Overview
 
-ozen-web provides high-quality audio playback using the Web Audio API, with support for selection playback, real-time cursor tracking, and keyboard controls.
+Ozen-web provides high-quality audio playback using the Web Audio API, with support for selection playback, real-time cursor tracking, and keyboard controls.
 
 ## Key Features
 
@@ -86,7 +86,7 @@ During playback, a red vertical cursor moves in real-time to show the current pl
 
 ## Web Audio API
 
-ozen-web uses the Web Audio API for playback:
+Ozen-web uses the Web Audio API for playback:
 
 ```javascript
 // Internal playback system

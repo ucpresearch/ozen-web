@@ -1,6 +1,6 @@
 # Syncing Build to Documentation
 
-The documentation site includes embedded live viewer examples that load from `docs/live/`. This directory should contain a copy of the built ozen-web app.
+The documentation site includes embedded live viewer examples that load from `docs/live/`. This directory should contain a copy of the built Ozen-web app.
 
 ## Why?
 
@@ -54,7 +54,7 @@ See `scripts/hooks/README.md` for details.
 
 The `deploy-docs.yml` workflow automatically:
 
-1. Builds the ozen-web app
+1. Builds the Ozen-web app
 2. Copies `build/` → `docs/live/`
 3. Captures screenshots
 4. Renders Quarto documentation

@@ -1,11 +1,11 @@
 ---
 title: "Features Overview"
-subtitle: "Complete guide to ozen-web capabilities"
+subtitle: "Complete guide to Ozen-web capabilities"
 ---
 
 ## Introduction
 
-ozen-web is a comprehensive browser-based tool for acoustic analysis and annotation. This page provides an overview of all major features with links to detailed documentation.
+Ozen-web is a comprehensive browser-based tool for acoustic analysis and annotation. This page provides an overview of all major features with links to detailed documentation.
 
 ## Core Features
 
@@ -43,7 +43,7 @@ ozen-web is a comprehensive browser-based tool for acoustic analysis and annotat
 
 ### Acoustic Analysis
 
-ozen-web provides research-grade acoustic measurements using Praat-compatible algorithms:
+Ozen-web provides research-grade acoustic measurements using Praat-compatible algorithms:
 
 **Available overlays:**
 
@@ -162,7 +162,7 @@ Perfect for building datasets for R, Python, SPSS, or Excel analysis.
 
 **For files >60 seconds:**
 
-ozen-web uses an intelligent on-demand analysis strategy to prevent UI freezing:
+Ozen-web uses an intelligent on-demand analysis strategy to prevent UI freezing:
 
 1. **On load**: Waveform displays immediately, spectrogram shows "Zoom in for spectrogram"
 2. **When zoomed**: Analysis runs for visible window only (≤60s)
@@ -300,7 +300,7 @@ formantColor: "#FF0000"
 
 ## Comparison with Desktop Tools
 
-| Feature | ozen-web | Praat | Desktop Ozen |
+| Feature | Ozen-web | Praat | Desktop Ozen |
 |---------|----------|-------|--------------|
 | **Installation** | None (browser) | Required | Required |
 | **Platform** | Any OS with browser | OS-specific builds | Windows/Mac/Linux |

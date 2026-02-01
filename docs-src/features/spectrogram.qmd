@@ -5,7 +5,7 @@ subtitle: "High-resolution spectrogram visualization"
 
 ## Overview
 
-The spectrogram displays frequency content over time, computed using Praat-accurate algorithms via WebAssembly. ozen-web uses a grayscale colormap matching Praat's default appearance, with intelligent resolution scaling for optimal performance.
+The spectrogram displays frequency content over time, computed using Praat-accurate algorithms via WebAssembly. Ozen-web uses a grayscale colormap matching Praat's default appearance, with intelligent resolution scaling for optimal performance.
 
 ![Spectrogram with formant overlays](../screenshots/tutorial-03-formant-overlay.png)
 
@@ -21,7 +21,7 @@ The spectrogram displays frequency content over time, computed using Praat-accur
 
 ### Initial Computation
 
-When audio is loaded, ozen-web:
+When audio is loaded, Ozen-web:
 
 1. **Computes full spectrogram** via WASM `to_spectrogram()`
 2. **Applies grayscale colormap** → converts to ImageData

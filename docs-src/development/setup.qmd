@@ -1,6 +1,6 @@
 ---
 title: "Development Setup"
-subtitle: "Getting started with ozen-web development"
+subtitle: "Getting started with Ozen-web development"
 ---
 
 ## Prerequisites
@@ -178,7 +178,7 @@ No changes needed for typical development.
 
 ## Environment Variables
 
-ozen-web doesn't use environment variables by default. Configuration is via `static/config.yaml`.
+Ozen-web doesn't use environment variables by default. Configuration is via `static/config.yaml`.
 
 ## Building WASM Backend
 
@@ -191,7 +191,7 @@ cd ../praatfan-core-rs/rust
 # Build WASM package
 wasm-pack build --target web
 
-# Copy to ozen-web
+# Copy to Ozen-web
 cp -r pkg/* ../ozen-web/static/wasm/praatfan/
 ```
 

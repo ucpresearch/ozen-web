@@ -5,7 +5,7 @@ subtitle: "System design and component structure"
 
 ## Overview
 
-ozen-web is a **fully client-side web application** built with SvelteKit, designed to run entirely in the browser without any backend server. The architecture emphasizes:
+Ozen-web is a **fully client-side web application** built with SvelteKit, designed to run entirely in the browser without any backend server. The architecture emphasizes:
 
 - **Reactive state management** via Svelte stores
 - **WASM-powered analysis** for Praat-accurate acoustic computation
@@ -17,7 +17,7 @@ ozen-web is a **fully client-side web application** built with SvelteKit, design
 
 ### Routes
 
-ozen-web uses SvelteKit's file-based routing with two main routes:
+Ozen-web uses SvelteKit's file-based routing with two main routes:
 
 ```
 src/routes/
@@ -126,7 +126,7 @@ graph TD
 
 ## State Management
 
-ozen-web uses **Svelte stores** for all shared state. Stores are the single source of truth; components subscribe and react to changes.
+Ozen-web uses **Svelte stores** for all shared state. Stores are the single source of truth; components subscribe and react to changes.
 
 ### Store Architecture
 
@@ -285,7 +285,7 @@ await initWasm('praatfan-local');  // ~200ms
 
 ### Canvas Strategy
 
-ozen-web uses **HTML5 Canvas** for all visualizations (not SVG/DOM) to handle:
+Ozen-web uses **HTML5 Canvas** for all visualizations (not SVG/DOM) to handle:
 - Large datasets (thousands of time points, frequency bins)
 - Real-time updates (cursor tracking, playback)
 - Smooth zoom/pan interactions

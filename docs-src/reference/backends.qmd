@@ -5,7 +5,7 @@ subtitle: "WASM backend options and configuration"
 
 ## Overview
 
-ozen-web supports multiple WebAssembly (WASM) backends for acoustic analysis, all based on the praatfan library. Different backends offer trade-offs between licensing, deployment complexity, and load time.
+Ozen-web supports multiple WebAssembly (WASM) backends for acoustic analysis, all based on the praatfan library. Different backends offer trade-offs between licensing, deployment complexity, and load time.
 
 ## Available Backends
 
@@ -91,7 +91,7 @@ GPL-licensed version of praatfan with additional features that require GPL depen
 ::: {.callout-warning}
 ## GPL Licensing Implications
 
-The GPL license is "copyleft" — if you distribute modified versions or link to GPL code, your code must also be GPL-licensed. For most users embedding ozen-web in websites or documents, this doesn't apply. Consult legal counsel if unsure.
+The GPL license is "copyleft" — if you distribute modified versions or link to GPL code, your code must also be GPL-licensed. For most users embedding Ozen-web in websites or documents, this doesn't apply. Consult legal counsel if unsure.
 :::
 
 **Advantages:**
@@ -234,7 +234,7 @@ tar -xzf praatfan-wasm.tar.gz
 ### Step 2: Copy to Static Directory
 
 ```bash
-# In ozen-web project root
+# In Ozen-web project root
 mkdir -p static/wasm/praatfan
 cp -r path/to/pkg/* static/wasm/praatfan/
 ```
@@ -362,7 +362,7 @@ No data migration needed — backends are fully compatible.
 ::: {.callout-note}
 ## Embedding and GPL
 
-Simply embedding the ozen-web viewer in a webpage via iframe typically does NOT require your website to be GPL-licensed, as this is considered "mere aggregation." However, consult legal counsel for specific situations.
+Simply embedding the Ozen-web viewer in a webpage via iframe typically does NOT require your website to be GPL-licensed, as this is considered "mere aggregation." However, consult legal counsel for specific situations.
 :::
 
 ## Future Backends

@@ -25,7 +25,7 @@ To generate real screenshots locally:
 
 ```bash
 # Terminal 1: Start preview server
-cd /path/to/ozen-web
+cd /path/to/Ozen-web
 npm run build
 npm run preview
 

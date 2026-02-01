@@ -5,7 +5,7 @@ subtitle: "State management with Svelte stores"
 
 ## Overview
 
-ozen-web uses **Svelte stores** for all shared state management. Stores are the single source of truth for application state, providing a reactive architecture where components automatically update when relevant data changes.
+Ozen-web uses **Svelte stores** for all shared state management. Stores are the single source of truth for application state, providing a reactive architecture where components automatically update when relevant data changes.
 
 **Location:** All stores are in `src/lib/stores/`
 

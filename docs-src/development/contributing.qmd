@@ -1,11 +1,11 @@
 ---
 title: "Contributing"
-subtitle: "How to contribute to ozen-web"
+subtitle: "How to contribute to Ozen-web"
 ---
 
 ## Getting Started
 
-Thank you for considering contributing to ozen-web! This guide will help you get set up and understand our development workflow.
+Thank you for considering contributing to Ozen-web! This guide will help you get set up and understand our development workflow.
 
 ### Prerequisites
 
@@ -22,7 +22,7 @@ Before contributing, ensure you have:
 1. **Fork the repository** on GitHub
 2. **Clone your fork:**
    ```bash
-   git clone https://github.com/YOUR-USERNAME/ozen-web.git
+   git clone https://github.com/YOUR-USERNAME/Ozen-web.git
    cd ozen-web
    ```
 
@@ -738,9 +738,9 @@ Click the gear icon to open settings.
 
 ## License
 
-By contributing to ozen-web, you agree that your contributions will be licensed under the MIT License.
+By contributing to Ozen-web, you agree that your contributions will be licensed under the MIT License.
 
-Thank you for contributing to ozen-web! 🎉
+Thank you for contributing to Ozen-web! 🎉
 
 ## See Also
 

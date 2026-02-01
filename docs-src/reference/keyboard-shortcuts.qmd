@@ -5,10 +5,10 @@ subtitle: "Complete reference for keyboard controls"
 
 ## Overview
 
-Keyboard shortcuts dramatically speed up your workflow in ozen-web. This page lists all available shortcuts organized by category.
+Keyboard shortcuts dramatically speed up your workflow in Ozen-web. This page lists all available shortcuts organized by category.
 
 ::: {.callout-tip}
-**Tip:** Print this page or keep it open in a second tab while learning ozen-web.
+**Tip:** Print this page or keep it open in a second tab while learning Ozen-web.
 :::
 
 ## Audio Playback
@@ -133,7 +133,7 @@ If you need different key bindings, please [open an issue](https://github.com/uc
 
 ## Accessibility
 
-ozen-web aims to be keyboard-accessible for users who cannot use a mouse:
+Ozen-web aims to be keyboard-accessible for users who cannot use a mouse:
 
 - All major functions have keyboard shortcuts
 - Tab navigation works for UI controls

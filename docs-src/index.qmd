@@ -1,5 +1,5 @@
 ---
-title: "ozen-web"
+title: "Ozen-web"
 subtitle: "Web-Based Acoustic Analysis & Annotation"
 page-layout: full
 toc: false
@@ -135,7 +135,7 @@ See the [Getting Started Guide](getting-started.html) for detailed installation 
 Try the interactive viewer below. This example shows a spectrogram with pitch and formant overlays:
 
 ::: {.viewer-embed}
-<iframe src="https://ucpresearch.github.io/ozen-web/viewer?overlays=pitch,formants" title="ozen-web Interactive Demo"></iframe>
+<iframe src="https://ucpresearch.github.io/ozen-web/viewer?overlays=pitch,formants" title="Ozen-web Interactive Demo"></iframe>
 :::
 
 ::: {.callout-note}
@@ -165,7 +165,7 @@ Should work on most modern web browsers
 
 ## Next Steps
 
-- **New to ozen-web?** → Start with the [Getting Started Guide](getting-started.html)
+- **New to Ozen-web?** → Start with the [Getting Started Guide](getting-started.html)
 - **Want a guided walkthrough?** → Follow the [Complete Tutorial](tutorial/index.html)
 - **Looking for specific features?** → Browse [Feature Documentation](features/overview.html)
 - **Embedding in a website?** → Check the [Embedding Guide](embedding/overview.html)
@@ -174,7 +174,7 @@ Should work on most modern web browsers
 ## Related Projects
 
 - **[ozen](https://github.com/ucpresearch/ozen)** — Desktop version (Python/PyQt6) with additional export formats and batch processing
-- **[praatfan-core-rs](https://github.com/ucpresearch/praatfan-core-rs)** — Rust acoustic analysis library powering ozen-web
+- **[praatfan-core-rs](https://github.com/ucpresearch/praatfan-core-rs)** — Rust acoustic analysis library powering Ozen-web
 
 ## License
 

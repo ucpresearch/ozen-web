@@ -5,7 +5,7 @@ subtitle: "WebAssembly backend development guide"
 
 ## Overview
 
-ozen-web uses **WebAssembly (WASM)** for acoustic analysis, powered by the **praatfan** library. WASM provides near-native performance for computationally intensive analysis while running entirely in the browser.
+Ozen-web uses **WebAssembly (WASM)** for acoustic analysis, powered by the **praatfan** library. WASM provides near-native performance for computationally intensive analysis while running entirely in the browser.
 
 **Key file:** `src/lib/wasm/acoustic.ts` - Abstraction layer for all WASM operations
 
@@ -17,7 +17,7 @@ ozen-web uses **WebAssembly (WASM)** for acoustic analysis, powered by the **pra
 
 ## Backend Options
 
-ozen-web supports three WASM backends with different licenses and delivery methods:
+Ozen-web supports three WASM backends with different licenses and delivery methods:
 
 | Backend | Source | License | Load Time | Use Case |
 |---------|--------|---------|-----------|----------|
