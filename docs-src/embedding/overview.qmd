@@ -33,7 +33,7 @@ ozen-web's mobile viewer can be embedded in websites, Quarto documents, R Markdo
 - `?overlays=` parameter configures which features to display
 - Viewer works from any subdirectory
 
-**See:** [URL Parameters Reference](url-parameters.qmd) for all available options
+**See:** [URL Parameters Reference](url-parameters.html) for all available options
 
 ## Directory Structure
 
@@ -41,7 +41,7 @@ ozen-web's mobile viewer can be embedded in websites, Quarto documents, R Markdo
 
 ```
 my-project/
-├── document.qmd                # Your Quarto document
+├── document.html                # Your Quarto document
 ├── document.html               # Rendered output
 ├── audio/                      # Your audio files
 │   ├── sample1.wav
@@ -106,7 +106,7 @@ html <- create_embedded_viewer("audio/sample.wav",
 htmltools::HTML(html)
 ```
 
-**See:** [Helper Scripts Documentation](basic-usage.qmd#helper-scripts)
+**See:** [Helper Scripts Documentation](basic-usage.html#helper-scripts)
 
 ## Use Cases
 
@@ -187,7 +187,7 @@ IFrame(src='./ozen-web/viewer.html?audio=data/recording.wav&overlays=all',
        height=600)
 ```
 
-**See:** [Examples Page](examples.qmd) for more use cases
+**See:** [Examples Page](examples.html) for more use cases
 
 ## Deployment
 
@@ -215,7 +215,7 @@ ozen-web works with all static site generators:
 
 Just include the `ozen-web/` directory in your static files.
 
-**See:** [Getting Started: Deployment](../getting-started.qmd#option-3-deploy-your-own-instance)
+**See:** [Getting Started: Deployment](../getting-started.html#option-3-deploy-your-own-instance)
 
 ## Important Considerations
 
@@ -262,7 +262,7 @@ servr::httd(port = 8000)
 
 **Or deploy to a web server** where HTTP is automatic.
 
-**See:** [Basic Usage: Serving Documents](basic-usage.qmd#serving-documents)
+**See:** [Basic Usage: Serving Documents](basic-usage.html#serving-documents)
 
 ### CORS for Remote Audio
 
@@ -284,14 +284,14 @@ location ~* \.(wav|mp3|ogg|flac)$ {
 }
 ```
 
-**See:** [URL Parameters: CORS](url-parameters.qmd#cors-requirements)
+**See:** [URL Parameters: CORS](url-parameters.html#cors-requirements)
 
 ## Next Steps
 
-- **[Basic Usage](basic-usage.qmd)** — Detailed embedding instructions
-- **[Quarto Integration](quarto-integration.qmd)** — Quarto-specific guide
-- **[URL Parameters](url-parameters.qmd)** — Complete parameter reference
-- **[Examples](examples.qmd)** — Working examples for all use cases
+- **[Basic Usage](basic-usage.html)** — Detailed embedding instructions
+- **[Quarto Integration](quarto-integration.html)** — Quarto-specific guide
+- **[URL Parameters](url-parameters.html)** — Complete parameter reference
+- **[Examples](examples.html)** — Working examples for all use cases
 
 ## FAQ
 
@@ -305,7 +305,7 @@ A: The embedded viewer is view-only. For editing, link to the full app or deploy
 
 **Q: Can I customize the appearance?**
 
-A: Yes, via `config.yaml` file in the `ozen-web/` directory. See [Configuration Reference](../reference/configuration.qmd).
+A: Yes, via `config.yaml` file in the `ozen-web/` directory. See [Configuration Reference](../reference/configuration.html).
 
 **Q: How large can embedded audio files be?**
 

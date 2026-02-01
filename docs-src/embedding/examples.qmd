@@ -1,0 +1,415 @@
+---
+title: "Embedding Examples"
+subtitle: "Real-world examples and use cases"
+---
+
+## Overview
+
+This page provides complete, copy-paste ready examples for common embedding scenarios. All examples use the hosted viewer at `https://ucpresearch.github.io/ozen-web/viewer`.
+
+## Phonetics & Linguistics
+
+### Example 1: Vowel Formants
+
+**Use case:** Demonstrate F1/F2 formant values for different vowels
+
+```html
+<h3>High Front Vowel /i/ ("beet")</h3>
+<iframe src="https://ucpresearch.github.io/ozen-web/viewer?audio=https://example.com/vowels/i.wav&overlays=formants&maxFreq=7500"
+        width="100%"
+        height="600"
+        style="border: none;">
+</iframe>
+
+<p>Notice: Low F1 (~300 Hz), high F2 (~2500 Hz)</p>
+
+<h3>Low Back Vowel /ɑ/ ("bot")</h3>
+<iframe src="https://ucpresearch.github.io/ozen-web/viewer?audio=https://example.com/vowels/a.wav&overlays=formants&maxFreq=7500"
+        width="100%"
+        height="600"
+        style="border: none;">
+</iframe>
+
+<p>Notice: High F1 (~700 Hz), low F2 (~1100 Hz)</p>
+```
+
+### Example 2: Pitch Contours
+
+**Use case:** Compare declarative vs. question intonation
+
+```html
+<h3>Declarative: "He's leaving."</h3>
+<iframe src="https://ucpresearch.github.io/ozen-web/viewer?audio=https://example.com/intonation/statement.wav&overlays=pitch,intensity"
+        width="100%"
+        height="500"
+        style="border: none;">
+</iframe>
+<p>Falling pitch at end of utterance.</p>
+
+<h3>Question: "He's leaving?"</h3>
+<iframe src="https://ucpresearch.github.io/ozen-web/viewer?audio=https://example.com/intonation/question.wav&overlays=pitch,intensity"
+        width="100%"
+        height="500"
+        style="border: none;">
+</iframe>
+<p>Rising pitch at end of utterance.</p>
+```
+
+### Example 3: Voice Quality Analysis
+
+**Use case:** Demonstrate HNR for voice quality research
+
+```html
+<h2>Voice Quality Comparison</h2>
+
+<h3>Modal Phonation</h3>
+<iframe src="https://ucpresearch.github.io/ozen-web/viewer?audio=https://example.com/voice/modal.wav&overlays=pitch,hnr,spectral_tilt"
+        width="100%"
+        height="600"
+        style="border: none;">
+</iframe>
+<p>High HNR (>15 dB) indicates clear, modal voice quality.</p>
+
+<h3>Creaky Voice</h3>
+<iframe src="https://ucpresearch.github.io/ozen-web/viewer?audio=https://example.com/voice/creaky.wav&overlays=pitch,hnr,spectral_tilt"
+        width="100%"
+        height="600"
+        style="border: none;">
+</iframe>
+<p>Low HNR (<10 dB) and irregular pitch indicate vocal fry.</p>
+```
+
+## Teaching & Education
+
+### Example 4: Interactive Lab Exercise
+
+**Use case:** Self-paced phonetics lab with questions
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Phonetics Lab 3: Fricatives</title>
+  <style>
+    body { font-family: sans-serif; max-width: 900px; margin: 0 auto; padding: 20px; }
+    .exercise { margin: 40px 0; padding: 20px; background: #f5f5f5; border-radius: 8px; }
+    iframe { margin: 20px 0; }
+  </style>
+</head>
+<body>
+  <h1>Lab 3: Fricative Acoustics</h1>
+
+  <div class="exercise">
+    <h2>Exercise 1: Sibilant Contrast</h2>
+    <p>Compare the spectral properties of /s/ and /ʃ/:</p>
+
+    <h3>Alveolar /s/ (as in "sip")</h3>
+    <iframe src="https://ucpresearch.github.io/ozen-web/viewer?audio=https://example.com/fricatives/s.wav&overlays=cog&maxFreq=10000"
+            width="100%"
+            height="500"
+            style="border: none;">
+    </iframe>
+
+    <h3>Postalveolar /ʃ/ (as in "ship")</h3>
+    <iframe src="https://ucpresearch.github.io/ozen-web/viewer?audio=https://example.com/fricatives/sh.wav&overlays=cog&maxFreq=10000"
+            width="100%"
+            height="500"
+            style="border: none;">
+    </iframe>
+
+    <h3>Questions:</h3>
+    <ol>
+      <li>What is the approximate Center of Gravity (CoG) for /s/? For /ʃ/?</li>
+      <li>Which fricative has higher-frequency energy?</li>
+      <li>Can you identify the fricative burst vs. following vowel?</li>
+    </ol>
+  </div>
+</body>
+</html>
+```
+
+### Example 5: Minimal Embedding in Blog Post
+
+**Use case:** Simple blog post with one example
+
+```html
+<p>Here's what the /a/ vowel sounds and looks like acoustically:</p>
+
+<iframe src="https://ucpresearch.github.io/ozen-web/viewer?audio=https://myblog.com/audio/vowel-a.wav&overlays=formants"
+        width="100%"
+        height="600"
+        style="border: none;">
+</iframe>
+
+<p>Notice the low second formant (F2) around 1200 Hz, typical of back vowels.</p>
+```
+
+## Research & Presentations
+
+### Example 6: Conference Poster (QR Code)
+
+**Use case:** Interactive figure accessible via QR code
+
+```html
+<!-- Host this page and generate QR code to it -->
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Interactive Figure: Vocal Fry Analysis</title>
+  <style>
+    body { margin: 0; font-family: sans-serif; }
+    .header { background: #003366; color: white; padding: 20px; text-align: center; }
+    .container { max-width: 1000px; margin: 0 auto; padding: 20px; }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h1>Vocal Fry in Final Position</h1>
+    <p>Smith & Jones (2024) — Interactive Figure 3</p>
+  </div>
+
+  <div class="container">
+    <p><strong>Example:</strong> Creaky phonation in utterance-final position</p>
+
+    <iframe src="https://ucpresearch.github.io/ozen-web/viewer?audio=https://example.com/research/vocal-fry.wav&overlays=pitch,hnr"
+            width="100%"
+            height="700"
+            style="border: none;">
+    </iframe>
+
+    <p><strong>Observations:</strong></p>
+    <ul>
+      <li>HNR drops below 10 dB in final syllable (indicates aperiodicity)</li>
+      <li>F0 decreases and becomes irregular</li>
+      <li>Typical of American English discourse-final position</li>
+    </ul>
+  </div>
+</body>
+</html>
+```
+
+### Example 7: Data URL (Self-Contained)
+
+**Use case:** Email-friendly single HTML file
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Example: Self-Contained Audio</title>
+</head>
+<body>
+  <h1>Embedded Example</h1>
+  <p>This entire example is in one HTML file — no external dependencies!</p>
+
+  <!-- Short audio file encoded as data URL -->
+  <iframe src="https://ucpresearch.github.io/ozen-web/viewer?audio=data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEARKwAAIhYAQACABAAZGF0YQAAAAA=&overlays=pitch"
+          width="100%"
+          height="600"
+          style="border: none;">
+  </iframe>
+
+  <p>Share this HTML file via email, and recipients can view it without any setup.</p>
+</body>
+</html>
+```
+
+## Language Learning
+
+### Example 8: Pronunciation Practice
+
+**Use case:** Show target pronunciation with model audio
+
+```html
+<h2>Lesson 5: French Nasal Vowels</h2>
+
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+  <div>
+    <h3>Target: /ɑ̃/ as in "temps"</h3>
+    <iframe src="https://ucpresearch.github.io/ozen-web/viewer?audio=https://example.com/french/nasal-a.wav&overlays=formants,a1_p0&maxFreq=7500"
+            width="100%"
+            height="500"
+            style="border: 1px solid #ccc;">
+    </iframe>
+    <p><strong>Key features:</strong> Notice A1-P0 negative values indicating nasal coupling.</p>
+  </div>
+
+  <div>
+    <h3>Your recording:</h3>
+    <p>Record yourself saying "temps" and compare the formant patterns and A1-P0 values.</p>
+    <p><em>(Users would upload their own recording to compare)</em></p>
+  </div>
+</div>
+```
+
+## Responsive Multi-Device
+
+### Example 9: Mobile-Friendly Embedding
+
+**Use case:** Works on desktop, tablet, phone
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      margin: 0;
+      padding: 20px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .viewer-container {
+      position: relative;
+      width: 100%;
+      padding-bottom: 75%; /* 4:3 aspect ratio */
+      margin: 20px 0;
+    }
+
+    iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+    }
+
+    @media (max-width: 768px) {
+      .viewer-container { padding-bottom: 100%; } /* More square on mobile */
+    }
+  </style>
+</head>
+<body>
+  <h1>Acoustic Analysis Example</h1>
+
+  <div class="viewer-container">
+    <iframe src="https://ucpresearch.github.io/ozen-web/viewer?audio=https://example.com/audio.wav&overlays=pitch,formants">
+    </iframe>
+  </div>
+
+  <p>This viewer adapts to your screen size. Try viewing on phone, tablet, and desktop.</p>
+</body>
+</html>
+```
+
+## Advanced JavaScript Integration
+
+### Example 10: Dynamic URL Generation
+
+**Use case:** Let users select overlays and generate embed code
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Embed Code Generator</title>
+  <style>
+    body { font-family: sans-serif; max-width: 800px; margin: 40px auto; padding: 20px; }
+    .controls { background: #f5f5f5; padding: 20px; border-radius: 8px; margin: 20px 0; }
+    label { display: block; margin: 10px 0; }
+    input[type="text"] { width: 100%; padding: 8px; }
+    button { padding: 10px 20px; background: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer; }
+    #embedCode { width: 100%; height: 150px; font-family: monospace; font-size: 12px; }
+    #preview { margin: 40px 0; }
+  </style>
+</head>
+<body>
+  <h1>ozen-web Embed Code Generator</h1>
+
+  <div class="controls">
+    <label>
+      Audio URL:
+      <input type="text" id="audioURL" value="https://example.com/audio.wav">
+    </label>
+
+    <label>
+      <input type="checkbox" id="pitch" checked> Pitch
+    </label>
+    <label>
+      <input type="checkbox" id="formants"> Formants
+    </label>
+    <label>
+      <input type="checkbox" id="intensity"> Intensity
+    </label>
+
+    <button onclick="generateEmbed()">Generate Embed Code</button>
+  </div>
+
+  <h3>Embed Code:</h3>
+  <textarea id="embedCode" readonly></textarea>
+
+  <h3>Preview:</h3>
+  <div id="preview"></div>
+
+  <script>
+    function generateEmbed() {
+      const audioURL = document.getElementById('audioURL').value;
+      const overlays = [];
+
+      if (document.getElementById('pitch').checked) overlays.push('pitch');
+      if (document.getElementById('formants').checked) overlays.push('formants');
+      if (document.getElementById('intensity').checked) overlays.push('intensity');
+
+      const params = new URLSearchParams({
+        audio: audioURL,
+        overlays: overlays.join(',')
+      });
+
+      const viewerURL = `https://ucpresearch.github.io/ozen-web/viewer?${params}`;
+
+      const embedCode = `<iframe src="${viewerURL}"
+        width="100%"
+        height="600"
+        style="border: none;">
+</iframe>`;
+
+      document.getElementById('embedCode').value = embedCode;
+      document.getElementById('preview').innerHTML = embedCode;
+    }
+
+    // Generate initial embed
+    generateEmbed();
+  </script>
+</body>
+</html>
+```
+
+## Best Practices Summary
+
+### Choose the Right Approach
+
+| Scenario | Recommendation |
+|----------|----------------|
+| Blog post, single example | Hosted viewer + remote audio URL |
+| Research paper (HTML) | Hosted viewer + GitHub Pages audio |
+| Teaching materials (Quarto) | Helper script + local audio |
+| Conference poster | Data URL for self-contained QR code |
+| Email distribution | Data URL in single HTML file |
+| Offline access required | Local viewer build + local audio |
+
+### Optimize for Performance
+
+- Use MP3 for large files (vs. WAV)
+- Host audio on CDN for faster loading
+- Preload only necessary overlays
+- Use appropriate maxFreq (don't default to 10kHz)
+
+### Accessibility
+
+- Provide text alternative describing what audio shows
+- Include captions or transcripts
+- Ensure responsive design for mobile viewers
+- Test with screen readers (provide ARIA labels)
+
+## See Also
+
+- [Basic Embedding](basic-usage.html) - Fundamentals
+- [URL Parameters](url-parameters.html) - Customization reference
+- [Quarto Integration](quarto-integration.html) - Academic publishing
+- [Mobile Viewer](../features/mobile-viewer.html) - Touch interface

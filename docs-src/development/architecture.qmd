@@ -1,0 +1,757 @@
+---
+title: "Architecture"
+subtitle: "System design and component structure"
+---
+
+## Overview
+
+ozen-web is a **fully client-side web application** built with SvelteKit, designed to run entirely in the browser without any backend server. The architecture emphasizes:
+
+- **Reactive state management** via Svelte stores
+- **WASM-powered analysis** for Praat-accurate acoustic computation
+- **Canvas-based rendering** for high-performance visualization
+- **Progressive enhancement** for long audio files
+- **Modular design** with clear separation of concerns
+
+## Application Structure
+
+### Routes
+
+ozen-web uses SvelteKit's file-based routing with two main routes:
+
+```
+src/routes/
+├── +page.svelte          # Main desktop application
+├── +layout.svelte        # App shell (shared layout)
+├── +layout.ts            # Prerender config
+└── viewer/
+    ├── +page.svelte      # Mobile-optimized viewer
+    └── +layout.ts        # Viewer prerender config
+```
+
+**Main Application (`/`):**
+- Full-featured desktop interface
+- Editable annotations and data points
+- File drop zone, settings panels, toolbar
+- Keyboard shortcuts for efficient workflow
+
+**Mobile Viewer (`/viewer`):**
+- Touch-optimized, read-only interface
+- URL-based audio loading (`?audio=...`)
+- Compact values display
+- Gesture support (tap, drag, pinch, pan)
+
+### Build System
+
+**Static Site Generation:**
+- All routes are **prerendered** at build time (not SPA mode)
+- Uses relative paths for portable deployment
+- Post-build script (`scripts/fix-relative-paths.js`) ensures base path detection works in subdirectories
+- No server required - deploy to any static host
+
+**Build output:**
+```bash
+npm run build    # → build/ directory
+```
+
+**Deployment flexibility:**
+```
+# Works at root
+https://example.com/
+
+# Works in subdirectory
+https://example.com/subfolder/
+
+# Works on GitHub Pages
+https://username.github.io/ozen-web/
+```
+
+## Component Hierarchy
+
+```mermaid
+graph TD
+    A[+layout.svelte] --> B[+page.svelte Main App]
+    A --> C[viewer/+page.svelte Mobile Viewer]
+
+    B --> D[FileDropZone]
+    B --> E[Waveform]
+    B --> F[Spectrogram]
+    B --> G[AnnotationEditor]
+    B --> H[ValuesPanel]
+    B --> I[TimeAxis]
+
+    G --> J[Tier x N]
+
+    F -.overlay.-> K[Pitch overlay]
+    F -.overlay.-> L[Formant overlay]
+    F -.overlay.-> M[Data points]
+
+    C --> N[Compact ValuesPanel]
+    C --> O[Spectrogram read-only]
+    C --> P[Touch gesture layer]
+```
+
+### Component Responsibilities
+
+**Layout Components:**
+
+| Component | File | Purpose |
+|-----------|------|---------|
+| App shell | `+layout.svelte` | HTML structure, global styles, WASM initialization |
+| Main app | `+page.svelte` | Desktop UI orchestration, toolbar, panels |
+| Mobile viewer | `viewer/+page.svelte` | Touch-optimized view-only interface |
+
+**Core Visualization:**
+
+| Component | File | Responsibility |
+|-----------|------|----------------|
+| `Waveform` | `Waveform.svelte` | Amplitude display, downsampling, synchronized cursor |
+| `Spectrogram` | `Spectrogram.svelte` | Time-frequency visualization, overlay rendering, interaction |
+| `TimeAxis` | `TimeAxis.svelte` | Time ruler with tick marks and labels |
+
+**Annotation & Data:**
+
+| Component | File | Responsibility |
+|-----------|------|----------------|
+| `AnnotationEditor` | `AnnotationEditor.svelte` | Tier container, add/remove tiers, toolbar |
+| `Tier` | `Tier.svelte` | Individual tier display, boundary editing, text input |
+| `ValuesPanel` | `ValuesPanel.svelte` | Real-time acoustic measurements at cursor |
+
+**Utilities:**
+
+| Component | File | Responsibility |
+|-----------|------|----------------|
+| `FileDropZone` | `FileDropZone.svelte` | Drag-drop and file picker for audio/TextGrid |
+| `Modal` | `Modal.svelte` | Reusable modal dialog container |
+
+## State Management
+
+ozen-web uses **Svelte stores** for all shared state. Stores are the single source of truth; components subscribe and react to changes.
+
+### Store Architecture
+
+```mermaid
+graph LR
+    A[User Action] --> B[Component]
+    B --> C[Store Update]
+    C --> D[Store]
+    D --> E[Reactive $binding]
+    E --> F[Component Re-render]
+
+    D -.derives.-> G[Derived Store]
+    G --> E
+```
+
+### Core Stores
+
+**src/lib/stores/**
+
+| Store | File | State |
+|-------|------|-------|
+| Audio | `audio.ts` | `audioBuffer`, `sampleRate`, `fileName`, `duration` |
+| View | `view.ts` | `timeRange`, `cursorPosition`, `selection`, `hoverPosition` |
+| Analysis | `analysis.ts` | `analysisResults`, `isAnalyzing`, `analysisParams` |
+| Annotations | `annotations.ts` | `tiers`, `activeTier`, annotation functions |
+| Data Points | `dataPoints.ts` | `dataPoints` array with measurements |
+| Undo/Redo | `undoManager.ts` | Unified history stack for all edits |
+| Config | `config.ts` | Colors, formant presets, UI preferences |
+
+### Data Flow Example
+
+**Loading audio file:**
+
+```mermaid
+sequenceDiagram
+    participant U as User
+    participant D as FileDropZone
+    participant A as audio.ts
+    participant V as view.ts
+    participant An as analysis.ts
+    participant W as Waveform
+    participant S as Spectrogram
+
+    U->>D: Drop audio file
+    D->>D: Decode with Web Audio API
+    D->>A: Set audioBuffer, sampleRate, fileName
+    A->>V: Reset timeRange to [0, duration]
+    A->>An: Trigger runAnalysis()
+    An->>An: Compute pitch, formants, etc.
+    An->>An: Set analysisResults
+    A-->>W: Reactive update (audioBuffer changed)
+    W->>W: Redraw waveform
+    An-->>S: Reactive update (analysisResults changed)
+    S->>S: Render spectrogram + overlays
+```
+
+**Editing annotation:**
+
+```mermaid
+sequenceDiagram
+    participant U as User
+    participant T as Tier
+    participant UM as undoManager.ts
+    participant An as annotations.ts
+    participant T2 as Tier (all)
+
+    U->>T: Double-click to add boundary
+    T->>UM: saveUndo()
+    UM->>UM: Capture current state snapshot
+    T->>An: addBoundary(tierIndex, time)
+    An->>An: Update tiers array
+    An-->>T2: Reactive update
+    T2->>T2: Re-render all tiers
+```
+
+### Derived Stores
+
+**Computed state** is implemented with derived stores:
+
+```typescript
+// src/lib/stores/view.ts
+export const visibleDuration = derived(
+  timeRange,
+  ($timeRange) => $timeRange.end - $timeRange.start
+);
+```
+
+Components can subscribe to `$visibleDuration` which automatically updates when `timeRange` changes.
+
+## WASM Integration
+
+### Backend Abstraction Layer
+
+**File:** `src/lib/wasm/acoustic.ts`
+
+The abstraction layer provides a **unified API** across multiple WASM backends:
+
+| Backend | Source | License |
+|---------|--------|---------|
+| `praatfan-local` | `static/wasm/praatfan/` | MIT/Apache-2.0 |
+| `praatfan` | CDN (GitHub Pages) | MIT/Apache-2.0 |
+| `praatfan-gpl` | CDN (GitHub Pages) | GPL |
+
+**Why abstraction matters:**
+- Different backends may have slightly different APIs
+- Wrapper functions normalize the interface
+- Easy to add new backends without touching components
+
+### WASM Call Flow
+
+```mermaid
+sequenceDiagram
+    participant C as Component/Store
+    participant A as acoustic.ts (abstraction)
+    participant W as WASM Module
+    participant M as Memory
+
+    C->>A: computePitch(sound, params)
+    A->>W: sound.to_pitch(...)
+    W->>M: Allocate arrays
+    W->>M: Run autocorrelation
+    W->>M: Store results
+    W-->>A: Return Pitch object
+    A->>W: pitch.ts() → Float64Array
+    A->>W: pitch.selected_array() → Float64Array
+    W-->>A: Return arrays
+    A->>W: pitch.free()
+    W->>M: Deallocate
+    A-->>C: Return { times, values }
+```
+
+**Critical pattern:** Always `.free()` WASM objects to prevent memory leaks.
+
+### Initialization
+
+**On app load (`+layout.svelte`):**
+
+1. Check for `config.yaml` or URL parameter for backend choice
+2. Call `initWasm(backend)` from `acoustic.ts`
+3. Set `wasmReady` store to `true`
+4. Components react to `$wasmReady` and enable analysis features
+
+**Lazy loading for CDN backends:**
+```typescript
+// praatfan backend downloads ~5MB on first init
+await initWasm('praatfan');  // 1-3 second delay
+```
+
+**Instant for local backend:**
+```typescript
+// praatfan-local uses bundled WASM
+await initWasm('praatfan-local');  // ~200ms
+```
+
+## Rendering Pipeline
+
+### Canvas Strategy
+
+ozen-web uses **HTML5 Canvas** for all visualizations (not SVG/DOM) to handle:
+- Large datasets (thousands of time points, frequency bins)
+- Real-time updates (cursor tracking, playback)
+- Smooth zoom/pan interactions
+
+### Spectrogram Rendering
+
+**Multi-stage pipeline:**
+
+```mermaid
+graph TD
+    A[Load audio] --> B[Compute full spectrogram via WASM]
+    B --> C[Apply grayscale colormap]
+    C --> D[Create ImageData]
+    D --> E[Draw to off-screen canvas cache]
+    E --> F[On zoom/pan: draw visible region]
+
+    F --> G{Zoom > 2x?}
+    G -->|Yes| H[Debounce 300ms]
+    G -->|No| I[Draw from cache]
+
+    H --> J[Recompute high-res spectrogram for visible window]
+    J --> K[Update cache for this region]
+    K --> I
+
+    I --> L[Draw overlays on top]
+    L --> M[Pitch track]
+    L --> N[Formants]
+    L --> O[Data points]
+    L --> P[Cursor/selection]
+```
+
+**Why this approach:**
+- **Full spectrogram cache:** Fast redraw when panning at low zoom
+- **Dynamic resolution:** High-quality detail when zoomed in
+- **Debouncing:** Prevents excessive recomputation during smooth zoom
+- **Overlay separation:** Overlays drawn each frame without recomputing spectrogram
+
+**Code location:** `src/lib/components/Spectrogram.svelte`
+
+### Waveform Rendering
+
+**Downsampling strategy:**
+
+```typescript
+// Pseudocode from Waveform.svelte
+function renderWaveform(audioBuffer, timeRange, canvasWidth) {
+  const samplesPerPixel = Math.ceil(visibleSamples / canvasWidth);
+
+  for (let x = 0; x < canvasWidth; x++) {
+    const startSample = visibleStart + (x * samplesPerPixel);
+    const endSample = startSample + samplesPerPixel;
+
+    // Find min/max in this pixel column
+    let min = Infinity, max = -Infinity;
+    for (let i = startSample; i < endSample; i++) {
+      const sample = audioBuffer[i];
+      if (sample < min) min = sample;
+      if (sample > max) max = sample;
+    }
+
+    // Draw vertical line from min to max
+    drawVerticalLine(x, min, max);
+  }
+}
+```
+
+**Result:** One vertical line per pixel showing amplitude range, efficient for any zoom level.
+
+### Overlay Rendering
+
+**Layers drawn on spectrogram canvas:**
+
+1. **Base spectrogram** (ImageData from cache)
+2. **Selection** (semi-transparent blue rectangle)
+3. **Pitch track** (blue line with dots)
+4. **Formant tracks** (red dots for F1-F4)
+5. **Intensity** (green line)
+6. **HNR/CoG/Spectral Tilt** (additional colored tracks)
+7. **Data points** (yellow dashed vertical lines + circles)
+8. **Cursor** (red vertical line, drawn last)
+
+**Drawing order matters:** Cursor must be on top to remain visible during playback.
+
+## Touch Handling
+
+**File:** `src/lib/touch/gestures.ts`
+
+The mobile viewer (`/viewer` route) uses custom touch gesture recognition:
+
+### Gesture Types
+
+| Gesture | Fingers | Action | Effect |
+|---------|---------|--------|--------|
+| Tap | 1 | Quick touch | Set cursor position |
+| Drag | 1 | Touch + move | Create selection |
+| Pan | 2 | Two-finger drag | Scroll time axis |
+| Pinch | 2 | Spread/pinch | Zoom in/out |
+
+### Touch Event Flow
+
+```mermaid
+sequenceDiagram
+    participant U as User
+    participant G as gestures.ts
+    participant V as view.ts
+    participant S as Spectrogram
+
+    U->>G: touchstart (2 fingers)
+    G->>G: Detect pinch gesture
+    U->>G: touchmove
+    G->>G: Calculate pinch distance
+    G->>G: Compute zoom delta
+    G->>V: Update timeRange (zoom)
+    V-->>S: Reactive update
+    S->>S: Redraw at new zoom level
+    U->>G: touchend
+    G->>G: Reset gesture state
+```
+
+**Conflict resolution:**
+- **1 finger:** Wait 150ms to distinguish tap vs drag
+- **2 fingers:** Immediately enter pan/pinch mode
+- **>2 fingers:** Ignore (prevent accidental gestures)
+
+**Code location:** `viewer/+page.svelte` integrates `gestures.ts`
+
+## File I/O
+
+### Loading Files
+
+**Audio files:**
+
+```mermaid
+graph LR
+    A[File source] --> B{Input method}
+    B -->|Drag & drop| C[FileDropZone]
+    B -->|File picker| C
+    B -->|Microphone| D[MediaRecorder API]
+    B -->|URL parameter| E[Fetch with CORS]
+    B -->|Data URL| F[Base64 decode]
+
+    C --> G[Decode with Web Audio API]
+    D --> G
+    E --> G
+    F --> G
+
+    G --> H[Float64Array samples]
+    H --> I[audio.ts store]
+```
+
+**TextGrid files:**
+
+```mermaid
+graph LR
+    A[File picker] --> B[FileReader.readAsText]
+    B --> C[textgrid/parser.ts]
+    C --> D{Format?}
+    D -->|Short| E[Parse short format]
+    D -->|Long| F[Parse long format]
+    E --> G[Tier objects]
+    F --> G
+    G --> H[annotations.ts store]
+```
+
+### Saving Files
+
+**Two approaches based on browser support:**
+
+**Modern browsers (File System Access API):**
+```typescript
+const handle = await window.showSaveFilePicker({
+  suggestedName: 'annotations.TextGrid',
+  types: [{ description: 'TextGrid', accept: { 'text/plain': ['.TextGrid'] } }]
+});
+const writable = await handle.createWritable();
+await writable.write(textGridContent);
+await writable.close();
+```
+
+**Fallback (Download link):**
+```typescript
+const blob = new Blob([textGridContent], { type: 'text/plain' });
+const url = URL.createObjectURL(blob);
+const a = document.createElement('a');
+a.href = url;
+a.download = 'annotations.TextGrid';
+a.click();
+URL.revokeObjectURL(url);
+```
+
+**File types supported:**
+
+| Format | Load | Save | Store | Parser |
+|--------|------|------|-------|--------|
+| WAV audio | ✅ | ✅ | `audio.ts` | Web Audio API |
+| MP3 audio | ✅ | ❌ | `audio.ts` | Web Audio API |
+| OGG audio | ✅ | ❌ | `audio.ts` | Web Audio API |
+| TextGrid | ✅ | ✅ | `annotations.ts` | `textgrid/parser.ts` |
+| TSV data | ✅ | ✅ | `dataPoints.ts` | Built-in |
+
+## Long Audio Handling
+
+**Problem:** Analyzing >60 second files upfront causes UI freezing.
+
+**Solution:** Progressive, on-demand analysis.
+
+### Analysis Strategy
+
+```mermaid
+graph TD
+    A[Load audio file] --> B{Duration > 60s?}
+    B -->|No| C[Run full analysis immediately]
+    B -->|Yes| D[Skip analysis, show waveform only]
+
+    C --> E[Display all features]
+
+    D --> F[User zooms in]
+    F --> G{Visible window ≤ 60s?}
+    G -->|No| H[Wait for more zoom]
+    G -->|Yes| I[Debounce 300ms]
+    H --> F
+    I --> J[Compute analysis for visible range only]
+    J --> K[Cache results for this region]
+    K --> E
+```
+
+**Implementation:**
+
+```typescript
+// src/lib/stores/analysis.ts
+export const MAX_ANALYSIS_DURATION = 60;
+
+export async function runAnalysis(): Promise<void> {
+  const audioDuration = get(duration);
+
+  if (audioDuration > MAX_ANALYSIS_DURATION) {
+    console.log('Audio too long, skipping upfront analysis');
+    analysisResults.set(null);
+    return;
+  }
+
+  // Run full analysis
+  await computeAllFeatures();
+}
+
+// Called when user zooms (in Spectrogram.svelte)
+export async function runAnalysisForRange(start: number, end: number): Promise<void> {
+  if (end - start > MAX_ANALYSIS_DURATION) {
+    return; // Still too wide
+  }
+
+  // Compute just for this window
+  await computeFeaturesForRange(start, end);
+}
+```
+
+**User experience:**
+- File loads instantly (no hanging)
+- Waveform always visible
+- Spectrogram shows "Zoom in to see spectrogram" message
+- Overlays appear once zoomed to analyzable window
+
+**Code location:** `src/lib/stores/analysis.ts`, `src/lib/components/Spectrogram.svelte`
+
+## Unified Undo System
+
+**File:** `src/lib/stores/undoManager.ts`
+
+### Architecture
+
+**State-snapshot approach:**
+- Before each change, capture full state (all tiers + all data points)
+- Use JSON deep-copy for isolation
+- Single history stack ensures chronological order
+
+```mermaid
+graph LR
+    A[User edits annotation] --> B[saveUndo]
+    B --> C[Capture current state]
+    C --> D[Push to history stack]
+    D --> E[Perform mutation]
+
+    F[User clicks Undo] --> G[Pop from history]
+    G --> H[Restore previous state]
+    H --> I[Update stores]
+```
+
+### Undoable Operations
+
+**Annotations:**
+- Add boundary
+- Remove boundary
+- Move boundary
+- Edit interval text
+
+**Data Points:**
+- Add data point
+- Remove data point
+- Move data point
+
+**Not undoable (by design):**
+- Add/remove/rename tier (structural changes)
+- Load audio/TextGrid (file operations)
+
+### Usage Pattern
+
+```typescript
+import { saveUndo, undo, redo } from '$lib/stores/undoManager';
+
+export function addBoundary(tierIndex: number, time: number): void {
+  saveUndo();  // MUST call before mutation
+
+  tiers.update(t => {
+    // Modify tiers...
+    return t;
+  });
+}
+
+// In component
+function handleUndo(event: KeyboardEvent) {
+  if ((event.ctrlKey || event.metaKey) && event.key === 'z') {
+    undo();
+  }
+}
+```
+
+**Important:** Always call `saveUndo()` *before* the mutation, not after.
+
+## Audio Playback
+
+**File:** `src/lib/audio/player.ts`
+
+Uses **Web Audio API** for precise playback:
+
+```mermaid
+graph LR
+    A[audioBuffer store] --> B[AudioBufferSourceNode]
+    B --> C[GainNode volume control]
+    C --> D[AudioContext destination]
+    D --> E[System audio output]
+
+    F[cursorPosition store] --> G[requestAnimationFrame loop]
+    G --> H[Update cursor during playback]
+    H --> G
+```
+
+### Playback Modes
+
+**Selection playback:**
+```typescript
+// Play only selected region
+playSelection(selection.start, selection.end);
+```
+
+**Visible window playback:**
+```typescript
+// Play what's currently visible on screen
+playVisibleWindow(timeRange.start, timeRange.end);
+```
+
+**Full file playback:**
+```typescript
+// Play from cursor to end
+playFromCursor(cursorPosition, audioDuration);
+```
+
+### Cursor Synchronization
+
+During playback:
+1. `AudioBufferSourceNode` starts at offset
+2. `requestAnimationFrame` loop checks `AudioContext.currentTime`
+3. Calculate playback position: `offset + (currentTime - startTime)`
+4. Update `cursorPosition` store (60 FPS)
+5. All components with `{$cursorPosition}` binding re-render
+
+**Result:** Smooth cursor tracking across waveform, spectrogram, and annotations.
+
+## Deployment Architecture
+
+### Static Build
+
+**No server required** - entire app is static HTML/CSS/JS:
+
+```
+build/
+├── index.html              # Main app HTML
+├── viewer.html             # Mobile viewer HTML
+├── _app/
+│   ├── immutable/
+│   │   ├── chunks/         # Code-split JS bundles
+│   │   ├── entry/          # Entry points
+│   │   └── nodes/          # Page components
+│   └── version.json        # Build version
+└── ...                     # Static assets
+```
+
+**Base path handling:**
+
+Post-build script (`scripts/fix-relative-paths.js`) injects runtime base path detection:
+
+```javascript
+// In generated HTML
+<script>
+  // Detect actual deployment path
+  window.__base = document.currentScript.src.replace(/\/[^\/]*$/, '').replace(/\/_app.*/, '');
+</script>
+```
+
+This allows deploying to:
+- Root: `https://example.com/`
+- Subdirectory: `https://example.com/tools/ozen/`
+- GitHub Pages: `https://user.github.io/ozen-web/`
+
+No rebuild needed - same build works everywhere.
+
+## Performance Considerations
+
+### Memory Management
+
+**WASM objects:**
+- Always `.free()` after use (Pitch, Formant, Spectrogram objects)
+- Use abstraction layer to enforce cleanup
+
+**Canvas caching:**
+- Off-screen canvas for spectrogram (reuse without recomputing)
+- Debounce zoom to avoid excessive regeneration
+
+**Audio buffer:**
+- Stored as `Float64Array` (full resolution, never downsampled)
+- Mono conversion done once on load (stereo → mono mix)
+
+### Rendering Optimization
+
+**Waveform:**
+- Downsample to one vertical line per pixel
+- `O(canvas width)` complexity, not `O(sample count)`
+
+**Spectrogram:**
+- Cache full spectrogram as ImageData
+- Draw visible region only (viewport clipping)
+- Regenerate high-res only when zoomed >2x
+
+**Overlays:**
+- Skip rendering points outside visible time range
+- Use `requestAnimationFrame` for smooth cursor updates
+
+### Lazy Analysis
+
+For audio >60s:
+- Skip upfront computation (prevents hanging)
+- Compute only visible window when zoomed
+- Cache computed regions (avoid re-analysis on pan)
+
+## Testing Strategy
+
+**Currently:** Manual testing workflow (see [Setup](setup.html#testing))
+
+**Future:** Automated tests could include:
+- Unit tests for stores (Vitest)
+- WASM integration tests (mock acoustic.ts)
+- Component tests (Svelte Testing Library)
+- E2E tests (Playwright - already used for screenshots)
+
+## See Also
+
+- [Setup](setup.html) - Development environment
+- [Stores](stores.html) - Detailed store documentation
+- [WASM Integration](wasm-integration.html) - Backend development
+- [Contributing](contributing.html) - How to contribute

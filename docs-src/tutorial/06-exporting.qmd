@@ -1,0 +1,439 @@
+---
+title: "6. Exporting"
+subtitle: "Save your annotations and data for analysis"
+---
+
+## Overview
+
+After annotating audio and collecting data points, you'll want to export your work for:
+
+- **Long-term storage** (save your annotations)
+- **Further analysis** (statistical analysis in R, Python, Praat)
+- **Sharing** (collaborate with colleagues)
+
+ozen-web supports three export formats:
+
+1. **TextGrid** (Praat format) — For annotations
+2. **TSV** (Tab-Separated Values) — For data points + measurements
+3. **WAV** (Audio) — For saving recorded or edited audio
+
+## Exporting TextGrids
+
+TextGrid is the standard format for time-aligned annotations, compatible with Praat.
+
+::: {.tutorial-steps}
+1. **Create some annotations** (section 4) if you haven't already
+
+2. **Click "Export TextGrid"** button (usually in toolbar or File menu)
+
+   ![TextGrid export dialog](../screenshots/tutorial-06-export-textgrid.png){.screenshot}
+
+3. A **file download dialog** appears (or File System Access API prompt)
+
+4. **Choose a location** and filename (e.g., `my-annotation.TextGrid`)
+
+5. **Click "Save"**
+
+6. The TextGrid file is saved to your computer
+:::
+
+### TextGrid File Contents
+
+A TextGrid file contains:
+
+- All annotation tiers (interval and point tiers)
+- All boundaries and their time positions
+- All interval labels
+
+**Example TextGrid content:**
+
+```
+File type = "ooTextFile"
+Object class = "TextGrid"
+
+xmin = 0
+xmax = 2.451
+tiers? <exists>
+size = 2
+
+item [1]:
+    class = "IntervalTier"
+    name = "words"
+    xmin = 0
+    xmax = 2.451
+    intervals: size = 3
+        intervals [1]:
+            xmin = 0
+            xmax = 0.523
+            text = "hello"
+        intervals [2]:
+            xmin = 0.523
+            xmax = 1.234
+            text = "world"
+        intervals [3]:
+            xmin = 1.234
+            xmax = 2.451
+            text = ""
+```
+
+### Opening TextGrids in Praat
+
+::: {.tutorial-steps}
+1. Open **Praat**
+
+2. Go to **Read → Read from file...**
+
+3. Select your TextGrid file
+
+4. Open the corresponding audio file
+
+5. Select both (Shift+click) and choose **View & Edit**
+
+6. Your annotations appear in Praat's editor
+:::
+
+::: {.callout-tip}
+Keep audio and TextGrid files in the same directory with matching names (e.g., `audio.wav` and `audio.TextGrid`) for easy loading in Praat.
+:::
+
+## Importing TextGrids
+
+You can also import existing TextGrid files into ozen-web:
+
+::: {.tutorial-steps}
+1. **Load an audio file** first (section 1)
+
+2. **Click "Import TextGrid"** button
+
+3. **Select a TextGrid file**
+
+4. The tiers and annotations appear in ozen-web
+:::
+
+::: {.callout-note}
+The TextGrid must match the audio duration. If durations don't match, some annotations may be truncated or extended.
+:::
+
+## Exporting Data Points (TSV)
+
+TSV (Tab-Separated Values) files are perfect for statistical analysis in R, Python, SPSS, or Excel.
+
+::: {.tutorial-steps}
+1. **Add some data points** (section 5) if you haven't already
+
+2. **Click "Export Data Points"** or "Export TSV" button
+
+   ![TSV export menu](../screenshots/tutorial-06-export-tsv.png){.screenshot}
+
+3. **Choose a location** and filename (e.g., `vowel-data.tsv`)
+
+4. **Click "Save"**
+
+5. The TSV file is saved
+:::
+
+### TSV File Contents
+
+A TSV file contains one row per data point with columns for:
+
+- **time** — Time position (seconds)
+- **frequency** — Frequency where you clicked (Hz)
+- **pitch** — Fundamental frequency (Hz)
+- **intensity** — Intensity (dB)
+- **f1, f2, f3, f4** — Formant frequencies (Hz)
+- **b1, b2, b3, b4** — Formant bandwidths (Hz)
+- **hnr** — Harmonics-to-Noise Ratio (dB)
+- **cog** — Center of Gravity (Hz)
+- **spectral_tilt** — Spectral tilt (dB/octave)
+- **a1_p0** — A1-P0 measure
+- **[tier_name]** — One column per annotation tier (labels at that time)
+
+**Example TSV:**
+
+```
+time	frequency	pitch	intensity	f1	f2	f3	f4	phones	words
+0.234	1500	156	72	678	1234	2890	3654	i	see
+0.567	1200	234	68	543	987	2567	3234	u	two
+0.891	1400	198	71	698	1324	2678	3456	æ	cats
+```
+
+### Analyzing TSV Data
+
+**In R:**
+
+```r
+# Read data
+data <- read.delim("vowel-data.tsv")
+
+# Plot F1 vs F2
+library(ggplot2)
+ggplot(data, aes(x = f2, y = f1, label = phones)) +
+  geom_text() +
+  scale_x_reverse() +
+  scale_y_reverse() +
+  labs(title = "Vowel Space", x = "F2 (Hz)", y = "F1 (Hz)")
+```
+
+**In Python:**
+
+```python
+import pandas as pd
+import matplotlib.pyplot as plt
+
+# Read data
+data = pd.read_csv('vowel-data.tsv', sep='\t')
+
+# Plot F1 vs F2
+plt.figure(figsize=(8, 6))
+for i, row in data.iterrows():
+    plt.text(row['f2'], row['f1'], row['phones'])
+plt.gca().invert_xaxis()
+plt.gca().invert_yaxis()
+plt.xlabel('F2 (Hz)')
+plt.ylabel('F1 (Hz)')
+plt.title('Vowel Space')
+plt.show()
+```
+
+**In Excel:**
+
+1. Open Excel
+2. File → Open → Select TSV file
+3. Data imports into columns
+4. Create scatter plot (F1 vs F2)
+5. Add data labels (vowel symbols)
+
+::: {.callout-try}
+**Try this:** Export your data points, open in Excel, and create a simple scatter plot of F1 (y-axis) vs F2 (x-axis). Each point represents a vowel!
+:::
+
+## Importing Data Points (TSV)
+
+You can also import previously exported TSV files:
+
+::: {.tutorial-steps}
+1. **Load the same audio file** that you used when creating the data points
+
+2. **Click "Import Data Points"** or "Import TSV"
+
+3. **Select your TSV file**
+
+4. Data points appear on the spectrogram
+:::
+
+::: {.callout-warning}
+TSV import requires matching audio files. If the audio is different, time positions may not align correctly.
+:::
+
+## Exporting Audio
+
+Save the current audio (useful after recording or trimming):
+
+::: {.tutorial-steps}
+1. **Click "Export Audio"** or "Save Audio" button
+
+2. **Choose format** (usually WAV, 16-bit PCM)
+
+3. **Choose location** and filename
+
+4. **Click "Save"**
+
+5. Audio is saved as a WAV file
+:::
+
+::: {.callout-note}
+Exported audio is always in WAV format (16-bit PCM, original sample rate). This ensures compatibility with Praat and other analysis software.
+:::
+
+## File System Access API vs. Downloads
+
+ozen-web uses two methods for saving files, depending on browser support:
+
+**File System Access API** (Chrome, Edge):
+
+- Shows native "Save" dialog
+- You choose exact location and filename
+- Can overwrite existing files
+- Feels like a desktop app
+
+**Download API** (Firefox, Safari, older browsers):
+
+- Files save to Downloads folder
+- Browser may add numbers (e.g., `data(1).tsv`, `data(2).tsv`)
+- You need to move files manually
+
+::: {.callout-tip}
+For best experience, use Chrome or Edge, which support the File System Access API.
+:::
+
+## Recommended Workflow
+
+For a complete research workflow:
+
+::: {.tutorial-steps}
+1. **Load audio** (section 1)
+
+2. **Create annotations** with multiple tiers (section 4)
+   - Words tier
+   - Phones tier
+   - Any other tiers needed
+
+3. **Enable acoustic overlays** (section 3)
+   - Pitch, Formants, Intensity
+
+4. **Add data points** at measurement locations (section 5)
+   - Vowel midpoints
+   - Consonant landmarks
+   - Pitch points
+
+5. **Export TextGrid** for annotations
+   - Saves all tiers and labels
+   - Compatible with Praat
+
+6. **Export TSV** for acoustic measurements
+   - Saves all data points with values
+   - Ready for statistical analysis
+
+7. **Organize your files:**
+   ```
+   my-project/
+   ├── audio.wav
+   ├── audio.TextGrid
+   └── data-points.tsv
+   ```
+:::
+
+::: {.callout-tip}
+Export frequently! Browser tabs can close unexpectedly. Save your work every 10-15 minutes.
+:::
+
+## Batch Processing Multiple Files
+
+For analyzing many files:
+
+::: {.tutorial-steps}
+1. Analyze first file (load, annotate, collect data, export)
+
+2. Load second file
+
+3. Repeat annotation and data collection
+
+4. Export each file's TextGrid and TSV
+
+5. Combine all TSV files in R or Python:
+
+**R:**
+```r
+files <- list.files(pattern = "*.tsv")
+data <- do.call(rbind, lapply(files, read.delim))
+```
+
+**Python:**
+```python
+import pandas as pd
+import glob
+
+files = glob.glob("*.tsv")
+data = pd.concat([pd.read_csv(f, sep='\t') for f in files])
+```
+:::
+
+::: {.callout-note}
+ozen-web doesn't have built-in batch processing. For large corpora, consider using the desktop version [ozen](https://github.com/ucpresearch/ozen) or scripting with Praat.
+:::
+
+## Practice Exercises
+
+1. **Export and re-import a TextGrid**
+   - Create annotations
+   - Export TextGrid
+   - Load a new audio file
+   - Load the same audio again
+   - Import the TextGrid
+   - Verify annotations reappear
+
+2. **Export data points and open in Excel**
+   - Create 3 data points
+   - Export TSV
+   - Open in Excel or Google Sheets
+   - Verify all columns are present
+
+3. **Analyze in R or Python** (if you know these languages)
+   - Export TSV with formant data
+   - Plot F1 vs F2
+   - Color-code by vowel label
+
+::: {.callout-try}
+**Challenge:** Create a complete mini-dataset:
+
+1. Record or load 3 short sentences
+2. Annotate each with a "words" tier
+3. Add data points on all vowels
+4. Export 3 TextGrids and 3 TSVs
+5. Combine TSVs in Excel/R/Python
+6. Plot a vowel space with all data
+:::
+
+## Troubleshooting
+
+**"Save" button doesn't appear:**
+
+- Check browser permissions (allow file system access)
+- Try using a different browser (Chrome/Edge recommended)
+
+**File saves to Downloads instead of chosen location:**
+
+- Your browser doesn't support File System Access API
+- This is normal for Firefox/Safari; manually move files after download
+
+**TextGrid won't open in Praat:**
+
+- Ensure the file extension is `.TextGrid` (not `.txt`)
+- Check that the file isn't empty (open in text editor)
+- Try re-exporting from ozen-web
+
+**TSV columns are misaligned in Excel:**
+
+- Ensure file extension is `.tsv` (not `.txt`)
+- When opening in Excel, choose "Tab" as delimiter
+- Or use "Text to Columns" feature after opening
+
+**Imported TextGrid doesn't match audio:**
+
+- Verify audio duration matches TextGrid duration
+- Check that you're importing the correct TextGrid for this audio file
+
+**Data points export is empty:**
+
+- Ensure you've added data points (section 5)
+- Check that acoustic overlays are enabled
+- Verify data points appear visually on the spectrogram
+
+## What's Next?
+
+**Congratulations!** 🎉 You've completed the ozen-web tutorial. You now know how to:
+
+- ✅ Load audio files
+- ✅ Navigate and explore audio
+- ✅ View acoustic features
+- ✅ Create multi-tier annotations
+- ✅ Collect acoustic measurements
+- ✅ Export data for analysis
+
+### Continue Learning
+
+- **[Features Documentation](../features/overview.html)** — Deep dive into all features
+- **[Keyboard Shortcuts Reference](../reference/keyboard-shortcuts.html)** — Speed up your workflow
+- **[Configuration Guide](../reference/configuration.html)** — Customize default settings
+- **[Embedding Guide](../embedding/overview.html)** — Embed ozen-web in websites or documents
+
+### Get Involved
+
+- **Report bugs**: [GitHub Issues](https://github.com/ucpresearch/ozen-web/issues)
+- **Request features**: [GitHub Discussions](https://github.com/ucpresearch/ozen-web/discussions)
+- **Contribute**: [Development Guide](../development/setup.html)
+
+---
+
+**Navigation:**
+[← Previous: Data Collection](05-data-collection.html) | [Tutorial Overview](index.html) | [Features Documentation →](../features/overview.html)

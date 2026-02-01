@@ -1,0 +1,292 @@
+---
+title: "3. Acoustic Analysis"
+subtitle: "Enable and interpret acoustic overlays"
+---
+
+## Overview
+
+ozen-web can display multiple acoustic features overlaid on the spectrogram:
+
+- **Pitch (F0)** — Fundamental frequency (blue line and dots)
+- **Formants (F1-F4)** — Resonance frequencies (red dots)
+- **Intensity** — Loudness over time (green line)
+- **HNR** — Voice quality (harmonicity)
+- **CoG** — Spectral center of gravity
+- **Spectral Tilt** — High/low frequency balance
+- **A1-P0** — Nasal formant measure
+
+In this section, you'll learn to enable these overlays and interpret what they show.
+
+## The Overlay Controls
+
+Look for the **overlay checkboxes** in the interface (usually in a sidebar or below the spectrogram).
+
+![Overlay toggle controls](../screenshots/tutorial-03-overlay-checkboxes.png){.screenshot}
+
+## Enabling Pitch
+
+Pitch (fundamental frequency) is the most commonly used overlay.
+
+::: {.tutorial-steps}
+1. **Check the "Pitch" checkbox**
+
+2. Wait 1-2 seconds for computation (first time only)
+
+3. A **blue line with dots** appears on the spectrogram
+
+   ![Spectrogram with pitch overlay](../screenshots/tutorial-03-pitch-overlay.png){.screenshot}
+
+4. Each dot represents one pitch measurement
+
+5. Vertical position = frequency (Hz)
+:::
+
+### Interpreting the Pitch Overlay
+
+- **Higher on screen** = higher pitch (e.g., 300 Hz for female voices)
+- **Lower on screen** = lower pitch (e.g., 100 Hz for male voices)
+- **Gaps in the line** = unvoiced sounds (s, f, t, k, etc.) or pitch detection failures
+- **Smooth contours** = steady pitch (vowels)
+- **Sharp movements** = pitch changes (intonation)
+
+::: {.callout-try}
+**Try this:** Record or load a sentence with a question. You'll see the pitch rise at the end.
+:::
+
+::: {.callout-note}
+Pitch is only detected in **voiced** segments. Consonants like [s], [f], [θ] won't show pitch values.
+:::
+
+## Enabling Formants
+
+Formants show the resonance frequencies that distinguish vowels.
+
+::: {.tutorial-steps}
+1. **Check the "Formants" checkbox**
+
+2. **Red dots** appear on the spectrogram
+
+   ![Spectrogram with formants overlay](../screenshots/tutorial-03-formant-overlay.png){.screenshot}
+
+3. Four vertical series of dots represent F1 (lowest), F2, F3, F4 (highest)
+:::
+
+### Interpreting the Formant Overlay
+
+Formants reveal vowel identity:
+
+| Vowel | F1 (Hz) | F2 (Hz) | Appearance on Spectrogram |
+|-------|---------|---------|---------------------------|
+| [i] "see" | ~300 | ~2300 | F1 low, F2 very high |
+| [u] "soon" | ~300 | ~800 | F1 low, F2 low |
+| [a] "father" | ~700 | ~1200 | F1 high, F2 mid |
+| [ɛ] "bed" | ~600 | ~1800 | F1 mid-high, F2 high |
+
+::: {.callout-try}
+**Try this:** Find a vowel in your audio, place the cursor in the middle, and read F1 and F2 values in the values panel. Compare to the table above.
+:::
+
+::: {.callout-tip}
+F1 roughly corresponds to **tongue height** (high = low F1, low = high F1).
+F2 roughly corresponds to **tongue frontness** (front = high F2, back = low F2).
+:::
+
+## Enabling Intensity
+
+Intensity shows loudness over time.
+
+::: {.tutorial-steps}
+1. **Check the "Intensity" checkbox**
+
+2. A **green line** appears, usually in the upper part of the spectrogram
+
+   ![Spectrogram with intensity overlay](../screenshots/intensity-overlay.png){.screenshot}
+
+3. Height corresponds to decibels (dB)
+:::
+
+### Interpreting Intensity
+
+- **Higher** = louder segments (stressed syllables, vowels)
+- **Lower** = quieter segments (unstressed syllables, consonants)
+- **Drops to bottom** = silence
+
+::: {.callout-try}
+**Try this:** Say a sentence with strong stress on one word. The intensity overlay will peak on the stressed syllable.
+:::
+
+## Enabling Advanced Overlays
+
+### HNR (Harmonics-to-Noise Ratio)
+
+Measures voice quality:
+
+- **High HNR** (>10 dB) = clear, modal voice
+- **Low HNR** (<5 dB) = breathy or creaky voice
+- **Very low HNR** = whisper or noise
+
+::: {.tutorial-steps}
+1. Check the "HNR" checkbox
+2. Orange/yellow line appears
+3. Higher = more harmonic (less noisy)
+:::
+
+### CoG (Center of Gravity)
+
+Measures spectral balance:
+
+- **High CoG** (>5000 Hz) = sibilants (s, sh), fricatives
+- **Low CoG** (<3000 Hz) = vowels, sonorants
+
+Useful for distinguishing fricatives.
+
+### Spectral Tilt
+
+Measures high vs. low frequency emphasis:
+
+- **Positive tilt** = more energy in low frequencies (vowels)
+- **Negative tilt** = more energy in high frequencies (fricatives)
+
+### A1-P0
+
+A measure related to nasality and open quotient. Useful for advanced research.
+
+::: {.callout-note}
+Advanced overlays (HNR, CoG, Spectral Tilt, A1-P0) are primarily useful for specialized phonetic research. Most users only need Pitch, Formants, and Intensity.
+:::
+
+## Viewing All Overlays Together
+
+You can enable multiple overlays simultaneously:
+
+![All overlays enabled](../screenshots/tutorial-03-all-overlays.png){.screenshot}
+
+::: {.callout-warning}
+Enabling too many overlays at once can make the display cluttered. Start with Pitch + Formants for most tasks.
+:::
+
+## Reading Values at the Cursor
+
+The **values panel** shows precise measurements at the cursor:
+
+::: {.tutorial-steps}
+1. Enable the overlays you're interested in (e.g., Pitch and Formants)
+
+2. Place the cursor in a vowel
+
+3. Read the values panel:
+   - **Time:** 0.452 s
+   - **Freq:** 1234 Hz (where you clicked)
+   - **Pitch:** 234 Hz
+   - **Intensity:** 68 dB
+   - **F1:** 523 Hz
+   - **F2:** 1987 Hz
+   - **F3:** 2743 Hz
+   - **F4:** 3543 Hz
+
+   ![Values panel with measurements](../screenshots/tutorial-05-datapoint-values.png){.screenshot}
+:::
+
+::: {.callout-tip}
+You can collect these measurements systematically using **data points** (covered in section 5).
+:::
+
+## Customizing Analysis Settings
+
+You can adjust analysis parameters via the settings panel (if available) or `config.yaml`:
+
+**Pitch settings:**
+
+- `pitchFloor`: Minimum pitch to detect (default: 75 Hz)
+- `pitchCeiling`: Maximum pitch to detect (default: 600 Hz)
+
+**Formant settings:**
+
+- `maxFormants`: Number of formants to track (default: 5)
+- `maxFormantFrequency`: Analysis ceiling (default: 5500 Hz for female voices, 5000 Hz for males)
+
+See [Configuration Reference](../reference/configuration.html) for all options.
+
+## Changing Spectrogram Max Frequency
+
+You may want to adjust the vertical range of the spectrogram:
+
+::: {.tutorial-steps}
+1. Find the **Max Frequency** dropdown (usually in toolbar)
+
+2. Choose a ceiling:
+   - **5 kHz** — Good for speech (default)
+   - **7.5 kHz** — Includes higher formants
+   - **10 kHz** — Full range, useful for fricatives
+
+3. The spectrogram y-axis rescales
+:::
+
+::: {.callout-tip}
+For most speech analysis, **5 kHz** is sufficient. Use 7.5-10 kHz if studying sibilants or children's voices.
+:::
+
+## Practice Exercises
+
+1. **Enable Pitch only**
+   - Find a vowel
+   - Place cursor in the middle
+   - Note the pitch value
+
+2. **Enable Formants**
+   - Identify F1 and F2 for the same vowel
+   - Try to guess the vowel based on formants (use the table above)
+
+3. **Enable Intensity**
+   - Find the loudest part of your audio
+   - Compare intensity values across different sounds
+
+4. **Enable all overlays**
+   - Observe how different overlays align
+   - Notice which features co-vary (e.g., intensity and voicing)
+
+::: {.callout-try}
+**Challenge:** Record three vowels: [i], [a], [u]. Enable formants and verify that F1 and F2 values match the expected patterns from the table.
+:::
+
+## Troubleshooting
+
+**Pitch overlay doesn't appear:**
+
+- Ensure WASM backend is loaded (check backend selector)
+- Try enabling/disabling the checkbox
+- Check browser console (F12) for errors
+
+**Pitch values seem wrong:**
+
+- Adjust `pitchFloor` and `pitchCeiling` for your speaker
+- Male voices: Try 50-300 Hz range
+- Female voices: Try 100-500 Hz range
+- Children: Try 150-600 Hz range
+
+**Formants are missing or erratic:**
+
+- Ensure you're looking at a vowel (not a consonant)
+- Try adjusting `maxFormantFrequency` (5500 for females, 5000 for males)
+- Zoom in to see individual formant dots more clearly
+
+**Too many overlays, display is cluttered:**
+
+- Disable overlays you're not actively using
+- Use the values panel to read measurements instead of viewing all overlays
+
+**Overlays don't update when zooming:**
+
+- This is expected for files >60s — analysis recomputes when zoomed
+- Wait 1-2 seconds after zooming for the update
+
+## What's Next?
+
+Now that you can visualize acoustic features, let's learn how to create annotations to mark boundaries and add labels.
+
+**Next:** [4. Annotations](04-annotations.html) →
+
+---
+
+**Navigation:**
+[← Previous: Exploring Audio](02-exploring-audio.html) | [Tutorial Overview](index.html) | [Next: Annotations →](04-annotations.html)

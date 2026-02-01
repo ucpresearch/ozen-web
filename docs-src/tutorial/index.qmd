@@ -1,0 +1,125 @@
+---
+title: "Complete Tutorial"
+subtitle: "From audio loading to data export in 30 minutes"
+---
+
+## Overview
+
+This tutorial will guide you through the complete workflow of using
+ozen-web for acoustic analysis and annotation. By the end, you'll know
+how to:
+
+- Load and explore audio files
+- View acoustic features (pitch, formants, intensity)
+- Create and edit annotation tiers
+- Collect acoustic measurements at specific points
+- Export your annotations and data for analysis
+
+**Prerequisites:**
+
+- Ozen-web running ([Getting Started
+  Guide](../getting-started.html)). The GitHub-hosted server should be
+  enough for most purposes.
+- A sample audio file (.wav, .flac, .mp3, or .ogg). You can also record yourself.
+- Basic familiarity with spectrograms (helpful but not required)
+
+## Sample Files
+
+For this tutorial, you can use:
+
+- **Your own audio**: Any .wav, .flac, .mp3, .ogg file of speech
+- **Record in-browser**: Use the microphone icon to record a few sentences
+- **Download samples**: [Example audio files](../examples/) from this documentation
+
+::: {.callout-tip}
+For your first time, use a short file (5-15 seconds) to see results quickly. You can try longer files later.
+:::
+
+## Tutorial Sections
+
+::: {.feature-grid}
+::: {.feature-card}
+### [1. Loading Audio](01-loading-audio.html)
+
+Learn three ways to load audio files: drag-and-drop, file picker, and microphone recording.
+
+:::
+
+::: {.feature-card}
+### [2. Exploring Audio](02-exploring-audio.html)
+
+Navigate the interface with zoom, pan, cursor placement, and audio playback.
+
+:::
+
+::: {.feature-card}
+### [3. Acoustic Analysis](03-acoustic-analysis.html)
+
+Enable and interpret pitch, formants, intensity, and other acoustic overlays.
+
+:::
+
+::: {.feature-card}
+### [4. Annotations](04-annotations.html)
+
+Create annotation tiers, add boundaries, edit labels, and use keyboard shortcuts.
+
+:::
+
+::: {.feature-card}
+### [5. Data Collection](05-data-collection.html)
+
+Add data points to collect acoustic measurements at specific time/frequency locations.
+
+:::
+
+::: {.feature-card}
+### [6. Exporting](06-exporting.html)
+
+Export TextGrids, data points (TSV), and audio files for further analysis.
+
+:::
+:::
+
+## Learning Path
+
+**Complete beginner?** Follow sections 1-6 in order.
+
+**Familiar with spectrograms?** Skip to section 3 (Acoustic Analysis) or 4 (Annotations).
+
+**Just need annotation?** Jump to section 4 (Annotations) and 6 (Exporting).
+
+**Just need measurements?** Go to sections 3 (Acoustic Analysis) and 5 (Data Collection).
+
+## What You'll Create
+
+By the end of this tutorial, you'll have:
+
+- ✅ An annotated audio file with multi-tier transcription
+- ✅ A TextGrid file (Praat format) for further analysis
+- ✅ A TSV file with acoustic measurements and labels
+- ✅ Skills to analyze your own research audio
+
+## Tips for Success
+
+::: {.callout-tip}
+**Use keyboard shortcuts** — They're listed in each section and dramatically speed up your workflow.
+:::
+
+::: {.callout-try}
+**Experiment freely** — The app has undo/redo (Ctrl+Z / Ctrl+Y), so you can't break anything.
+:::
+
+::: {.callout-note}
+**Save your work** — Export your TextGrid and TSV files regularly (section 6) to avoid losing progress.
+:::
+
+## Need Help?
+
+- **Stuck on a step?** Check the screenshots in each section
+- **Want more detail?** See the [Features Documentation](../features/overview.html)
+- **Looking for shortcuts?** See the [Keyboard Shortcuts Reference](../reference/keyboard-shortcuts.html)
+
+---
+
+**Ready to start?** Let's begin with [Loading Audio](01-loading-audio.html) →

@@ -4,16 +4,16 @@ This documentation site is configured to deploy to GitHub Pages serving from the
 
 ## Configuration
 
-Quarto is configured to output directly to the `docs/` directory (not `docs/_site/`):
+Documentation source files (`.qmd`) are in `docs-src/`, and Quarto renders HTML output to `docs/`:
 
 ```yaml
-# docs/_quarto.yml
+# docs-src/_quarto.yml
 project:
   type: website
-  output-dir: .  # Output to docs/ directly
+  output-dir: ../docs  # Output to docs/ directory
 ```
 
-This allows GitHub Pages to serve from `/docs` without needing GitHub Actions deployment.
+This keeps source separate from generated files, and allows GitHub Pages to serve from `/docs`.
 
 ## GitHub Pages Settings
 
@@ -50,12 +50,12 @@ The `.github/workflows/deploy-docs.yml` workflow automatically:
 You can also render and commit locally:
 
 ```bash
-# Render documentation
-cd docs
+# Render documentation from source
+cd docs-src
 quarto render
 
 # Commit generated HTML
-git add docs/*.html docs/**/*.html docs/site_libs/
+git add ../docs/*.html ../docs/**/*.html ../docs/site_libs/
 git commit -m "Update documentation"
 git push
 ```
@@ -64,31 +64,37 @@ GitHub Pages will pick up the changes automatically.
 
 ## File Structure
 
-After rendering, the `docs/` directory contains:
+Documentation source and output are separated:
 
 ```
-docs/
-├── index.html                   # Landing page
-├── getting-started.html         # Getting started guide
-├── tutorial/
-│   ├── index.html
-│   ├── 01-loading-audio.html
-│   └── ...
-├── features/
-│   └── *.html
-├── embedding/
-│   └── *.html
-├── reference/
-│   └── *.html
-├── development/
-│   └── *.html
-├── site_libs/                   # Bootstrap, jQuery, etc.
-├── assets/                      # CSS, images
-├── screenshots/                 # Generated screenshots
-└── live/                        # Built ozen-web app (for embedding examples)
+ozen-web/
+├── docs-src/                    # Source files (committed)
+│   ├── _quarto.yml              # Quarto configuration
+│   ├── index.qmd                # Landing page source
+│   ├── getting-started.qmd
+│   ├── tutorial/*.qmd
+│   ├── features/*.qmd
+│   ├── embedding/*.qmd
+│   ├── reference/*.qmd
+│   ├── development/*.qmd
+│   ├── assets/                  # CSS, images (source)
+│   └── screenshots/             # Screenshot placeholders
+│
+└── docs/                        # Generated HTML (committed, served by GitHub Pages)
+    ├── index.html
+    ├── getting-started.html
+    ├── tutorial/*.html
+    ├── features/*.html
+    ├── embedding/*.html
+    ├── reference/*.html
+    ├── development/*.html
+    ├── site_libs/               # Bootstrap, jQuery, etc.
+    ├── assets/                  # CSS, images (copied from source)
+    ├── screenshots/             # Generated screenshots
+    └── live/                    # Built ozen-web app (for embedding examples)
 ```
 
-The `.qmd` source files and `.html` rendered files coexist in the same directories.
+This keeps source (`.qmd`) separate from generated (`.html`) files.
 
 ## Why This Approach?
 

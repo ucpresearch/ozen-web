@@ -1,0 +1,21 @@
+# Quarto build output
+_site/
+.quarto/
+
+# Generated screenshots (optional - comment out if you want to commit them)
+# screenshots/*.png
+
+# Temporary files
+*.tmp
+*.log
+.DS_Store
+Thumbs.db
+
+# Editor files
+.vscode/
+.idea/
+*.swp
+*~
+
+/.quarto/
+**/*.quarto_ipynb

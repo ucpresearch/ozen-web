@@ -1,0 +1,189 @@
+---
+title: "ozen-web"
+subtitle: "Web-Based Acoustic Analysis & Annotation"
+page-layout: full
+toc: false
+---
+
+::: {.hero}
+# Ozen-web
+
+**Browser-based acoustic analysis and annotation**
+
+A powerful, browser-based tool for phonetic research, built with
+Svelte and WebAssembly. Analyze pitch, formants, intensity, and more,
+with various supporting backends.
+
+::: {.hero-buttons}
+[Get Started](getting-started.html){.hero-button}
+[View Tutorial](tutorial/index.html){.hero-button .secondary}
+[Try It](live/index.html){.hero-button .secondary}
+:::
+:::
+
+## Key Features
+
+::: {.feature-grid}
+::: {.feature-card}
+### <span class="feature-icon">📊</span> Phonetic Analysis
+
+Powered by
+[**praatfan_rust**](https://github.com/ucpresearch/praatfan-core-clean)
+WebAssembly to provide acoustic measurements: pitch (F0), formants
+(F1-F4), intensity, HNR, center of gravity, spectral tilt, and
+more. 
+
+```{=nothere}
+* [**praatfan_rust**](https://github.com/ucpresearch/praatfan-core-clean)
+  is a clean-room re-implementation of
+  [Parselmouth](https://github.com/YannickJadoul/Parselmouth) in Rust,
+  so it can be distributed under MIT license. It does not yield
+  perfect Praat-compatible values (e.g. different formants in
+  voiceless areas). Praatfan_rust can also be packaged with Ozen-web. 
+
+* [**praatfan_gpl**](https://github.com/ucpresearch/praatfan-core-rs)
+  a re-implementation of
+  [Parselmouth](https://github.com/YannickJadoul/Parselmouth) in Rust,
+  but paying close attention to implementation details as seen in the
+  code, which leads to high compatibility with Parselmouth (which
+  uses Praat's engine to calculate values). Use it if you want to get
+  Praat-compatible measurements. The one downside is that it's
+  GPL-license.
+```
+
+
+:::
+
+::: {.feature-card}
+### Interactive Annotation
+
+Full TextGrid support with multi-tier annotations. Add boundaries,
+edit labels, snap to higher layer boundaries, with keyboard shortcuts
+for efficient workflow.
+:::
+
+::: {.feature-card}
+###  Mobile-Optimized
+
+An alternative touch-friendly viewer-only front end with
+pinch-to-zoom, drag-to-select, and responsive layout. Aimed for
+phone-based access to phonetic analysis and embedding in
+presentations.
+
+:::
+
+::: {.feature-card}
+###  Works Offline
+
+Runs entirely in a browser. No external server required, no data
+uploaded.
+
+:::
+
+::: {.feature-card}
+###  Data Collection
+
+Double-click to add points of intest for data collection with acoustic
+measurements. Export to TSV with all values and annotation labels for
+statistical analysis, or ctrl-C / command-C to copy to clipboard.
+
+:::
+
+::: {.feature-card}
+###  Highly Embeddable
+
+Embed the viewer in Quarto documents, R Markdown, Jupyter notebooks,
+or any web page. URL parameters for pre-configuration and data URL
+support for self-contained embeds.
+
+:::
+:::
+
+## Quick Start
+
+* Use the [live version](live/index.html)
+
+* Or download the `docs/live/` directory to directory on your server, `live/`
+
+	**Important**: Ozen-web will not work if you just open a local
+    html file in your browser, it has to be served from a web
+    server. The web server can be local though (python has `python -m
+    http.server`). If this sounds complicated, [try the python
+    interface](https://github.com/ucpresearch/ozen)
+
+
+```{=nothere}
+# Clone repository
+git clone https://github.com/ucpresearch/ozen-web.git
+cd ozen-web
+
+# Install dependencies
+npm install
+
+# Copy WASM package (if using local backend)
+mkdir -p static/wasm/praatfan
+cp -r ../praatfan-core-clean/rust/pkg/* static/wasm/praatfan/
+
+# Start development server
+npm run dev
+```
+
+See the [Getting Started Guide](getting-started.html) for detailed installation instructions.
+
+## Live Demo
+
+Try the interactive viewer below. This example shows a spectrogram with pitch and formant overlays:
+
+::: {.viewer-embed}
+<iframe src="https://ucpresearch.github.io/ozen-web/viewer?overlays=pitch,formants" title="ozen-web Interactive Demo"></iframe>
+:::
+
+::: {.callout-note}
+The embedded viewer requires audio to be loaded. Click "Load Audio", record yourself, or drag a WAV file to explore features.
+:::
+
+## Use Cases
+
+**Phonetics Research**
+: Measure vowel formants, analyze intonation contours, annotate phonetic transcription
+
+**Speech Pathology**
+: Visualize voice quality measures (HNR, spectral tilt), track therapy progress
+
+**Language Documentation**
+: Transcribe endangered languages, create time-aligned corpora, work offline in the field with laptop or tablet.
+
+**Teaching & Presentations**
+: Embed interactive spectrograms in lecture slides, Quarto documents, or course websites. Students can explore audio without installing software.
+
+**Podcast & Audio Production**
+: Visualize speech clarity, identify noise regions, mark edit points with sub-second accuracy.
+
+## Browser Compatibility
+
+Should work on most modern web browsers
+
+## Next Steps
+
+- **New to ozen-web?** → Start with the [Getting Started Guide](getting-started.html)
+- **Want a guided walkthrough?** → Follow the [Complete Tutorial](tutorial/index.html)
+- **Looking for specific features?** → Browse [Feature Documentation](features/overview.html)
+- **Embedding in a website?** → Check the [Embedding Guide](embedding/overview.html)
+- **Contributing to development?** → Read [Development Setup](development/setup.html)
+
+## Related Projects
+
+- **[ozen](https://github.com/ucpresearch/ozen)** — Desktop version (Python/PyQt6) with additional export formats and batch processing
+- **[praatfan-core-rs](https://github.com/ucpresearch/praatfan-core-rs)** — Rust acoustic analysis library powering ozen-web
+
+## License
+
+MIT License — free for research, teaching, and commercial use.
+
+WASM backend options include MIT/Apache-2.0 (default) and GPL-licensed variants. See [WASM Backends Reference](reference/backends.html) for details.
+
+---
+
+<div style="text-align: center; margin-top: 3rem; color: #666;">
+Built with [Svelte](https://svelte.dev/) • [SvelteKit](https://kit.svelte.dev/) • [praatfan](https://github.com/ucpresearch/praatfan-core-rs) • [TypeScript](https://www.typescriptlang.org/)
+</div>

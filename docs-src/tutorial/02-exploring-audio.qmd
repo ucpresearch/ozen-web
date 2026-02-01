@@ -1,0 +1,267 @@
+---
+title: "2. Exploring Audio"
+subtitle: "Navigate, zoom, and play your audio"
+---
+
+## Overview
+
+In this section, you'll learn essential navigation techniques:
+
+- Placing the cursor
+- Selecting audio regions
+- Zooming in and out
+- Panning the view
+- Playing audio
+
+## The Interface Layout
+
+After loading audio, you'll see:
+
+- **Waveform panel** (top) — Shows amplitude over time
+- **Spectrogram panel** (middle) — Shows frequency content over time
+- **Annotation tiers** (bottom) — For transcription (covered in section 4)
+- **Time axis** — Shows time in seconds
+- **Values panel** (right) — Shows acoustic measurements at cursor
+
+## Placing the Cursor
+
+The cursor is a vertical red line that shows the current time position.
+
+::: {.tutorial-steps}
+1. **Click anywhere** on the waveform or spectrogram
+
+2. The **red cursor line** appears at that time position
+
+   ![Cursor placement](../screenshots/tutorial-02-cursor-placement.png){.screenshot}
+
+3. The **values panel** updates to show acoustic measurements at the cursor time
+:::
+
+::: {.callout-tip}
+**Keyboard shortcut:** Use **Left/Right arrow keys** to move the cursor in small increments (10ms steps).
+:::
+
+## Selecting Audio Regions
+
+Select a time range to play or analyze a specific section:
+
+::: {.tutorial-steps}
+1. **Click and drag** across the waveform or spectrogram
+
+2. A **blue highlighted region** shows your selection
+
+   ![Selected region](../screenshots/tutorial-02-selection.png){.screenshot}
+
+3. Release the mouse to finalize the selection
+
+4. The selection remains until you click elsewhere or press Escape
+:::
+
+::: {.callout-try}
+Try selecting a single word or syllable in your audio. The selection will be useful for playback (next section).
+:::
+
+**Keyboard shortcuts:**
+
+- **Shift + Left/Right arrows** — Extend or shrink selection
+- **Escape** — Clear selection
+
+## Zooming
+
+Zooming lets you see fine-grained detail in the audio.
+
+### Zoom with Mouse Wheel
+
+::: {.tutorial-steps}
+1. **Hover your mouse** over the spectrogram or waveform
+
+2. **Scroll the mouse wheel**:
+   - **Scroll up** → Zoom in (expands time scale)
+   - **Scroll down** → Zoom out (compresses time scale)
+
+3. Zoom is **centered on the mouse cursor position**
+
+   ![Zoom demonstration](../screenshots/tutorial-02-zoom-demo.png){.screenshot}
+:::
+
+::: {.callout-tip}
+Zoom is centered on your mouse position, so place the mouse over the region you want to examine before scrolling.
+:::
+
+### Zoom Levels
+
+You can zoom from:
+
+- **Maximum zoom out**: Entire audio file visible (e.g., 0-300s)
+- **Maximum zoom in**: Individual pitch periods visible (~20-50ms windows)
+
+::: {.callout-note}
+For files >60 seconds, the spectrogram only computes for the visible time window when zoomed. This prevents UI freezing on long recordings.
+:::
+
+**Keyboard shortcuts:**
+
+- **+** / **-** keys — Zoom in/out centered on cursor
+- **Mouse wheel** — Zoom centered on mouse position (recommended)
+
+## Panning
+
+Pan the view to explore different parts of the audio horizontally.
+
+::: {.tutorial-steps}
+1. **Use horizontal scrollbar** at the bottom of the view
+
+   OR
+
+2. **Click and drag horizontally** while holding Ctrl/Cmd key
+
+3. The visible time window shifts left or right
+:::
+
+::: {.callout-tip}
+On trackpads, use **two-finger horizontal swipe** to pan smoothly.
+:::
+
+## Playing Audio
+
+Play your audio or selected regions to hear what you're analyzing.
+
+### Play Entire Visible Window
+
+::: {.tutorial-steps}
+1. Press **Tab** key
+
+2. Audio plays from the start to the end of the visible window
+
+3. A **moving green playback cursor** shows the current position
+
+4. Press **Escape** or **Space** to stop
+:::
+
+### Play Selected Region
+
+::: {.tutorial-steps}
+1. **Select a region** (click and drag)
+
+2. Press **Space** key
+
+3. Only the selected audio plays
+
+4. Press **Space** again to pause, or **Escape** to stop and deselect
+:::
+
+### Play from Cursor
+
+::: {.tutorial-steps}
+1. **Click to place the cursor** at a time position
+
+2. **Press Space**
+
+3. Audio plays from cursor to the end of the visible window
+:::
+
+::: {.callout-try}
+**Practice:** Select a single vowel in your audio and press Space repeatedly to hear it in isolation. This is useful for formant analysis.
+:::
+
+**Keyboard shortcuts:**
+
+| Key | Action |
+|-----|--------|
+| <kbd>Space</kbd> | Play selection (or from cursor if no selection) |
+| <kbd>Tab</kbd> | Play entire visible window |
+| <kbd>Escape</kbd> | Stop playback and clear selection |
+
+## Combining Navigation Techniques
+
+Efficient workflow combines all these techniques:
+
+::: {.tutorial-steps}
+1. **Zoom out** to see the full file (scroll wheel down)
+
+2. **Click** on an interesting region (e.g., a word or phrase)
+
+3. **Zoom in** on that region (scroll wheel up)
+
+4. **Select** a portion (click and drag)
+
+5. **Play the selection** (Space key)
+
+6. **Place cursor** on a specific point (click)
+
+7. **Read acoustic values** in the values panel
+:::
+
+## The Values Panel
+
+The **values panel** (right side) shows acoustic measurements at the cursor position:
+
+- **Time** — Current cursor position (seconds)
+- **Frequency** — Frequency under mouse (Hz)
+- **Pitch (F0)** — Fundamental frequency (Hz)
+- **Intensity** — Sound pressure level (dB)
+- **F1, F2, F3, F4** — Formant frequencies (Hz)
+- **HNR** — Harmonics-to-Noise Ratio (dB)
+- **CoG** — Spectral center of gravity (Hz)
+- **More** — Additional measurements
+
+![Values panel showing measurements](../screenshots/tutorial-02-values-panel.png){.screenshot}
+
+::: {.callout-note}
+Values are only shown when acoustic overlays are enabled (covered in the next section). If you see "—" for all values, you need to enable overlays first.
+:::
+
+## Practice Exercises
+
+Before moving to the next section, practice these skills:
+
+1. **Zoom in** to see a single word clearly
+2. **Select** that word and play it (Space)
+3. **Place the cursor** in the middle of a vowel
+4. **Zoom in further** to see individual pitch periods
+5. **Pan left and right** to explore neighboring sounds
+6. **Zoom out** to see the full audio again
+
+::: {.callout-try}
+**Challenge:** Find three vowels in your audio. For each one:
+
+- Zoom to show just that vowel
+- Place cursor in the middle
+- Note the approximate pitch (you'll see this more clearly in the next section)
+:::
+
+## Troubleshooting
+
+**Zoom isn't working:**
+
+- Ensure mouse is over the waveform/spectrogram area
+- Try using +/- keys instead of mouse wheel
+- Check that your browser allows scroll events
+
+**Playback doesn't work:**
+
+- Check browser audio isn't muted
+- Ensure audio output device is connected
+- Try clicking the page first (browsers require user interaction for audio)
+
+**Cursor jumps unexpectedly:**
+
+- This happens if you click during playback
+- Press Escape to stop playback first
+
+**Spectrogram shows "Zoom in for spectrogram":**
+
+- Your file is >60 seconds
+- Zoom in to a window ≤60 seconds to trigger analysis
+- This is normal behavior for long files
+
+## What's Next?
+
+Now that you can navigate the audio, let's enable acoustic overlays to see pitch, formants, and intensity.
+
+**Next:** [3. Acoustic Analysis](03-acoustic-analysis.html) →
+
+---
+
+**Navigation:**
+[← Previous: Loading Audio](01-loading-audio.html) | [Tutorial Overview](index.html) | [Next: Acoustic Analysis →](03-acoustic-analysis.html)

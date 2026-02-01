@@ -1,0 +1,380 @@
+---
+title: "Analysis Backends"
+subtitle: "WASM backend options and configuration"
+---
+
+## Overview
+
+ozen-web supports multiple WebAssembly (WASM) backends for acoustic analysis, all based on the praatfan library. Different backends offer trade-offs between licensing, deployment complexity, and load time.
+
+## Available Backends
+
+### praatfan-local
+
+**Source:** Local `static/wasm/praatfan/` directory
+**License:** MIT OR Apache-2.0 (dual-licensed)
+**Size:** ~5 MB
+**Load time:** Instant (no download)
+
+**Description:**
+
+The local backend uses WASM files bundled with your deployment. This is the fastest option since files are served from the same origin as the app.
+
+**Setup:**
+
+```bash
+# Copy WASM package to static directory
+mkdir -p static/wasm/praatfan
+cp -r path/to/praatfan-core-rs/rust/pkg/* static/wasm/praatfan/
+```
+
+**Advantages:**
+- Fastest load time (no CDN download)
+- Works offline
+- No external dependencies
+- Full control over version
+
+**Disadvantages:**
+- Requires manual setup
+- Adds ~5 MB to deployment size
+- Must update manually for bug fixes
+
+**Use when:**
+- Deploying your own instance
+- Offline use required
+- Optimal performance needed
+
+### praatfan
+
+**Source:** GitHub Pages CDN (`https://ucpresearch.github.io/praatfan/`)
+**License:** MIT OR Apache-2.0 (dual-licensed)
+**Size:** ~5 MB download
+**Load time:** 1-3 seconds (depends on connection)
+
+**Description:**
+
+The CDN backend downloads WASM files from GitHub Pages on first load. This is the default for the hosted viewer.
+
+**Setup:**
+
+No setup required — works out of the box.
+
+**Advantages:**
+- No local setup needed
+- Automatically gets updates
+- Smaller deployment (no WASM in bundle)
+- Same permissive license as local version
+
+**Disadvantages:**
+- Requires internet connection
+- Initial load delay (~2 seconds)
+- External dependency
+
+**Use when:**
+- Using hosted viewer at ucpresearch.github.io
+- No local WASM setup available
+- Deployment size needs to be minimal
+
+### praatfan-gpl
+
+**Source:** GitHub Pages CDN
+**License:** GPL (copyleft)
+**Size:** ~5 MB download
+**Load time:** 1-3 seconds
+
+**Description:**
+
+GPL-licensed version of praatfan with additional features that require GPL dependencies.
+
+**Important licensing note:**
+
+::: {.callout-warning}
+## GPL Licensing Implications
+
+The GPL license is "copyleft" — if you distribute modified versions or link to GPL code, your code must also be GPL-licensed. For most users embedding ozen-web in websites or documents, this doesn't apply. Consult legal counsel if unsure.
+:::
+
+**Advantages:**
+- Same as `praatfan` CDN backend
+- Access to GPL-only features (if any)
+
+**Disadvantages:**
+- GPL licensing restrictions
+- Same external dependency as `praatfan`
+
+**Use when:**
+- You specifically need GPL features
+- Your project is already GPL-compatible
+
+## Backend Comparison
+
+| Feature | praatfan-local | praatfan (CDN) | praatfan-gpl |
+|---------|----------------|----------------|--------------|
+| **License** | MIT/Apache-2.0 | MIT/Apache-2.0 | GPL |
+| **Setup required** | Yes | No | No |
+| **Load time** | Instant | 1-3s | 1-3s |
+| **Offline use** | ✅ Yes | ❌ No | ❌ No |
+| **Deployment size** | +5 MB | Minimal | Minimal |
+| **Updates** | Manual | Automatic | Automatic |
+| **Commercial use** | ✅ Yes | ✅ Yes | ⚠️ GPL terms |
+
+## Selecting a Backend
+
+### Via UI
+
+In the main application:
+
+1. Click backend selector dropdown
+2. Choose: praatfan-local, praatfan, or praatfan-gpl
+3. Wait for WASM to initialize
+
+The selection is saved to browser localStorage.
+
+### Via URL Parameter
+
+When embedding the viewer:
+
+```
+?backend=praatfan-local
+?backend=praatfan
+?backend=praatfan-gpl
+```
+
+Example:
+
+```html
+<iframe src="https://ucpresearch.github.io/ozen-web/viewer?audio=...&backend=praatfan-local">
+</iframe>
+```
+
+### Via Configuration File
+
+In `static/config.yaml`:
+
+```yaml
+backend: praatfan-local  # or praatfan, praatfan-gpl
+```
+
+### Programmatic Selection
+
+In code (for custom deployments):
+
+```javascript
+import { initWasm } from '$lib/wasm/acoustic';
+
+// Initialize specific backend
+await initWasm('praatfan-local');
+```
+
+## Algorithm Compatibility
+
+**All backends produce identical results** for standard acoustic analyses:
+
+- Pitch (F0)
+- Formants (F1-F4) with bandwidths
+- Intensity
+- HNR (Harmonics-to-Noise Ratio)
+- Center of Gravity (CoG)
+- Spectral Tilt
+- A1-P0
+- Spectrograms
+
+The backends differ only in licensing and delivery method, not in computational accuracy.
+
+## Performance Characteristics
+
+### Initialization Time
+
+| Backend | First Load | Subsequent Loads |
+|---------|------------|------------------|
+| praatfan-local | ~200 ms | ~200 ms |
+| praatfan (CDN) | ~2000 ms | ~200 ms* |
+| praatfan-gpl | ~2000 ms | ~200 ms* |
+
+*If browser-cached
+
+### Analysis Speed
+
+All backends have identical analysis performance once loaded:
+
+| Analysis | 30s Audio | Notes |
+|----------|-----------|-------|
+| Pitch | ~100 ms | |
+| Formants | ~200 ms | |
+| Intensity | ~80 ms | |
+| Spectrogram | ~300 ms | 5 kHz max freq |
+
+Performance depends on device CPU, not backend choice.
+
+## Setup Guide: Local Backend
+
+### Prerequisites
+
+- Access to praatfan-core-rs repository
+- OR pre-built WASM package
+
+### Step 1: Obtain WASM Files
+
+**Option A: Build from source**
+
+```bash
+cd praatfan-core-rs/rust
+wasm-pack build --target web
+# Output in pkg/ directory
+```
+
+**Option B: Download release**
+
+```bash
+# Download from GitHub releases
+wget https://github.com/ucpresearch/praatfan-core-rs/releases/latest/download/praatfan-wasm.tar.gz
+tar -xzf praatfan-wasm.tar.gz
+```
+
+### Step 2: Copy to Static Directory
+
+```bash
+# In ozen-web project root
+mkdir -p static/wasm/praatfan
+cp -r path/to/pkg/* static/wasm/praatfan/
+```
+
+### Step 3: Verify Files
+
+```bash
+ls static/wasm/praatfan/
+# Should contain:
+# - praatfan_bg.wasm
+# - praatfan.js
+# - package.json
+```
+
+### Step 4: Configure Default Backend
+
+In `static/config.yaml`:
+
+```yaml
+backend: praatfan-local
+```
+
+### Step 5: Test
+
+```bash
+npm run dev
+# Open http://localhost:5173
+# Check backend selector shows "praatfan-local"
+# Load audio and verify analysis works
+```
+
+## Troubleshooting
+
+### "Failed to initialize WASM"
+
+**Problem:** Backend won't load
+
+**Possible causes:**
+- praatfan-local: Files missing from `static/wasm/praatfan/`
+- praatfan/praatfan-gpl: Network connection issue
+- All: Browser doesn't support WASM
+
+**Solution:**
+- Check browser console for specific error
+- Verify files exist: `ls static/wasm/praatfan/`
+- Test network: `curl https://ucpresearch.github.io/praatfan/praatfan_bg.wasm`
+- Update browser (WASM support required)
+
+### Slow Initial Load
+
+**Problem:** App takes 5+ seconds to initialize
+
+**Likely cause:** CDN backend with slow connection
+
+**Solution:**
+- Use praatfan-local for faster load
+- OR accept initial delay (subsequent loads are fast)
+- Check network speed
+
+### CORS Errors with Local Files
+
+**Problem:** "CORS policy blocked" when using praatfan-local
+
+**Cause:** Serving app via file:// protocol
+
+**Solution:**
+- Use HTTP server (not file://)
+- `npm run dev` or `npm run preview`
+
+## Migration Guide
+
+### Switching from CDN to Local
+
+1. Set up local backend (see setup guide above)
+2. Update config: `backend: praatfan-local`
+3. Deploy updated app
+4. Users will use local files automatically
+
+### Switching from Local to CDN
+
+1. Update config: `backend: praatfan`
+2. Deploy
+3. Remove `static/wasm/praatfan/` to save space (optional)
+
+No data migration needed — backends are fully compatible.
+
+## Licensing Summary
+
+### MIT/Apache-2.0 (praatfan-local, praatfan)
+
+**Permissions:**
+- ✅ Commercial use
+- ✅ Modification
+- ✅ Distribution
+- ✅ Private use
+
+**Conditions:**
+- Include copyright notice
+- Include license text
+
+**Ideal for:**
+- Commercial projects
+- Proprietary software
+- Embedding in closed-source tools
+
+### GPL (praatfan-gpl)
+
+**Permissions:**
+- ✅ Commercial use
+- ✅ Modification
+- ✅ Distribution
+- ✅ Private use
+
+**Conditions:**
+- Disclose source code
+- License under GPL
+- State changes
+- Include copyright
+
+**Ideal for:**
+- Open-source projects
+- GPL-compatible software
+- When GPL features are required
+
+::: {.callout-note}
+## Embedding and GPL
+
+Simply embedding the ozen-web viewer in a webpage via iframe typically does NOT require your website to be GPL-licensed, as this is considered "mere aggregation." However, consult legal counsel for specific situations.
+:::
+
+## Future Backends
+
+Potential future backend options:
+
+- **praatfan-minimal** - Smaller WASM (pitch + formants only)
+- **praatfan-gpu** - GPU-accelerated spectrogram computation
+- **praatfan-python** - Pyodide-based backend for Jupyter notebooks
+
+## See Also
+
+- [Configuration](configuration.html) - Configuring default backend
+- [URL Parameters](../embedding/url-parameters.html) - Backend parameter
+- [WASM Integration](../development/wasm-integration.html) - Developer guide

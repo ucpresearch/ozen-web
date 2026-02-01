@@ -1,0 +1,149 @@
+---
+title: "Waveform"
+subtitle: "Amplitude-domain visualization"
+---
+
+## Overview
+
+The waveform displays audio amplitude over time, providing a complementary view to the spectrogram. It's useful for identifying silence, amplitude modulation, and overall signal structure.
+
+![Waveform with audio loaded](../screenshots/tutorial-01-audio-loaded.png)
+
+## Key Features
+
+- **Synchronized with spectrogram** - Both views share the same time axis
+- **Full file visualization** - Works with arbitrarily long recordings
+- **Amplitude scaling** - Auto-scales to maximum amplitude
+- **Downsampled rendering** - Efficient display at any zoom level
+- **Interactive** - Click to place cursor, drag to select
+
+## Display
+
+The waveform shows:
+
+- **Positive amplitude** (above centerline)
+- **Negative amplitude** (below centerline)
+- **Filled area** - Shaded region between positive and negative peaks
+
+**Visual properties:**
+- Dark gray filled waveform
+- Light background
+- Synchronized with time axis
+
+## Downsampling Strategy
+
+For efficient rendering at any zoom level, the waveform uses min/max downsampling:
+
+1. Divide visible time range into pixel columns
+2. For each pixel column, find min and max sample values
+3. Draw vertical line from min to max
+4. Fill area creates solid waveform appearance
+
+This approach:
+- Preserves all peaks and zero-crossings
+- Renders instantly even for hour-long files
+- Shows full detail when zoomed in
+- Prevents aliasing artifacts
+
+## Interaction
+
+### Cursor Placement
+
+Click anywhere on waveform to place cursor at that time position. Cursor synchronizes across waveform and spectrogram.
+
+### Time Selection
+
+Click and drag horizontally to select time region:
+
+1. Click starting point
+2. Hold and drag to end point
+3. Release to finalize selection
+4. Selected region highlights in blue
+
+**Keyboard:**
+- **Space** - Play selection (if selected) or visible window
+- **Escape** - Clear selection
+
+### Zoom and Pan
+
+- **Scroll wheel** - Zoom in/out (centered on cursor)
+- **Horizontal scroll** - Pan left/right through time
+- Waveform and spectrogram zoom/pan together
+
+## Use Cases
+
+### Identifying Silence
+
+Waveform clearly shows silent regions where amplitude approaches zero. Useful for:
+
+- Detecting recording start/end
+- Finding pauses between utterances
+- Identifying segment boundaries
+
+### Amplitude Modulation
+
+Waveform visualizes amplitude changes over time:
+
+- **Peaks** - Vowels, stressed syllables
+- **Valleys** - Consonants, unstressed syllables
+- **Gradual changes** - Prosodic phrase structure
+
+### Clipping Detection
+
+Waveform shows if audio clips (reaches maximum amplitude):
+
+- **Flat tops/bottoms** - Signal clipping, indicates distortion
+- **Smooth peaks** - Proper levels, no clipping
+
+::: {.callout-warning}
+## Avoiding Clipping
+
+If waveform shows flat-topped peaks, the recording clipped during capture. This distortion cannot be removed. Use the original recording with lower gain settings.
+:::
+
+### Period Detection
+
+When zoomed to millisecond scale, waveform shows individual periods of voiced sounds:
+
+- Count zero-crossings to estimate fundamental frequency
+- Visualize individual pitch periods
+- Detect aperiodicity (e.g., creaky voice, vocal fry)
+
+## Configuration
+
+Waveform appearance can be customized via `config.yaml`:
+
+```yaml
+colors:
+  waveform: "#333333"       # Waveform fill color
+  waveformBackground: "#FFFFFF"  # Background
+```
+
+## Performance
+
+| File Duration | Render Time |
+|---------------|-------------|
+| 5 seconds | < 10 ms |
+| 1 minute | < 20 ms |
+| 1 hour | < 50 ms |
+| 24 hours | < 100 ms |
+
+Waveform rendering is near-instantaneous for all file lengths due to efficient downsampling.
+
+## Limitations
+
+**Current version:**
+- Read-only (no waveform editing)
+- Single channel (stereo files mix to mono)
+- No waveform envelope extraction
+
+**Future enhancements:**
+- Stereo waveform (dual channel display)
+- Amplitude envelope overlay
+- Waveform colorization by intensity
+
+## See Also
+
+- [Spectrogram](spectrogram.html) - Frequency-domain visualization
+- [Audio Playback](audio-playback.html) - Playing audio
+- [Tutorial: Exploring Audio](../tutorial/02-exploring-audio.html) - Navigation guide

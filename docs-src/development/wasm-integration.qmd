@@ -1,0 +1,765 @@
+---
+title: "WASM Integration"
+subtitle: "WebAssembly backend development guide"
+---
+
+## Overview
+
+ozen-web uses **WebAssembly (WASM)** for acoustic analysis, powered by the **praatfan** library. WASM provides near-native performance for computationally intensive analysis while running entirely in the browser.
+
+**Key file:** `src/lib/wasm/acoustic.ts` - Abstraction layer for all WASM operations
+
+**Why WASM:**
+- **Performance:** 10-100x faster than pure JavaScript
+- **Praat-accurate:** Implements Praat algorithms identically
+- **Browser-native:** No plugins or servers required
+- **Portable:** Same binary runs on all platforms
+
+## Backend Options
+
+ozen-web supports three WASM backends with different licenses and delivery methods:
+
+| Backend | Source | License | Load Time | Use Case |
+|---------|--------|---------|-----------|----------|
+| `praatfan-local` | `static/wasm/praatfan/` (bundled) | MIT/Apache-2.0 | Instant (~200ms) | Production deployments, offline use |
+| `praatfan` | GitHub Pages CDN | MIT/Apache-2.0 | 1-3 seconds | Hosted viewer, minimal bundle size |
+| `praatfan-gpl` | GitHub Pages CDN | GPL | 1-3 seconds | GPL-compatible projects, GPL features |
+
+### Backend Selection Priority
+
+**Runtime detection order:**
+
+1. **URL parameter:** `?backend=praatfan-local`
+2. **Config file:** `backend: praatfan` in `static/config.yaml`
+3. **Default:** `praatfan-local`
+
+### API Differences
+
+While all backends compute the same results, they have **slight API differences**:
+
+**praatfan-gpl:**
+```javascript
+// Direct accessor properties
+pitch.start_time
+pitch.time_step
+pitch.num_frames
+
+// Methods with interpolation parameter
+intensity.get_value_at_time(time, 'cubic')
+formant.get_value_at_time(formantNum, time, 'hertz', 'linear')
+```
+
+**praatfan & praatfan-local:**
+```javascript
+// Accessor methods (not properties)
+pitch.start_time()
+pitch.time_step()
+pitch.num_frames()
+
+// Array-based access (manual interpolation)
+const times = pitch.times();
+const values = pitch.values();
+// Interpolate manually
+```
+
+**The abstraction layer handles these differences transparently.**
+
+## Abstraction Layer Architecture
+
+### Purpose
+
+The abstraction layer (`src/lib/wasm/acoustic.ts`) provides a **unified API** across all backends, isolating components from WASM implementation details.
+
+```mermaid
+graph LR
+    A[Component/Store] --> B[acoustic.ts abstraction]
+    B --> C{Backend?}
+    C -->|praatfan-gpl| D[praatfan-gpl.wasm]
+    C -->|praatfan| E[praatfan.wasm]
+    C -->|praatfan-local| F[praatfan.wasm local]
+
+    B -.normalize API.-> D
+    B -.normalize API.-> E
+    B -.normalize API.-> F
+```
+
+### Core Functions
+
+**Initialization:**
+
+```typescript
+import { initWasm, wasmReady, currentBackend } from '$lib/wasm/acoustic';
+
+// Initialize specific backend
+await initWasm('praatfan-local');
+
+// Check readiness (store)
+if (get(wasmReady)) {
+  // WASM ready to use
+}
+
+// Get active backend
+const backend = get(currentBackend);  // 'praatfan-local'
+```
+
+**Creating Sound objects:**
+
+```typescript
+import { createSound, getWasm } from '$lib/wasm/acoustic';
+
+const wasm = getWasm();
+const sound = new wasm.Sound(audioBuffer, sampleRate);
+
+// Or use helper
+const sound = createSound(audioBuffer, sampleRate);
+
+// CRITICAL: Free when done
+sound.free();
+```
+
+**Analysis computation:**
+
+```typescript
+import {
+  computePitch,
+  computeFormant,
+  computeIntensity,
+  computeHarmonicity,
+  computeSpectrogram
+} from '$lib/wasm/acoustic';
+
+// All functions handle backend differences internally
+const pitch = computePitch(sound, timeStep, pitchFloor, pitchCeiling);
+const formant = computeFormant(sound, timeStep, numFormants, maxFormant, windowLength, preEmphasis);
+const intensity = computeIntensity(sound, minPitch, timeStep);
+const harmonicity = computeHarmonicity(sound, timeStep, minPitch, silenceThreshold, periodsPerWindow);
+const spectrogram = computeSpectrogram(sound, windowLength, maxFreq, timeStep, freqStep);
+```
+
+**Extracting values:**
+
+```typescript
+import {
+  getPitchTimes,
+  getPitchValues,
+  getIntensityAtTime,
+  getFormantAtTime,
+  getBandwidthAtTime,
+  getHarmonicityAtTime,
+  getSpectrogramInfo
+} from '$lib/wasm/acoustic';
+
+// Get pitch track
+const times = getPitchTimes(pitch);    // Float64Array
+const values = getPitchValues(pitch);  // Float64Array
+
+// Get value at specific time (with interpolation)
+const f0 = getIntensityAtTime(intensity, 1.5);  // At 1.5 seconds
+const f1 = getFormantAtTime(formant, 1, 1.5);   // F1 at 1.5 seconds
+const b1 = getBandwidthAtTime(formant, 1, 1.5); // B1 at 1.5 seconds
+const hnr = getHarmonicityAtTime(harmonicity, 1.5);
+
+// Get spectrogram metadata
+const info = getSpectrogramInfo(spectrogram);
+console.log(info.nTimes, info.nFreqs);  // Dimensions
+console.log(info.timeMin, info.timeMax);  // Time range
+console.log(info.freqMin, info.freqMax);  // Frequency range
+console.log(info.values);  // Float64Array of power values
+```
+
+## Memory Management
+
+**CRITICAL:** WASM objects must be manually freed to avoid memory leaks.
+
+### The Problem
+
+JavaScript has automatic garbage collection, but **WASM memory is not tracked** by JavaScript's GC. Unreleased WASM objects accumulate until the browser tab runs out of memory.
+
+### The Solution
+
+**Always call `.free()` on WASM objects when done:**
+
+```typescript
+// ✅ CORRECT: Free all objects
+const sound = createSound(samples, sampleRate);
+const pitch = computePitch(sound, 0.01, 75, 600);
+
+// Use pitch...
+const times = getPitchTimes(pitch);
+const values = getPitchValues(pitch);
+
+// Free when done
+pitch.free();
+sound.free();
+```
+
+```typescript
+// ❌ WRONG: Memory leak
+const sound = createSound(samples, sampleRate);
+const pitch = computePitch(sound, 0.01, 75, 600);
+
+// Use pitch...
+const times = getPitchTimes(pitch);
+const values = getPitchValues(pitch);
+
+// Objects never freed - memory leak!
+```
+
+### Using try/finally
+
+**Best practice:** Use `try/finally` to ensure cleanup even on errors:
+
+```typescript
+const sound = createSound(samples, sampleRate);
+try {
+  const pitch = computePitch(sound, 0.01, 75, 600);
+  try {
+    // Use pitch...
+    const times = getPitchTimes(pitch);
+  } finally {
+    pitch.free();  // Always freed
+  }
+} finally {
+  sound.free();  // Always freed
+}
+```
+
+### Abstraction Layer Cleanup
+
+**The `computeAcoustics()` helper handles cleanup automatically:**
+
+```typescript
+import { computeAcoustics } from '$lib/wasm/acoustic';
+
+// All objects freed internally
+const results = await computeAcoustics(samples, sampleRate, {
+  timeStep: 0.01,
+  pitchFloor: 75,
+  pitchCeiling: 600,
+  maxFormant: 5500
+});
+
+// Safe to use results (JS arrays, not WASM objects)
+console.log(results.pitch);
+console.log(results.formants.f1);
+```
+
+**Implementation:**
+```typescript
+export async function computeAcoustics(...) {
+  const sound = createSound(samples, sampleRate);
+
+  try {
+    const pitch = computePitch(...);
+    const intensity = computeIntensity(...);
+    // ... more analyses
+
+    // Extract to JS arrays
+    const results = {
+      times: Array.from(getPitchTimes(pitch)),
+      pitch: Array.from(getPitchValues(pitch)),
+      // ...
+    };
+
+    // Free WASM objects
+    pitch.free();
+    intensity.free();
+    // ... more frees
+
+    return results;  // Pure JS data
+  } finally {
+    sound.free();  // Always freed
+  }
+}
+```
+
+## Complete Usage Examples
+
+### Example 1: Basic Pitch Analysis
+
+```typescript
+import { get } from 'svelte/store';
+import { audioBuffer, sampleRate } from '$lib/stores/audio';
+import {
+  createSound,
+  computePitch,
+  getPitchTimes,
+  getPitchValues
+} from '$lib/wasm/acoustic';
+
+async function analyzePitch() {
+  const samples = get(audioBuffer);
+  const sr = get(sampleRate);
+
+  if (!samples) return;
+
+  const sound = createSound(samples, sr);
+  try {
+    const pitch = computePitch(sound, 0.01, 75, 600);
+    try {
+      const times = getPitchTimes(pitch);
+      const values = getPitchValues(pitch);
+
+      console.log(`Computed ${times.length} pitch frames`);
+      console.log(`Mean F0: ${values.reduce((a,b) => a+b) / values.length} Hz`);
+
+      return { times, values };
+    } finally {
+      pitch.free();
+    }
+  } finally {
+    sound.free();
+  }
+}
+```
+
+### Example 2: Formant Tracking
+
+```typescript
+import { getFormantAtTime, getBandwidthAtTime } from '$lib/wasm/acoustic';
+
+// Given: formant object from computeFormant()
+function getFormantValuesAtTime(formant: any, time: number) {
+  const f1 = getFormantAtTime(formant, 1, time);
+  const f2 = getFormantAtTime(formant, 2, time);
+  const f3 = getFormantAtTime(formant, 3, time);
+  const f4 = getFormantAtTime(formant, 4, time);
+
+  const b1 = getBandwidthAtTime(formant, 1, time);
+  const b2 = getBandwidthAtTime(formant, 2, time);
+  const b3 = getBandwidthAtTime(formant, 3, time);
+  const b4 = getBandwidthAtTime(formant, 4, time);
+
+  return {
+    formants: [f1, f2, f3, f4],
+    bandwidths: [b1, b2, b3, b4]
+  };
+}
+
+// Usage
+const sound = createSound(samples, sampleRate);
+try {
+  const formant = computeFormant(sound, 0.01, 5, 5500, 0.025, 50);
+  try {
+    const vowelFormants = getFormantValuesAtTime(formant, 1.5);
+    console.log('F1:', vowelFormants.formants[0], 'Hz');
+    console.log('F2:', vowelFormants.formants[1], 'Hz');
+  } finally {
+    formant.free();
+  }
+} finally {
+  sound.free();
+}
+```
+
+### Example 3: Spectrogram with Metadata
+
+```typescript
+import { computeSpectrogram, getSpectrogramInfo } from '$lib/wasm/acoustic';
+
+function computeSpectrogramForVisualization(sound: any) {
+  const spectrogram = computeSpectrogram(sound, 0.005, 5000, 0.005, 20);
+
+  try {
+    const info = getSpectrogramInfo(spectrogram);
+
+    console.log(`Spectrogram: ${info.nTimes} frames × ${info.nFreqs} bins`);
+    console.log(`Time range: ${info.timeMin} - ${info.timeMax} s`);
+    console.log(`Frequency range: ${info.freqMin} - ${info.freqMax} Hz`);
+
+    // Create ImageData for canvas rendering
+    const imageData = createImageData(info.values, info.nFreqs, info.nTimes);
+
+    return imageData;
+  } finally {
+    spectrogram.free();
+  }
+}
+```
+
+### Example 4: Full Acoustic Analysis
+
+```typescript
+import { computeAcoustics } from '$lib/wasm/acoustic';
+
+async function analyzeAudio(samples: Float64Array, sampleRate: number) {
+  // All WASM objects automatically freed
+  const results = await computeAcoustics(samples, sampleRate, {
+    timeStep: 0.01,
+    pitchFloor: 75,
+    pitchCeiling: 600,
+    maxFormant: 5500
+  });
+
+  // Results are pure JavaScript objects
+  return {
+    times: results.times,
+    pitch: results.pitch,
+    intensity: results.intensity,
+    f1: results.formants.f1,
+    f2: results.formants.f2,
+    f3: results.formants.f3,
+    f4: results.formants.f4,
+    harmonicity: results.harmonicity,
+    spectrogram: results.spectrogram
+  };
+}
+```
+
+## Initialization Process
+
+### App Startup
+
+**File:** `src/routes/+layout.svelte`
+
+```svelte
+<script lang="ts">
+  import { onMount } from 'svelte';
+  import { initWasm, wasmReady } from '$lib/wasm/acoustic';
+  import { config } from '$lib/stores/config';
+
+  let loading = true;
+
+  onMount(async () => {
+    try {
+      // Get backend from config or default
+      const backend = $config.backend || 'praatfan-local';
+
+      // Initialize WASM
+      await initWasm(backend);
+
+      loading = false;
+    } catch (e) {
+      console.error('Failed to initialize WASM:', e);
+      alert('Failed to load analysis module. Try refreshing the page.');
+    }
+  });
+</script>
+
+{#if loading}
+  <div>Loading acoustic analysis module...</div>
+{:else if $wasmReady}
+  <slot />
+{:else}
+  <div>Failed to initialize</div>
+{/if}
+```
+
+### Lazy Loading Pattern
+
+**For viewer route with URL-specified backend:**
+
+```svelte
+<script lang="ts">
+  import { page } from '$app/stores';
+  import { initWasm, wasmReady } from '$lib/wasm/acoustic';
+
+  onMount(async () => {
+    const backendParam = $page.url.searchParams.get('backend');
+    const backend = backendParam || 'praatfan';
+
+    await initWasm(backend);
+
+    // Now load audio...
+  });
+</script>
+```
+
+### Switching Backends
+
+**Users can switch backends at runtime:**
+
+```svelte
+<script>
+  import { initWasm, currentBackend } from '$lib/wasm/acoustic';
+
+  async function switchBackend(newBackend: string) {
+    // Re-initialize with different backend
+    await initWasm(newBackend);
+
+    // Clear and recompute analyses
+    analysisResults.set(null);
+    await runAnalysis();
+  }
+</script>
+
+<select bind:value={$currentBackend} on:change={e => switchBackend(e.target.value)}>
+  <option value="praatfan-local">Local (fastest)</option>
+  <option value="praatfan">CDN (MIT/Apache)</option>
+  <option value="praatfan-gpl">CDN (GPL)</option>
+</select>
+```
+
+## Error Handling
+
+### Initialization Errors
+
+**Common causes:**
+- Network failure (CDN backends)
+- CORS issues (CDN backends)
+- Missing local files (`praatfan-local`)
+- Browser doesn't support WASM
+
+**Handling:**
+
+```typescript
+import { initWasm } from '$lib/wasm/acoustic';
+
+try {
+  await initWasm('praatfan');
+} catch (e) {
+  if (e.message.includes('Failed to fetch')) {
+    // Network error - offer fallback
+    console.error('CDN unreachable, trying local backend...');
+    await initWasm('praatfan-local');
+  } else if (e.message.includes('CORS')) {
+    // CORS error - can't fix, inform user
+    alert('Unable to load analysis module due to network restrictions.');
+  } else {
+    // Unknown error
+    console.error('WASM initialization failed:', e);
+    alert('Failed to initialize acoustic analysis.');
+  }
+}
+```
+
+### Analysis Errors
+
+**Common causes:**
+- Invalid parameters (negative frequencies, etc.)
+- Empty audio buffer
+- Sample rate = 0
+
+**Handling:**
+
+```typescript
+import { computePitch } from '$lib/wasm/acoustic';
+
+function safePitchAnalysis(sound: any, timeStep: number, floor: number, ceiling: number) {
+  // Validate parameters
+  if (timeStep <= 0 || timeStep > 1) {
+    throw new Error(`Invalid timeStep: ${timeStep}`);
+  }
+  if (floor <= 0 || ceiling <= floor) {
+    throw new Error(`Invalid pitch range: ${floor}-${ceiling} Hz`);
+  }
+
+  try {
+    return computePitch(sound, timeStep, floor, ceiling);
+  } catch (e) {
+    console.error('Pitch analysis failed:', e);
+    throw new Error('Acoustic analysis failed. Check audio quality.');
+  }
+}
+```
+
+## Performance Considerations
+
+### Computation Cost
+
+**Relative computational cost:**
+
+| Analysis | Cost | Notes |
+|----------|------|-------|
+| Waveform | Minimal | No WASM, just downsampling |
+| Intensity | Low | Simple RMS calculation |
+| Pitch | Medium | Autocorrelation per frame |
+| Formants | High | LPC analysis per frame |
+| Spectrogram | Very High | FFT for all time-frequency bins |
+| Harmonicity | Medium | Autocorrelation-based |
+
+### Optimization Strategies
+
+**1. Analyze only visible window (long audio):**
+
+```typescript
+// Instead of analyzing full 5-minute file:
+await runAnalysisForRange(0, 300);  // All 5 minutes
+
+// Analyze only visible 10 seconds:
+await runAnalysisForRange(cursorTime - 5, cursorTime + 5);
+```
+
+**2. Debounce during zoom:**
+
+```typescript
+import { debounce } from 'lodash-es';
+
+const debouncedAnalysis = debounce(async () => {
+  await runAnalysisForRange($timeRange.start, $timeRange.end);
+}, 300);  // Wait 300ms after zoom stops
+
+$: if ($timeRange) {
+  debouncedAnalysis();
+}
+```
+
+**3. Reuse Sound objects:**
+
+```typescript
+// ❌ BAD: Create Sound repeatedly
+for (let i = 0; i < 100; i++) {
+  const sound = createSound(samples, sampleRate);
+  const pitch = computePitch(sound, ...);
+  pitch.free();
+  sound.free();
+}
+
+// ✅ GOOD: Reuse Sound object
+const sound = createSound(samples, sampleRate);
+try {
+  for (let i = 0; i < 100; i++) {
+    const pitch = computePitch(sound, ...);
+    // Use pitch...
+    pitch.free();
+  }
+} finally {
+  sound.free();
+}
+```
+
+**4. Extract only needed formants:**
+
+```typescript
+// ❌ BAD: Extract all formants when only F1/F2 needed
+const formant = computeFormant(sound, 0.01, 5, 5500, 0.025, 50);
+const f1 = formant.formant_values(1);
+const f2 = formant.formant_values(2);
+formant.free();
+
+// ✅ GOOD: Use numFormants=2 for faster computation
+const formant = computeFormant(sound, 0.01, 2, 5500, 0.025, 50);
+const f1 = formant.formant_values(1);
+const f2 = formant.formant_values(2);
+formant.free();
+```
+
+## Debugging WASM Integration
+
+### Check Backend Status
+
+```svelte
+<script>
+  import { wasmReady, currentBackend } from '$lib/wasm/acoustic';
+  import { getBackendType } from '$lib/wasm/acoustic';
+
+  $: console.log('WASM ready:', $wasmReady);
+  $: console.log('Current backend:', $currentBackend);
+  $: if ($wasmReady) {
+    console.log('Backend type:', getBackendType());
+  }
+</script>
+```
+
+### Verify Memory Cleanup
+
+```typescript
+// Track Sound object count
+let soundCount = 0;
+
+const originalCreateSound = createSound;
+createSound = function(...args) {
+  soundCount++;
+  console.log(`Created Sound #${soundCount}`);
+  const sound = originalCreateSound(...args);
+
+  const originalFree = sound.free;
+  sound.free = function() {
+    soundCount--;
+    console.log(`Freed Sound, ${soundCount} remaining`);
+    originalFree.call(sound);
+  };
+
+  return sound;
+};
+```
+
+### Test Analysis Results
+
+```typescript
+import { computePitch } from '$lib/wasm/acoustic';
+
+// Verify pitch range
+const sound = createSound(samples, sampleRate);
+const pitch = computePitch(sound, 0.01, 75, 600);
+
+const values = getPitchValues(pitch);
+const validValues = values.filter(v => !isNaN(v));
+const min = Math.min(...validValues);
+const max = Math.max(...validValues);
+
+console.log(`Pitch range: ${min.toFixed(1)} - ${max.toFixed(1)} Hz`);
+console.assert(min >= 70 && max <= 610, 'Pitch out of expected range!');
+
+pitch.free();
+sound.free();
+```
+
+## Adding New Backends
+
+### Steps to Add a Backend
+
+**1. Add backend to type definition:**
+
+```typescript
+// src/lib/stores/config.ts
+export type AcousticBackend = 'praatfan-gpl' | 'praatfan' | 'praatfan-local' | 'my-new-backend';
+```
+
+**2. Add backend URL:**
+
+```typescript
+// src/lib/wasm/acoustic.ts
+const REMOTE_BACKEND_URLS: Record<string, string> = {
+  'praatfan-gpl': 'https://...',
+  'praatfan': 'https://...',
+  'my-new-backend': 'https://example.com/my-backend.js'
+};
+```
+
+**3. Map to backend type:**
+
+```typescript
+const BACKEND_TYPE: Record<AcousticBackend, 'praatfan-gpl' | 'praatfan' | 'my-type'> = {
+  'praatfan-gpl': 'praatfan-gpl',
+  'praatfan': 'praatfan',
+  'praatfan-local': 'praatfan',
+  'my-new-backend': 'my-type'  // Define API type
+};
+```
+
+**4. Update abstraction functions if API differs:**
+
+```typescript
+export function computePitch(sound: any, timeStep: number, floor: number, ceiling: number) {
+  const backend = getBackendType();
+
+  if (backend === 'my-type') {
+    // Handle new backend API
+    return sound.calculate_pitch(timeStep, floor, ceiling);
+  } else if (backend === 'praatfan-gpl') {
+    return sound.to_pitch(timeStep, floor, ceiling);
+  } else {
+    return sound.to_pitch_ac(timeStep, floor, ceiling);
+  }
+}
+```
+
+**5. Test all analysis functions:**
+
+```bash
+# Load new backend
+npm run dev
+# Open browser console
+> import { initWasm } from '$lib/wasm/acoustic';
+> await initWasm('my-new-backend');
+> // Run test analyses...
+```
+
+## See Also
+
+- [Architecture](architecture.html) - Overall system design
+- [Stores](stores.html) - State management (analysis store uses WASM)
+- [Backends Reference](../reference/backends.html) - User-facing backend documentation
+- [praatfan-core-rs](https://github.com/ucpresearch/praatfan-core-rs) - GPL backend source
+- [praatfan-core-clean](https://github.com/ucpresearch/praatfan-core-clean) - MIT/Apache backend source

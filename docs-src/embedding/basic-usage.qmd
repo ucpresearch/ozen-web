@@ -1,0 +1,445 @@
+---
+title: "Basic Embedding"
+subtitle: "Embed the ozen-web viewer in web pages and documents"
+---
+
+## Overview
+
+ozen-web can be embedded in web pages, documentation, and presentations using standard HTML iframes. The viewer supports URL parameters for pre-loading audio and configuring overlays, making it ideal for interactive examples and educational materials.
+
+## Simple iframe Embedding
+
+### Basic Example
+
+Embed the hosted viewer directly:
+
+```html
+<iframe src="https://ucpresearch.github.io/ozen-web/viewer"
+        width="800"
+        height="600"
+        style="border: 1px solid #ccc;">
+</iframe>
+```
+
+This embeds the mobile viewer interface with an empty file drop zone.
+
+### With Audio Pre-loaded
+
+Load audio automatically via URL parameter:
+
+```html
+<iframe src="https://ucpresearch.github.io/ozen-web/viewer?audio=https://example.com/audio.wav"
+        width="800"
+        height="600"
+        style="border: none;">
+</iframe>
+```
+
+**Requirements:**
+- Audio file must be accessible via HTTPS
+- Server must enable CORS (see below)
+- Supported formats: WAV, MP3, OGG
+
+### With Overlays Configured
+
+Pre-enable acoustic overlays:
+
+```html
+<iframe src="https://ucpresearch.github.io/ozen-web/viewer?audio=https://example.com/audio.wav&overlays=pitch,formants,intensity"
+        width="800"
+        height="600"
+        style="border: none;">
+</iframe>
+```
+
+**Overlay options:**
+- `pitch` - Fundamental frequency track
+- `formants` - F1-F4 formants
+- `intensity` - Intensity track
+- `hnr` - Harmonics-to-noise ratio
+- `cog` - Center of gravity
+- `spectral_tilt` - Spectral tilt
+- `a1_p0` - A1-P0 measure
+
+Multiple overlays separated by commas.
+
+## CORS Requirements
+
+For the viewer to load audio from your server, the server must send CORS headers:
+
+### Required Headers
+
+```
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: GET
+```
+
+### Apache (.htaccess)
+
+```apache
+<IfModule mod_headers.c>
+    Header set Access-Control-Allow-Origin "*"
+</IfModule>
+```
+
+### Nginx
+
+```nginx
+location ~ \.(wav|mp3|ogg)$ {
+    add_header Access-Control-Allow-Origin *;
+}
+```
+
+### Python HTTP Server
+
+```python
+# Simple CORS-enabled server
+python3 -m http.server 8000 --bind 0.0.0.0
+```
+
+Note: Python's built-in server doesn't add CORS headers by default. Use a production server for deployment.
+
+### GitHub Pages
+
+GitHub Pages automatically enables CORS for all static files — no configuration needed.
+
+### Amazon S3
+
+When uploading audio files, set:
+- **Public access:** Enabled
+- **CORS configuration:**
+
+```json
+[
+    {
+        "AllowedHeaders": ["*"],
+        "AllowedMethods": ["GET"],
+        "AllowedOrigins": ["*"],
+        "ExposeHeaders": []
+    }
+]
+```
+
+## Responsive Embedding
+
+Make the iframe responsive to container width:
+
+```html
+<div style="position: relative; width: 100%; padding-bottom: 75%; /* 4:3 aspect ratio */">
+  <iframe src="https://ucpresearch.github.io/ozen-web/viewer?audio=..."
+          style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none;">
+  </iframe>
+</div>
+```
+
+**Common aspect ratios:**
+- 16:9 (widescreen): `padding-bottom: 56.25%;`
+- 4:3 (standard): `padding-bottom: 75%;`
+- 3:2: `padding-bottom: 66.67%;`
+
+## Self-Contained Embedding (Data URLs)
+
+For truly portable embeds without external file dependencies, encode audio as a data URL:
+
+### Creating Data URL
+
+**Using Base64 encoding:**
+
+```bash
+# Linux/Mac
+base64 -w 0 audio.wav > audio.base64
+
+# Then construct data URL:
+# data:audio/wav;base64,<paste base64 here>
+```
+
+**In JavaScript:**
+
+```javascript
+// Convert file to data URL
+async function fileToDataURL(file) {
+  return new Promise((resolve) => {
+    const reader = new FileReader();
+    reader.onload = e => resolve(e.target.result);
+    reader.readAsDataURL(file);
+  });
+}
+
+const dataURL = await fileToDataURL(audioFile);
+// data:audio/wav;base64,UklGRiQAAABXQVZFZm10...
+```
+
+**In R:**
+
+```r
+library(base64enc)
+
+audio_data <- readBin("audio.wav", "raw", file.info("audio.wav")$size)
+data_url <- paste0("data:audio/wav;base64,", base64encode(audio_data))
+```
+
+### Embedding with Data URL
+
+```html
+<iframe src="https://ucpresearch.github.io/ozen-web/viewer?audio=data:audio/wav;base64,UklGRiQAAABXQVZFZm10..."
+        width="800"
+        height="600"
+        style="border: none;">
+</iframe>
+```
+
+**Advantages:**
+- No external file hosting required
+- Works offline after initial page load
+- Self-contained — entire example in one HTML file
+- No CORS issues
+
+**Limitations:**
+- URL length limits (~2MB practical limit for most browsers)
+- Not suitable for long audio files
+- Increases page size
+
+**Use cases:**
+- Short audio examples in documentation
+- QR code-embeddable demos
+- Email-friendly examples (single HTML file)
+
+## Helper Scripts
+
+ozen-web includes helper scripts for generating embed code:
+
+### R Script (create-iframe.R)
+
+Located at `scripts/create-iframe.R`:
+
+**Basic usage:**
+
+```r
+source("scripts/create-iframe.R")
+
+# Generate iframe HTML
+html <- create_embedded_viewer(
+  "data/vowel-example.wav",
+  overlays = "pitch,formants,intensity",
+  height = 600
+)
+
+# Use in R Markdown/Quarto
+htmltools::HTML(html)
+```
+
+**Command-line usage:**
+
+```bash
+Rscript scripts/create-iframe.R audio.wav "pitch,formants" "./ozen-web/viewer.html"
+```
+
+**Features:**
+- Automatically calculates relative paths
+- Handles data URL encoding
+- Customizable viewer URL (for local builds)
+- Height can be numeric (pixels) or percentage
+
+See [Quarto Integration](quarto-integration.html) for detailed R Markdown examples.
+
+### Python Script (create-iframe.py)
+
+Located at `scripts/create-iframe.py`:
+
+**Basic usage:**
+
+```python
+from create_iframe import create_embedded_viewer
+
+# Generate iframe HTML
+html = create_embedded_viewer(
+    audio_path="data/vowel-example.wav",
+    overlays="pitch,formants,intensity",
+    height=600
+)
+
+print(html)
+```
+
+**Command-line usage:**
+
+```bash
+python scripts/create-iframe.py audio.wav --overlays pitch,formants --height 600
+```
+
+**Features:**
+- Same functionality as R version
+- Base64 encoding for data URLs
+- Relative path calculation
+- Jupyter notebook compatible
+
+## Local Development
+
+When embedding in local HTML files:
+
+### File Protocol Limitation
+
+Modern browsers block `file://` iframes for security:
+
+```html
+<!-- ❌ Won't work when opened as file:// -->
+<iframe src="file:///path/to/viewer.html?audio=file:///audio.wav">
+</iframe>
+```
+
+### Solution: Local HTTP Server
+
+Serve your HTML files over HTTP:
+
+**Python 3:**
+
+```bash
+python3 -m http.server 8000
+# Open http://localhost:8000/your-page.html
+```
+
+**Node.js (http-server):**
+
+```bash
+npx http-server -p 8000
+# Open http://localhost:8000/your-page.html
+```
+
+**PHP:**
+
+```bash
+php -S localhost:8000
+```
+
+**R (servr package):**
+
+```r
+servr::httd(port = 8000)
+```
+
+Now iframes will work properly.
+
+## Embedding Best Practices
+
+### 1. Choose Appropriate Dimensions
+
+**Desktop viewers:**
+- Minimum width: 800px
+- Minimum height: 600px
+- Recommended: 1000px × 700px or larger
+
+**Mobile-optimized:**
+- Width: 100% (responsive)
+- Height: 500-700px
+
+### 2. Set Meaningful Defaults
+
+Pre-configure overlays to highlight the acoustic features relevant to your example:
+
+```html
+<!-- For pitch analysis example -->
+?overlays=pitch,intensity
+
+<!-- For vowel formants example -->
+?overlays=formants
+
+<!-- For voice quality example -->
+?overlays=pitch,hnr,spectral_tilt
+```
+
+### 3. Provide Context
+
+Always explain what the viewer shows:
+
+```html
+<p>Figure 1: Pitch contour for question intonation.
+   Notice the final rise at the end of the utterance.</p>
+
+<iframe src="https://ucpresearch.github.io/ozen-web/viewer?audio=...&overlays=pitch,intensity">
+</iframe>
+```
+
+### 4. Test on Mobile
+
+If your page is mobile-accessible, test the embedded viewer on phones:
+
+- Touch gestures work correctly
+- Viewer is responsive
+- Settings drawer accessible
+- Play button visible
+
+### 5. Consider Loading Time
+
+For large audio files (>5 MB):
+- Warn users about loading time
+- Consider hosting files on CDN
+- Use compressed formats (MP3 instead of WAV)
+
+## Troubleshooting
+
+### Viewer Not Loading
+
+**Problem:** Blank iframe or error message
+
+**Possible causes:**
+- CORS not enabled on audio server
+- Invalid audio URL
+- Mixed content (HTTP audio on HTTPS page)
+
+**Solution:**
+- Check browser console for CORS errors
+- Test audio URL directly in browser
+- Ensure both page and audio use HTTPS
+
+### Audio Not Playing
+
+**Problem:** Viewer loads but audio doesn't play
+
+**Possible causes:**
+- Browser autoplay policy
+- Invalid audio format
+- File corrupted
+
+**Solution:**
+- User must click play button (autoplay restricted)
+- Verify audio file plays in browser directly
+- Re-encode audio file
+
+### iframe Too Small
+
+**Problem:** Viewer UI is cramped or cut off
+
+**Solution:**
+- Increase iframe dimensions
+- Use responsive embedding with aspect ratio
+- Minimum 800×600 recommended
+
+## Security Considerations
+
+### Content Security Policy (CSP)
+
+If your site uses CSP headers, allow iframes:
+
+```
+Content-Security-Policy: frame-src https://ucpresearch.github.io
+```
+
+### Data URL Size Limits
+
+Different browsers have different URL length limits:
+
+| Browser | Max URL Length |
+|---------|----------------|
+| Chrome | ~2 MB (practical) |
+| Firefox | ~65 KB (strict) |
+| Safari | ~2 MB |
+| Edge | ~2 MB |
+
+For cross-browser compatibility, keep data URLs under 64 KB or use external file hosting.
+
+## See Also
+
+- [Quarto Integration](quarto-integration.html) - Using in Quarto documents
+- [URL Parameters](url-parameters.html) - Complete parameter reference
+- [Examples](examples.html) - Real-world embedding examples
+- [Mobile Viewer](../features/mobile-viewer.html) - Touch interface details

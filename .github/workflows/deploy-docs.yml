@@ -4,7 +4,7 @@ on:
   push:
     branches: [master, main]
     paths:
-      - 'docs/**'
+      - 'docs-src/**'
       - 'src/**'
       - 'static/**'
       - 'package.json'
@@ -71,7 +71,7 @@ jobs:
 
       - name: Render Quarto documentation
         run: |
-          cd docs
+          cd docs-src
           quarto render
 
       - name: Commit rendered documentation

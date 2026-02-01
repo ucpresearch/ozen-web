@@ -1,0 +1,451 @@
+---
+title: "Quarto Integration"
+subtitle: "Embed ozen-web in Quarto and R Markdown documents"
+---
+
+## Overview
+
+Quarto and R Markdown documents can embed the ozen-web viewer using the helper script `create-iframe.R`. This enables interactive acoustic examples in research papers, teaching materials, and blog posts.
+
+## Setup
+
+### 1. Install Dependencies
+
+```r
+install.packages(c("htmltools", "base64enc"))
+```
+
+### 2. Copy Helper Script
+
+The script is located at `scripts/create-iframe.R` in the ozen-web repository:
+
+```bash
+# Copy to your project
+cp path/to/ozen-web/scripts/create-iframe.R scripts/
+```
+
+Or download directly:
+
+```bash
+curl -O https://raw.githubusercontent.com/ucpresearch/ozen-web/main/scripts/create-iframe.R
+```
+
+## Basic Usage
+
+### In Quarto Document
+
+````markdown
+---
+title: "Phonetic Analysis Example"
+format: html
+---
+
+## Vowel Formants
+
+Figure 1 shows F1 and F2 formants for the vowel /a/:
+
+```{{r}}
+#| echo: false
+source("scripts/create-iframe.R")
+html <- create_embedded_viewer(
+  "data/vowel-a.wav",
+  overlays = "formants",
+  height = 600
+)
+htmltools::HTML(html)
+```
+````
+
+### In R Markdown
+
+````markdown
+---
+title: "Pitch Analysis"
+output: html_document
+---
+
+## Intonation Pattern
+
+```{{r echo=FALSE}}
+source("scripts/create-iframe.R")
+html <- create_embedded_viewer(
+  "audio/question.wav",
+  overlays = "pitch,intensity"
+)
+htmltools::HTML(html)
+```
+````
+
+## Function Reference
+
+### create_embedded_viewer()
+
+```r
+create_embedded_viewer(
+  audio_path,
+  overlays = NULL,
+  viewer_url = "./ozen-web/viewer.html",
+  height = 600
+)
+```
+
+**Parameters:**
+
+- **`audio_path`** (string, required) - Path to audio file relative to output HTML
+- **`overlays`** (string, optional) - Comma-separated overlays: `"pitch,formants,intensity"`
+- **`viewer_url`** (string, default: `"./ozen-web/viewer.html"`) - Path to viewer
+- **`height`** (number/string, default: `600`) - Height in pixels or percentage (`"80%"`)
+
+**Returns:** HTML string for iframe
+
+## Deployment Strategies
+
+### Strategy 1: Use Hosted Viewer (Easiest)
+
+Point `viewer_url` to the hosted version:
+
+```r
+html <- create_embedded_viewer(
+  "audio/example.wav",
+  overlays = "pitch",
+  viewer_url = "https://ucpresearch.github.io/ozen-web/viewer"
+)
+```
+
+**Pros:**
+- No local ozen-web build needed
+- Always up-to-date
+- Smaller project size
+
+**Cons:**
+- Requires internet connection
+- External dependency
+
+### Strategy 2: Local Viewer Build
+
+Build ozen-web locally and include in project:
+
+```bash
+# Build ozen-web
+cd path/to/ozen-web
+npm run build
+
+# Copy build to your project
+cp -r build/ ../my-project/ozen-web/
+```
+
+**In Quarto document:**
+
+```r
+html <- create_embedded_viewer(
+  "audio/example.wav",
+  overlays = "formants",
+  viewer_url = "./ozen-web/viewer.html"  # Local build
+)
+```
+
+**Pros:**
+- Works offline
+- No external dependencies
+- Full control over version
+
+**Cons:**
+- Larger project size (~2-3 MB)
+- Must update manually
+
+### Strategy 3: Data URL Embedding (Most Portable)
+
+For very short audio files, encode as data URL:
+
+```r
+library(base64enc)
+
+# Read and encode audio
+audio_data <- readBin("audio/short.wav", "raw", file.info("audio/short.wav")$size)
+data_url <- paste0("data:audio/wav;base64,", base64encode(audio_data))
+
+# Create iframe with data URL
+html <- create_embedded_viewer(
+  data_url,  # Self-contained
+  overlays = "pitch",
+  viewer_url = "https://ucpresearch.github.io/ozen-web/viewer"
+)
+```
+
+**Pros:**
+- Completely self-contained
+- Single HTML file with everything
+- No audio file hosting needed
+
+**Cons:**
+- Only suitable for short files (<30 seconds)
+- Increases HTML file size
+
+## Complete Examples
+
+### Example 1: Tutorial With Multiple Figures
+
+````markdown
+---
+title: "Phonetic Tutorial"
+format: html
+---
+
+```{{r setup, include=FALSE}}
+source("scripts/create-iframe.R")
+```
+
+## Vowel Analysis
+
+### High Front Vowel /i/
+
+```{{r echo=FALSE}}
+htmltools::HTML(create_embedded_viewer(
+  "vowels/i.wav",
+  overlays = "formants",
+  height = 500
+))
+```
+
+### Low Back Vowel /ɑ/
+
+```{{r echo=FALSE}}
+htmltools::HTML(create_embedded_viewer(
+  "vowels/a.wav",
+  overlays = "formants",
+  height = 500
+))
+```
+````
+
+### Example 2: Research Paper Figure
+
+````markdown
+---
+title: "Tone Production in Mandarin"
+format: pdf
+---
+
+## Results
+
+Figure 1 shows pitch contours for Tone 2 (rising):
+
+```{{r fig-tone2, echo=FALSE, fig.cap="Tone 2 pitch contour"}}
+#| echo: false
+htmltools::HTML(create_embedded_viewer(
+  "data/tone2-example.wav",
+  overlays = "pitch,intensity",
+  viewer_url = "https://ucpresearch.github.io/ozen-web/viewer",
+  height = 600
+))
+```
+````
+
+### Example 3: Course Materials
+
+````markdown
+---
+title: "Week 3: Formant Analysis Lab"
+format: html
+---
+
+## Exercise 1: Identify the Vowel
+
+Listen to the audio and observe the formant tracks:
+
+```{{r echo=FALSE}}
+source("scripts/create-iframe.R")
+htmltools::HTML(create_embedded_viewer(
+  "exercises/mystery-vowel-1.wav",
+  overlays = "formants",
+  viewer_url = "./ozen-web/viewer.html",
+  height = 700
+))
+```
+
+**Questions:**
+1. What are the approximate F1 and F2 values?
+2. Based on formants, which vowel is this?
+3. Is it front or back? High or low?
+````
+
+## Local Development Workflow
+
+### Directory Structure
+
+```
+my-quarto-project/
+├── _quarto.yml
+├── index.html
+├── analysis.html
+├── scripts/
+│   └── create-iframe.R        # Helper script
+├── audio/                      # Audio files
+│   ├── example1.wav
+│   └── example2.wav
+└── ozen-web/                   # Local viewer build (optional)
+    ├── viewer.html
+    ├── _app/
+    └── ...
+```
+
+### Preview Locally
+
+```bash
+quarto preview
+```
+
+This starts a local server (typically `http://localhost:XXXX`) where iframes will work correctly.
+
+::: {.callout-warning}
+## File:// Protocol Doesn't Work
+
+Opening the rendered HTML directly (double-clicking) won't load iframes due to browser security. Always use `quarto preview` or a local HTTP server.
+:::
+
+### Build for Deployment
+
+```bash
+quarto render
+```
+
+Output goes to `_site/` directory, ready for hosting.
+
+## GitHub Pages Deployment
+
+### 1. Configure Quarto
+
+In `_quarto.yml`:
+
+```yaml
+project:
+  type: website
+  output-dir: _site
+
+website:
+  title: "My Research"
+  navbar:
+    left:
+      - index.html
+      - analysis.html
+```
+
+### 2. Include Audio Files
+
+Ensure audio files are in the project and will be copied to output:
+
+```yaml
+resources:
+  - "audio/*.wav"
+  - "ozen-web/**"  # If using local build
+```
+
+### 3. Deploy to GitHub Pages
+
+**Option A: GitHub Actions (Recommended)**
+
+Create `.github/workflows/quarto-publish.yml`:
+
+```yaml
+on:
+  push:
+    branches: main
+
+name: Render and Publish
+
+jobs:
+  build-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Quarto
+        uses: quarto-dev/quarto-actions/setup@v2
+
+      - name: Render Quarto Project
+        uses: quarto-dev/quarto-actions/render@v2
+
+      - name: Publish to GitHub Pages
+        uses: quarto-dev/quarto-actions/publish@v2
+        with:
+          target: gh-pages
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+```
+
+**Option B: Manual Publish**
+
+```bash
+quarto publish gh-pages
+```
+
+### 4. Enable GitHub Pages
+
+- Go to repository Settings → Pages
+- Source: `gh-pages` branch
+- Visit `https://username.github.io/repo-name/`
+
+## Responsive Design
+
+Make viewers adapt to screen size:
+
+```r
+# Use percentage height
+html <- create_embedded_viewer(
+  "audio/example.wav",
+  height = "80%"  # Percentage of container
+)
+```
+
+Or wrap in responsive container:
+
+````markdown
+```{{r echo=FALSE}}
+cat('
+<div style="position: relative; width: 100%; padding-bottom: 56.25%;">
+')
+htmltools::HTML(create_embedded_viewer(
+  "audio/example.wav",
+  overlays = "pitch",
+  viewer_url = "https://ucpresearch.github.io/ozen-web/viewer"
+))
+cat('</div>')
+```
+````
+
+## Troubleshooting
+
+### iframes Don't Load
+
+**Problem:** Blank or broken iframes
+
+**Solution:**
+- Use `quarto preview` (not file://)
+- Check audio paths are relative to output HTML
+- Verify viewer URL is correct
+
+### Audio Files Not Found
+
+**Problem:** 404 errors for audio files
+
+**Solution:**
+- Add audio files to `resources:` in `_quarto.yml`
+- Check relative paths (relative to rendered HTML location)
+- Test paths: `ls _site/audio/`
+
+### Script Not Found
+
+**Problem:** `source("scripts/create-iframe.R")` fails
+
+**Solution:**
+- Check script path relative to `.html` file
+- Use absolute path if needed: `source(here::here("scripts/create-iframe.R"))`
+- Ensure script is in repository
+
+## See Also
+
+- [Basic Embedding](basic-usage.html) - iframe fundamentals
+- [URL Parameters](url-parameters.html) - Customization options
+- [Examples](examples.html) - Real-world examples
+- [Quarto Documentation](https://quarto.org/docs/guide/) - Official Quarto docs

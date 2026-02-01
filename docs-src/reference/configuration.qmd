@@ -1,0 +1,489 @@
+---
+title: "Configuration"
+subtitle: "Customize ozen-web with config.yaml"
+---
+
+## Overview
+
+ozen-web can be customized using an optional `config.yaml` file placed in the same directory as the application. This file allows you to override default colors, formant presets, spectrogram settings, and more.
+
+## Configuration File Location
+
+**For local development:**
+```
+ozen-web/
+├── static/
+│   └── config.yaml    # Place here
+```
+
+**For deployed sites:**
+```
+your-site/
+├── index.html
+├── _app/
+└── config.yaml        # Place alongside index.html
+```
+
+The app automatically loads `config.yaml` on startup. If the file is not found, built-in defaults are used.
+
+## Basic Structure
+
+```yaml
+# config.yaml
+colors:
+  cursor: '#ff0000'
+  pitch: '#0000ff'
+
+formantPresets:
+  female:
+    maxFormant: 5500
+
+spectrogram:
+  maxFrequency: 5000
+```
+
+::: {.callout-note}
+The config file is **optional**. Only include settings you want to override — defaults are used for omitted values.
+:::
+
+## Complete Configuration Reference
+
+### Colors
+
+#### Cursor and Selection
+
+```yaml
+colors:
+  # Cursor line
+  cursor: '#ff0000'           # Red cursor
+  cursorWidth: 1              # Line width in pixels
+
+  # Selection highlight
+  selection:
+    fill: 'rgba(255, 192, 203, 0.4)'  # Semi-transparent pink
+    border: '#ff0080'                  # Pink border
+```
+
+**Defaults:**
+- Cursor: Red (`#ff0000`)
+- Selection fill: Semi-transparent blue
+- Selection border: Solid blue
+
+#### Waveform
+
+```yaml
+colors:
+  waveform:
+    background: '#ffffff'     # White background
+    line: '#000000'           # Black waveform
+    lineWidth: 1              # Line width
+```
+
+**Defaults:**
+- Background: White
+- Line: Black
+- Line width: 1px
+
+#### Acoustic Overlays
+
+```yaml
+colors:
+  # Pitch (F0)
+  pitch: '#0000ff'            # Blue
+  pitchWidth: 2               # Line width
+
+  # Intensity
+  intensity: '#008000'        # Green
+  intensityWidth: 2
+
+  # HNR
+  hnr: '#ff8000'              # Orange
+  hnrWidth: 2
+
+  # CoG (Center of Gravity)
+  cog: '#800080'              # Purple
+  cogWidth: 2
+
+  # Spectral Tilt
+  spectralTilt: '#00ffff'     # Cyan
+  spectralTiltWidth: 2
+```
+
+**Defaults:**
+- Pitch: Blue (`#0000ff`)
+- Intensity: Green (`#008000`)
+- HNR: Orange
+- CoG: Purple
+- All widths: 2px
+
+#### Formants
+
+```yaml
+colors:
+  formant:
+    f1: '#ff0000'             # Bright red (F1)
+    f2: '#ff8080'             # Light red (F2)
+    f3: '#ff4040'             # Medium red (F3)
+    f4: '#ffc0c0'             # Very light red (F4)
+    size: 3                   # Dot size in pixels
+```
+
+**Defaults:**
+- F1-F4: Red gradient (dark to light)
+- Dot size: 3px
+
+::: {.callout-tip}
+Use different shades of the same color for formants (F1-F4) to keep them visually grouped while distinguishing each formant.
+:::
+
+#### Annotations
+
+```yaml
+colors:
+  # Tier backgrounds
+  tier:
+    background: '#f5f5f5'     # Light gray
+    selected: '#dcdcff'       # Light blue (when selected)
+    border: '#808080'         # Gray border
+    text: '#000000'           # Black text
+
+  # Boundary lines
+  boundary: '#0000ff'         # Blue
+  boundaryHover: '#ff0000'    # Red (on mouse hover)
+  boundaryWidth: 2            # Line width
+```
+
+**Defaults:**
+- Tier background: Light gray
+- Selected tier: Light blue
+- Boundaries: Blue, red on hover
+- Boundary width: 2px
+
+### Formant Presets
+
+Define formant analysis parameters for different speaker types:
+
+```yaml
+formantPresets:
+  female:
+    maxFormant: 5500          # Hz - analysis ceiling
+    numFormants: 5            # Number of formants to track
+
+  male:
+    maxFormant: 5000
+    numFormants: 5
+
+  child:
+    maxFormant: 8000          # Higher ceiling for children's voices
+    numFormants: 5
+```
+
+**Usage:** Select the preset in the app's formant settings dropdown.
+
+**Defaults:**
+- Female: 5500 Hz, 5 formants
+- Male: 5000 Hz, 5 formants
+- Child: 8000 Hz, 5 formants
+
+::: {.callout-tip}
+**Choosing maxFormant:**
+
+- **Too low:** Missing high formants (especially F3, F4 in female/child speech)
+- **Too high:** Spurious formants, tracking errors
+- **Rule of thumb:** Female/child ~5500-8000 Hz, Male ~5000-5500 Hz
+:::
+
+### Spectrogram Settings
+
+```yaml
+spectrogram:
+  dynamicRange: 70.0          # dB - contrast range
+  maxFrequency: 5000          # Hz - vertical axis maximum
+  windowLength: 0.005         # seconds - analysis window (5ms)
+  timeStep: 0.002             # seconds - time resolution (2ms)
+```
+
+**Parameters:**
+
+| Parameter | Description | Default | Range |
+|-----------|-------------|---------|-------|
+| `dynamicRange` | Contrast between dark and light (dB) | 70.0 | 30-100 |
+| `maxFrequency` | Vertical axis ceiling (Hz) | 5000 | 1000-22050 |
+| `windowLength` | Analysis window duration (s) | 0.005 | 0.001-0.05 |
+| `timeStep` | Time between analyses (s) | 0.002 | 0.0005-0.01 |
+
+**Effect of parameters:**
+
+- **dynamicRange** ↑ → More contrast, darker background
+- **windowLength** ↑ → Better frequency resolution, worse time resolution
+- **windowLength** ↓ → Better time resolution, worse frequency resolution
+- **timeStep** ↓ → Smoother spectrogram, slower computation
+
+::: {.callout-note}
+For most speech analysis, the defaults (5ms window, 2ms step) provide a good balance.
+:::
+
+### Pitch Settings
+
+```yaml
+pitch:
+  displayFloor: 75            # Hz - minimum pitch to display
+  displayCeiling: 500         # Hz - maximum pitch to display
+  floor: 75                   # Hz - detection floor
+  ceiling: 600                # Hz - detection ceiling
+```
+
+**Display vs. Detection:**
+
+- **`displayFloor`/`displayCeiling`:** Visual y-axis range on spectrogram
+- **`floor`/`ceiling`:** Pitch detection algorithm range
+
+**Typical values:**
+
+| Speaker Type | Floor | Ceiling |
+|--------------|-------|---------|
+| Male | 50-75 Hz | 300-400 Hz |
+| Female | 100-150 Hz | 400-600 Hz |
+| Child | 150-200 Hz | 600-800 Hz |
+
+### Annotation Settings
+
+```yaml
+annotation:
+  defaultTiers:               # Tiers created when loading audio
+    - words
+    - phones
+    - syllables
+```
+
+When you load an audio file, these tiers are automatically created.
+
+**Default:** `words`, `phones`
+
+## Example Configurations
+
+### High-Contrast Theme
+
+For presentations or low-light environments:
+
+```yaml
+colors:
+  cursor: '#ffff00'           # Yellow cursor
+  pitch: '#00ffff'            # Cyan pitch
+  formant:
+    f1: '#ff00ff'             # Magenta
+    f2: '#ffff00'             # Yellow
+    f3: '#00ffff'             # Cyan
+    f4: '#ff8080'             # Light red
+  waveform:
+    background: '#000000'     # Black background
+    line: '#00ff00'           # Green waveform
+```
+
+### Female Speaker Analysis
+
+```yaml
+formantPresets:
+  female:
+    maxFormant: 5800          # Slightly higher for accurate F4
+    numFormants: 5
+
+pitch:
+  floor: 120
+  ceiling: 500
+  displayFloor: 120
+  displayCeiling: 500
+
+spectrogram:
+  maxFrequency: 7500          # Show higher frequencies
+```
+
+### Male Speaker Analysis
+
+```yaml
+formantPresets:
+  male:
+    maxFormant: 5000
+    numFormants: 5
+
+pitch:
+  floor: 60
+  ceiling: 300
+  displayFloor: 60
+  displayCeiling: 300
+
+spectrogram:
+  maxFrequency: 5000          # Standard range sufficient
+```
+
+### Consonant Analysis
+
+For analyzing fricatives and stops:
+
+```yaml
+spectrogram:
+  maxFrequency: 10000         # Show high-frequency content
+  windowLength: 0.003         # Shorter window for better time resolution
+  timeStep: 0.001             # Finer time steps
+
+colors:
+  cog: '#ff00ff'              # Highlight CoG for fricative analysis
+  cogWidth: 3
+```
+
+### Teaching/Presentation
+
+Large, visible overlays:
+
+```yaml
+colors:
+  pitch: '#0000ff'
+  pitchWidth: 4               # Thicker lines
+
+  formant:
+    f1: '#ff0000'
+    f2: '#00ff00'
+    f3: '#0000ff'
+    f4: '#ff00ff'
+    size: 5                   # Larger dots
+
+  boundary: '#ff0000'
+  boundaryWidth: 4
+```
+
+## Loading Custom Configurations
+
+### At Startup
+
+Place `config.yaml` in the app directory. The app loads it automatically on startup.
+
+### Runtime Loading
+
+Some implementations support loading custom configs via UI:
+
+1. Click "Settings" or "⚙️" icon
+2. Select "Load Configuration"
+3. Choose your `.yaml` file
+
+Check your app version for runtime config loading support.
+
+## Color Format Reference
+
+Colors can be specified in multiple formats:
+
+```yaml
+colors:
+  pitch: '#0000ff'                    # Hex (6-digit)
+  intensity: '#008000'                # Hex (6-digit)
+  selection:
+    fill: 'rgba(255, 192, 203, 0.4)' # RGBA (with alpha)
+    border: 'rgb(255, 0, 128)'       # RGB
+```
+
+**Supported formats:**
+
+- Hex: `#rrggbb` (e.g., `#ff0000`)
+- RGB: `rgb(r, g, b)` (e.g., `rgb(255, 0, 0)`)
+- RGBA: `rgba(r, g, b, a)` (e.g., `rgba(255, 0, 0, 0.5)`)
+- Named colors: `red`, `blue`, `green` (limited palette)
+
+## Validation
+
+Invalid config files will show errors in the browser console:
+
+```
+Config validation error: Invalid color format '#xyz'
+Config validation error: maxFormant must be between 1000 and 22050
+```
+
+If validation fails, defaults are used for that setting.
+
+## Troubleshooting
+
+**Config not loading:**
+
+- Check file is named exactly `config.yaml` (not `config.yml`)
+- Ensure YAML syntax is valid (use [YAML Lint](http://www.yamllint.com/))
+- Check browser console for errors (F12 → Console)
+- Ensure file is in correct location (same directory as `index.html`)
+
+**Colors not changing:**
+
+- Verify color format is valid (`#rrggbb` or `rgba(...)`)
+- Clear browser cache (Ctrl+Shift+R)
+- Check console for validation errors
+
+**Formant preset not working:**
+
+- Ensure `maxFormant` is reasonable (1000-22050 Hz)
+- Verify you've selected the preset in the app UI
+- Check `numFormants` is between 3-5
+
+## Default Configuration
+
+If you need to reset to defaults, simply delete or rename `config.yaml`. The complete default configuration is:
+
+```yaml
+colors:
+  cursor: '#ff0000'
+  cursorWidth: 1
+  selection:
+    fill: 'rgba(173, 216, 230, 0.4)'
+    border: '#0080ff'
+  waveform:
+    background: '#ffffff'
+    line: '#000000'
+    lineWidth: 1
+  pitch: '#0000ff'
+  pitchWidth: 2
+  intensity: '#008000'
+  intensityWidth: 2
+  formant:
+    f1: '#ff0000'
+    f2: '#ff8080'
+    f3: '#ff4040'
+    f4: '#ffc0c0'
+    size: 3
+  tier:
+    background: '#f5f5f5'
+    selected: '#dcdcff'
+    border: '#808080'
+    text: '#000000'
+  boundary: '#0000ff'
+  boundaryHover: '#ff0000'
+  boundaryWidth: 2
+
+formantPresets:
+  female:
+    maxFormant: 5500
+    numFormants: 5
+  male:
+    maxFormant: 5000
+    numFormants: 5
+  child:
+    maxFormant: 8000
+    numFormants: 5
+
+spectrogram:
+  dynamicRange: 70.0
+  maxFrequency: 5000
+  windowLength: 0.005
+  timeStep: 0.002
+
+pitch:
+  displayFloor: 75
+  displayCeiling: 500
+  floor: 75
+  ceiling: 600
+
+annotation:
+  defaultTiers:
+    - words
+    - phones
+```
+
+## See Also
+
+- [Features Overview](../features/overview.html) — What each setting controls
+- [WASM Backends](backends.html) — Backend-specific configuration
+- [Development: Stores](../development/stores.html) — How configuration is implemented

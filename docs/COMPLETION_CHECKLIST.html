@@ -1,0 +1,1424 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.29">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>completion_checklist – ozen-web</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-0815c480559380816a4d1ea211a47e91.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-da67e8c4bf892742008e2f79db78be0d.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<style>html{ scroll-behavior: smooth; }</style>
+
+
+</head>
+
+<body class="nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a href="./index.html" class="navbar-brand navbar-brand-logo">
+    <img src="./assets/logo.png" alt="" class="navbar-logo">
+    </a>
+    <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">ozen-web</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="./index.html"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./getting-started.html"> 
+<span class="menu-text">Getting Started</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./tutorial/index.html"> 
+<span class="menu-text">Tutorial</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-features" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Features</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-features">    
+        <li>
+    <a class="dropdown-item" href="./features/overview.html">
+ <span class="dropdown-text">Overview</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./features/spectrogram.html">
+ <span class="dropdown-text">Spectrogram</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./features/waveform.html">
+ <span class="dropdown-text">Waveform</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./features/annotations.html">
+ <span class="dropdown-text">Annotations</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./features/acoustic-overlays.html">
+ <span class="dropdown-text">Acoustic Overlays</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./features/data-points.html">
+ <span class="dropdown-text">Data Points</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./features/audio-playback.html">
+ <span class="dropdown-text">Audio Playback</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./features/mobile-viewer.html">
+ <span class="dropdown-text">Mobile Viewer</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="./embedding/overview.html"> 
+<span class="menu-text">Embedding</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-reference" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Reference</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-reference">    
+        <li>
+    <a class="dropdown-item" href="./reference/keyboard-shortcuts.html">
+ <span class="dropdown-text">Keyboard Shortcuts</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./reference/configuration.html">
+ <span class="dropdown-text">Configuration</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./reference/backends.html">
+ <span class="dropdown-text">WASM Backends</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./reference/file-formats.html">
+ <span class="dropdown-text">File Formats</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="./development/setup.html"> 
+<span class="menu-text">Development</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/ucpresearch/ozen-web"> <i class="bi bi-github" role="img" aria-label="GitHub repository">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#documentation-completion-checklist" id="toc-documentation-completion-checklist" class="nav-link active" data-scroll-target="#documentation-completion-checklist">Documentation Completion Checklist</a>
+  <ul class="collapse">
+  <li><a href="#pre-launch-required-for-first-deployment" id="toc-pre-launch-required-for-first-deployment" class="nav-link" data-scroll-target="#pre-launch-required-for-first-deployment">🚀 Pre-Launch (Required for First Deployment)</a></li>
+  <li><a href="#complete-stub-pages" id="toc-complete-stub-pages" class="nav-link" data-scroll-target="#complete-stub-pages">📄 Complete Stub Pages</a>
+  <ul class="collapse">
+  <li><a href="#features-7-pages" id="toc-features-7-pages" class="nav-link" data-scroll-target="#features-7-pages">Features (7 pages)</a></li>
+  <li><a href="#embedding-4-pages" id="toc-embedding-4-pages" class="nav-link" data-scroll-target="#embedding-4-pages">Embedding (4 pages)</a></li>
+  <li><a href="#reference-3-pages" id="toc-reference-3-pages" class="nav-link" data-scroll-target="#reference-3-pages">Reference (3 pages)</a></li>
+  <li><a href="#development-5-pages" id="toc-development-5-pages" class="nav-link" data-scroll-target="#development-5-pages">Development (5 pages)</a></li>
+  </ul></li>
+  <li><a href="#enhance-screenshots" id="toc-enhance-screenshots" class="nav-link" data-scroll-target="#enhance-screenshots">🖼️ Enhance Screenshots</a></li>
+  <li><a href="#add-example-files" id="toc-add-example-files" class="nav-link" data-scroll-target="#add-example-files">📚 Add Example Files</a></li>
+  <li><a href="#quality-assurance" id="toc-quality-assurance" class="nav-link" data-scroll-target="#quality-assurance">🔍 Quality Assurance</a></li>
+  <li><a href="#deployment-maintenance" id="toc-deployment-maintenance" class="nav-link" data-scroll-target="#deployment-maintenance">🚀 Deployment &amp; Maintenance</a></li>
+  <li><a href="#progress-tracking" id="toc-progress-tracking" class="nav-link" data-scroll-target="#progress-tracking">📊 Progress Tracking</a></li>
+  <li><a href="#milestones" id="toc-milestones" class="nav-link" data-scroll-target="#milestones">🎯 Milestones</a>
+  <ul class="collapse">
+  <li><a href="#milestone-1-deployable-mvp" id="toc-milestone-1-deployable-mvp" class="nav-link" data-scroll-target="#milestone-1-deployable-mvp">Milestone 1: Deployable (MVP)</a></li>
+  <li><a href="#milestone-2-feature-complete" id="toc-milestone-2-feature-complete" class="nav-link" data-scroll-target="#milestone-2-feature-complete">Milestone 2: Feature Complete</a></li>
+  <li><a href="#milestone-3-production-ready" id="toc-milestone-3-production-ready" class="nav-link" data-scroll-target="#milestone-3-production-ready">Milestone 3: Production Ready</a></li>
+  </ul></li>
+  <li><a href="#tips" id="toc-tips" class="nav-link" data-scroll-target="#tips">💡 Tips</a></li>
+  </ul></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/ucpresearch/ozen-web/edit/main/COMPLETION_CHECKLIST.md" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/ucpresearch/ozen-web/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"><h1 class="title display-7"></h1></header><div class="quarto-title-block"><div class="quarto-title-tools-only"><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
+
+
+
+
+<section id="documentation-completion-checklist" class="level1">
+<h1>Documentation Completion Checklist</h1>
+<p>Use this checklist to track progress on completing the ozen-web documentation site.</p>
+<section id="pre-launch-required-for-first-deployment" class="level2">
+<h2 class="anchored" data-anchor-id="pre-launch-required-for-first-deployment">🚀 Pre-Launch (Required for First Deployment)</h2>
+<ul class="task-list">
+<li><label><input type="checkbox"><strong>Add test audio file</strong></label>
+<ul class="task-list">
+<li><label><input type="checkbox">Create or record a 5-15 second speech sample</label></li>
+<li><label><input type="checkbox">Save as WAV (16-bit PCM) to <code>scripts/screenshots/test-audio/sample.wav</code></label></li>
+<li><label><input type="checkbox">Verify audio has clear vowels and consonants</label></li>
+</ul></li>
+<li><label><input type="checkbox"><strong>Update placeholder URLs</strong></label>
+<ul class="task-list">
+<li><label><input type="checkbox">Find all instances: <code>grep -r "ucpresearch" docs/</code></label></li>
+<li><label><input type="checkbox">Replace with actual GitHub username</label></li>
+<li><label><input type="checkbox">Files to check: <code>_quarto.yml</code>, <code>index.qmd</code>, <code>getting-started.qmd</code>, tutorial files, etc.</label></li>
+</ul></li>
+<li><label><input type="checkbox"><strong>Install prerequisites</strong></label>
+<ul class="task-list">
+<li><label><input type="checkbox">Quarto 1.4.549+ installed</label></li>
+<li><label><input type="checkbox">Node.js 18+ installed</label></li>
+<li><label><input type="checkbox">Screenshot dependencies: <code>cd scripts/screenshots &amp;&amp; npm install</code></label></li>
+</ul></li>
+<li><label><input type="checkbox"><strong>Test local build</strong></label>
+<ul class="task-list">
+<li><label><input type="checkbox">Run: <code>./scripts/docs/build-docs.sh</code></label></li>
+<li><label><input type="checkbox">Fix any build errors</label></li>
+<li><label><input type="checkbox">Verify screenshots directory populated: <code>ls docs/screenshots/</code></label></li>
+</ul></li>
+<li><label><input type="checkbox"><strong>Test local preview</strong></label>
+<ul class="task-list">
+<li><label><input type="checkbox">Run: <code>./scripts/docs/serve-docs.sh</code></label></li>
+<li><label><input type="checkbox">Open http://localhost:8080</label></li>
+<li><label><input type="checkbox">Click through all navigation links</label></li>
+<li><label><input type="checkbox">Verify no broken internal links</label></li>
+</ul></li>
+<li><label><input type="checkbox"><strong>Push to GitHub</strong></label>
+<ul class="task-list">
+<li><label><input type="checkbox">Create GitHub repository (if not exists)</label></li>
+<li><label><input type="checkbox">Push all files</label></li>
+<li><label><input type="checkbox">Enable GitHub Pages in Settings → Pages</label></li>
+<li><label><input type="checkbox">Wait for deployment (~5 minutes)</label></li>
+<li><label><input type="checkbox">Verify site live at <code>https://USERNAME.github.io/ozen-web/</code></label></li>
+</ul></li>
+</ul>
+</section>
+<section id="complete-stub-pages" class="level2">
+<h2 class="anchored" data-anchor-id="complete-stub-pages">📄 Complete Stub Pages</h2>
+<section id="features-7-pages" class="level3">
+<h3 class="anchored" data-anchor-id="features-7-pages">Features (7 pages)</h3>
+<ul class="task-list">
+<li><label><input type="checkbox"><strong>features/spectrogram.qmd</strong></label>
+<ul>
+<li>Content: Spectrogram computation, colormap, zoom enhancement</li>
+<li>Sources: <code>CLAUDE.md</code>, <code>src/lib/components/Spectrogram.svelte</code></li>
+<li>Screenshots: Zoomed spectrogram, max frequency selector</li>
+</ul></li>
+<li><label><input type="checkbox"><strong>features/waveform.qmd</strong></label>
+<ul>
+<li>Content: Waveform display, downsampling, synchronization</li>
+<li>Sources: <code>src/lib/components/Waveform.svelte</code></li>
+<li>Screenshots: Waveform visualization</li>
+</ul></li>
+<li><label><input type="checkbox"><strong>features/annotations.qmd</strong></label>
+<ul>
+<li>Content: TextGrid support, tier management, undo system</li>
+<li>Sources: <code>CLAUDE.md</code>, <code>src/lib/stores/annotations.ts</code></li>
+<li>Screenshots: Multi-tier annotations, boundary editing</li>
+</ul></li>
+<li><label><input type="checkbox"><strong>features/acoustic-overlays.qmd</strong></label>
+<ul>
+<li>Content: All overlay types, interpretation guide, settings</li>
+<li>Sources: <code>CLAUDE.md</code>, <code>src/lib/wasm/acoustic.ts</code></li>
+<li>Screenshots: Individual overlays, combined overlays</li>
+</ul></li>
+<li><label><input type="checkbox"><strong>features/data-points.qmd</strong></label>
+<ul>
+<li>Content: Adding/moving/removing points, export format</li>
+<li>Sources: <code>src/lib/stores/dataPoints.ts</code></li>
+<li>Screenshots: Data points on spectrogram, TSV output</li>
+</ul></li>
+<li><label><input type="checkbox"><strong>features/audio-playback.qmd</strong></label>
+<ul>
+<li>Content: Playback controls, Web Audio API details</li>
+<li>Sources: <code>src/lib/audio/player.ts</code></li>
+<li>Screenshots: Playback cursor, controls</li>
+</ul></li>
+<li><label><input type="checkbox"><strong>features/mobile-viewer.qmd</strong></label>
+<ul>
+<li>Content: Touch gestures, mobile layout, URL parameters</li>
+<li>Sources: <code>src/routes/viewer/+page.svelte</code>, <code>src/lib/touch/gestures.ts</code></li>
+<li>Screenshots: Mobile interface (portrait/landscape)</li>
+</ul></li>
+</ul>
+</section>
+<section id="embedding-4-pages" class="level3">
+<h3 class="anchored" data-anchor-id="embedding-4-pages">Embedding (4 pages)</h3>
+<ul class="task-list">
+<li><label><input type="checkbox"><strong>embedding/basic-usage.qmd</strong></label>
+<ul>
+<li>Content: Step-by-step embedding guide, directory structure</li>
+<li>Sources: <code>README.md</code> (Embedding section)</li>
+<li>Examples: HTML snippets, helper script usage</li>
+</ul></li>
+<li><label><input type="checkbox"><strong>embedding/quarto-integration.qmd</strong></label>
+<ul>
+<li>Content: Quarto-specific instructions, <code>embed-resources</code> handling</li>
+<li>Sources: <code>README.md</code>, <code>scripts/create-iframe.*</code></li>
+<li>Examples: Quarto document with embedded viewer</li>
+</ul></li>
+<li><label><input type="checkbox"><strong>embedding/url-parameters.qmd</strong></label>
+<ul>
+<li>Content: All URL parameters, CORS setup, data URLs</li>
+<li>Sources: <code>README.md</code>, <code>src/routes/viewer/+page.svelte</code></li>
+<li>Examples: Parameter combinations, server configs</li>
+</ul></li>
+<li><label><input type="checkbox"><strong>embedding/examples.qmd</strong></label>
+<ul>
+<li>Content: Real-world use cases with full code</li>
+<li>Examples: Research paper, course material, blog post, notebook</li>
+</ul></li>
+</ul>
+</section>
+<section id="reference-3-pages" class="level3">
+<h3 class="anchored" data-anchor-id="reference-3-pages">Reference (3 pages)</h3>
+<ul class="task-list">
+<li><label><input type="checkbox"><strong>reference/configuration.qmd</strong></label>
+<ul>
+<li>Content: All config.yaml options with descriptions</li>
+<li>Sources: <code>static/config.yaml</code>, <code>src/lib/stores/config.ts</code></li>
+<li>Examples: Sample configs for different use cases</li>
+</ul></li>
+<li><label><input type="checkbox"><strong>reference/backends.qmd</strong></label>
+<ul>
+<li>Content: Backend comparison, when to use each, setup</li>
+<li>Sources: <code>CLAUDE.md</code>, <code>src/lib/wasm/acoustic.ts</code></li>
+<li>Table: Feature comparison, license differences</li>
+</ul></li>
+<li><label><input type="checkbox"><strong>reference/file-formats.qmd</strong></label>
+<ul>
+<li>Content: TextGrid, TSV, WAV format specifications</li>
+<li>Sources: <code>src/lib/textgrid/parser.ts</code></li>
+<li>Examples: File format examples, schemas</li>
+</ul></li>
+</ul>
+</section>
+<section id="development-5-pages" class="level3">
+<h3 class="anchored" data-anchor-id="development-5-pages">Development (5 pages)</h3>
+<ul class="task-list">
+<li><label><input type="checkbox"><strong>development/setup.qmd</strong></label>
+<ul>
+<li>Content: Detailed dev environment setup, dependencies</li>
+<li>Sources: <code>DEVELOPMENT.md</code></li>
+<li>Commands: Installation, build, test procedures</li>
+</ul></li>
+<li><label><input type="checkbox"><strong>development/architecture.qmd</strong></label>
+<ul>
+<li>Content: System design, component architecture</li>
+<li>Sources: <code>CLAUDE.md</code>, <code>DEVELOPMENT.md</code></li>
+<li>Diagrams: Use Mermaid for architecture diagrams</li>
+</ul></li>
+<li><label><input type="checkbox"><strong>development/stores.qmd</strong></label>
+<ul>
+<li>Content: Svelte stores pattern, state management</li>
+<li>Sources: <code>CLAUDE.md</code>, <code>src/lib/stores/*.ts</code></li>
+<li>Code: Store implementation examples</li>
+</ul></li>
+<li><label><input type="checkbox"><strong>development/wasm-integration.qmd</strong></label>
+<ul>
+<li>Content: WASM backend abstraction, adding new backends</li>
+<li>Sources: <code>CLAUDE.md</code>, <code>src/lib/wasm/acoustic.ts</code></li>
+<li>Code: WASM usage patterns, memory management</li>
+</ul></li>
+<li><label><input type="checkbox"><strong>development/contributing.qmd</strong></label>
+<ul>
+<li>Content: Contribution guidelines, code style, PR process</li>
+<li>Sources: Standard contributing guide template</li>
+<li>Checklist: PR checklist, testing requirements</li>
+</ul></li>
+</ul>
+</section>
+</section>
+<section id="enhance-screenshots" class="level2">
+<h2 class="anchored" data-anchor-id="enhance-screenshots">🖼️ Enhance Screenshots</h2>
+<ul class="task-list">
+<li><label><input type="checkbox"><strong>Add missing screenshots</strong> (not in initial 15)</label>
+<ul class="task-list">
+<li><label><input type="checkbox">File drop zone (highlighted when dragging)</label></li>
+<li><label><input type="checkbox">Backend selector dropdown</label></li>
+<li><label><input type="checkbox">Settings drawer (mobile)</label></li>
+<li><label><input type="checkbox">Context menus (right-click)</label></li>
+<li><label><input type="checkbox">TextGrid export dialog</label></li>
+<li><label><input type="checkbox">TSV export result (spreadsheet view)</label></li>
+<li><label><input type="checkbox">Values panel (close-up)</label></li>
+<li><label><input type="checkbox">Boundary snapping visualization</label></li>
+<li><label><input type="checkbox">Annotation editing (text input active)</label></li>
+</ul></li>
+<li><label><input type="checkbox"><strong>Improve screenshot quality</strong></label>
+<ul class="task-list">
+<li><label><input type="checkbox">Use real speech audio (not synthesized tones)</label></li>
+<li><label><input type="checkbox">Show meaningful labels (“hello”, “world” not “a”, “b”)</label></li>
+<li><label><input type="checkbox">Capture at different zoom levels</label></li>
+<li><label><input type="checkbox">Include UI context (not just cropped regions)</label></li>
+</ul></li>
+</ul>
+</section>
+<section id="add-example-files" class="level2">
+<h2 class="anchored" data-anchor-id="add-example-files">📚 Add Example Files</h2>
+<ul class="task-list">
+<li><label><input type="checkbox"><strong>docs/examples/demo-audio.wav</strong></label>
+<ul>
+<li>Short (10-15 sec) speech sample</li>
+<li>Clear vowels for formant demonstration</li>
+<li>Varied intonation for pitch tracking</li>
+</ul></li>
+<li><label><input type="checkbox"><strong>docs/examples/demo-textgrid.TextGrid</strong></label>
+<ul>
+<li>Matching annotation for demo audio</li>
+<li>Multiple tiers (words, phones)</li>
+<li>Example labels</li>
+</ul></li>
+<li><label><input type="checkbox"><strong>docs/examples/demo-data.tsv</strong></label>
+<ul>
+<li>Sample data points export</li>
+<li>Shows typical analysis output</li>
+<li>Includes annotation labels</li>
+</ul></li>
+</ul>
+</section>
+<section id="quality-assurance" class="level2">
+<h2 class="anchored" data-anchor-id="quality-assurance">🔍 Quality Assurance</h2>
+<ul class="task-list">
+<li><label><input type="checkbox"><strong>Verify all links</strong></label>
+<ul class="task-list">
+<li><label><input type="checkbox">Internal page links work</label></li>
+<li><label><input type="checkbox">Screenshots display correctly</label></li>
+<li><label><input type="checkbox">External links open (GitHub, resources)</label></li>
+<li><label><input type="checkbox">Navigation breadcrumbs correct</label></li>
+</ul></li>
+<li><label><input type="checkbox"><strong>Test on mobile</strong></label>
+<ul class="task-list">
+<li><label><input type="checkbox">Site responsive on phone</label></li>
+<li><label><input type="checkbox">Navigation works (hamburger menu)</label></li>
+<li><label><input type="checkbox">Images scale properly</label></li>
+<li><label><input type="checkbox">No horizontal scroll</label></li>
+</ul></li>
+<li><label><input type="checkbox"><strong>Test code examples</strong></label>
+<ul class="task-list">
+<li><label><input type="checkbox">All code snippets are valid</label></li>
+<li><label><input type="checkbox">Bash commands work as written</label></li>
+<li><label><input type="checkbox">Python/R examples are correct</label></li>
+<li><label><input type="checkbox">File paths are accurate</label></li>
+</ul></li>
+<li><label><input type="checkbox"><strong>Check consistency</strong></label>
+<ul class="task-list">
+<li><label><input type="checkbox">Terminology consistent across pages</label></li>
+<li><label><input type="checkbox">Screenshot captions match content</label></li>
+<li><label><input type="checkbox">Cross-references up to date</label></li>
+<li><label><input type="checkbox">Keyboard shortcuts match implementation</label></li>
+</ul></li>
+</ul>
+</section>
+<section id="deployment-maintenance" class="level2">
+<h2 class="anchored" data-anchor-id="deployment-maintenance">🚀 Deployment &amp; Maintenance</h2>
+<ul class="task-list">
+<li><label><input type="checkbox"><strong>GitHub Actions verification</strong></label>
+<ul class="task-list">
+<li><label><input type="checkbox">deploy-docs.yml runs successfully</label></li>
+<li><label><input type="checkbox">Screenshots generate in CI</label></li>
+<li><label><input type="checkbox">Site deploys to GitHub Pages</label></li>
+<li><label><input type="checkbox">No workflow errors</label></li>
+</ul></li>
+<li><label><input type="checkbox"><strong>Weekly screenshot updates</strong></label>
+<ul class="task-list">
+<li><label><input type="checkbox">update-screenshots.yml scheduled correctly</label></li>
+<li><label><input type="checkbox">Commits trigger re-deployment</label></li>
+<li><label><input type="checkbox">Screenshots stay current with app changes</label></li>
+</ul></li>
+<li><label><input type="checkbox"><strong>Set up custom domain</strong> (optional)</label>
+<ul class="task-list">
+<li><label><input type="checkbox">Configure CNAME in repository settings</label></li>
+<li><label><input type="checkbox">Update URLs in <code>_quarto.yml</code></label></li>
+<li><label><input type="checkbox">Test custom domain works</label></li>
+</ul></li>
+</ul>
+</section>
+<section id="progress-tracking" class="level2">
+<h2 class="anchored" data-anchor-id="progress-tracking">📊 Progress Tracking</h2>
+<p>Update this table as you complete sections:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Section</th>
+<th>Pages</th>
+<th>Complete</th>
+<th>Percentage</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Pre-Launch</td>
+<td>-</td>
+<td>0/6</td>
+<td>0%</td>
+</tr>
+<tr class="even">
+<td>Features</td>
+<td>7</td>
+<td>1/7</td>
+<td>14%</td>
+</tr>
+<tr class="odd">
+<td>Embedding</td>
+<td>4</td>
+<td>1/4</td>
+<td>25%</td>
+</tr>
+<tr class="even">
+<td>Reference</td>
+<td>3</td>
+<td>1/3</td>
+<td>33%</td>
+</tr>
+<tr class="odd">
+<td>Development</td>
+<td>5</td>
+<td>0/5</td>
+<td>0%</td>
+</tr>
+<tr class="even">
+<td>Screenshots</td>
+<td>15+</td>
+<td>0/15</td>
+<td>0%</td>
+</tr>
+<tr class="odd">
+<td>Examples</td>
+<td>3</td>
+<td>0/3</td>
+<td>0%</td>
+</tr>
+<tr class="even">
+<td>QA</td>
+<td>-</td>
+<td>0/4</td>
+<td>0%</td>
+</tr>
+<tr class="odd">
+<td><strong>TOTAL</strong></td>
+<td><strong>41+</strong></td>
+<td><strong>3/47</strong></td>
+<td><strong>~6%</strong></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="milestones" class="level2">
+<h2 class="anchored" data-anchor-id="milestones">🎯 Milestones</h2>
+<section id="milestone-1-deployable-mvp" class="level3">
+<h3 class="anchored" data-anchor-id="milestone-1-deployable-mvp">Milestone 1: Deployable (MVP)</h3>
+<ul>
+<li><label><input type="checkbox">Pre-launch checklist complete</label></li>
+<li><label><input type="checkbox">Site builds and deploys</label></li>
+<li><label><input type="checkbox">At least tutorial is complete</label></li>
+<li><strong>Target: 1-2 hours</strong></li>
+</ul>
+</section>
+<section id="milestone-2-feature-complete" class="level3">
+<h3 class="anchored" data-anchor-id="milestone-2-feature-complete">Milestone 2: Feature Complete</h3>
+<ul>
+<li><label><input type="checkbox">All stub pages have content</label></li>
+<li><label><input type="checkbox">All screenshots captured</label></li>
+<li><label><input type="checkbox">Examples added</label></li>
+<li><strong>Target: 20-30 hours</strong></li>
+</ul>
+</section>
+<section id="milestone-3-production-ready" class="level3">
+<h3 class="anchored" data-anchor-id="milestone-3-production-ready">Milestone 3: Production Ready</h3>
+<ul>
+<li><label><input type="checkbox">All QA checks pass</label></li>
+<li><label><input type="checkbox">Custom domain configured (optional)</label></li>
+<li><label><input type="checkbox">Documentation mentioned in main README</label></li>
+<li><label><input type="checkbox">Announced to users</label></li>
+<li><strong>Target: 30-40 hours total</strong></li>
+</ul>
+</section>
+</section>
+<section id="tips" class="level2">
+<h2 class="anchored" data-anchor-id="tips">💡 Tips</h2>
+<ul>
+<li><strong>Work incrementally</strong>: Complete one page at a time, test, commit</li>
+<li><strong>Reuse content</strong>: Extract from existing markdown files (README, DEVELOPMENT, CLAUDE)</li>
+<li><strong>Use templates</strong>: Copy structure from completed pages</li>
+<li><strong>Test frequently</strong>: Run <code>quarto preview</code> to see changes immediately</li>
+<li><strong>Ask for help</strong>: Open issues on GitHub if stuck</li>
+</ul>
+<hr>
+<p><strong>Start date:</strong> ____________ <strong>Target completion:</strong> ____________ <strong>Last updated:</strong> ____________</p>
+
+
+<!-- -->
+
+</section>
+</section>
+
+<a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a></main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+    const viewSource = window.document.getElementById('quarto-view-source') ||
+                       window.document.getElementById('quarto-code-tools-source');
+    if (viewSource) {
+      const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
+      viewSource.addEventListener("click", function(e) {
+        if (sourceUrl) {
+          // rstudio viewer pane
+          if (/\bcapabilities=\b/.test(window.location)) {
+            window.open(sourceUrl);
+          } else {
+            window.location.href = sourceUrl;
+          }
+        } else {
+          const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
+          modal.show();
+        }
+        return false;
+      });
+    }
+    function toggleCodeHandler(show) {
+      return function(e) {
+        const detailsSrc = window.document.querySelectorAll(".cell > details > .sourceCode");
+        for (let i=0; i<detailsSrc.length; i++) {
+          const details = detailsSrc[i].parentElement;
+          if (show) {
+            details.open = true;
+          } else {
+            details.removeAttribute("open");
+          }
+        }
+        const cellCodeDivs = window.document.querySelectorAll(".cell > .sourceCode");
+        const fromCls = show ? "hidden" : "unhidden";
+        const toCls = show ? "unhidden" : "hidden";
+        for (let i=0; i<cellCodeDivs.length; i++) {
+          const codeDiv = cellCodeDivs[i];
+          if (codeDiv.classList.contains(fromCls)) {
+            codeDiv.classList.remove(fromCls);
+            codeDiv.classList.add(toCls);
+          } 
+        }
+        return false;
+      }
+    }
+    const hideAllCode = window.document.getElementById("quarto-hide-all-code");
+    if (hideAllCode) {
+      hideAllCode.addEventListener("click", toggleCodeHandler(false));
+    }
+    const showAllCode = window.document.getElementById("quarto-show-all-code");
+    if (showAllCode) {
+      showAllCode.addEventListener("click", toggleCodeHandler(true));
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/ucpresearch\.github\.io\/ozen-web");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+            // target, if specified
+            link.setAttribute("target", "_blank");
+            if (link.getAttribute("rel") === null) {
+              link.setAttribute("rel", "noopener");
+            }
+            // default icon
+            link.classList.add("external");
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
+<div class="sourceCode" id="cb1" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Documentation Completion Checklist</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>Use this checklist to track progress on completing the ozen-web documentation site.</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">## 🚀 Pre-Launch (Required for First Deployment)</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> **Add test audio file**</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span><span class="va">[ ]</span> Create or record a 5-15 second speech sample</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span><span class="va">[ ]</span> Save as WAV (16-bit PCM) to <span class="in">`scripts/screenshots/test-audio/sample.wav`</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span><span class="va">[ ]</span> Verify audio has clear vowels and consonants</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> **Update placeholder URLs**</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span><span class="va">[ ]</span> Find all instances: <span class="in">`grep -r "ucpresearch" docs/`</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span><span class="va">[ ]</span> Replace with actual GitHub username</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span><span class="va">[ ]</span> Files to check: <span class="in">`_quarto.yml`</span>, <span class="in">`index.qmd`</span>, <span class="in">`getting-started.qmd`</span>, tutorial files, etc.</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> **Install prerequisites**</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span><span class="va">[ ]</span> Quarto 1.4.549+ installed</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span><span class="va">[ ]</span> Node.js 18+ installed</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span><span class="va">[ ]</span> Screenshot dependencies: <span class="in">`cd scripts/screenshots &amp;&amp; npm install`</span></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> **Test local build**</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span><span class="va">[ ]</span> Run: <span class="in">`./scripts/docs/build-docs.sh`</span></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span><span class="va">[ ]</span> Fix any build errors</span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span><span class="va">[ ]</span> Verify screenshots directory populated: <span class="in">`ls docs/screenshots/`</span></span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> **Test local preview**</span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span><span class="va">[ ]</span> Run: <span class="in">`./scripts/docs/serve-docs.sh`</span></span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span><span class="va">[ ]</span> Open http://localhost:8080</span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span><span class="va">[ ]</span> Click through all navigation links</span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span><span class="va">[ ]</span> Verify no broken internal links</span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> **Push to GitHub**</span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span><span class="va">[ ]</span> Create GitHub repository (if not exists)</span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span><span class="va">[ ]</span> Push all files</span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span><span class="va">[ ]</span> Enable GitHub Pages in Settings → Pages</span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span><span class="va">[ ]</span> Wait for deployment (~5 minutes)</span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span><span class="va">[ ]</span> Verify site live at <span class="in">`https://USERNAME.github.io/ozen-web/`</span></span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a><span class="fu">## 📄 Complete Stub Pages</span></span>
+<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a><span class="fu">### Features (7 pages)</span></span>
+<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> **features/spectrogram.qmd**</span>
+<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>Content: Spectrogram computation, colormap, zoom enhancement</span>
+<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>Sources: <span class="in">`CLAUDE.md`</span>, <span class="in">`src/lib/components/Spectrogram.svelte`</span></span>
+<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>Screenshots: Zoomed spectrogram, max frequency selector</span>
+<span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-49"><a href="#cb1-49" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> **features/waveform.qmd**</span>
+<span id="cb1-50"><a href="#cb1-50" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>Content: Waveform display, downsampling, synchronization</span>
+<span id="cb1-51"><a href="#cb1-51" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>Sources: <span class="in">`src/lib/components/Waveform.svelte`</span></span>
+<span id="cb1-52"><a href="#cb1-52" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>Screenshots: Waveform visualization</span>
+<span id="cb1-53"><a href="#cb1-53" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-54"><a href="#cb1-54" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> **features/annotations.qmd**</span>
+<span id="cb1-55"><a href="#cb1-55" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>Content: TextGrid support, tier management, undo system</span>
+<span id="cb1-56"><a href="#cb1-56" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>Sources: <span class="in">`CLAUDE.md`</span>, <span class="in">`src/lib/stores/annotations.ts`</span></span>
+<span id="cb1-57"><a href="#cb1-57" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>Screenshots: Multi-tier annotations, boundary editing</span>
+<span id="cb1-58"><a href="#cb1-58" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-59"><a href="#cb1-59" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> **features/acoustic-overlays.qmd**</span>
+<span id="cb1-60"><a href="#cb1-60" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>Content: All overlay types, interpretation guide, settings</span>
+<span id="cb1-61"><a href="#cb1-61" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>Sources: <span class="in">`CLAUDE.md`</span>, <span class="in">`src/lib/wasm/acoustic.ts`</span></span>
+<span id="cb1-62"><a href="#cb1-62" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>Screenshots: Individual overlays, combined overlays</span>
+<span id="cb1-63"><a href="#cb1-63" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-64"><a href="#cb1-64" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> **features/data-points.qmd**</span>
+<span id="cb1-65"><a href="#cb1-65" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>Content: Adding/moving/removing points, export format</span>
+<span id="cb1-66"><a href="#cb1-66" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>Sources: <span class="in">`src/lib/stores/dataPoints.ts`</span></span>
+<span id="cb1-67"><a href="#cb1-67" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>Screenshots: Data points on spectrogram, TSV output</span>
+<span id="cb1-68"><a href="#cb1-68" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-69"><a href="#cb1-69" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> **features/audio-playback.qmd**</span>
+<span id="cb1-70"><a href="#cb1-70" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>Content: Playback controls, Web Audio API details</span>
+<span id="cb1-71"><a href="#cb1-71" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>Sources: <span class="in">`src/lib/audio/player.ts`</span></span>
+<span id="cb1-72"><a href="#cb1-72" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>Screenshots: Playback cursor, controls</span>
+<span id="cb1-73"><a href="#cb1-73" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-74"><a href="#cb1-74" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> **features/mobile-viewer.qmd**</span>
+<span id="cb1-75"><a href="#cb1-75" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>Content: Touch gestures, mobile layout, URL parameters</span>
+<span id="cb1-76"><a href="#cb1-76" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>Sources: <span class="in">`src/routes/viewer/+page.svelte`</span>, <span class="in">`src/lib/touch/gestures.ts`</span></span>
+<span id="cb1-77"><a href="#cb1-77" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>Screenshots: Mobile interface (portrait/landscape)</span>
+<span id="cb1-78"><a href="#cb1-78" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-79"><a href="#cb1-79" aria-hidden="true" tabindex="-1"></a><span class="fu">### Embedding (4 pages)</span></span>
+<span id="cb1-80"><a href="#cb1-80" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-81"><a href="#cb1-81" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> **embedding/basic-usage.qmd**</span>
+<span id="cb1-82"><a href="#cb1-82" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>Content: Step-by-step embedding guide, directory structure</span>
+<span id="cb1-83"><a href="#cb1-83" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>Sources: <span class="in">`README.md`</span> (Embedding section)</span>
+<span id="cb1-84"><a href="#cb1-84" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>Examples: HTML snippets, helper script usage</span>
+<span id="cb1-85"><a href="#cb1-85" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-86"><a href="#cb1-86" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> **embedding/quarto-integration.qmd**</span>
+<span id="cb1-87"><a href="#cb1-87" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>Content: Quarto-specific instructions, <span class="in">`embed-resources`</span> handling</span>
+<span id="cb1-88"><a href="#cb1-88" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>Sources: <span class="in">`README.md`</span>, <span class="in">`scripts/create-iframe.*`</span></span>
+<span id="cb1-89"><a href="#cb1-89" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>Examples: Quarto document with embedded viewer</span>
+<span id="cb1-90"><a href="#cb1-90" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-91"><a href="#cb1-91" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> **embedding/url-parameters.qmd**</span>
+<span id="cb1-92"><a href="#cb1-92" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>Content: All URL parameters, CORS setup, data URLs</span>
+<span id="cb1-93"><a href="#cb1-93" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>Sources: <span class="in">`README.md`</span>, <span class="in">`src/routes/viewer/+page.svelte`</span></span>
+<span id="cb1-94"><a href="#cb1-94" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>Examples: Parameter combinations, server configs</span>
+<span id="cb1-95"><a href="#cb1-95" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-96"><a href="#cb1-96" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> **embedding/examples.qmd**</span>
+<span id="cb1-97"><a href="#cb1-97" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>Content: Real-world use cases with full code</span>
+<span id="cb1-98"><a href="#cb1-98" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>Examples: Research paper, course material, blog post, notebook</span>
+<span id="cb1-99"><a href="#cb1-99" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-100"><a href="#cb1-100" aria-hidden="true" tabindex="-1"></a><span class="fu">### Reference (3 pages)</span></span>
+<span id="cb1-101"><a href="#cb1-101" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-102"><a href="#cb1-102" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> **reference/configuration.qmd**</span>
+<span id="cb1-103"><a href="#cb1-103" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>Content: All config.yaml options with descriptions</span>
+<span id="cb1-104"><a href="#cb1-104" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>Sources: <span class="in">`static/config.yaml`</span>, <span class="in">`src/lib/stores/config.ts`</span></span>
+<span id="cb1-105"><a href="#cb1-105" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>Examples: Sample configs for different use cases</span>
+<span id="cb1-106"><a href="#cb1-106" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-107"><a href="#cb1-107" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> **reference/backends.qmd**</span>
+<span id="cb1-108"><a href="#cb1-108" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>Content: Backend comparison, when to use each, setup</span>
+<span id="cb1-109"><a href="#cb1-109" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>Sources: <span class="in">`CLAUDE.md`</span>, <span class="in">`src/lib/wasm/acoustic.ts`</span></span>
+<span id="cb1-110"><a href="#cb1-110" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>Table: Feature comparison, license differences</span>
+<span id="cb1-111"><a href="#cb1-111" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-112"><a href="#cb1-112" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> **reference/file-formats.qmd**</span>
+<span id="cb1-113"><a href="#cb1-113" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>Content: TextGrid, TSV, WAV format specifications</span>
+<span id="cb1-114"><a href="#cb1-114" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>Sources: <span class="in">`src/lib/textgrid/parser.ts`</span></span>
+<span id="cb1-115"><a href="#cb1-115" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>Examples: File format examples, schemas</span>
+<span id="cb1-116"><a href="#cb1-116" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-117"><a href="#cb1-117" aria-hidden="true" tabindex="-1"></a><span class="fu">### Development (5 pages)</span></span>
+<span id="cb1-118"><a href="#cb1-118" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-119"><a href="#cb1-119" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> **development/setup.qmd**</span>
+<span id="cb1-120"><a href="#cb1-120" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>Content: Detailed dev environment setup, dependencies</span>
+<span id="cb1-121"><a href="#cb1-121" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>Sources: <span class="in">`DEVELOPMENT.md`</span></span>
+<span id="cb1-122"><a href="#cb1-122" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>Commands: Installation, build, test procedures</span>
+<span id="cb1-123"><a href="#cb1-123" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-124"><a href="#cb1-124" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> **development/architecture.qmd**</span>
+<span id="cb1-125"><a href="#cb1-125" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>Content: System design, component architecture</span>
+<span id="cb1-126"><a href="#cb1-126" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>Sources: <span class="in">`CLAUDE.md`</span>, <span class="in">`DEVELOPMENT.md`</span></span>
+<span id="cb1-127"><a href="#cb1-127" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>Diagrams: Use Mermaid for architecture diagrams</span>
+<span id="cb1-128"><a href="#cb1-128" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-129"><a href="#cb1-129" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> **development/stores.qmd**</span>
+<span id="cb1-130"><a href="#cb1-130" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>Content: Svelte stores pattern, state management</span>
+<span id="cb1-131"><a href="#cb1-131" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>Sources: <span class="in">`CLAUDE.md`</span>, <span class="in">`src/lib/stores/*.ts`</span></span>
+<span id="cb1-132"><a href="#cb1-132" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>Code: Store implementation examples</span>
+<span id="cb1-133"><a href="#cb1-133" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-134"><a href="#cb1-134" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> **development/wasm-integration.qmd**</span>
+<span id="cb1-135"><a href="#cb1-135" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>Content: WASM backend abstraction, adding new backends</span>
+<span id="cb1-136"><a href="#cb1-136" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>Sources: <span class="in">`CLAUDE.md`</span>, <span class="in">`src/lib/wasm/acoustic.ts`</span></span>
+<span id="cb1-137"><a href="#cb1-137" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>Code: WASM usage patterns, memory management</span>
+<span id="cb1-138"><a href="#cb1-138" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-139"><a href="#cb1-139" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> **development/contributing.qmd**</span>
+<span id="cb1-140"><a href="#cb1-140" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>Content: Contribution guidelines, code style, PR process</span>
+<span id="cb1-141"><a href="#cb1-141" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>Sources: Standard contributing guide template</span>
+<span id="cb1-142"><a href="#cb1-142" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>Checklist: PR checklist, testing requirements</span>
+<span id="cb1-143"><a href="#cb1-143" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-144"><a href="#cb1-144" aria-hidden="true" tabindex="-1"></a><span class="fu">## 🖼️ Enhance Screenshots</span></span>
+<span id="cb1-145"><a href="#cb1-145" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-146"><a href="#cb1-146" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> **Add missing screenshots** (not in initial 15)</span>
+<span id="cb1-147"><a href="#cb1-147" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span><span class="va">[ ]</span> File drop zone (highlighted when dragging)</span>
+<span id="cb1-148"><a href="#cb1-148" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span><span class="va">[ ]</span> Backend selector dropdown</span>
+<span id="cb1-149"><a href="#cb1-149" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span><span class="va">[ ]</span> Settings drawer (mobile)</span>
+<span id="cb1-150"><a href="#cb1-150" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span><span class="va">[ ]</span> Context menus (right-click)</span>
+<span id="cb1-151"><a href="#cb1-151" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span><span class="va">[ ]</span> TextGrid export dialog</span>
+<span id="cb1-152"><a href="#cb1-152" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span><span class="va">[ ]</span> TSV export result (spreadsheet view)</span>
+<span id="cb1-153"><a href="#cb1-153" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span><span class="va">[ ]</span> Values panel (close-up)</span>
+<span id="cb1-154"><a href="#cb1-154" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span><span class="va">[ ]</span> Boundary snapping visualization</span>
+<span id="cb1-155"><a href="#cb1-155" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span><span class="va">[ ]</span> Annotation editing (text input active)</span>
+<span id="cb1-156"><a href="#cb1-156" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-157"><a href="#cb1-157" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> **Improve screenshot quality**</span>
+<span id="cb1-158"><a href="#cb1-158" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span><span class="va">[ ]</span> Use real speech audio (not synthesized tones)</span>
+<span id="cb1-159"><a href="#cb1-159" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span><span class="va">[ ]</span> Show meaningful labels ("hello", "world" not "a", "b")</span>
+<span id="cb1-160"><a href="#cb1-160" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span><span class="va">[ ]</span> Capture at different zoom levels</span>
+<span id="cb1-161"><a href="#cb1-161" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span><span class="va">[ ]</span> Include UI context (not just cropped regions)</span>
+<span id="cb1-162"><a href="#cb1-162" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-163"><a href="#cb1-163" aria-hidden="true" tabindex="-1"></a><span class="fu">## 📚 Add Example Files</span></span>
+<span id="cb1-164"><a href="#cb1-164" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-165"><a href="#cb1-165" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> **docs/examples/demo-audio.wav**</span>
+<span id="cb1-166"><a href="#cb1-166" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>Short (10-15 sec) speech sample</span>
+<span id="cb1-167"><a href="#cb1-167" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>Clear vowels for formant demonstration</span>
+<span id="cb1-168"><a href="#cb1-168" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>Varied intonation for pitch tracking</span>
+<span id="cb1-169"><a href="#cb1-169" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-170"><a href="#cb1-170" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> **docs/examples/demo-textgrid.TextGrid**</span>
+<span id="cb1-171"><a href="#cb1-171" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>Matching annotation for demo audio</span>
+<span id="cb1-172"><a href="#cb1-172" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>Multiple tiers (words, phones)</span>
+<span id="cb1-173"><a href="#cb1-173" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>Example labels</span>
+<span id="cb1-174"><a href="#cb1-174" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-175"><a href="#cb1-175" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> **docs/examples/demo-data.tsv**</span>
+<span id="cb1-176"><a href="#cb1-176" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>Sample data points export</span>
+<span id="cb1-177"><a href="#cb1-177" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>Shows typical analysis output</span>
+<span id="cb1-178"><a href="#cb1-178" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>Includes annotation labels</span>
+<span id="cb1-179"><a href="#cb1-179" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-180"><a href="#cb1-180" aria-hidden="true" tabindex="-1"></a><span class="fu">## 🔍 Quality Assurance</span></span>
+<span id="cb1-181"><a href="#cb1-181" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-182"><a href="#cb1-182" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> **Verify all links**</span>
+<span id="cb1-183"><a href="#cb1-183" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span><span class="va">[ ]</span> Internal page links work</span>
+<span id="cb1-184"><a href="#cb1-184" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span><span class="va">[ ]</span> Screenshots display correctly</span>
+<span id="cb1-185"><a href="#cb1-185" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span><span class="va">[ ]</span> External links open (GitHub, resources)</span>
+<span id="cb1-186"><a href="#cb1-186" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span><span class="va">[ ]</span> Navigation breadcrumbs correct</span>
+<span id="cb1-187"><a href="#cb1-187" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-188"><a href="#cb1-188" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> **Test on mobile**</span>
+<span id="cb1-189"><a href="#cb1-189" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span><span class="va">[ ]</span> Site responsive on phone</span>
+<span id="cb1-190"><a href="#cb1-190" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span><span class="va">[ ]</span> Navigation works (hamburger menu)</span>
+<span id="cb1-191"><a href="#cb1-191" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span><span class="va">[ ]</span> Images scale properly</span>
+<span id="cb1-192"><a href="#cb1-192" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span><span class="va">[ ]</span> No horizontal scroll</span>
+<span id="cb1-193"><a href="#cb1-193" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-194"><a href="#cb1-194" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> **Test code examples**</span>
+<span id="cb1-195"><a href="#cb1-195" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span><span class="va">[ ]</span> All code snippets are valid</span>
+<span id="cb1-196"><a href="#cb1-196" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span><span class="va">[ ]</span> Bash commands work as written</span>
+<span id="cb1-197"><a href="#cb1-197" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span><span class="va">[ ]</span> Python/R examples are correct</span>
+<span id="cb1-198"><a href="#cb1-198" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span><span class="va">[ ]</span> File paths are accurate</span>
+<span id="cb1-199"><a href="#cb1-199" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-200"><a href="#cb1-200" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> **Check consistency**</span>
+<span id="cb1-201"><a href="#cb1-201" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span><span class="va">[ ]</span> Terminology consistent across pages</span>
+<span id="cb1-202"><a href="#cb1-202" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span><span class="va">[ ]</span> Screenshot captions match content</span>
+<span id="cb1-203"><a href="#cb1-203" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span><span class="va">[ ]</span> Cross-references up to date</span>
+<span id="cb1-204"><a href="#cb1-204" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span><span class="va">[ ]</span> Keyboard shortcuts match implementation</span>
+<span id="cb1-205"><a href="#cb1-205" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-206"><a href="#cb1-206" aria-hidden="true" tabindex="-1"></a><span class="fu">## 🚀 Deployment &amp; Maintenance</span></span>
+<span id="cb1-207"><a href="#cb1-207" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-208"><a href="#cb1-208" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> **GitHub Actions verification**</span>
+<span id="cb1-209"><a href="#cb1-209" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span><span class="va">[ ]</span> deploy-docs.yml runs successfully</span>
+<span id="cb1-210"><a href="#cb1-210" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span><span class="va">[ ]</span> Screenshots generate in CI</span>
+<span id="cb1-211"><a href="#cb1-211" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span><span class="va">[ ]</span> Site deploys to GitHub Pages</span>
+<span id="cb1-212"><a href="#cb1-212" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span><span class="va">[ ]</span> No workflow errors</span>
+<span id="cb1-213"><a href="#cb1-213" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-214"><a href="#cb1-214" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> **Weekly screenshot updates**</span>
+<span id="cb1-215"><a href="#cb1-215" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span><span class="va">[ ]</span> update-screenshots.yml scheduled correctly</span>
+<span id="cb1-216"><a href="#cb1-216" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span><span class="va">[ ]</span> Commits trigger re-deployment</span>
+<span id="cb1-217"><a href="#cb1-217" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span><span class="va">[ ]</span> Screenshots stay current with app changes</span>
+<span id="cb1-218"><a href="#cb1-218" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-219"><a href="#cb1-219" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> **Set up custom domain** (optional)</span>
+<span id="cb1-220"><a href="#cb1-220" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span><span class="va">[ ]</span> Configure CNAME in repository settings</span>
+<span id="cb1-221"><a href="#cb1-221" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span><span class="va">[ ]</span> Update URLs in <span class="in">`_quarto.yml`</span></span>
+<span id="cb1-222"><a href="#cb1-222" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span><span class="va">[ ]</span> Test custom domain works</span>
+<span id="cb1-223"><a href="#cb1-223" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-224"><a href="#cb1-224" aria-hidden="true" tabindex="-1"></a><span class="fu">## 📊 Progress Tracking</span></span>
+<span id="cb1-225"><a href="#cb1-225" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-226"><a href="#cb1-226" aria-hidden="true" tabindex="-1"></a>Update this table as you complete sections:</span>
+<span id="cb1-227"><a href="#cb1-227" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-228"><a href="#cb1-228" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Section <span class="pp">|</span> Pages <span class="pp">|</span> Complete <span class="pp">|</span> Percentage <span class="pp">|</span></span>
+<span id="cb1-229"><a href="#cb1-229" aria-hidden="true" tabindex="-1"></a><span class="pp">|---------|-------|----------|------------|</span></span>
+<span id="cb1-230"><a href="#cb1-230" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Pre-Launch <span class="pp">|</span> - <span class="pp">|</span> 0/6 <span class="pp">|</span> 0% <span class="pp">|</span></span>
+<span id="cb1-231"><a href="#cb1-231" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Features <span class="pp">|</span> 7 <span class="pp">|</span> 1/7 <span class="pp">|</span> 14% <span class="pp">|</span></span>
+<span id="cb1-232"><a href="#cb1-232" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Embedding <span class="pp">|</span> 4 <span class="pp">|</span> 1/4 <span class="pp">|</span> 25% <span class="pp">|</span></span>
+<span id="cb1-233"><a href="#cb1-233" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Reference <span class="pp">|</span> 3 <span class="pp">|</span> 1/3 <span class="pp">|</span> 33% <span class="pp">|</span></span>
+<span id="cb1-234"><a href="#cb1-234" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Development <span class="pp">|</span> 5 <span class="pp">|</span> 0/5 <span class="pp">|</span> 0% <span class="pp">|</span></span>
+<span id="cb1-235"><a href="#cb1-235" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Screenshots <span class="pp">|</span> 15+ <span class="pp">|</span> 0/15 <span class="pp">|</span> 0% <span class="pp">|</span></span>
+<span id="cb1-236"><a href="#cb1-236" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Examples <span class="pp">|</span> 3 <span class="pp">|</span> 0/3 <span class="pp">|</span> 0% <span class="pp">|</span></span>
+<span id="cb1-237"><a href="#cb1-237" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> QA <span class="pp">|</span> - <span class="pp">|</span> 0/4 <span class="pp">|</span> 0% <span class="pp">|</span></span>
+<span id="cb1-238"><a href="#cb1-238" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **TOTAL** | **41+** | **3/47** | **~6%** <span class="pp">|</span></span>
+<span id="cb1-239"><a href="#cb1-239" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-240"><a href="#cb1-240" aria-hidden="true" tabindex="-1"></a><span class="fu">## 🎯 Milestones</span></span>
+<span id="cb1-241"><a href="#cb1-241" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-242"><a href="#cb1-242" aria-hidden="true" tabindex="-1"></a><span class="fu">### Milestone 1: Deployable (MVP)</span></span>
+<span id="cb1-243"><a href="#cb1-243" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> Pre-launch checklist complete</span>
+<span id="cb1-244"><a href="#cb1-244" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> Site builds and deploys</span>
+<span id="cb1-245"><a href="#cb1-245" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> At least tutorial is complete</span>
+<span id="cb1-246"><a href="#cb1-246" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Target: 1-2 hours**</span>
+<span id="cb1-247"><a href="#cb1-247" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-248"><a href="#cb1-248" aria-hidden="true" tabindex="-1"></a><span class="fu">### Milestone 2: Feature Complete</span></span>
+<span id="cb1-249"><a href="#cb1-249" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> All stub pages have content</span>
+<span id="cb1-250"><a href="#cb1-250" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> All screenshots captured</span>
+<span id="cb1-251"><a href="#cb1-251" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> Examples added</span>
+<span id="cb1-252"><a href="#cb1-252" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Target: 20-30 hours**</span>
+<span id="cb1-253"><a href="#cb1-253" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-254"><a href="#cb1-254" aria-hidden="true" tabindex="-1"></a><span class="fu">### Milestone 3: Production Ready</span></span>
+<span id="cb1-255"><a href="#cb1-255" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> All QA checks pass</span>
+<span id="cb1-256"><a href="#cb1-256" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> Custom domain configured (optional)</span>
+<span id="cb1-257"><a href="#cb1-257" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> Documentation mentioned in main README</span>
+<span id="cb1-258"><a href="#cb1-258" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> Announced to users</span>
+<span id="cb1-259"><a href="#cb1-259" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Target: 30-40 hours total**</span>
+<span id="cb1-260"><a href="#cb1-260" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-261"><a href="#cb1-261" aria-hidden="true" tabindex="-1"></a><span class="fu">## 💡 Tips</span></span>
+<span id="cb1-262"><a href="#cb1-262" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-263"><a href="#cb1-263" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Work incrementally**: Complete one page at a time, test, commit</span>
+<span id="cb1-264"><a href="#cb1-264" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Reuse content**: Extract from existing markdown files (README, DEVELOPMENT, CLAUDE)</span>
+<span id="cb1-265"><a href="#cb1-265" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Use templates**: Copy structure from completed pages</span>
+<span id="cb1-266"><a href="#cb1-266" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Test frequently**: Run <span class="in">`quarto preview`</span> to see changes immediately</span>
+<span id="cb1-267"><a href="#cb1-267" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Ask for help**: Open issues on GitHub if stuck</span>
+<span id="cb1-268"><a href="#cb1-268" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-269"><a href="#cb1-269" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb1-270"><a href="#cb1-270" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-271"><a href="#cb1-271" aria-hidden="true" tabindex="-1"></a>**Start date:** ____________</span>
+<span id="cb1-272"><a href="#cb1-272" aria-hidden="true" tabindex="-1"></a>**Target completion:** ____________</span>
+<span id="cb1-273"><a href="#cb1-273" aria-hidden="true" tabindex="-1"></a>**Last updated:** ____________</span></code><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></pre></div>
+</div></div></div></div></div>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>Built with <a href="https://quarto.org/">Quarto</a></p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/ucpresearch/ozen-web/edit/main/COMPLETION_CHECKLIST.md" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/ucpresearch/ozen-web/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
+    <div class="nav-footer-right">
+<p><a href="https://github.com/ucpresearch/ozen-web">GitHub</a> | <a href="https://github.com/ucpresearch/ozen-web/issues">Issues</a></p>
+</div>
+  </div>
+</footer>
+
+
+
+
+<script src="site_libs/quarto-html/zenscroll-min.js"></script>
+</body></html>

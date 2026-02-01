@@ -1,0 +1,200 @@
+---
+title: "1. Loading Audio"
+subtitle: "Three ways to load audio files into ozen-web"
+---
+
+## Overview
+
+In this section, you'll learn how to load audio files into ozen-web using three different methods:
+
+1. **Drag and drop** (fastest)
+2. **File picker** (traditional)
+3. **Microphone recording** (create new audio)
+
+## Before You Start
+
+Make sure ozen-web is running in your browser:
+
+- **Hosted version**: [https://ucpresearch.github.io/ozen-web/](https://ucpresearch.github.io/ozen-web/)
+- **Local server**: [http://localhost:5173](http://localhost:5173)
+
+You should see an empty interface with a prominent file drop zone.
+
+![Empty interface with drop zone](../screenshots/tutorial-01-empty-interface.png){.screenshot}
+
+## Method 1: Drag and Drop
+
+The fastest way to load audio is drag-and-drop:
+
+::: {.tutorial-steps}
+1. **Find an audio file** on your computer (WAV, MP3, or OGG format)
+
+2. **Drag the file** over the ozen-web window
+
+   The drop zone will highlight with a blue border
+
+   ![Drag-drop highlighted](../screenshots/tutorial-01-drag-drop.png){.screenshot}
+
+3. **Release the mouse** button
+
+4. **Wait for loading** (1-2 seconds)
+
+   - Progress indicator appears briefly
+   - Waveform appears in the display
+   - Spectrogram loads (or prompts to zoom for long files)
+
+   ![Audio loaded successfully](../screenshots/tutorial-01-audio-loaded.png){.screenshot}
+:::
+
+::: {.callout-tip}
+You can drag files from Finder (Mac), File Explorer (Windows), or Nautilus/Dolphin (Linux).
+:::
+
+## Method 2: File Picker
+
+If you prefer a traditional file dialog:
+
+::: {.tutorial-steps}
+1. **Click the "Load Audio" button** in the interface (usually top-left or center)
+
+2. **Select your audio file** in the file dialog
+
+3. **Click "Open"**
+
+4. Audio loads just like drag-and-drop
+:::
+
+::: {.callout-note}
+The file picker shows only supported formats (WAV, MP3, OGG, M4A, FLAC). If your file doesn't appear, check the format or try "All Files" filter.
+:::
+
+## Method 3: Microphone Recording
+
+Create new audio directly in the browser:
+
+::: {.tutorial-steps}
+1. **Click the microphone icon** 🎤 (usually in the toolbar)
+
+2. **Allow microphone access** when prompted by the browser
+
+   ![Browser microphone permission dialog](../screenshots/microphone-permission.png){.screenshot}
+
+3. **Click the red record button**
+
+4. **Speak into your microphone**
+
+   - A timer shows recording duration
+   - Maximum recording time: 60 seconds (configurable)
+
+5. **Click the stop button** when finished
+
+6. **The recorded audio loads automatically**
+:::
+
+::: {.callout-try}
+Try recording yourself saying a few vowels ("ah", "ee", "oo") to see clear formant patterns in the spectrogram.
+:::
+
+::: {.callout-warning}
+Microphone recording uses your browser's MediaRecorder API. Quality depends on your microphone and browser settings. For research-grade recordings, use external recording software.
+:::
+
+## What You Should See
+
+After loading audio successfully, you should see:
+
+- **Waveform display** showing amplitude over time
+- **Time axis** at the bottom (0.0s, 0.5s, 1.0s, ...)
+- **Filename** displayed in the interface
+- **Spectrogram** (for files ≤60s) or "Zoom in for spectrogram" message
+
+![Successful audio load](../screenshots/tutorial-01-audio-loaded.png){.screenshot}
+
+## Supported Audio Formats
+
+ozen-web supports most common audio formats via the Web Audio API:
+
+| Format | Extension | Notes |
+|--------|-----------|-------|
+| **WAV** | `.wav` | ✅ Recommended, lossless, 16/24-bit PCM |
+| **MP3** | `.mp3` | ✅ Widely supported, lossy compression |
+| **OGG** | `.ogg`, `.oga` | ✅ Open format, good quality |
+| **M4A** | `.m4a` | ⚠️ Browser-dependent (works in Safari/Chrome) |
+| **FLAC** | `.flac` | ⚠️ Browser-dependent (Chrome/Edge only) |
+
+::: {.callout-tip}
+For phonetic research, use **16-bit WAV files at 44.1kHz or 48kHz** sampling rate for best compatibility and quality.
+:::
+
+## File Size Limits
+
+While there's no hard limit, practical constraints apply:
+
+- **Small files** (< 1 MB, < 30s): Load instantly
+- **Medium files** (1-10 MB, 30-300s): Load in 1-5 seconds
+- **Large files** (> 10 MB, > 300s): May take 10+ seconds; spectrogram computed on-demand when zoomed
+
+::: {.callout-note}
+Files longer than 60 seconds show waveform immediately but require zooming to trigger spectrogram analysis. See [Features: Long Audio Handling](../features/overview.html#long-audio-handling) for details.
+:::
+
+## Loading a Different File
+
+To load a new audio file:
+
+1. Simply drag another file or click "Load Audio" again
+2. The previous audio will be replaced (annotations are lost unless exported)
+
+::: {.callout-warning}
+Loading a new file clears all unsaved annotations and data points. Export your work first if needed (see [Section 6: Exporting](06-exporting.html)).
+:::
+
+## Troubleshooting
+
+**File won't load:**
+
+- Check the file format (use WAV if unsure)
+- Ensure the file isn't corrupted (try playing in another app)
+- Check browser console (F12) for error messages
+
+**"Failed to decode audio" error:**
+
+- File may be in an unsupported codec
+- Convert to WAV using Audacity, FFmpeg, or Praat
+- Try a different browser (Chrome/Edge have best codec support)
+
+**Microphone doesn't work:**
+
+- Check browser permissions (Settings → Privacy → Microphone)
+- Ensure microphone is connected and working in other apps
+- Try using HTTPS (microphone API requires secure context)
+
+**File loads but no spectrogram:**
+
+- For files >60s, zoom in to trigger analysis
+- Check that WASM backend is loaded (see backend selector)
+- Try refreshing the page (Ctrl+R)
+
+## Practice Exercise
+
+Before moving to the next section, try:
+
+1. Load an audio file using drag-and-drop
+2. Load a different file using the file picker
+3. Record 5 seconds of speech using the microphone
+4. Observe the differences in waveform appearance
+
+::: {.callout-try}
+**Challenge:** Record yourself saying "hello" three times with different intonations (statement, question, excited). Notice how the pitch contours differ in the waveform.
+:::
+
+## What's Next?
+
+Now that you have audio loaded, let's learn how to navigate and explore it.
+
+**Next:** [2. Exploring Audio](02-exploring-audio.html) →
+
+---
+
+**Navigation:**
+[← Back to Tutorial Overview](index.html) | [Next: Exploring Audio →](02-exploring-audio.html)

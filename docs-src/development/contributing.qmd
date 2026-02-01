@@ -1,0 +1,750 @@
+---
+title: "Contributing"
+subtitle: "How to contribute to ozen-web"
+---
+
+## Getting Started
+
+Thank you for considering contributing to ozen-web! This guide will help you get set up and understand our development workflow.
+
+### Prerequisites
+
+Before contributing, ensure you have:
+
+- **Node.js** 18 or later
+- **npm** 9 or later
+- **Git**
+- **Text editor** (VS Code recommended with Svelte extension)
+- Basic familiarity with **TypeScript**, **Svelte**, and **Canvas API**
+
+### Initial Setup
+
+1. **Fork the repository** on GitHub
+2. **Clone your fork:**
+   ```bash
+   git clone https://github.com/YOUR-USERNAME/ozen-web.git
+   cd ozen-web
+   ```
+
+3. **Add upstream remote:**
+   ```bash
+   git remote add upstream https://github.com/ucpresearch/ozen-web.git
+   ```
+
+4. **Install dependencies:**
+   ```bash
+   npm install
+   ```
+
+5. **Copy WASM backend (optional, for local backend):**
+   ```bash
+   mkdir -p static/wasm/praatfan
+   # Copy from praatfan-core-clean or use CDN backend
+   ```
+
+6. **Start development server:**
+   ```bash
+   npm run dev
+   ```
+
+7. **Open http://localhost:5173** and verify the app works
+
+For detailed setup instructions, see [Development Setup](setup.html).
+
+## Development Workflow
+
+### Creating a Feature Branch
+
+```bash
+# Update your fork
+git checkout master
+git pull upstream master
+
+# Create feature branch
+git checkout -b feature/your-feature-name
+```
+
+**Branch naming conventions:**
+- `feature/description` - New features
+- `fix/description` - Bug fixes
+- `refactor/description` - Code refactoring
+- `docs/description` - Documentation changes
+
+### Making Changes
+
+1. **Write code** following our style guidelines (see below)
+2. **Test thoroughly** (manual testing checklist below)
+3. **Commit with clear messages:**
+   ```bash
+   git add file1.ts file2.svelte
+   git commit -m "Add pitch smoothing toggle to settings panel"
+   ```
+
+4. **Push to your fork:**
+   ```bash
+   git push origin feature/your-feature-name
+   ```
+
+5. **Open a pull request** on GitHub
+
+### Commit Message Guidelines
+
+**Format:**
+```
+<type>: <description>
+
+[optional body]
+
+[optional footer]
+```
+
+**Types:**
+- `feat:` New feature
+- `fix:` Bug fix
+- `refactor:` Code refactoring
+- `docs:` Documentation changes
+- `style:` Code style changes (formatting, no logic change)
+- `test:` Adding or updating tests
+- `chore:` Maintenance tasks
+
+**Examples:**
+
+Good:
+```
+feat: Add keyboard shortcut (S) for toggling spectrogram
+
+Add S key to show/hide spectrogram overlay. Updates keyboard
+shortcuts documentation and adds visual feedback on toggle.
+
+Closes #123
+```
+
+Bad:
+```
+fixed stuff
+```
+
+## Code Style Guidelines
+
+### TypeScript
+
+**Use strict typing:**
+
+```typescript
+// ✅ GOOD: Explicit types
+function computePitch(sound: any, timeStep: number, floor: number, ceiling: number): any {
+  return sound.to_pitch_ac(timeStep, floor, ceiling);
+}
+
+// ❌ BAD: Implicit any everywhere
+function computePitch(sound, timeStep, floor, ceiling) {
+  return sound.to_pitch_ac(timeStep, floor, ceiling);
+}
+```
+
+**Prefer interfaces over types for objects:**
+
+```typescript
+// ✅ GOOD
+export interface DataPoint {
+  id: number;
+  time: number;
+  frequency: number;
+}
+
+// ⚠️ OK but prefer interface
+export type DataPoint = {
+  id: number;
+  time: number;
+  frequency: number;
+};
+```
+
+**Use const for immutable values:**
+
+```typescript
+// ✅ GOOD
+const MAX_FREQUENCY = 10000;
+const defaultColors = {  cursor: '#ff0000' };
+
+// ❌ BAD
+let MAX_FREQUENCY = 10000;
+```
+
+### Svelte Components
+
+**Component structure:**
+
+```svelte
+<script lang="ts">
+  // 1. Imports
+  import { onMount } from 'svelte';
+  import { audioBuffer } from '$lib/stores/audio';
+
+  // 2. Props
+  export let height: number = 600;
+  export let showCursor: boolean = true;
+
+  // 3. Local state
+  let canvas: HTMLCanvasElement;
+  let ctx: CanvasRenderingContext2D | null = null;
+
+  // 4. Reactive statements
+  $: if ($audioBuffer && ctx) {
+    redraw();
+  }
+
+  // 5. Functions
+  function redraw() {
+    // ...
+  }
+
+  // 6. Lifecycle
+  onMount(() => {
+    ctx = canvas.getContext('2d');
+  });
+</script>
+
+<!-- 7. Template -->
+<canvas bind:this={canvas} {height} />
+
+<!-- 8. Styles -->
+<style>
+  canvas {
+    cursor: crosshair;
+  }
+</style>
+```
+
+**Naming conventions:**
+
+- Components: `PascalCase.svelte`
+- Props: `camelCase`
+- Local variables: `camelCase`
+- Constants: `UPPER_SNAKE_CASE`
+
+**Prefer reactive statements over direct subscriptions:**
+
+```svelte
+<!-- ✅ GOOD: Reactive statement -->
+<script>
+  import { cursorPosition } from '$lib/stores/view';
+
+  $: console.log('Cursor at', $cursorPosition);
+</script>
+
+<!-- ❌ BAD: Manual subscription -->
+<script>
+  import { cursorPosition } from '$lib/stores/view';
+  import { onMount, onDestroy } from 'svelte';
+
+  let position = 0;
+  let unsubscribe;
+
+  onMount(() => {
+    unsubscribe = cursorPosition.subscribe(p => position = p);
+  });
+
+  onDestroy(() => {
+    unsubscribe();
+  });
+
+  $: console.log('Cursor at', position);
+</script>
+```
+
+### File Organization
+
+**Store functions:**
+
+```typescript
+// src/lib/stores/myStore.ts
+
+/**
+ * Module docstring explaining what this store manages.
+ */
+
+import { writable } from 'svelte/store';
+
+// 1. Type definitions
+export interface MyData {
+  field: string;
+}
+
+// 2. Store exports
+export const myStore = writable<MyData[]>([]);
+
+// 3. Helper functions (non-exported)
+function helperFunction() {
+  // ...
+}
+
+// 4. Public API functions
+export function addItem(item: MyData): void {
+  myStore.update(items => [...items, item]);
+}
+```
+
+### Comments and Documentation
+
+**Use JSDoc for public APIs:**
+
+```typescript
+/**
+ * Compute pitch track from audio samples.
+ *
+ * @param sound - WASM Sound object
+ * @param timeStep - Analysis time step in seconds
+ * @param pitchFloor - Minimum pitch in Hz
+ * @param pitchCeiling - Maximum pitch in Hz
+ * @returns Pitch object (must be freed with .free())
+ *
+ * @example
+ * const sound = createSound(samples, sampleRate);
+ * const pitch = computePitch(sound, 0.01, 75, 600);
+ * // ... use pitch
+ * pitch.free();
+ * sound.free();
+ */
+export function computePitch(
+  sound: any,
+  timeStep: number,
+  pitchFloor: number,
+  pitchCeiling: number
+): any {
+  // Implementation...
+}
+```
+
+**Inline comments for complex logic:**
+
+```typescript
+// ✅ GOOD: Explain non-obvious logic
+// Convert pixel x-coordinate to time using visible time range
+const time = $timeRange.start + (x / canvasWidth) * ($timeRange.end - $timeRange.start);
+
+// ❌ BAD: State the obvious
+// Set cursor position to time
+cursorPosition.set(time);
+```
+
+### Formatting
+
+**Use Prettier defaults** (if configured):
+
+- 2 spaces for indentation
+- Single quotes for strings (except avoid escaping)
+- No semicolons (Prettier will add them)
+- Trailing commas where valid
+
+**Manual formatting (if no Prettier):**
+
+```typescript
+// ✅ GOOD: Consistent spacing
+const obj = { a: 1, b: 2 };
+if (condition) {
+  doSomething();
+}
+
+// ❌ BAD: Inconsistent spacing
+const obj={a:1,b:2};
+if(condition){doSomething();}
+```
+
+## Component Patterns
+
+### Store Usage
+
+```svelte
+<script lang="ts">
+  import { audioBuffer } from '$lib/stores/audio';
+  import { cursorPosition } from '$lib/stores/view';
+
+  // ✅ GOOD: Use reactive statements
+  $: if ($audioBuffer) {
+    console.log('Audio loaded');
+  }
+
+  // ✅ GOOD: Direct binding in template
+</script>
+
+<div>Cursor: {$cursorPosition.toFixed(3)}s</div>
+```
+
+### Canvas Rendering
+
+```svelte
+<script lang="ts">
+  import { onMount } from 'svelte';
+  import { audioBuffer } from '$lib/stores/audio';
+
+  let canvas: HTMLCanvasElement;
+  let ctx: CanvasRenderingContext2D | null = null;
+
+  // Reactive redraw
+  $: if ($audioBuffer && ctx) {
+    renderWaveform();
+  }
+
+  function renderWaveform() {
+    if (!ctx || !$audioBuffer) return;
+
+    // Clear canvas
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    // Draw waveform
+    // ...
+  }
+
+  onMount(() => {
+    ctx = canvas.getContext('2d');
+  });
+</script>
+
+<canvas bind:this={canvas} width={800} height={200} />
+```
+
+### WASM Memory Management
+
+```typescript
+// ✅ GOOD: Always free WASM objects
+export async function analyzeAudio() {
+  const sound = createSound($audioBuffer, $sampleRate);
+  try {
+    const pitch = computePitch(sound, 0.01, 75, 600);
+    try {
+      // Use pitch...
+    } finally {
+      pitch.free();
+    }
+  } finally {
+    sound.free();
+  }
+}
+
+// ❌ BAD: Memory leak
+export async function analyzeAudio() {
+  const sound = createSound($audioBuffer, $sampleRate);
+  const pitch = computePitch(sound, 0.01, 75, 600);
+  // Objects never freed
+}
+```
+
+## Testing
+
+### Manual Testing Checklist
+
+Before submitting a pull request, test the following:
+
+**Audio Loading:**
+- [ ] Drag & drop WAV file
+- [ ] Drag & drop MP3 file
+- [ ] File picker
+- [ ] Microphone recording
+- [ ] URL parameter loading (`?audio=...`)
+
+**Visualization:**
+- [ ] Waveform displays correctly
+- [ ] Spectrogram renders
+- [ ] Zoom in/out with scroll wheel
+- [ ] Pan left/right
+- [ ] Cursor updates on click
+- [ ] Selection via drag
+
+**Overlays:**
+- [ ] Toggle pitch overlay
+- [ ] Toggle formants overlay
+- [ ] Toggle intensity overlay
+- [ ] Toggle HNR, CoG, spectral tilt, A1-P0
+
+**Annotations:**
+- [ ] Add annotation tier
+- [ ] Remove tier
+- [ ] Add boundary (double-click)
+- [ ] Remove boundary (right-click)
+- [ ] Move boundary (drag)
+- [ ] Edit interval text
+- [ ] Undo/redo (Ctrl+Z / Ctrl+Y)
+
+**Data Points:**
+- [ ] Add data point (double-click spectrogram)
+- [ ] Move data point (drag)
+- [ ] Remove data point (right-click)
+- [ ] Export TSV
+
+**Playback:**
+- [ ] Play selection (Space)
+- [ ] Play visible window (Tab)
+- [ ] Pause (Space)
+- [ ] Stop (Escape)
+- [ ] Cursor tracks during playback
+
+**File I/O:**
+- [ ] Export TextGrid
+- [ ] Import TextGrid
+- [ ] Save audio as WAV
+- [ ] Export data points TSV
+
+**Browser Compatibility:**
+- [ ] Chrome
+- [ ] Firefox
+- [ ] Safari
+- [ ] Edge
+
+**Mobile Viewer:**
+- [ ] URL loading works
+- [ ] Touch gestures (tap, drag, pinch, pan)
+- [ ] Settings drawer
+- [ ] Play button
+
+### Testing Long Audio
+
+If your change affects long audio handling (>60s):
+
+- [ ] Load 2-minute audio file
+- [ ] Verify spectrogram shows "Zoom in..." message
+- [ ] Zoom to <60s window
+- [ ] Verify analysis runs
+- [ ] Pan around
+- [ ] Verify no UI freezing
+
+### Regression Testing
+
+Before submitting, verify you didn't break:
+
+- [ ] Existing keyboard shortcuts
+- [ ] Existing mouse interactions
+- [ ] Store reactivity
+- [ ] WASM memory management (no leaks)
+
+## Pull Request Process
+
+### Before Submitting
+
+1. **Update your branch:**
+   ```bash
+   git checkout master
+   git pull upstream master
+   git checkout feature/your-feature
+   git rebase master
+   ```
+
+2. **Run build:**
+   ```bash
+   npm run build
+   ```
+   Ensure it builds without errors.
+
+3. **Run type checking:**
+   ```bash
+   npm run check
+   ```
+   Fix all TypeScript errors.
+
+4. **Test manually** using checklist above
+
+5. **Write good commit messages** following guidelines
+
+### Opening the PR
+
+1. Go to https://github.com/ucpresearch/ozen-web
+2. Click "New Pull Request"
+3. Select your fork and branch
+4. Fill out the PR template:
+
+**Title:** Clear, concise description
+
+**Description:**
+```markdown
+## What
+
+Brief description of what this PR does.
+
+## Why
+
+Explain the motivation or fix.
+
+## How
+
+Technical details if complex.
+
+## Testing
+
+- [x] Tested on Chrome
+- [x] Tested on Firefox
+- [x] Ran manual test checklist
+- [x] Build passes
+- [x] Type check passes
+
+## Screenshots
+
+(If UI change, include before/after screenshots)
+
+Closes #123
+```
+
+### Code Review
+
+**Expect feedback:**
+- Reviewers may request changes
+- Respond to comments promptly
+- Push changes to the same branch (PR updates automatically)
+
+**Be respectful:**
+- Accept constructive criticism
+- Explain your reasoning if you disagree
+- Don't take feedback personally
+
+**After approval:**
+- Maintainer will merge your PR
+- Delete your feature branch:
+  ```bash
+  git branch -d feature/your-feature
+  git push origin --delete feature/your-feature
+  ```
+
+## Reporting Issues
+
+### Bug Reports
+
+Use the GitHub issue template and include:
+
+1. **Description:** What's wrong?
+2. **Steps to reproduce:**
+   ```
+   1. Load audio file
+   2. Click on spectrogram
+   3. Observe error in console
+   ```
+
+3. **Expected behavior:** What should happen?
+4. **Actual behavior:** What actually happens?
+5. **Environment:**
+   - Browser: Chrome 120
+   - OS: Windows 11
+   - Audio file: short.wav (WAV, 16-bit, 16 kHz, 5s)
+
+6. **Screenshots:** If applicable
+7. **Console errors:** Copy full error messages
+
+### Feature Requests
+
+Include:
+
+1. **Use case:** Why is this needed?
+2. **Proposed solution:** How might it work?
+3. **Alternatives:** Other approaches considered?
+4. **Additional context:** Examples, mockups, etc.
+
+## Documentation
+
+### When to Update Docs
+
+Update documentation when you:
+
+- Add a new feature
+- Change existing behavior
+- Add/remove keyboard shortcuts
+- Modify API functions
+- Fix significant bugs
+
+### Documentation Structure
+
+- **User docs:** `docs/` (Quarto .html files)
+  - Tutorial: Step-by-step guides
+  - Features: Feature descriptions
+  - Reference: Technical details
+- **Developer docs:** `docs/development/` (this section)
+- **Code comments:** Inline JSDoc and comments
+
+### Writing Documentation
+
+**Use clear, concise language:**
+
+```markdown
+<!-- ✅ GOOD -->
+## Adding Data Points
+
+Double-click on the spectrogram to add a data point.
+
+<!-- ❌ BAD -->
+## Data Point Addition Methodology
+
+In order to facilitate the instantiation of a data collection
+point entity, the user should utilize a double-click interaction
+modality upon the spectrogram visualization interface.
+```
+
+**Include code examples:**
+
+```markdown
+## Usage
+
+\`\`\`typescript
+import { computePitch } from '$lib/wasm/acoustic';
+
+const sound = createSound(samples, sampleRate);
+const pitch = computePitch(sound, 0.01, 75, 600);
+// ...
+pitch.free();
+sound.free();
+\`\`\`
+```
+
+**Use screenshots for UI features:**
+
+```markdown
+## Settings Panel
+
+![Settings panel screenshot](screenshots/settings-panel.png)
+
+Click the gear icon to open settings.
+```
+
+## Best Practices
+
+### Performance
+
+- **Debounce expensive operations** (analysis during zoom)
+- **Free WASM objects** immediately after use
+- **Avoid unnecessary re-renders** (check reactive dependencies)
+- **Use `requestAnimationFrame`** for smooth animations
+
+### Accessibility
+
+- **Keyboard navigation** for all features
+- **Semantic HTML** where possible
+- **ARIA labels** for canvas elements (future)
+- **Focus indicators** visible
+
+### Security
+
+- **No eval()** or unsafe dynamic code
+- **Validate file inputs** (check MIME types)
+- **Sanitize TextGrid import** (no code execution)
+- **Use CORS** for remote audio loading
+
+### Compatibility
+
+- **Support modern browsers** (Chrome 90+, Firefox 88+, Safari 14+)
+- **Graceful degradation** for missing features
+- **Test on multiple platforms** (Windows, Mac, Linux)
+
+## Questions?
+
+- **GitHub Discussions:** For questions and ideas
+- **GitHub Issues:** For bugs and feature requests
+- **Documentation:** Check [Development](.) section first
+
+## License
+
+By contributing to ozen-web, you agree that your contributions will be licensed under the MIT License.
+
+Thank you for contributing to ozen-web! 🎉
+
+## See Also
+
+- [Setup](setup.html) - Development environment setup
+- [Architecture](architecture.html) - System design
+- [Stores](stores.html) - State management patterns
+- [WASM Integration](wasm-integration.html) - WASM backend development

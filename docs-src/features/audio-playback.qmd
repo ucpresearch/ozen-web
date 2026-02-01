@@ -1,0 +1,216 @@
+---
+title: "Audio Playback"
+subtitle: "Web Audio API-based playback system"
+---
+
+## Overview
+
+ozen-web provides high-quality audio playback using the Web Audio API, with support for selection playback, real-time cursor tracking, and keyboard controls.
+
+## Key Features
+
+- **Selection playback** - Play selected time region
+- **Window playback** - Play currently visible window
+- **Real-time cursor** - Visual cursor follows playback position
+- **Keyboard shortcuts** - Space/Tab/Escape for quick control
+- **Loop playback** - Repeat selected region (future feature)
+- **Playback rate** - Slow-motion playback (future feature)
+
+## Playback Controls
+
+### Keyboard Shortcuts
+
+| Key | Action |
+|-----|--------|
+| **Space** | Play selection (if selected) or toggle play/pause |
+| **Tab** | Play visible window |
+| **Escape** | Stop playback and deselect |
+
+### Mouse Controls
+
+- **Click play button** - Start/pause playback (if UI button present)
+- **Click on spectrogram during playback** - Seek to position
+
+## Playback Modes
+
+### Selection Playback
+
+**When time region is selected:**
+
+1. Drag to select time region (blue highlight)
+2. Press **Space** to play selected region
+3. Playback starts at selection start
+4. Automatically stops at selection end
+
+**Use cases:**
+- Listen to specific phone or word
+- Verify annotation boundary placement
+- Compare different vowel tokens
+
+### Window Playback
+
+**When no selection:**
+
+1. Zoom to desired time window
+2. Press **Tab** to play visible window
+3. Playback starts at window start
+4. Automatically stops at window end
+
+**Use cases:**
+- Play phrase or sentence
+- Listen while zoomed in on detail
+- Quick audio review without selecting
+
+### Full File Playback
+
+1. Press Space with no selection and fully zoomed out
+2. Plays entire audio file from current cursor position
+
+## Real-Time Cursor Tracking
+
+During playback, a red vertical cursor moves in real-time to show the current playback position:
+
+- Synchronized with audio sample-accurately
+- Updates at 60 FPS for smooth animation
+- Stops at end of playback region
+- Can be used to identify timing of acoustic events
+
+::: {.callout-tip}
+## Finding Event Timing
+
+1. Play audio (Space)
+2. Watch cursor move across spectrogram
+3. Press Escape when cursor reaches target event
+4. Cursor position shows exact time of event
+:::
+
+## Web Audio API
+
+ozen-web uses the Web Audio API for playback:
+
+```javascript
+// Internal playback system
+const audioContext = new AudioContext();
+const source = audioContext.createBufferSource();
+source.buffer = audioBuffer;
+source.connect(audioContext.destination);
+source.start(0, startTime, duration);
+```
+
+**Advantages:**
+- Sample-accurate timing
+- Low latency
+- Cross-platform consistency
+- No plugin required
+
+**Limitations:**
+- Requires user gesture to start (browser security)
+- May require AudioContext resume() on first play
+
+## Playback State
+
+The app tracks playback state:
+
+- **Stopped** - No playback active (initial state)
+- **Playing** - Audio currently playing
+- **Paused** - Playback paused (can resume)
+
+**State transitions:**
+- Space (no selection) → Playing from cursor
+- Space (selection) → Playing selection
+- Space (during playback) → Paused
+- Space (paused) → Resume from pause position
+- Escape → Stopped (return to start)
+
+## Selection Workflow
+
+**Efficient annotation workflow:**
+
+1. Play full window (Tab) to hear context
+2. Pause (Space) when you hear boundary
+3. Zoom in on boundary region
+4. Select boundary region (click + drag)
+5. Play selection (Space) to verify
+6. Add annotation boundary
+7. Repeat
+
+## Audio Quality
+
+All playback preserves original audio quality:
+
+- **Sample rate** - Matches source file (16 kHz, 44.1 kHz, 48 kHz, etc.)
+- **Bit depth** - Converted to Float32 for processing (no quality loss)
+- **Resampling** - Web Audio API handles resampling if needed
+
+No compression or downsampling is applied during playback.
+
+## Browser Compatibility
+
+Web Audio API is supported in all modern browsers:
+
+| Browser | Support | Notes |
+|---------|---------|-------|
+| Chrome 90+ | ✅ Full | Best performance |
+| Firefox 88+ | ✅ Full | |
+| Safari 14+ | ✅ Full | May require user gesture |
+| Edge 90+ | ✅ Full | Chromium-based |
+
+## Future Features
+
+Planned playback enhancements:
+
+- **Loop playback** - Continuously repeat selection
+- **Playback rate control** - 0.5x, 0.75x, 1.5x, 2x speed
+- **Pitch-preserving slow-motion** - Slow down without changing pitch
+- **Fade in/out** - Smooth start/stop transitions
+- **Volume control** - Master volume slider
+
+## Troubleshooting
+
+### No Sound
+
+**Problem**: Playback starts but no audio heard
+
+**Possible causes:**
+- System volume muted
+- Browser audio blocked (autoplay policy)
+- AudioContext not resumed
+
+**Solution:**
+- Check system volume
+- Click on page first (browser security requirement)
+- Try pressing Space again to resume AudioContext
+
+### Playback Stutters
+
+**Problem**: Audio playback is choppy or glitchy
+
+**Possible causes:**
+- High CPU usage (many browser tabs)
+- Underpowered device
+- Large buffer size
+
+**Solution:**
+- Close other tabs
+- Try in Chrome (best performance)
+- Reload page to reset AudioContext
+
+### Selection Won't Play
+
+**Problem**: Pressing Space doesn't play selected region
+
+**Possible causes:**
+- Selection too short (<10ms)
+- No audio loaded
+- Playback already active
+
+**Solution:**
+- Ensure selection is >10ms
+- Load audio file first
+- Press Escape to stop current playback
+
+## See Also
+
+- [Keyboard Shortcuts](../reference/keyboard-shortcuts.html) - Full shortcut reference
+- [Tutorial: Exploring Audio](../tutorial/02-exploring-audio.html) - Playback workflow
+- [Waveform](waveform.html) - Visual amplitude display

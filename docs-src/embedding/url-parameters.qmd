@@ -1,0 +1,468 @@
+---
+title: "URL Parameters"
+subtitle: "Complete reference for viewer URL parameters"
+---
+
+## Overview
+
+The ozen-web viewer supports URL parameters for pre-loading audio and configuring the interface. This enables creation of shareable links, embedded examples, and pre-configured analysis views.
+
+## Base URL
+
+```
+https://ucpresearch.github.io/ozen-web/viewer
+```
+
+or for local deployment:
+
+```
+http://localhost:4173/viewer
+```
+
+## Parameter Reference
+
+### audio
+
+**Type:** String (URL or data URL)
+**Required:** No
+**Default:** Empty (shows file drop zone)
+
+Load audio file automatically from URL.
+
+**Examples:**
+
+```
+# Remote HTTPS URL
+?audio=https://example.com/recording.wav
+
+# GitHub raw content
+?audio=https://raw.githubusercontent.com/user/repo/main/audio.wav
+
+# Data URL (Base64-encoded)
+?audio=data:audio/wav;base64,UklGRiQAAABXQVZFZm10...
+
+# Multiple parameters
+?audio=https://example.com/audio.wav&overlays=pitch
+```
+
+**Supported formats:**
+- WAV (recommended, no compression artifacts)
+- MP3 (smaller file size)
+- OGG (open format)
+
+**Requirements:**
+- Must be HTTPS (or data URL)
+- Server must enable CORS headers
+- File must be publicly accessible
+
+::: {.callout-warning}
+## CORS Required
+
+The audio server must send `Access-Control-Allow-Origin: *` header. See [Basic Embedding](basic-usage.html#cors-requirements) for configuration details.
+:::
+
+### overlays
+
+**Type:** Comma-separated string
+**Required:** No
+**Default:** None (all overlays disabled)
+
+Pre-enable acoustic overlays.
+
+**Valid values:**
+
+| Value | Overlay | Description |
+|-------|---------|-------------|
+| `pitch` | Pitch (F0) | Fundamental frequency track (blue) |
+| `formants` | Formants | F1-F4 formant frequencies (red dots) |
+| `intensity` | Intensity | Sound pressure level (green) |
+| `hnr` | HNR | Harmonics-to-noise ratio (cyan) |
+| `cog` | CoG | Center of gravity (orange) |
+| `spectral_tilt` | Spectral Tilt | Spectral slope (purple) |
+| `a1_p0` | A1-P0 | Nasal measure (pink) |
+
+**Examples:**
+
+```
+# Single overlay
+?overlays=pitch
+
+# Multiple overlays (comma-separated, no spaces)
+?overlays=pitch,formants,intensity
+
+# All acoustic overlays
+?overlays=pitch,formants,intensity,hnr,cog,spectral_tilt,a1_p0
+
+# With audio
+?audio=https://example.com/audio.wav&overlays=formants
+```
+
+**Case sensitivity:** Values are case-insensitive (`pitch` = `Pitch` = `PITCH`)
+
+**Invalid values:** Silently ignored (viewer loads without that overlay)
+
+### maxFreq
+
+**Type:** Number
+**Required:** No
+**Default:** 5000
+**Valid values:** 5000, 7500, 10000
+
+Set spectrogram maximum frequency (Hz).
+
+**Examples:**
+
+```
+# 5 kHz (default, suitable for male speech)
+?maxFreq=5000
+
+# 7.5 kHz (suitable for female/child speech)
+?maxFreq=7500
+
+# 10 kHz (maximum detail for fricatives, bird calls)
+?maxFreq=10000
+
+# Combined with overlays
+?audio=...&overlays=formants&maxFreq=7500
+```
+
+**Use cases:**
+- `5000` — Adult male speech (default)
+- `7500` — Adult female, children's voices
+- `10000` — High-frequency analysis (fricatives, sibilants)
+
+### backend
+
+**Type:** String
+**Required:** No
+**Default:** `praatfan-local` (if available), else `praatfan`
+
+Select WASM analysis backend.
+
+**Valid values:**
+
+| Value | Source | License | Description |
+|-------|--------|---------|-------------|
+| `praatfan-local` | Local `static/wasm/praatfan/` | MIT/Apache-2.0 | Fastest (no download) |
+| `praatfan` | GitHub Pages CDN | MIT/Apache-2.0 | No local setup required |
+| `praatfan-gpl` | GitHub Pages CDN | GPL | GPL-licensed version |
+
+**Examples:**
+
+```
+# Use local backend (fastest)
+?backend=praatfan-local
+
+# Use CDN backend (no setup)
+?backend=praatfan
+
+# Use GPL backend
+?backend=praatfan-gpl
+```
+
+**Notes:**
+- `praatfan-local` only works if WASM files are in `static/wasm/praatfan/`
+- CDN backends download ~5 MB on first load
+- All backends produce identical results
+
+See [Backends Reference](../reference/backends.html) for details.
+
+## URL Encoding
+
+URL parameters must be properly encoded:
+
+### Special Characters
+
+| Character | Encoded | Example |
+|-----------|---------|---------|
+| Space | `%20` or `+` | `my%20audio.wav` |
+| Comma | `%2C` | `pitch%2Cformants` |
+| Colon | `%3A` | `data%3Aaudio/wav` |
+| Slash | `%2F` | `path%2Fto%2Faudio.wav` |
+
+**Note:** Commas in overlay lists should NOT be encoded:
+
+```
+✅ Correct:   ?overlays=pitch,formants
+❌ Incorrect: ?overlays=pitch%2Cformants
+```
+
+### JavaScript Encoding
+
+```javascript
+const params = new URLSearchParams({
+  audio: 'https://example.com/my audio.wav',
+  overlays: 'pitch,formants'
+});
+
+const url = `https://ucpresearch.github.io/ozen-web/viewer?${params}`;
+// Result: ...viewer?audio=https%3A%2F%2Fexample.com%2Fmy+audio.wav&overlays=pitch%2Cformants
+```
+
+### R Encoding
+
+```r
+library(urltools)
+
+params <- list(
+  audio = "https://example.com/my audio.wav",
+  overlays = "pitch,formants"
+)
+
+url <- paste0(
+  "https://ucpresearch.github.io/ozen-web/viewer?",
+  paste(names(params), sapply(params, url_encode), sep = "=", collapse = "&")
+)
+```
+
+### Python Encoding
+
+```python
+from urllib.parse import urlencode, quote
+
+params = {
+    'audio': 'https://example.com/my audio.wav',
+    'overlays': 'pitch,formants'
+}
+
+url = f"https://ucpresearch.github.io/ozen-web/viewer?{urlencode(params, quote_via=quote)}"
+```
+
+## Data URL Format
+
+For self-contained embeds, encode audio as Base64 data URL:
+
+### Structure
+
+```
+data:[<mediatype>][;base64],<data>
+```
+
+**For audio files:**
+
+```
+data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEARKwAAIhYAQACABAAZGF0YQAAAAA=
+```
+
+### Components
+
+1. **`data:`** — Data URL prefix
+2. **`audio/wav`** — MIME type
+3. **`;base64`** — Encoding indicator
+4. **`,<data>`** — Base64-encoded audio data
+
+### MIME Types
+
+| Format | MIME Type |
+|--------|-----------|
+| WAV | `audio/wav` or `audio/x-wav` |
+| MP3 | `audio/mpeg` |
+| OGG | `audio/ogg` |
+
+### Generating Data URLs
+
+**Command line (Linux/Mac):**
+
+```bash
+echo -n "data:audio/wav;base64," && base64 -w 0 audio.wav
+```
+
+**Node.js:**
+
+```javascript
+const fs = require('fs');
+const data = fs.readFileSync('audio.wav');
+const dataURL = `data:audio/wav;base64,${data.toString('base64')}`;
+```
+
+**R:**
+
+```r
+library(base64enc)
+audio_data <- readBin("audio.wav", "raw", file.info("audio.wav")$size)
+data_url <- paste0("data:audio/wav;base64,", base64encode(audio_data))
+```
+
+**Python:**
+
+```python
+import base64
+
+with open('audio.wav', 'rb') as f:
+    audio_data = f.read()
+    data_url = f"data:audio/wav;base64,{base64.b64encode(audio_data).decode()}"
+```
+
+## Complete Examples
+
+### Basic Audio Playback
+
+```
+https://ucpresearch.github.io/ozen-web/viewer?audio=https://example.com/speech.wav
+```
+
+### Pitch Analysis
+
+```
+https://ucpresearch.github.io/ozen-web/viewer?audio=https://example.com/speech.wav&overlays=pitch,intensity
+```
+
+### Vowel Formant Analysis
+
+```
+https://ucpresearch.github.io/ozen-web/viewer?audio=https://example.com/vowel.wav&overlays=formants&maxFreq=7500
+```
+
+### Voice Quality Analysis
+
+```
+https://ucpresearch.github.io/ozen-web/viewer?audio=https://example.com/voice.wav&overlays=pitch,hnr,spectral_tilt
+```
+
+### Fricative Analysis
+
+```
+https://ucpresearch.github.io/ozen-web/viewer?audio=https://example.com/sibilant.wav&overlays=cog&maxFreq=10000
+```
+
+### Self-Contained Example (Data URL)
+
+```
+https://ucpresearch.github.io/ozen-web/viewer?audio=data:audio/wav;base64,UklGRiQAAABXQVZF...&overlays=pitch
+```
+
+## Building URLs Programmatically
+
+### JavaScript Helper Function
+
+```javascript
+function buildViewerURL(audioURL, options = {}) {
+  const baseURL = 'https://ucpresearch.github.io/ozen-web/viewer';
+  const params = new URLSearchParams();
+
+  if (audioURL) params.append('audio', audioURL);
+  if (options.overlays) params.append('overlays', options.overlays);
+  if (options.maxFreq) params.append('maxFreq', options.maxFreq);
+  if (options.backend) params.append('backend', options.backend);
+
+  return `${baseURL}?${params}`;
+}
+
+// Usage
+const url = buildViewerURL('https://example.com/audio.wav', {
+  overlays: 'pitch,formants',
+  maxFreq: 7500
+});
+```
+
+### R Helper Function
+
+```r
+build_viewer_url <- function(audio_url, overlays = NULL, max_freq = NULL, backend = NULL) {
+  base_url <- "https://ucpresearch.github.io/ozen-web/viewer"
+
+  params <- list()
+  if (!is.null(audio_url)) params$audio <- audio_url
+  if (!is.null(overlays)) params$overlays <- overlays
+  if (!is.null(max_freq)) params$maxFreq <- max_freq
+  if (!is.null(backend)) params$backend <- backend
+
+  if (length(params) > 0) {
+    query <- paste(names(params), unlist(params), sep = "=", collapse = "&")
+    paste0(base_url, "?", query)
+  } else {
+    base_url
+  }
+}
+
+# Usage
+url <- build_viewer_url(
+  "https://example.com/audio.wav",
+  overlays = "pitch,formants",
+  max_freq = 7500
+)
+```
+
+### Python Helper Function
+
+```python
+from urllib.parse import urlencode
+
+def build_viewer_url(audio_url, overlays=None, max_freq=None, backend=None):
+    base_url = 'https://ucpresearch.github.io/ozen-web/viewer'
+
+    params = {}
+    if audio_url:
+        params['audio'] = audio_url
+    if overlays:
+        params['overlays'] = overlays
+    if max_freq:
+        params['maxFreq'] = max_freq
+    if backend:
+        params['backend'] = backend
+
+    if params:
+        return f"{base_url}?{urlencode(params)}"
+    return base_url
+
+# Usage
+url = build_viewer_url(
+    'https://example.com/audio.wav',
+    overlays='pitch,formants',
+    max_freq=7500
+)
+```
+
+## Troubleshooting
+
+### Parameter Not Working
+
+**Problem:** URL parameter ignored by viewer
+
+**Possible causes:**
+- Typo in parameter name (`overlay` instead of `overlays`)
+- Invalid parameter value
+- URL encoding issues
+
+**Solution:**
+- Check parameter names (case-insensitive but must be exact)
+- Verify values against reference above
+- Test URL in browser address bar
+- Check browser console for errors
+
+### Audio Won't Load
+
+**Problem:** Audio parameter present but file doesn't load
+
+**Causes:**
+- CORS not enabled
+- Invalid audio URL
+- Mixed content (HTTP audio on HTTPS viewer)
+- Data URL too long
+
+**Solution:**
+- Test audio URL directly in browser
+- Check server CORS headers
+- Use HTTPS for both viewer and audio
+- Keep data URLs under 2 MB
+
+### Overlays Not Appearing
+
+**Problem:** Overlays parameter set but no visualization
+
+**Causes:**
+- Invalid overlay name
+- URL encoding broke comma separation
+- WASM not loaded yet
+
+**Solution:**
+- Check overlay names spelling
+- Don't encode commas in overlay list
+- Wait for WASM initialization (status indicator)
+
+## See Also
+
+- [Basic Embedding](basic-usage.html) - iframe integration guide
+- [Examples](examples.html) - Real-world URL examples
+- [Backends Reference](../reference/backends.html) - WASM backend details
+- [Configuration](../reference/configuration.html) - Advanced settings

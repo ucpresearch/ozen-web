@@ -1,0 +1,336 @@
+---
+title: "4. Annotations"
+subtitle: "Create multi-tier transcriptions with TextGrid support"
+---
+
+## Overview
+
+Annotations let you add time-aligned transcriptions to your audio. In this section, you'll learn:
+
+- Creating annotation tiers
+- Adding and removing boundaries
+- Editing interval labels
+- Using keyboard shortcuts for efficient annotation
+- Understanding tier types (interval and point)
+
+## What Are Annotation Tiers?
+
+**Annotation tiers** divide your audio into labeled intervals, similar to Praat's TextGrid format.
+
+**Common uses:**
+
+- **Phonetic transcription**: Mark phones/phonemes
+- **Word alignment**: Segment words with timestamps
+- **Prosody**: Label pitch accents and breaks
+- **Events**: Mark breathing, laughter, noise
+
+![Multi-tier annotation example](../screenshots/tutorial-04-multitiered.png){.screenshot}
+
+## Creating Your First Tier
+
+::: {.tutorial-steps}
+1. **Click the "+ Add Tier" button** (usually below the spectrogram)
+
+   ![Add tier button](../screenshots/tutorial-04-add-tier.png){.screenshot}
+
+2. **Enter a tier name** in the dialog:
+   - Examples: "phones", "words", "syllables"
+   - Names should be descriptive and lowercase
+
+3. **Select tier type**:
+   - **Interval tier** (most common) — Divides time into labeled segments
+   - **Point tier** — Marks specific time points (less common)
+
+4. **Click "Create"**
+
+5. A new tier appears below the spectrogram
+:::
+
+::: {.callout-tip}
+Create multiple tiers for different levels of analysis (e.g., "words" tier above "phones" tier).
+:::
+
+## Adding Boundaries
+
+Boundaries divide a tier into intervals. Each interval can have a text label.
+
+::: {.tutorial-steps}
+1. **Double-click on a tier** at the time position where you want a boundary
+
+   ![Adding a boundary](../screenshots/tutorial-04-add-boundary.png){.screenshot}
+
+2. A **vertical boundary line** appears
+
+3. This creates two intervals: before and after the boundary
+
+4. Repeat to add more boundaries
+:::
+
+**Keyboard shortcut:**
+
+- **Double-click on tier** — Add boundary at that time position
+
+::: {.callout-try}
+**Try this:** Zoom in on a word and add boundaries at the start and end of each phone. You'll create a series of intervals corresponding to individual sounds.
+:::
+
+## Editing Interval Labels
+
+Each interval can have a text label (e.g., a phone symbol, word, or comment).
+
+::: {.tutorial-steps}
+1. **Double-click on an interval** (the space between two boundaries)
+
+2. A **text input field** appears
+
+   ![Editing an interval label](../screenshots/tutorial-04-edit-label.png){.screenshot}
+
+3. **Type the label** (e.g., "a", "s", "hello", "breath")
+
+4. **Press Enter** to save
+
+5. **Press Escape** to cancel without saving
+:::
+
+**Keyboard shortcuts:**
+
+- **Double-click interval** — Edit label
+- **Enter** — Save label
+- **Escape** — Cancel editing
+- **Tab** — Move to next interval (if implemented)
+
+::: {.callout-tip}
+Use IPA symbols for phonetic transcription. Most browsers support Unicode IPA input. Install an IPA keyboard or use copy-paste from a character palette.
+:::
+
+## Moving Boundaries
+
+You can adjust boundary positions by dragging:
+
+::: {.tutorial-steps}
+1. **Click on a boundary** line
+
+2. **Drag left or right** to adjust its position
+
+3. Release to finalize the position
+:::
+
+::: {.callout-note}
+When you move a boundary, both adjacent intervals resize accordingly. The boundary to the left and right of the moved boundary stay fixed.
+:::
+
+## Removing Boundaries
+
+::: {.tutorial-steps}
+1. **Right-click on a boundary** line
+
+2. Select **"Remove boundary"** from the context menu
+
+   ![Boundary context menu](../screenshots/tutorial-04-boundary-menu.png){.screenshot}
+
+3. The boundary is deleted, merging the two adjacent intervals
+
+4. The merged interval's label becomes the label of the left interval
+:::
+
+**Keyboard shortcut (if implemented):**
+
+- **Select boundary + Delete key** — Remove selected boundary
+
+::: {.callout-warning}
+Removing a boundary merges intervals permanently (unless you undo). Use Ctrl+Z to undo if needed.
+:::
+
+## Undo and Redo
+
+ozen-web has unified undo/redo for all annotation actions:
+
+**Keyboard shortcuts:**
+
+- <kbd>Ctrl+Z</kbd> (Windows/Linux) or <kbd>Cmd+Z</kbd> (Mac) — Undo last action
+- <kbd>Ctrl+Y</kbd> or <kbd>Ctrl+Shift+Z</kbd> — Redo
+
+**Undoable actions:**
+
+- Adding boundaries
+- Removing boundaries
+- Moving boundaries
+- Editing interval labels
+- Adding/removing data points (section 5)
+
+**Non-undoable actions** (by design):
+
+- Adding/removing tiers
+- Loading audio files
+- Loading TextGrid files
+
+::: {.callout-tip}
+Get comfortable with Ctrl+Z! It allows you to experiment freely without worrying about mistakes.
+:::
+
+## Working with Multiple Tiers
+
+Create hierarchical annotations with multiple tiers:
+
+::: {.tutorial-steps}
+1. **Add a "words" tier** (click "+ Add Tier")
+
+2. **Add a "phones" tier**
+
+3. In the words tier, add boundaries at word boundaries
+
+4. In the phones tier, add boundaries at phone boundaries (within each word)
+
+5. Label each interval appropriately
+:::
+
+![Multi-tier annotation](../screenshots/tutorial-04-multitiered.png){.screenshot}
+
+### Tier Ordering
+
+Tiers are displayed bottom-to-top in the order they were created. Some implementations allow reordering (check your version).
+
+Convention: Place higher-level tiers (words, phrases) above lower-level tiers (phones).
+
+## Boundary Snapping
+
+ozen-web supports **boundary snapping** to help align tiers:
+
+::: {.tutorial-steps}
+1. When adding a boundary on a lower tier, move your cursor close to an existing boundary on an upper tier
+
+2. The cursor "snaps" to align with the upper tier's boundary
+
+3. Double-click to place the boundary at the snapped position
+:::
+
+::: {.callout-tip}
+This feature helps maintain consistent alignment across tiers (e.g., ensuring word boundaries align across "words" and "phones" tiers).
+:::
+
+## Selecting Annotation Tiers
+
+Some operations require selecting which tier to work on:
+
+**Keyboard shortcuts:**
+
+- <kbd>1</kbd> — Select tier 1
+- <kbd>2</kbd> — Select tier 2
+- <kbd>3</kbd> — Select tier 3
+- <kbd>4</kbd> — Select tier 4
+- <kbd>5</kbd> — Select tier 5
+
+The selected tier is highlighted or indicated visually.
+
+## Example Workflow
+
+Let's annotate a short phrase: "hello world"
+
+::: {.tutorial-steps}
+1. **Load audio** (section 1) with someone saying "hello world"
+
+2. **Add a "words" tier**
+
+3. Zoom to see the full phrase
+
+4. **Double-click** at the start of "hello" to add a boundary
+
+5. **Double-click** between "hello" and "world" to add a boundary
+
+6. **Double-click** at the end of "world" to add a boundary
+
+7. Now you have three intervals:
+   - Silence before "hello"
+   - "hello"
+   - "world"
+   - Silence after (implicit, extends to end)
+
+8. **Double-click the first interval** and type "hello", press Enter
+
+9. **Double-click the second interval** and type "world", press Enter
+
+10. **Add a "phones" tier**
+
+11. Zoom in on "hello"
+
+12. Add boundaries and labels for each phone:
+    - /h/ [h]
+    - /ɛ/ [ɛ] or [e]
+    - /l/ [l]
+    - /oʊ/ [oʊ] or [o]
+
+13. Repeat for "world":
+    - /w/ [w]
+    - /ɝ/ [ɝ] or [ər]
+    - /l/ [l]
+    - /d/ [d]
+:::
+
+![Completed annotation example](../screenshots/tutorial-04-multitiered.png){.screenshot}
+
+## Practice Exercises
+
+1. **Create a "syllables" tier**
+   - Mark syllable boundaries in a word
+   - Label each syllable
+
+2. **Create a "phones" tier**
+   - Transcribe a short word phonetically
+   - Use IPA symbols if possible
+
+3. **Practice undo/redo**
+   - Add several boundaries
+   - Undo them all (Ctrl+Z repeatedly)
+   - Redo (Ctrl+Y)
+
+4. **Move boundaries**
+   - Add a boundary slightly off
+   - Drag it to the correct position
+   - Use playback (Space) to verify alignment
+
+::: {.callout-try}
+**Challenge:** Annotate a complete sentence with two tiers:
+
+1. **Words tier**: Segment into words
+2. **Phones tier**: Transcribe each word phonetically
+
+Use boundary snapping to align phone boundaries with word boundaries.
+:::
+
+## Troubleshooting
+
+**Can't add boundary:**
+
+- Ensure you're double-clicking on the tier, not on an interval or the spectrogram
+- Check that the tier is selected (if your version requires selection)
+
+**Boundary appears in wrong location:**
+
+- Zoom in for more precise placement
+- You can drag the boundary to adjust after placing
+
+**Can't edit label:**
+
+- Double-click the *interval* (space between boundaries), not the boundary line itself
+- Ensure you're double-clicking, not single-clicking
+
+**Undo doesn't work:**
+
+- Check that you're using the correct keyboard shortcut (Ctrl+Z, not Alt+Z)
+- Ensure the app window has focus (click on it first)
+
+**Tier names overlap:**
+
+- Tier labels may overlap if many tiers are shown; this is a UI limitation
+- Use short tier names ("W" for words, "P" for phones) if needed
+
+## What's Next?
+
+Now that you can create annotations, let's learn how to collect acoustic measurements at specific time points.
+
+**Next:** [5. Data Collection](05-data-collection.html) →
+
+---
+
+**Navigation:**
+[← Previous: Acoustic Analysis](03-acoustic-analysis.html) | [Tutorial Overview](index.html) | [Next: Data Collection →](05-data-collection.html)

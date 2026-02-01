@@ -1,0 +1,289 @@
+---
+title: "Development Setup"
+subtitle: "Getting started with ozen-web development"
+---
+
+## Prerequisites
+
+- **Node.js** 18 or later
+- **npm** 9 or later
+- **Git**
+- **Text editor** (VS Code recommended)
+
+## Quick Start
+
+```bash
+# Clone repository
+git clone https://github.com/ucpresearch/ozen-web.git
+cd ozen-web
+
+# Install dependencies
+npm install
+
+# Copy WASM backend (optional, for local backend)
+mkdir -p static/wasm/praatfan
+cp -r ../praatfan-core-rs/rust/pkg/* static/wasm/praatfan/
+
+# Start development server
+npm run dev
+
+# Open http://localhost:5173
+```
+
+## Repository Structure
+
+```
+ozen-web/
+├── src/
+│   ├── lib/                      # Library code
+│   │   ├── stores/               # Svelte stores (state management)
+│   │   ├── wasm/                 # WASM integration
+│   │   ├── audio/                # Web Audio playback
+│   │   ├── textgrid/             # TextGrid parser
+│   │   ├── touch/                # Touch gesture handling
+│   │   ├── components/           # Svelte components
+│   │   └── types.ts              # TypeScript types
+│   ├── routes/
+│   │   ├── +page.svelte          # Main app
+│   │   ├── +layout.svelte        # App shell
+│   │   └── viewer/               # Mobile viewer route
+│   └── app.html                  # HTML template
+├── static/                       # Static assets
+│   ├── wasm/                     # WASM backends (gitignored)
+│   ├── favicon*.png              # Icons
+│   └── config.yaml               # Optional config
+├── scripts/                      # Helper scripts
+│   ├── create-iframe.R           # R embedding helper
+│   ├── create-iframe.py          # Python embedding helper
+│   └── fix-relative-paths.js     # Build script
+├── docs/                         # Documentation (Quarto)
+├── package.json
+├── svelte.config.js
+├── vite.config.ts
+└── tsconfig.json
+```
+
+## Development Workflow
+
+### 1. Start Dev Server
+
+```bash
+npm run dev
+```
+
+- Opens at `http://localhost:5173`
+- Hot module replacement enabled
+- Changes reload automatically
+
+### 2. Make Changes
+
+Edit files in `src/`:
+
+**Components:**
+```svelte
+<!-- src/lib/components/MyComponent.svelte -->
+<script lang="ts">
+  export let prop: string;
+</script>
+
+<div>{prop}</div>
+```
+
+**Stores:**
+```typescript
+// src/lib/stores/myStore.ts
+import { writable } from 'svelte/store';
+
+export const myStore = writable<string>('initial value');
+```
+
+**Types:**
+```typescript
+// src/lib/types.ts
+export interface MyType {
+  field: string;
+}
+```
+
+### 3. Test Changes
+
+- Load audio file
+- Test features
+- Check browser console for errors
+- Test on different browsers
+
+### 4. Build for Production
+
+```bash
+npm run build
+```
+
+Output in `build/` directory.
+
+### 5. Preview Production Build
+
+```bash
+npm run preview
+```
+
+Opens at `http://localhost:4173`
+
+## npm Scripts
+
+| Command | Description |
+|---------|-------------|
+| `npm run dev` | Start development server |
+| `npm run build` | Build for production |
+| `npm run preview` | Preview production build |
+| `npm run check` | Type-check without building |
+| `npm run check:watch` | Type-check in watch mode |
+| `npm run lint` | Lint code (if configured) |
+| `npm run format` | Format code (if configured) |
+
+## VS Code Setup
+
+### Recommended Extensions
+
+- **Svelte for VS Code** (`svelte.svelte-vscode`)
+- **TypeScript and JavaScript Language Features** (built-in)
+- **ESLint** (if using)
+- **Prettier** (if using)
+
+### Settings
+
+Create `.vscode/settings.json`:
+
+```json
+{
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "svelte.svelte-vscode",
+  "[svelte]": {
+    "editor.defaultFormatter": "svelte.svelte-vscode"
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  }
+}
+```
+
+## TypeScript Configuration
+
+`tsconfig.json` is pre-configured for:
+
+- SvelteKit integration
+- Strict type checking
+- Path aliases (`$lib/*`)
+
+No changes needed for typical development.
+
+## Environment Variables
+
+ozen-web doesn't use environment variables by default. Configuration is via `static/config.yaml`.
+
+## Building WASM Backend
+
+If developing WASM integration:
+
+```bash
+# Navigate to praatfan-core-rs
+cd ../praatfan-core-rs/rust
+
+# Build WASM package
+wasm-pack build --target web
+
+# Copy to ozen-web
+cp -r pkg/* ../ozen-web/static/wasm/praatfan/
+```
+
+## Debugging
+
+### Browser DevTools
+
+**Chrome DevTools:**
+1. Open DevTools (F12)
+2. Sources tab → filesystem → add workspace
+3. Set breakpoints in source files
+4. Use console for logging
+
+**Vue DevTools for Svelte:**
+Not applicable — use browser console and Svelte DevTools (community extension)
+
+### Console Logging
+
+```typescript
+import { dev } from '$app/environment';
+
+if (dev) {
+  console.log('Debug info:', variable);
+}
+```
+
+### Type Checking
+
+```bash
+# Check types without building
+npm run check
+
+# Watch mode
+npm run check:watch
+```
+
+## Common Issues
+
+### Port Already in Use
+
+**Error:** `Port 5173 is already in use`
+
+**Solution:**
+```bash
+# Kill process on port 5173
+lsof -ti:5173 | xargs kill
+
+# Or use different port
+npm run dev -- --port 3000
+```
+
+### WASM Not Loading
+
+**Error:** `Failed to initialize WASM`
+
+**Solution:**
+- Check `static/wasm/praatfan/` exists and has files
+- Use `praatfan` CDN backend instead
+- Check browser console for specific error
+
+### Type Errors
+
+**Error:** TypeScript errors in imports
+
+**Solution:**
+```bash
+# Regenerate types
+npm run check
+
+# Check tsconfig.json paths
+```
+
+## Testing
+
+Currently no automated tests. Manual testing workflow:
+
+1. Load various audio formats (WAV, MP3, OGG)
+2. Test all overlay toggles
+3. Create annotations, test undo/redo
+4. Add data points, export TSV
+5. Test on Chrome, Firefox, Safari
+6. Test mobile viewer on phone
+
+## Contributing
+
+See [Contributing Guide](contributing.html) for:
+- Code style guidelines
+- Pull request process
+- Issue reporting
+
+## See Also
+
+- [Architecture](architecture.html) - System design overview
+- [Stores](stores.html) - State management guide
+- [WASM Integration](wasm-integration.html) - Backend development

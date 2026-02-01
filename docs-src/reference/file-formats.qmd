@@ -1,0 +1,450 @@
+---
+title: "File Formats"
+subtitle: "Supported file formats and specifications"
+---
+
+## Overview
+
+ozen-web supports multiple file formats for audio input, annotation import/export, and data export. This page documents format specifications and compatibility.
+
+## Audio Formats
+
+### WAV (Waveform Audio File Format)
+
+**Extension:** `.wav`
+**MIME type:** `audio/wav`, `audio/x-wav`
+**Support:** ✅ Full (recommended)
+
+**Specifications:**
+- **Encoding:** PCM (uncompressed)
+- **Bit depth:** 8-bit, 16-bit, 24-bit, 32-bit
+- **Sample rate:** Any (8 kHz - 96 kHz typical)
+- **Channels:** Mono or stereo (stereo is mixed to mono)
+
+**Advantages:**
+- Uncompressed (no quality loss)
+- Universally compatible
+- Fast to decode
+
+**Disadvantages:**
+- Large file size
+- Not suitable for web streaming
+
+**Example:**
+```bash
+# Convert audio to WAV
+ffmpeg -i input.mp3 -ar 16000 -ac 1 output.wav
+```
+
+### MP3 (MPEG Audio Layer III)
+
+**Extension:** `.mp3`
+**MIME type:** `audio/mpeg`
+**Support:** ✅ Full
+
+**Specifications:**
+- **Encoding:** Lossy compression
+- **Bit rate:** 64-320 kbps
+- **Sample rate:** 8-48 kHz
+- **Channels:** Mono or stereo
+
+**Advantages:**
+- Small file size
+- Good for web distribution
+- Widely supported
+
+**Disadvantages:**
+- Lossy compression artifacts
+- Not recommended for precise acoustic analysis
+- Compression can affect formant measurements
+
+**Example:**
+```bash
+# Convert to MP3 (192 kbps)
+ffmpeg -i input.wav -b:a 192k output.mp3
+```
+
+### OGG Vorbis
+
+**Extension:** `.ogg`
+**MIME type:** `audio/ogg`
+**Support:** ✅ Full
+
+**Specifications:**
+- **Encoding:** Lossy compression (Vorbis codec)
+- **Bit rate:** Variable (typically 64-320 kbps)
+- **Sample rate:** 8-192 kHz
+- **Channels:** Mono or stereo
+
+**Advantages:**
+- Open format (no licensing fees)
+- Better quality than MP3 at same bitrate
+- Smaller than WAV
+
+**Disadvantages:**
+- Lossy compression
+- Less universal than WAV/MP3
+
+### Format Recommendations
+
+| Use Case | Recommended Format |
+|----------|-------------------|
+| Research analysis | WAV (16-bit, 16-44.1 kHz) |
+| Long recordings | MP3 (192+ kbps) |
+| Web embedding | MP3 or OGG |
+| Archival | WAV (24-bit, 48 kHz) |
+| Field recordings | WAV (16-bit, 16 kHz) |
+
+## Annotation Formats
+
+### TextGrid (Praat Format)
+
+**Extension:** `.TextGrid`
+**Support:** ✅ Import and export
+
+**Description:**
+
+TextGrid is Praat's native annotation format, widely used in phonetics research. ozen-web supports both short and long TextGrid formats.
+
+**Format variants:**
+
+#### Short Format
+
+```
+File type = "ooTextFile"
+Object class = "TextGrid"
+
+xmin = 0
+xmax = 2.5
+tiers? <exists>
+size = 2
+item []:
+    item [1]:
+        class = "IntervalTier"
+        name = "words"
+        xmin = 0
+        xmax = 2.5
+        intervals: size = 3
+        intervals [1]:
+            xmin = 0
+            xmax = 0.8
+            text = "the"
+        intervals [2]:
+            xmin = 0.8
+            xmax = 1.5
+            text = "cat"
+        intervals [3]:
+            xmin = 1.5
+            xmax = 2.5
+            text = ""
+```
+
+#### Long Format
+
+```
+File type = "ooTextFile"
+Object class = "TextGrid"
+
+0
+2.5
+<exists>
+2
+"IntervalTier"
+"words"
+0
+2.5
+3
+0
+0.8
+"the"
+0.8
+1.5
+"cat"
+1.5
+2.5
+""
+```
+
+**ozen-web support:**
+
+| Feature | Import | Export |
+|---------|--------|--------|
+| Interval tiers | ✅ Yes | ✅ Yes |
+| Point tiers | ❌ No | ❌ No |
+| Multiple tiers | ✅ Yes | ✅ Yes |
+| UTF-8 text | ✅ Yes | ✅ Yes |
+| IPA characters | ✅ Yes | ✅ Yes |
+| Short format | ✅ Yes | ✅ Yes (default) |
+| Long format | ✅ Yes | ❌ No |
+
+**Compatibility:**
+
+- ✅ Praat (all versions)
+- ✅ Montreal Forced Aligner
+- ✅ Elan (via conversion)
+- ✅ WebMAUS
+
+**Example (programmatic creation):**
+
+```python
+# Python (using pympi or textgrid library)
+import textgrid
+
+tg = textgrid.TextGrid()
+tier = textgrid.IntervalTier(name='words', minTime=0, maxTime=2.5)
+tier.add(0, 0.8, 'the')
+tier.add(0.8, 1.5, 'cat')
+tier.add(1.5, 2.5, '')
+tg.append(tier)
+tg.write('output.TextGrid')
+```
+
+**Limitations:**
+
+::: {.callout-warning}
+## Point Tiers Not Supported
+
+ozen-web currently does not support point tiers. Convert point tiers to interval tiers in Praat before importing:
+
+```praat
+# In Praat
+textgrid = selected("TextGrid")
+Create TextGrid... 0 2.5 "words" ""
+# Manually convert points to intervals
+```
+:::
+
+## Data Export Formats
+
+### TSV (Tab-Separated Values)
+
+**Extension:** `.tsv`
+**Support:** ✅ Export only
+
+**Description:**
+
+Data points are exported as tab-separated values for analysis in R, Python, Excel, or Praat.
+
+**Format:**
+
+```
+time	freq	pitch	intensity	f1	f2	f3	f4	b1	b2	b3	b4	hnr	cog	spectral_tilt	a1_p0	label_words	label_phones
+1.234	720	245	68	720	1240	2650	3500	80	110	150	200	15.3	5420	-2.1	-5.4	"cat"	"æ"
+1.567	850	250	70	850	1180	2580	3450	85	105	145	195	16.1	5380	-1.9	-4.8	"sat"	"æ"
+```
+
+**Column descriptions:**
+
+| Column | Unit | Description |
+|--------|------|-------------|
+| `time` | seconds | Time position of data point |
+| `freq` | Hz | Frequency at cursor position |
+| `pitch` | Hz | Fundamental frequency (F0) |
+| `intensity` | dB SPL | Sound pressure level |
+| `f1`, `f2`, `f3`, `f4` | Hz | Formant frequencies |
+| `b1`, `b2`, `b3`, `b4` | Hz | Formant bandwidths |
+| `hnr` | dB | Harmonics-to-noise ratio |
+| `cog` | Hz | Spectral center of gravity |
+| `spectral_tilt` | dB/Hz | Spectral slope |
+| `a1_p0` | dB | Nasal measure |
+| `label_*` | text | Annotation labels (one column per tier) |
+
+**Missing values:**
+
+- Empty cells indicate measurement not available
+- Common for pitch in unvoiced regions
+- Common for labels when no annotation at that time
+
+**Importing into tools:**
+
+**R:**
+```r
+data <- read.table("data-points.tsv", header=TRUE, sep="\t", quote="\"")
+```
+
+**Python/Pandas:**
+```python
+import pandas as pd
+df = pd.read_csv("data-points.tsv", sep='\t')
+```
+
+**Praat:**
+```praat
+table = Read Table from tab-separated file: "data-points.tsv"
+```
+
+**Excel:**
+- File → Open → Select TSV file
+- Choose "Tab" as delimiter
+
+## Audio Save Format
+
+### WAV Export
+
+**Support:** ✅ Save audio
+
+ozen-web can save the loaded audio as WAV file:
+
+- **Format:** 16-bit PCM WAV
+- **Sample rate:** Original (preserved from input)
+- **Channels:** Mono (if stereo input, mixed down)
+- **Encoding:** Uncompressed
+
+**Use cases:**
+- Save microphone recording
+- Export processed audio
+- Convert MP3/OGG to WAV
+
+**Limitations:**
+- Cannot edit audio (read-only)
+- Cannot apply effects
+- Save as-is only
+
+## File Size Guidelines
+
+### Audio Files
+
+| Duration | WAV (16-bit, 16 kHz) | MP3 (192 kbps) | OGG (Q5) |
+|----------|----------------------|----------------|----------|
+| 10 seconds | ~320 KB | ~240 KB | ~160 KB |
+| 1 minute | ~1.9 MB | ~1.4 MB | ~960 KB |
+| 5 minutes | ~9.5 MB | ~7.2 MB | ~4.8 MB |
+| 30 minutes | ~57 MB | ~43 MB | ~29 MB |
+| 1 hour | ~115 MB | ~86 MB | ~58 MB |
+
+### TextGrid Files
+
+TextGrid files are plain text:
+
+- **Small:** <1 KB (single tier, few intervals)
+- **Medium:** 1-10 KB (multiple tiers, detailed annotation)
+- **Large:** 10-100 KB (many tiers, long recordings)
+
+### TSV Files
+
+Data point exports:
+
+- ~100 bytes per data point
+- 100 data points ≈ 10 KB
+- 1000 data points ≈ 100 KB
+
+## Character Encoding
+
+### Text Files
+
+All text files use **UTF-8** encoding:
+
+- TextGrid files
+- TSV files
+- Configuration files
+
+This ensures support for:
+- IPA characters (ɑ, ə, ʃ, etc.)
+- Unicode symbols
+- Non-Latin scripts (中文, العربية, etc.)
+
+**Encoding issues:**
+
+If you see garbled characters, the file may be in a different encoding. Convert to UTF-8:
+
+```bash
+# Linux/Mac
+iconv -f ISO-8859-1 -t UTF-8 input.TextGrid > output.TextGrid
+
+# Or use Praat (always saves UTF-8)
+```
+
+## Browser Compatibility
+
+### Supported Audio Formats by Browser
+
+| Format | Chrome | Firefox | Safari | Edge |
+|--------|--------|---------|--------|------|
+| WAV | ✅ | ✅ | ✅ | ✅ |
+| MP3 | ✅ | ✅ | ✅ | ✅ |
+| OGG | ✅ | ✅ | ❌ | ✅ |
+
+**Note:** Safari does not support OGG Vorbis. Use WAV or MP3 for maximum compatibility.
+
+### File API Support
+
+All modern browsers support:
+- File picker (input type="file")
+- Drag and drop
+- File System Access API (save files)
+
+Minimum versions:
+- Chrome 90+
+- Firefox 88+
+- Safari 14+
+- Edge 90+
+
+## Conversion Tools
+
+### ffmpeg (Command Line)
+
+**Convert to WAV:**
+```bash
+# From MP3
+ffmpeg -i input.mp3 output.wav
+
+# Specify sample rate and channels
+ffmpeg -i input.mp3 -ar 16000 -ac 1 output.wav
+
+# From video (extract audio)
+ffmpeg -i video.mp4 -vn -acodec pcm_s16le output.wav
+```
+
+**Convert to MP3:**
+```bash
+# High quality
+ffmpeg -i input.wav -b:a 192k output.mp3
+
+# Smaller file
+ffmpeg -i input.wav -b:a 128k output.mp3
+```
+
+### SoX (Sound eXchange)
+
+```bash
+# Convert format
+sox input.mp3 output.wav
+
+# Resample
+sox input.wav -r 16000 output.wav
+
+# Mono conversion
+sox input.wav -c 1 output.wav
+```
+
+### Praat
+
+```praat
+# Read audio
+sound = Read from file: "input.mp3"
+
+# Save as WAV
+Save as WAV file: "output.wav"
+```
+
+### Online Tools
+
+- [CloudConvert](https://cloudconvert.com/wav-converter)
+- [Online Audio Converter](https://online-audio-converter.com/)
+
+## Future Format Support
+
+Planned additions:
+
+- **FLAC** - Lossless compression audio
+- **WebM** - Web-native audio/video
+- **ELAN (.eaf)** - Alternative annotation format
+- **JSON** - Machine-readable annotation export
+- **CSV** - Alternative to TSV
+
+## See Also
+
+- [Tutorial: Loading Audio](../tutorial/01-loading-audio.html) - Supported loading methods
+- [Tutorial: Exporting](../tutorial/06-exporting.html) - Export workflows
+- [Annotations](../features/annotations.html) - TextGrid features
+- [Data Points](../features/data-points.html) - TSV export details

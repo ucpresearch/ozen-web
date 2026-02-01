@@ -1,0 +1,948 @@
+---
+title: "Stores"
+subtitle: "State management with Svelte stores"
+---
+
+## Overview
+
+ozen-web uses **Svelte stores** for all shared state management. Stores are the single source of truth for application state, providing a reactive architecture where components automatically update when relevant data changes.
+
+**Location:** All stores are in `src/lib/stores/`
+
+**Key principles:**
+- Components **subscribe** to stores and react to changes
+- Components **never** hold local copies of shared state
+- All mutations go through store functions, not direct assignment
+- Derived stores compute values from other stores automatically
+
+## Store Types
+
+### Writable Stores
+
+**Definition:** Can be read and updated by any component.
+
+```typescript
+import { writable } from 'svelte/store';
+
+export const myStore = writable<string>('initial value');
+```
+
+**Usage:**
+```svelte
+<script>
+  import { myStore } from '$lib/stores/myStore';
+
+  // Subscribe (auto-managed with $)
+  $: value = $myStore;
+
+  // Update
+  function handleClick() {
+    myStore.set('new value');
+  }
+</script>
+```
+
+### Derived Stores
+
+**Definition:** Computed values that automatically update when their dependencies change.
+
+```typescript
+import { derived } from 'svelte/store';
+
+export const fullName = derived(
+  [firstName, lastName],
+  ([$first, $last]) => `${$first} ${$last}`
+);
+```
+
+**Benefits:**
+- No manual cache invalidation
+- Always up-to-date
+- Declarative dependencies
+
+### Readonly Stores
+
+**Definition:** Can be read but not updated externally (updates only via store functions).
+
+```typescript
+import { readable } from 'svelte/store';
+
+export const time = readable(Date.now(), (set) => {
+  const interval = setInterval(() => set(Date.now()), 1000);
+  return () => clearInterval(interval);
+});
+```
+
+## Core Stores
+
+### audio.ts - Audio Buffer
+
+**Purpose:** Stores loaded audio data and metadata.
+
+**State:**
+
+| Export | Type | Description |
+|--------|------|-------------|
+| `audioBuffer` | `Float64Array \| null` | Raw audio samples (mono, -1 to 1) |
+| `sampleRate` | `number` | Original sample rate (Hz) |
+| `fileName` | `string` | Name of loaded file |
+| `duration` | `number` | Duration in seconds |
+
+**Usage:**
+
+```typescript
+import { audioBuffer, sampleRate, fileName, duration } from '$lib/stores/audio';
+
+// In component
+$: if ($audioBuffer) {
+  console.log(`Loaded ${$fileName}: ${$duration}s at ${$sampleRate} Hz`);
+}
+```
+
+**Key characteristics:**
+- Audio stored at **full resolution** (never downsampled)
+- Mono only (stereo files mixed to mono on load)
+- `Float64Array` for WASM compatibility
+- Set once per file load, immutable afterward
+
+### view.ts - Viewport State
+
+**Purpose:** Manages the visible time window, cursor, and selection.
+
+**State:**
+
+| Export | Type | Description |
+|--------|------|-------------|
+| `timeRange` | `{ start: number, end: number }` | Visible time window (seconds) |
+| `cursorPosition` | `number` | Current cursor position (seconds) |
+| `selection` | `{ start, end } \| null` | Selected region (seconds) |
+| `hoverPosition` | `number \| null` | Mouse hover position (seconds) |
+| `isDragging` | `boolean` | Whether cursor is being dragged |
+| `visibleDuration` | `derived` | Computed: `end - start` |
+
+**Usage:**
+
+```typescript
+import { timeRange, cursorPosition, selection } from '$lib/stores/view';
+
+// Zoom in around cursor
+function zoomIn() {
+  const center = get(cursorPosition);
+  const currentDuration = $timeRange.end - $timeRange.start;
+  const newDuration = currentDuration * 0.5;
+
+  timeRange.set({
+    start: center - newDuration / 2,
+    end: center + newDuration / 2
+  });
+}
+
+// Select a region
+function selectRegion(start: number, end: number) {
+  selection.set({ start, end });
+  cursorPosition.set(start);
+}
+```
+
+**Reactivity pattern:**
+```svelte
+<!-- Waveform component auto-redraws when timeRange changes -->
+<script>
+  $: if ($audioBuffer && $timeRange) {
+    redrawWaveform($audioBuffer, $timeRange);
+  }
+</script>
+```
+
+### analysis.ts - Acoustic Features
+
+**Purpose:** Stores computed acoustic analyses and manages analysis state.
+
+**State:**
+
+| Export | Type | Description |
+|--------|------|-------------|
+| `analysisResults` | `AnalysisResults \| null` | Cached pitch, formants, intensity, etc. |
+| `isAnalyzing` | `boolean` | Analysis in progress flag |
+| `analysisProgress` | `number` | Progress percentage (0-100) |
+| `analysisParams` | `object` | Current analysis parameters |
+
+**AnalysisResults structure:**
+```typescript
+interface AnalysisResults {
+  pitch: {
+    times: Float64Array;
+    values: Float64Array;
+  };
+  formants: {
+    times: Float64Array;
+    f1: Float64Array;
+    f2: Float64Array;
+    f3: Float64Array;
+    f4: Float64Array;
+    b1: Float64Array;
+    b2: Float64Array;
+    b3: Float64Array;
+    b4: Float64Array;
+  };
+  intensity: { /* ... */ };
+  hnr: { /* ... */ };
+  cog: { /* ... */ };
+  spectralTilt: { /* ... */ };
+  a1p0: { /* ... */ };
+  spectrogram: SpectrogramData;
+}
+```
+
+**Functions:**
+
+```typescript
+import { runAnalysis, runAnalysisForRange, analysisResults } from '$lib/stores/analysis';
+
+// Trigger full analysis (for audio ≤60s)
+await runAnalysis();
+
+// Analyze visible window only (for audio >60s)
+await runAnalysisForRange(startTime, endTime);
+
+// Access results
+$: if ($analysisResults) {
+  const { pitch, formants } = $analysisResults;
+  // Draw overlays...
+}
+```
+
+**Long audio handling:**
+- Audio >60s: `analysisResults` starts as `null`
+- User zooms in: `runAnalysisForRange()` called automatically (debounced 300ms)
+- Results cached for current window
+- Components check `if ($analysisResults)` before drawing overlays
+
+### annotations.ts - Annotation Tiers
+
+**Purpose:** Manages annotation tiers, intervals, and boundaries.
+
+**State:**
+
+| Export | Type | Description |
+|--------|------|-------------|
+| `tiers` | `Tier[]` | All annotation tiers |
+| `selectedTierIndex` | `number` | Currently active tier (0-indexed) |
+| `selectedTier` | `derived` | Currently active tier object |
+| `selectedIntervalIndex` | `number \| null` | Selected interval within tier |
+
+**Tier structure:**
+```typescript
+interface Tier {
+  name: string;
+  type: 'interval' | 'point';
+  intervals: Interval[];
+}
+
+interface Interval {
+  start: number;
+  end: number;
+  text: string;
+}
+```
+
+**Functions:**
+
+```typescript
+import {
+  tiers,
+  addTier,
+  removeTier,
+  renameTier,
+  addBoundary,
+  removeBoundary,
+  moveBoundary,
+  setIntervalText,
+  loadTextGrid,
+  exportTiers
+} from '$lib/stores/annotations';
+
+// Tier management (not undoable)
+addTier('words', 'interval');
+removeTier(2);
+renameTier(0, 'phones');
+
+// Boundary editing (undoable)
+addBoundary(tierIndex, time);       // Double-click on tier
+removeBoundary(tierIndex, boundaryIndex);  // Right-click menu
+moveBoundary(tierIndex, boundaryIndex, newTime);  // Drag
+
+// Text editing (undoable)
+setIntervalText(tierIndex, intervalIndex, 'cat');
+
+// File I/O
+loadTextGrid(textGridString);  // Import from Praat
+const tgContent = exportTiers();  // Export to TextGrid format
+```
+
+**Undoable operations:**
+- `addBoundary()`
+- `removeBoundary()`
+- `moveBoundary()`
+- `setIntervalText()`
+
+**Not undoable:**
+- `addTier()` / `removeTier()` - structural changes
+- `loadTextGrid()` - file operation
+
+### dataPoints.ts - Data Collection
+
+**Purpose:** Manages data collection points on the spectrogram.
+
+**State:**
+
+| Export | Type | Description |
+|--------|------|-------------|
+| `dataPoints` | `DataPoint[]` | All data points |
+| `hoveredPointId` | `number \| null` | Currently hovered point |
+| `draggingPointId` | `number \| null` | Currently dragging point |
+
+**DataPoint structure:**
+```typescript
+interface DataPoint {
+  id: number;
+  time: number;          // Position in seconds
+  frequency: number;     // Position in Hz (click location)
+  acousticValues: {      // Measured values at this point
+    pitch?: number;
+    intensity?: number;
+    f1?: number;
+    f2?: number;
+    f3?: number;
+    f4?: number;
+    b1?: number;
+    b2?: number;
+    b3?: number;
+    b4?: number;
+    hnr?: number;
+    cog?: number;
+    spectralTilt?: number;
+    a1p0?: number;
+  };
+  annotationIntervals: { // Text from all tiers at this time
+    [tierName: string]: string;
+  };
+}
+```
+
+**Functions:**
+
+```typescript
+import {
+  dataPoints,
+  addDataPoint,
+  removeDataPoint,
+  moveDataPoint,
+  exportToTSV,
+  importFromTSV
+} from '$lib/stores/dataPoints';
+
+// Add point (double-click on spectrogram)
+const point = addDataPoint(time, frequency);
+// Automatically collects all acoustic values and annotation text
+
+// Remove point (right-click)
+removeDataPoint(pointId);
+
+// Move point (drag)
+moveDataPoint(pointId, newTime, newFrequency);
+
+// Export to TSV file
+const tsvContent = exportToTSV();
+// Includes: time, freq, pitch, intensity, formants, labels, etc.
+
+// Import from TSV
+importFromTSV(tsvContent);
+```
+
+**All operations are undoable** via the unified undo system.
+
+### undoManager.ts - Undo/Redo
+
+**Purpose:** Unified undo/redo system for all editable state.
+
+**Architecture:**
+- **State-snapshot approach:** Captures full state before each change
+- **Single stack:** All operations (annotations + data points) in chronological order
+- **JSON deep-copy:** Ensures state isolation
+
+**API:**
+
+```typescript
+import {
+  initUndoManager,
+  saveUndo,
+  undo,
+  redo,
+  canUndo,
+  canRedo,
+  clearUndoHistory
+} from '$lib/stores/undoManager';
+
+// Initialize once at app startup
+onMount(() => {
+  initUndoManager(tiers, dataPoints);
+});
+
+// Before any mutation
+export function someEditOperation() {
+  saveUndo();  // MUST call before changing state
+  tiers.update(t => { /* modify */ });
+}
+
+// In component (keyboard shortcut)
+function handleKeydown(e: KeyboardEvent) {
+  if ((e.ctrlKey || e.metaKey) && e.key === 'z') {
+    if (!e.shiftKey) {
+      undo();
+    } else {
+      redo();
+    }
+  }
+}
+
+// UI state
+$: undoAvailable = canUndo();
+$: redoAvailable = canRedo();
+```
+
+**Critical usage pattern:**
+```typescript
+// ✅ CORRECT: Save before mutation
+export function addBoundary(tierIndex: number, time: number): void {
+  saveUndo();  // Capture current state first
+  tiers.update(t => {
+    // Modify tiers...
+    return t;
+  });
+}
+
+// ❌ WRONG: Save after mutation
+export function addBoundary(tierIndex: number, time: number): void {
+  tiers.update(t => {
+    // Modify tiers...
+    return t;
+  });
+  saveUndo();  // Too late! Already changed.
+}
+```
+
+**Undoable operations:**
+- All annotation boundary operations
+- All data point operations
+
+**Non-undoable operations:**
+- Tier add/remove/rename (structural)
+- File loading (audio, TextGrid)
+
+### config.ts - Application Configuration
+
+**Purpose:** Stores visual settings, formant presets, and backend choice.
+
+**State:**
+
+```typescript
+interface OzenConfig {
+  backend: 'praatfan-local' | 'praatfan' | 'praatfan-gpl';
+  colors: {
+    waveform: { background, line, lineWidth };
+    spectrogram: { colormap: 'grayscale' | 'viridis' };
+    cursor: string;
+    selection: { fill, border };
+    pitch: string;
+    intensity: string;
+    formant: { f1, f2, f3, f4, size };
+    tier: { background, selected, border, text };
+    boundary: string;
+    /* ... */
+  };
+  formantPresets: {
+    female: { maxFormant: 5500, numFormants: 5, ... };
+    male: { maxFormant: 5000, numFormants: 5, ... };
+    child: { maxFormant: 8000, numFormants: 5, ... };
+  };
+  spectrogramSettings: {
+    windowLength: 0.005;
+    dynamicRange: 70;
+    preemphasis: 50;
+  };
+  /* ... */
+}
+```
+
+**Functions:**
+
+```typescript
+import {
+  config,
+  loadConfigFromYAML,
+  getCurrentPreset,
+  applyFormantPreset
+} from '$lib/stores/config';
+
+// Load from YAML file
+await loadConfigFromYAML('/config.yaml');
+
+// Access config
+$: cursorColor = $config.colors.cursor;
+$: pitchColor = $config.colors.pitch;
+
+// Apply formant preset
+applyFormantPreset('female');  // maxFormant = 5500
+applyFormantPreset('male');    // maxFormant = 5000
+applyFormantPreset('child');   // maxFormant = 8000
+```
+
+**YAML format:**
+```yaml
+backend: praatfan-local
+
+colors:
+  cursor: "#ff0000"
+  pitch: "#0066cc"
+  formant:
+    f1: "#ff3333"
+    f2: "#ff6666"
+    f3: "#ff9999"
+    f4: "#ffcccc"
+
+formantPresets:
+  female:
+    maxFormant: 5500
+    numFormants: 5
+  male:
+    maxFormant: 5000
+    numFormants: 5
+```
+
+## Store Communication Patterns
+
+### Direct Dependencies
+
+Some stores import and use other stores:
+
+```typescript
+// analysis.ts imports audio stores
+import { audioBuffer, sampleRate } from './audio';
+
+export async function runAnalysis() {
+  const buffer = get(audioBuffer);
+  const sr = get(sampleRate);
+  // Use to create WASM Sound object
+}
+```
+
+### Derived Stores Across Modules
+
+```typescript
+// view.ts
+export const visibleDuration = derived(
+  timeRange,
+  ($tr) => $tr.end - $tr.start
+);
+```
+
+Components can import and use `$visibleDuration` without knowing how it's computed.
+
+### Event-Driven Updates
+
+```typescript
+// FileDropZone component loads audio
+async function handleAudioLoad(file: File) {
+  const decoded = await decodeAudio(file);
+
+  // Update audio stores
+  audioBuffer.set(decoded.samples);
+  sampleRate.set(decoded.sampleRate);
+  fileName.set(file.name);
+  duration.set(decoded.samples.length / decoded.sampleRate);
+
+  // Trigger analysis (if short enough)
+  await runAnalysis();
+}
+
+// Spectrogram component reacts
+$: if ($analysisResults) {
+  renderSpectrogram($analysisResults.spectrogram);
+  drawPitchOverlay($analysisResults.pitch);
+}
+```
+
+### Cross-Store Coordination
+
+**Example:** Data points collect annotation text
+
+```typescript
+// dataPoints.ts
+function collectAnnotationIntervals(time: number): Record<string, string> {
+  const allTiers = get(tiers);  // Import from annotations.ts
+  const labels: Record<string, string> = {};
+
+  for (const tier of allTiers) {
+    const interval = tier.intervals.find(
+      (int) => int.start <= time && time < int.end
+    );
+    if (interval) {
+      labels[tier.name] = interval.text;
+    }
+  }
+
+  return labels;
+}
+```
+
+## Reactive Patterns
+
+### Auto-Subscription in Components
+
+**Svelte's `$` prefix** auto-subscribes to stores:
+
+```svelte
+<script>
+  import { cursorPosition } from '$lib/stores/view';
+
+  // Automatically subscribes when component mounts
+  // Automatically unsubscribes when component unmounts
+  $: console.log('Cursor moved to', $cursorPosition);
+</script>
+
+<div>Cursor: {$cursorPosition.toFixed(3)}s</div>
+```
+
+### Reactive Statements
+
+**Re-run code when dependencies change:**
+
+```svelte
+<script>
+  import { audioBuffer, duration } from '$lib/stores/audio';
+  import { timeRange } from '$lib/stores/view';
+
+  // Recalculate when any dependency changes
+  $: visibleSamples = Math.floor(
+    ($timeRange.end - $timeRange.start) * $sampleRate
+  );
+
+  $: pixelsPerSecond = canvasWidth / ($timeRange.end - $timeRange.start);
+</script>
+```
+
+### Update Methods
+
+**Three ways to update writable stores:**
+
+```typescript
+import { myStore } from './myStore';
+
+// 1. Set (replace entire value)
+myStore.set({ x: 10, y: 20 });
+
+// 2. Update (function receives current value)
+myStore.update(current => ({ ...current, x: current.x + 1 }));
+
+// 3. Direct assignment in component (compiles to .set())
+$myStore = { x: 10, y: 20 };  // Only in .svelte files
+```
+
+### Custom Stores
+
+**Pattern:** Wrap writable with custom logic.
+
+```typescript
+function createCounterStore() {
+  const { subscribe, set, update } = writable(0);
+
+  return {
+    subscribe,
+    increment: () => update(n => n + 1),
+    decrement: () => update(n => n - 1),
+    reset: () => set(0)
+  };
+}
+
+export const counter = createCounterStore();
+
+// Usage
+counter.increment();  // No need to call .update() with function
+```
+
+## Best Practices
+
+### 1. Always Use get() for One-Time Reads
+
+```typescript
+import { get } from 'svelte/store';
+import { audioBuffer } from '$lib/stores/audio';
+
+// ✅ CORRECT: One-time read
+function processAudio() {
+  const buffer = get(audioBuffer);
+  if (!buffer) return;
+  // Use buffer...
+}
+
+// ❌ WRONG: Creates subscription (memory leak in plain .ts files)
+function processAudio() {
+  let buffer;
+  audioBuffer.subscribe(b => buffer = b)();  // Subscription never cleaned up
+  // Use buffer...
+}
+```
+
+### 2. Use Derived Stores for Computed Values
+
+```typescript
+// ✅ CORRECT: Derived store
+export const visibleDuration = derived(
+  timeRange,
+  ($tr) => $tr.end - $tr.start
+);
+
+// ❌ WRONG: Manual recomputation
+export const visibleDuration = writable(5);
+timeRange.subscribe($tr => {
+  visibleDuration.set($tr.end - $tr.start);
+});
+```
+
+### 3. Call saveUndo() Before Mutations
+
+```typescript
+// ✅ CORRECT
+export function addBoundary(tierIndex: number, time: number): void {
+  saveUndo();  // Save BEFORE
+  tiers.update(/* ... */);
+}
+
+// ❌ WRONG
+export function addBoundary(tierIndex: number, time: number): void {
+  tiers.update(/* ... */);
+  saveUndo();  // Too late
+}
+```
+
+### 4. Keep Stores Focused
+
+**Good:**
+- `audio.ts` - Only audio data
+- `view.ts` - Only viewport state
+- `analysis.ts` - Only acoustic results
+
+**Bad:**
+- `appState.ts` - Everything in one giant store
+
+### 5. Use Derived Stores to Avoid Duplication
+
+```typescript
+// ✅ CORRECT: Single source of truth
+export const timeRange = writable({ start: 0, end: 5 });
+export const visibleDuration = derived(timeRange, $tr => $tr.end - $tr.start);
+
+// ❌ WRONG: Duplicate state (can get out of sync)
+export const timeRange = writable({ start: 0, end: 5 });
+export const visibleDuration = writable(5);  // Must manually sync
+```
+
+### 6. Initialize Stores at App Level
+
+```svelte
+<!-- +layout.svelte or +page.svelte -->
+<script>
+  import { onMount } from 'svelte';
+  import { initUndoManager } from '$lib/stores/undoManager';
+  import { tiers } from '$lib/stores/annotations';
+  import { dataPoints } from '$lib/stores/dataPoints';
+
+  onMount(() => {
+    initUndoManager(tiers, dataPoints);
+  });
+</script>
+```
+
+### 7. Handle Null/Undefined Gracefully
+
+```svelte
+<script>
+  import { audioBuffer, analysisResults } from '$lib/stores/...';
+
+  // ✅ CORRECT: Check before use
+  $: if ($audioBuffer && $analysisResults) {
+    renderVisualization($audioBuffer, $analysisResults);
+  }
+</script>
+
+<!-- ✅ CORRECT: Conditional rendering -->
+{#if $audioBuffer}
+  <Waveform />
+{/if}
+
+{#if $analysisResults}
+  <Spectrogram />
+{/if}
+```
+
+## Store Initialization Order
+
+**Typical initialization flow:**
+
+```
+1. App loads (+layout.svelte)
+   ↓
+2. Initialize WASM backend (acoustic.ts)
+   ↓
+3. Initialize undo manager
+   ↓
+4. Load config.yaml (if present)
+   ↓
+5. Check URL parameters (viewer route)
+   ↓
+6. Load audio from URL if specified
+   ↓
+7. Run analysis
+   ↓
+8. Render components
+```
+
+**Code:**
+```svelte
+<!-- +layout.svelte -->
+<script>
+  import { onMount } from 'svelte';
+  import { initWasm } from '$lib/wasm/acoustic';
+  import { initUndoManager } from '$lib/stores/undoManager';
+  import { loadConfigFromYAML } from '$lib/stores/config';
+
+  onMount(async () => {
+    // 1. Initialize WASM
+    await initWasm('praatfan-local');
+
+    // 2. Initialize undo
+    initUndoManager(tiers, dataPoints);
+
+    // 3. Load config if present
+    try {
+      await loadConfigFromYAML('/config.yaml');
+    } catch (e) {
+      console.log('No config.yaml, using defaults');
+    }
+  });
+</script>
+```
+
+## Debugging Stores
+
+### Log Store Changes
+
+```svelte
+<script>
+  import { cursorPosition } from '$lib/stores/view';
+
+  // Debug: log every change
+  $: console.log('Cursor:', $cursorPosition);
+
+  // Debug: log specific conditions
+  $: if ($cursorPosition > 5) {
+    console.warn('Cursor past 5 seconds');
+  }
+</script>
+```
+
+### Use Svelte DevTools
+
+**Browser extension:** Install Svelte DevTools (Chrome/Firefox)
+
+**Features:**
+- Inspect current store values
+- See which components are subscribed
+- Track state changes over time
+
+### Manual Subscription
+
+```typescript
+import { cursorPosition } from '$lib/stores/view';
+
+// Debug: monitor in console
+const unsubscribe = cursorPosition.subscribe(value => {
+  console.log('Cursor changed:', value);
+});
+
+// Remember to unsubscribe when done
+unsubscribe();
+```
+
+## Common Patterns
+
+### Pattern: Conditional Analysis
+
+```typescript
+// Run analysis only if audio is short enough
+$: if ($audioBuffer) {
+  if ($duration <= MAX_ANALYSIS_DURATION) {
+    runAnalysis();
+  } else {
+    console.log('Audio too long, waiting for zoom');
+  }
+}
+```
+
+### Pattern: Synchronized Cursors
+
+```typescript
+// Waveform sets hover position
+function handleMouseMove(e: MouseEvent) {
+  const time = pixelToTime(e.offsetX);
+  hoverPosition.set(time);
+}
+
+// Spectrogram reacts to hover
+$: if ($hoverPosition !== null) {
+  drawHoverCursor($hoverPosition);
+}
+```
+
+### Pattern: Debounced Analysis
+
+```typescript
+import { debounce } from 'lodash-es';
+
+// Avoid excessive recomputation during smooth zoom
+const runAnalysisDebounced = debounce(async () => {
+  await runAnalysisForRange($timeRange.start, $timeRange.end);
+}, 300);
+
+$: if ($timeRange && $duration > MAX_ANALYSIS_DURATION) {
+  const visibleDuration = $timeRange.end - $timeRange.start;
+  if (visibleDuration <= MAX_ANALYSIS_DURATION) {
+    runAnalysisDebounced();
+  }
+}
+```
+
+### Pattern: Store Reset on File Load
+
+```typescript
+async function loadNewAudio(file: File) {
+  // Clear old state
+  analysisResults.set(null);
+  tiers.set([]);
+  dataPoints.set([]);
+  clearUndoHistory();
+
+  // Load new audio
+  const decoded = await decodeAudio(file);
+  audioBuffer.set(decoded.samples);
+  // ...
+}
+```
+
+## See Also
+
+- [Architecture](architecture.html) - System design overview
+- [WASM Integration](wasm-integration.html) - Analysis backend details
+- [Svelte Store Tutorial](https://svelte.dev/tutorial/writable-stores) - Official docs
+- [Svelte Store API](https://svelte.dev/docs#run-time-svelte-store) - API reference

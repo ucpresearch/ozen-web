@@ -1,0 +1,199 @@
+---
+title: "Keyboard Shortcuts"
+subtitle: "Complete reference for keyboard controls"
+---
+
+## Overview
+
+Keyboard shortcuts dramatically speed up your workflow in ozen-web. This page lists all available shortcuts organized by category.
+
+::: {.callout-tip}
+**Tip:** Print this page or keep it open in a second tab while learning ozen-web.
+:::
+
+## Audio Playback
+
+| Key | Action | Notes |
+|-----|--------|-------|
+| <kbd>Space</kbd> | Play/pause selection | If no selection, plays from cursor to end of visible window |
+| <kbd>Tab</kbd> | Play visible window | Plays entire time range currently shown |
+| <kbd>Escape</kbd> | Stop playback & clear selection | Stops audio and removes selection highlight |
+
+## Navigation
+
+| Key | Action | Notes |
+|-----|--------|-------|
+| <kbd>←</kbd> <kbd>→</kbd> | Move cursor | Left/Right arrows move cursor by ~10ms increments |
+| <kbd>Shift</kbd>+<kbd>←</kbd> <kbd>→</kbd> | Extend/shrink selection | Adjust selection boundaries |
+| <kbd>Mouse Wheel</kbd> | Zoom in/out | Centered on mouse cursor position |
+| <kbd>+</kbd> / <kbd>-</kbd> | Zoom in/out | Centered on time cursor position |
+| <kbd>Horizontal Scroll</kbd> | Pan view | Two-finger swipe on trackpads |
+| <kbd>Ctrl</kbd>+<kbd>Drag</kbd> | Pan view | Alternative to scrollbar |
+
+## Editing (Annotations & Data Points)
+
+| Key | Action | Notes |
+|-----|--------|-------|
+| <kbd>Ctrl</kbd>+<kbd>Z</kbd> | Undo | Mac: <kbd>Cmd</kbd>+<kbd>Z</kbd> |
+| <kbd>Ctrl</kbd>+<kbd>Y</kbd> | Redo | Mac: <kbd>Cmd</kbd>+<kbd>Shift</kbd>+<kbd>Z</kbd> |
+| <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>Z</kbd> | Redo (alternative) | Cross-platform consistency |
+| <kbd>Enter</kbd> | Save edited label | When editing interval text |
+| <kbd>Escape</kbd> | Cancel label edit | Discards changes to interval label |
+| <kbd>Delete</kbd> | Remove selected item | Works on selected boundary or data point (if implemented) |
+
+## Annotation Tiers
+
+| Key | Action | Notes |
+|-----|--------|-------|
+| <kbd>1</kbd> | Select tier 1 | Makes tier 1 active for editing |
+| <kbd>2</kbd> | Select tier 2 | Makes tier 2 active for editing |
+| <kbd>3</kbd> | Select tier 3 | Makes tier 3 active for editing |
+| <kbd>4</kbd> | Select tier 4 | Makes tier 4 active for editing |
+| <kbd>5</kbd> | Select tier 5 | Makes tier 5 active for editing |
+| <kbd>Double-click</kbd> on tier | Add boundary | At cursor time position |
+| <kbd>Double-click</kbd> on interval | Edit label | Opens text input for interval |
+| <kbd>Right-click</kbd> on boundary | Remove boundary menu | Shows context menu |
+| <kbd>Drag</kbd> boundary | Move boundary | Adjust boundary time position |
+
+## Data Points
+
+| Key | Action | Notes |
+|-----|--------|-------|
+| <kbd>Double-click</kbd> on spectrogram | Add data point | At clicked time/frequency |
+| <kbd>Drag</kbd> data point | Move data point | Adjust time and/or frequency position |
+| <kbd>Right-click</kbd> on data point | Remove data point | Shows context menu |
+| <kbd>Click</kbd> data point | Select & view values | Values panel updates |
+
+## Mouse & Click Actions
+
+| Action | Result | Location |
+|--------|--------|----------|
+| **Single Click** | Place cursor | Waveform or spectrogram |
+| **Click & Drag** | Select time region | Waveform or spectrogram |
+| **Double-click** | Add boundary | Annotation tier |
+| **Double-click** | Edit interval label | Annotation interval |
+| **Double-click** | Add data point | Spectrogram (outside tiers) |
+| **Right-click** | Context menu | Boundary or data point |
+| **Drag** | Move boundary/point | Boundary line or data point |
+| **Scroll Wheel** | Zoom | Waveform or spectrogram |
+
+## Platform-Specific Shortcuts
+
+### Windows/Linux
+
+| Key | Mac Equivalent |
+|-----|----------------|
+| <kbd>Ctrl</kbd> | <kbd>Cmd</kbd> |
+| <kbd>Alt</kbd> | <kbd>Option</kbd> |
+
+### macOS
+
+Most shortcuts use <kbd>Cmd</kbd> instead of <kbd>Ctrl</kbd>:
+
+- **Undo:** <kbd>Cmd</kbd>+<kbd>Z</kbd>
+- **Redo:** <kbd>Cmd</kbd>+<kbd>Shift</kbd>+<kbd>Z</kbd>
+- **Pan:** <kbd>Cmd</kbd>+<kbd>Drag</kbd>
+
+## Tips for Efficient Workflow
+
+::: {.callout-tip}
+**Master these shortcuts first:**
+
+1. <kbd>Space</kbd> — Play selection (most used)
+2. <kbd>Scroll Wheel</kbd> — Zoom (essential for navigation)
+3. <kbd>Ctrl</kbd>+<kbd>Z</kbd> — Undo (safety net)
+4. <kbd>Double-click</kbd> — Add boundaries and data points
+5. <kbd>1-5</kbd> — Switch between annotation tiers
+:::
+
+### Typical Annotation Workflow
+
+1. <kbd>Scroll Wheel</kbd> — Zoom to see target region
+2. <kbd>Click</kbd> — Place cursor at boundary location
+3. <kbd>Space</kbd> — Play selection to verify
+4. <kbd>Double-click tier</kbd> — Add boundary
+5. <kbd>Double-click interval</kbd> — Edit label
+6. <kbd>Enter</kbd> — Save label
+7. <kbd>Ctrl</kbd>+<kbd>Z</kbd> — Undo if needed
+
+### Typical Data Collection Workflow
+
+1. <kbd>Scroll Wheel</kbd> — Zoom to vowel
+2. <kbd>Click</kbd> — Place cursor at vowel midpoint
+3. <kbd>Space</kbd> — Play to verify location
+4. <kbd>Double-click spectrogram</kbd> — Add data point
+5. Check values panel for measurements
+6. Repeat for all target segments
+
+## Customization
+
+Currently, keyboard shortcuts are not customizable. This may change in future versions.
+
+If you need different key bindings, please [open an issue](https://github.com/ucpresearch/ozen-web/issues) on GitHub.
+
+## Accessibility
+
+ozen-web aims to be keyboard-accessible for users who cannot use a mouse:
+
+- All major functions have keyboard shortcuts
+- Tab navigation works for UI controls
+- Screen reader support is limited (this is an area for improvement)
+
+**Suggestions for accessibility improvements are welcome!** Please [contribute feedback](https://github.com/ucpresearch/ozen-web/discussions).
+
+## Quick Reference Card
+
+Print-friendly quick reference:
+
+::: {.shortcut-table}
+| **Category** | **Key** | **Action** |
+|--------------|---------|------------|
+| **Playback** | Space | Play selection |
+| | Tab | Play window |
+| | Esc | Stop |
+| **Navigate** | ←→ | Move cursor |
+| | Wheel | Zoom |
+| | +/- | Zoom |
+| **Edit** | Ctrl+Z | Undo |
+| | Ctrl+Y | Redo |
+| | Enter | Save label |
+| **Tiers** | 1-5 | Select tier |
+| | Dbl-click tier | Add boundary |
+| | Dbl-click interval | Edit label |
+| **Data** | Dbl-click spectrogram | Add point |
+| | Right-click | Remove |
+:::
+
+## Browser-Specific Notes
+
+### Chrome/Edge
+
+- All shortcuts work as expected
+- Best overall experience
+
+### Firefox
+
+- All shortcuts work
+- Slightly different scroll behavior on some platforms
+
+### Safari
+
+- All shortcuts work
+- <kbd>Cmd</kbd> key on macOS instead of <kbd>Ctrl</kbd>
+
+## Mobile/Touch
+
+The mobile viewer (`/viewer` route) uses touch gestures instead of keyboard shortcuts:
+
+- **Tap** → Place cursor
+- **Drag** → Select region
+- **Two-finger drag** → Pan
+- **Pinch** → Zoom
+
+**See:** [Mobile Viewer Documentation](../features/mobile-viewer.html)
+
+## Next Steps
+
+- **Practice:** Try the [Tutorial](../tutorial/index.html) to practice shortcuts
+- **Workflow:** Read [Features Overview](../features/overview.html) for efficient workflows
+- **Customize:** See [Configuration Reference](configuration.html) for other settings

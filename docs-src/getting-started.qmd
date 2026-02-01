@@ -1,0 +1,155 @@
+---
+title: "Getting Started"
+subtitle: "Install and run ozen-web in 5 minutes"
+---
+
+## Overview
+
+ozen-web is a static web application that runs entirely in your browser. You can:
+
+1. **Use the hosted version** (easiest) — No setup required
+2. **Run locally for development** — Full control and offline access
+3. **Deploy your own instance** — Host on GitHub Pages, Netlify, or any static host
+
+## Option 1: Use Hosted Version
+
+The fastest way to get started is using the hosted version:
+
+**🌐 [https://ucpresearch.github.io/ozen-web/live/](https://ucpresearch.github.io/ozen-web/live/index.html)**
+
+Simply visit the URL and drag an audio file (WAV, MP3, OGG) to begin analyzing.
+
+::: {.callout-tip}
+Bookmark the URL for quick access. All processing happens locally in your browser — no data is uploaded to servers.
+:::
+
+### Loading Your First Audio File
+
+::: {.tutorial-steps}
+1. **Drag and drop** a WAV, MP3, or OGG file onto the interface
+
+   OR
+
+   **Click "Load Audio"** button and select a file
+
+2. Wait for the waveform to appear (1-2 seconds for typical files)
+
+3. The spectrogram will load automatically (or zoom in for long files)
+
+4. Enable acoustic overlays using checkboxes: Pitch, Formants, Intensity
+:::
+
+::: {.callout-try}
+Don't have an audio file handy? Record directly in the browser by clicking the microphone icon 🎤 (requires microphone permission).
+:::
+
+### What's Next?
+
+- Follow the [Complete Tutorial](tutorial/index.html) for a guided walkthrough
+- Explore [Features Documentation](features/overview.html) for detailed feature guides
+- Check [Keyboard Shortcuts](reference/keyboard-shortcuts.html) for efficient workflow
+
+
+## Option 2: Run Locally
+
+For development or offline use, run ozen-web on your machine.
+
+### Prerequisites
+
+- Any local web server, for instance `python -m http.server 8080`,
+  started from one of the parent directories
+
+### Download
+
+- `git clone https://github.com/ucpresearch/ozen-web.git`
+
+- `cd ozen-web/docs`
+
+- `python -m http.server 8080` (adapt the port -- 8080 --  as necessary)
+
+- Open the following url (adapt the port as necessary):
+  (http://localhost:8080/live/index.html)[http://localhost:8080/live/index.html]  
+  notice that this method doesn't use https, and your browser may
+  complain about it
+
+## Option 3: Deploy Your Own Instance
+
+The `build/` or `docs/live` (same content) folder will work with any
+static file host:
+
+- **AWS S3** + CloudFront
+- **Google Cloud Storage**
+- **Azure Static Web Apps**
+- **Cloudflare Pages**
+- **GitLab Pages**
+
+Just upload the `build/` folder's contents.
+
+## Configuration
+
+### Backend Selection
+
+ozen-web supports multiple WASM backends:
+
+| Backend | Source | License | Speed | Offline |
+|---------|--------|---------|-------|---------|
+| `praatfan-local` | `static/wasm/` | MIT/Apache-2.0 | Fastest | ✅ Yes |
+| `praatfan` | GitHub Pages CDN | MIT/Apache-2.0 | Fast | ❌ No |
+| `praatfan-gpl` | GitHub Pages CDN | GPL | Fast | ❌ No |
+
+Select the backend using the dropdown in the app interface.
+
+See [WASM Backends Reference](reference/backends.html) for detailed comparison.
+
+### Custom Configuration
+
+Create `static/config.yaml` to customize default settings:
+
+```yaml
+# Example configuration
+backend: "praatfan-local"
+maxFrequency: 5000
+showPitch: true
+showFormants: true
+theme: "dark"
+```
+
+See [Configuration Reference](reference/configuration.html) for all options.
+
+## Troubleshooting
+
+### WASM Fails to Load
+
+- **Check backend selection**: Try switching between backends in the dropdown
+- **Clear browser cache**: Hard refresh with Ctrl+Shift+R (Cmd+Shift+R on Mac)
+- **Check browser console**: Open DevTools (F12) → Console tab for error messages
+
+### Audio File Won't Load
+
+- **Supported formats**: WAV, MP3, OGG (16-bit or 24-bit PCM for WAV)
+- **File size**: Files >100MB may be slow; try shorter clips
+- **Browser support**: Some browsers have codec limitations (try Chrome/Edge)
+
+### Long Audio Files Show "Zoom in for spectrogram"
+
+This is expected behavior for files >60 seconds. Zoom in to a window ≤60s to trigger analysis.
+
+See [Features: Long Audio Handling](features/overview.html#long-audio-handling) for details.
+
+## Getting Help
+
+- **Documentation**: Browse [Features](features/overview.html) and [Reference](reference/keyboard-shortcuts.html) sections
+- **Tutorial**: Follow the [step-by-step guide](tutorial/index.html)
+- **Issues**: Report bugs at [GitHub Issues](https://github.com/ucpresearch/ozen-web/issues)
+
+## What's Next?
+
+Ready to dive deeper? Try the:
+
+- **[Complete Tutorial](tutorial/index.html)** — Guided walkthrough from loading audio to exporting data
+- **[Features Overview](features/overview.html)** — Detailed documentation of all features
+- **[Embedding Guide](embedding/overview.html)** — Embed ozen-web in your websites or documents
+
+---
+
+**All set?** Head to the [Tutorial](tutorial/index.html) to learn the complete workflow. →
