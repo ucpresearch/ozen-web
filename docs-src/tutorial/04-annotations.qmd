@@ -37,13 +37,9 @@ Annotations let you add time-aligned transcriptions to your audio. In this secti
    - Examples: "phones", "words", "syllables"
    - Names should be descriptive and lowercase
 
-3. **Select tier type**:
-   - **Interval tier** (most common) — Divides time into labeled segments
-   - **Point tier** — Marks specific time points (less common)
+3. **Press Enter or click OK**
 
-4. **Click "Create"**
-
-5. A new tier appears below the spectrogram
+4. A new tier appears below the spectrogram
 :::
 
 ::: {.callout-tip}
