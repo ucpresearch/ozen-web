@@ -65,7 +65,8 @@ If you prefer a traditional file dialog:
 :::
 
 ::: {.callout-note}
-The file picker shows only supported formats (WAV, MP3, OGG, M4A, FLAC). If your file doesn't appear, check the format or try "All Files" filter.
+The file picker shows only supported formats (WAV, FLAC, MP3, OGG). If
+your file doesn't appear, check the format or try "All Files" filter.
 :::
 
 ## Method 3: Microphone Recording
@@ -92,7 +93,7 @@ Create new audio directly in the browser:
 :::
 
 ::: {.callout-try}
-Try recording yourself saying a few vowels ("ah", "ee", "oo") to see clear formant patterns in the spectrogram.
+Try recording yourself saying a few words that differ only by their vowels (_bead_, _bid_, _bed_, _bad_) to see clear formant patterns in the spectrogram.
 :::
 
 ::: {.callout-warning}

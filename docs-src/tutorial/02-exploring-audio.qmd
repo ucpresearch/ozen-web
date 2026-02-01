@@ -108,18 +108,25 @@ For files >60 seconds, the spectrogram only computes for the visible time window
 
 Pan the view to explore different parts of the audio horizontally.
 
+### Trackpad Users
+
+**Two-finger horizontal swipe** pans smoothly left/right.
+
+### Mouse Users
+
+Mouse panning options vary by browser/OS:
+
 ::: {.tutorial-steps}
-1. **Use horizontal scrollbar** at the bottom of the view
-
-   OR
-
-2. **Click and drag horizontally** while holding Ctrl/Cmd key
-
-3. The visible time window shifts left or right
+1. **Try Shift+Scroll** — Some systems translate this to horizontal scroll
+2. **If that doesn't work**, use the **zoom-to-navigate** approach:
+   - Click where you want to center the view
+   - Zoom in (scroll up) to focus on that location
+   - Zoom out (scroll down) to see more context
+   - Repeat to navigate
 :::
 
-::: {.callout-tip}
-On trackpads, use **two-finger horizontal swipe** to pan smoothly.
+::: {.callout-note}
+**No native mouse drag panning**: The app reserves click-and-drag for selecting audio regions. Horizontal scrolling (via trackpad or Shift+scroll) is currently the only direct panning method.
 :::
 
 ## Playing Audio

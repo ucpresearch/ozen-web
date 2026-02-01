@@ -23,12 +23,9 @@ Keyboard shortcuts dramatically speed up your workflow in Ozen-web. This page li
 
 | Key | Action | Notes |
 |-----|--------|-------|
-| <kbd>←</kbd> <kbd>→</kbd> | Move cursor | Left/Right arrows move cursor by ~10ms increments |
-| <kbd>Shift</kbd>+<kbd>←</kbd> <kbd>→</kbd> | Extend/shrink selection | Adjust selection boundaries |
 | <kbd>Mouse Wheel</kbd> | Zoom in/out | Centered on mouse cursor position |
-| <kbd>+</kbd> / <kbd>-</kbd> | Zoom in/out | Centered on time cursor position |
-| <kbd>Horizontal Scroll</kbd> | Pan view | Two-finger swipe on trackpads |
-| <kbd>Ctrl</kbd>+<kbd>Drag</kbd> | Pan view | Alternative to scrollbar |
+| <kbd>Horizontal Scroll</kbd> | Pan view | Two-finger swipe on trackpads, or Shift+scroll on some systems |
+| <kbd>Shift</kbd>+<kbd>Scroll</kbd> | Pan view (maybe) | Browser/OS dependent — may produce horizontal scroll |
 
 ## Editing (Annotations & Data Points)
 
@@ -151,17 +148,34 @@ Print-friendly quick reference:
 | **Playback** | Space | Play selection |
 | | Tab | Play window |
 | | Esc | Stop |
-| **Navigate** | ←→ | Move cursor |
-| | Wheel | Zoom |
-| | +/- | Zoom |
+| **Navigate** | Wheel | Zoom (vertical scroll) |
+| | Horizontal scroll | Pan (trackpad or Shift+scroll) |
 | **Edit** | Ctrl+Z | Undo |
 | | Ctrl+Y | Redo |
+| | Ctrl+C | Copy data points |
 | | Enter | Save label |
 | **Tiers** | 1-5 | Select tier |
 | | Dbl-click tier | Add boundary |
 | | Dbl-click interval | Edit label |
 | **Data** | Dbl-click spectrogram | Add point |
 | | Right-click | Remove |
+:::
+
+## Mouse-Only Users
+
+::: {.callout-warning}
+## Panning Limitation
+
+Ozen-web currently lacks click-and-drag panning for mouse users. Horizontal panning requires:
+
+- **Trackpad**: Two-finger horizontal swipe
+- **Mouse**: Shift+Scroll (works on some browsers/OS combinations)
+
+**If Shift+Scroll doesn't work**, use this workaround:
+1. Click on the waveform/spectrogram where you want to focus
+2. Zoom in (scroll up) to center on that location
+3. Zoom out (scroll down) to see more context
+4. Repeat to navigate different regions
 :::
 
 ## Browser-Specific Notes
