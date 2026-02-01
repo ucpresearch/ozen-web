@@ -2,15 +2,28 @@
 # Post-commit hook to automatically copy build/ to docs/live/
 # This ensures embedded examples in documentation always use the latest build
 
+# Prevent re-entry during amend
+LOCK_FILE=".git/hooks/post-commit.lock"
+if [ -f "$LOCK_FILE" ]; then
+    exit 0
+fi
+
 # Only run if build/ directory exists (i.e., after a successful build)
 if [ -d "build" ]; then
     echo "Updating docs/live/ with latest build..."
     ./scripts/copy-build-to-docs.sh
 
-    # Optional: Auto-commit the updated docs/live/
+    # Check if docs/live/ has changes
     if [ -n "$(git status --porcelain docs/live)" ]; then
+        # Create lock to prevent re-entry
+        touch "$LOCK_FILE"
+
         git add docs/live
         git commit --amend --no-edit --no-verify
+
+        # Remove lock
+        rm -f "$LOCK_FILE"
+
         echo "✓ Updated docs/live/ in commit"
     fi
 else
