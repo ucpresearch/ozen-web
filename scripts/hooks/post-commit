@@ -1,0 +1,18 @@
+#!/bin/bash
+# Post-commit hook to automatically copy build/ to docs/live/
+# This ensures embedded examples in documentation always use the latest build
+
+# Only run if build/ directory exists (i.e., after a successful build)
+if [ -d "build" ]; then
+    echo "Updating docs/live/ with latest build..."
+    ./scripts/copy-build-to-docs.sh
+
+    # Optional: Auto-commit the updated docs/live/
+    if [ -n "$(git status --porcelain docs/live)" ]; then
+        git add docs/live
+        git commit --amend --no-edit --no-verify
+        echo "✓ Updated docs/live/ in commit"
+    fi
+else
+    echo "Skipping docs/live/ update (no build/ directory)"
+fi
