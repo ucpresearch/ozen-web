@@ -43,14 +43,14 @@ Pitch (fundamental frequency) is the most commonly used overlay.
 
 ### Interpreting the Pitch Overlay
 
-- **Higher on screen** = higher pitch (e.g., 300 Hz for female voices)
-- **Lower on screen** = lower pitch (e.g., 100 Hz for male voices)
-- **Gaps in the line** = unvoiced sounds (s, f, t, k, etc.) or pitch detection failures
-- **Smooth contours** = steady pitch (vowels)
-- **Sharp movements** = pitch changes (intonation)
+- **Higher on screen** = higher pitch 
+- **Lower on screen** = lower pitch 
+- **Gaps in the line** = unvoiced sounds ([s], [f], [t], [k], etc., or silence) or pitch detection failures
+- **Smooth contours** = steady pitch (often vowels)
+- **Sharp movements** = pitch changes (intonation / tone)
 
 ::: {.callout-try}
-**Try this:** Record or load a sentence with a question. You'll see the pitch rise at the end.
+**Try this:** Record yourself saying "really?!" and watch the pitch track follow your intonation.
 :::
 
 ::: {.callout-note}
@@ -75,12 +75,13 @@ Formants show the resonance frequencies that distinguish vowels.
 
 Formants reveal vowel identity:
 
-| Vowel | F1 (Hz) | F2 (Hz) | Appearance on Spectrogram |
+| Vowel | Appearance on Spectrogram |
 |-------|---------|---------|---------------------------|
-| [i] "see" | ~300 | ~2300 | F1 low, F2 very high |
-| [u] "soon" | ~300 | ~800 | F1 low, F2 low |
-| [a] "father" | ~700 | ~1200 | F1 high, F2 mid |
-| [ɛ] "bed" | ~600 | ~1800 | F1 mid-high, F2 high |
+| [i] _peel_ | F1 low, F2 very high |
+| [ʊ] _pull_ | F1 low (but not as low), F2 low |
+| [ɔ] _Paul_ | F1 high, F2 low |
+| [æ] _pal_  | F1 high, F2 high |
+| [ɜ˞] _pearl_  | F1 mid, F2 high, F3 low |
 
 ::: {.callout-try}
 **Try this:** Find a vowel in your audio, place the cursor in the middle, and read F1 and F2 values in the values panel. Compare to the table above.

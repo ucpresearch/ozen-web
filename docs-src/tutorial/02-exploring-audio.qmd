@@ -108,16 +108,10 @@ Pan the view to explore different parts of the audio horizontally.
 
    OR
 
-2. **Two-finger horizontal swipe** on trackpad
+2. **Two-finger horizontal swipe** on trackpad (if available)
 
-   OR
-
-3. **Shift+Scroll** on some mouse/browser combinations
 :::
 
-::: {.callout-tip}
-**Arrow keys** are the recommended way to pan for all users - they work consistently across all platforms and browsers.
-:::
 
 ## Playing Audio
 
@@ -157,9 +151,6 @@ Play your audio or selected regions to hear what you're analyzing.
 3. Audio plays from cursor to the end of the visible window
 :::
 
-::: {.callout-try}
-**Practice:** Select a single vowel in your audio and press Space repeatedly to hear it in isolation. This is useful for formant analysis.
-:::
 
 **Keyboard shortcuts:**
 

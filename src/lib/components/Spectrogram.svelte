@@ -208,7 +208,7 @@
 				freqMin: info.freqMin,
 				freqMax: info.freqMax,
 				timeMin: paddedStart,
-				timeMax: info.timeMax,
+				timeMax: paddedEnd,
 				nFreqs: info.nFreqs,
 				nTimes: info.nTimes
 			};
