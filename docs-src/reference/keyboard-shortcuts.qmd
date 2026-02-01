@@ -24,7 +24,7 @@ Keyboard shortcuts dramatically speed up your workflow in Ozen-web. This page li
 | Key | Action | Notes |
 |-----|--------|-------|
 | <kbd>←</kbd> <kbd>→</kbd> | Pan left/right | Pan by 10% of visible window |
-| <kbd>↑</kbd> <kbd>↓</kbd> | Zoom in/out | Centered on cursor position |
+| <kbd>↑</kbd> <kbd>↓</kbd> | Zoom in/out | Centered on visible window center |
 | <kbd>Mouse Wheel</kbd> | Zoom in/out | Centered on mouse position |
 | <kbd>Horizontal Scroll</kbd> | Pan view | Two-finger swipe on trackpads |
 | <kbd>Shift</kbd>+<kbd>Scroll</kbd> | Pan view (maybe) | Browser/OS dependent |

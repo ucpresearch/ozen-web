@@ -516,7 +516,7 @@
     "href": "reference/keyboard-shortcuts.html#navigation",
     "title": "Keyboard Shortcuts",
     "section": "Navigation",
-    "text": "Navigation\n\n\n\n\n\n\n\n\nKey\nAction\nNotes\n\n\n\n\n← →\nPan left/right\nPan by 10% of visible window\n\n\n↑ ↓\nZoom in/out\nCentered on cursor position\n\n\nMouse Wheel\nZoom in/out\nCentered on mouse position\n\n\nHorizontal Scroll\nPan view\nTwo-finger swipe on trackpads\n\n\nShift+Scroll\nPan view (maybe)\nBrowser/OS dependent",
+    "text": "Navigation\n\n\n\n\n\n\n\n\nKey\nAction\nNotes\n\n\n\n\n← →\nPan left/right\nPan by 10% of visible window\n\n\n↑ ↓\nZoom in/out\nCentered on visible window center\n\n\nMouse Wheel\nZoom in/out\nCentered on mouse position\n\n\nHorizontal Scroll\nPan view\nTwo-finger swipe on trackpads\n\n\nShift+Scroll\nPan view (maybe)\nBrowser/OS dependent",
     "crumbs": [
       "Keyboard Shortcuts"
     ]
@@ -3019,7 +3019,7 @@
     "href": "tutorial/02-exploring-audio.html#placing-the-cursor",
     "title": "2. Exploring Audio",
     "section": "Placing the Cursor",
-    "text": "Placing the Cursor\nThe cursor is a vertical red line that shows the current time position.\n\n\nClick anywhere on the waveform or spectrogram\nThe red cursor line appears at that time position\n\n\n\nCursor placement\n\n\nThe values panel updates to show acoustic measurements at the cursor time\n\n\n\n\n\n\n\n\nTip\n\n\n\nKeyboard shortcut: Use Left/Right arrow keys to move the cursor in small increments (10ms steps).",
+    "text": "Placing the Cursor\nThe cursor is a vertical red line that shows the current time position.\n\n\nClick anywhere on the waveform or spectrogram\nThe red cursor line appears at that time position\n\n\n\nCursor placement\n\n\nThe values panel updates to show acoustic measurements at the cursor time",
     "crumbs": [
       "Tutorial",
       "Complete Workflow",
@@ -3031,7 +3031,7 @@
     "href": "tutorial/02-exploring-audio.html#selecting-audio-regions",
     "title": "2. Exploring Audio",
     "section": "Selecting Audio Regions",
-    "text": "Selecting Audio Regions\nSelect a time range to play or analyze a specific section:\n\n\nClick and drag across the waveform or spectrogram\nA blue highlighted region shows your selection\n\n\n\nSelected region\n\n\nRelease the mouse to finalize the selection\nThe selection remains until you click elsewhere or press Escape\n\n\n\nTry selecting a single word or syllable in your audio. The selection will be useful for playback (next section).\n\nKeyboard shortcuts:\n\nShift + Left/Right arrows — Extend or shrink selection\nEscape — Clear selection",
+    "text": "Selecting Audio Regions\nSelect a time range to play or analyze a specific section:\n\n\nClick and drag across the waveform or spectrogram\nA blue highlighted region shows your selection\n\n\n\nSelected region\n\n\nRelease the mouse to finalize the selection\nThe selection remains until you click elsewhere or press Escape\n\n\n\nTry selecting a single word or syllable in your audio. The selection will be useful for playback (next section).\n\nKeyboard shortcut:\n\nEscape — Clear selection",
     "crumbs": [
       "Tutorial",
       "Complete Workflow",
@@ -3043,7 +3043,7 @@
     "href": "tutorial/02-exploring-audio.html#zooming",
     "title": "2. Exploring Audio",
     "section": "Zooming",
-    "text": "Zooming\nZooming lets you see fine-grained detail in the audio.\n\n\nUse Up/Down arrow keys:\n\nUp arrow → Zoom in (expands time scale)\nDown arrow → Zoom out (compresses time scale)\nZoom is centered on the cursor position\n\nOR\nUse mouse wheel (centered on mouse position):\n\nScroll up → Zoom in\nScroll down → Zoom out\n\n\n\n\nZoom demonstration\n\n\n\n\n\n\n\n\n\n\nTip\n\n\n\nArrow keys zoom centered on the cursor position, while mouse wheel zooms centered on the mouse pointer. Use whichever is more convenient!\n\n\n\nZoom Levels\nYou can zoom from:\n\nMaximum zoom out: Entire audio file visible (e.g., 0-300s)\nMaximum zoom in: Individual pitch periods visible (~20-50ms windows)\n\n\n\n\n\n\n\nNote\n\n\n\nFor files &gt;60 seconds, the spectrogram only computes for the visible time window when zoomed. This prevents UI freezing on long recordings.\n\n\nKeyboard shortcuts:\n\n+ / - keys — Zoom in/out centered on cursor\nMouse wheel — Zoom centered on mouse position (recommended)",
+    "text": "Zooming\nZooming lets you see fine-grained detail in the audio.\n\n\nUse Up/Down arrow keys:\n\nUp arrow → Zoom in (expands time scale)\nDown arrow → Zoom out (compresses time scale)\nZoom is centered on the visible window center\n\nOR\nUse mouse wheel (centered on mouse position):\n\nScroll up → Zoom in\nScroll down → Zoom out\n\n\n\n\nZoom demonstration\n\n\n\n\n\n\n\n\n\n\nTip\n\n\n\nArrow keys zoom centered on the visible window center, while mouse wheel zooms centered on the mouse pointer. Use whichever is more convenient!\n\n\n\nZoom Levels\nYou can zoom from:\n\nMaximum zoom out: Entire audio file visible (e.g., 0-300s)\nMaximum zoom in: Individual pitch periods visible (~20-50ms windows)\n\n\n\n\n\n\n\nNote\n\n\n\nFor files &gt;60 seconds, the spectrogram only computes for the visible time window when zoomed. This prevents UI freezing on long recordings.\n\n\nMouse wheel zoom:\n\nMouse wheel — Zoom centered on mouse position",
     "crumbs": [
       "Tutorial",
       "Complete Workflow",
