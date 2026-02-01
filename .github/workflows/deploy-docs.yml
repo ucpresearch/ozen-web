@@ -1,0 +1,87 @@
+name: Deploy Documentation
+
+on:
+  push:
+    branches: [master, main]
+    paths:
+      - 'docs/**'
+      - 'src/**'
+      - 'static/**'
+      - 'package.json'
+      - 'svelte.config.js'
+      - 'vite.config.ts'
+      - '.github/workflows/deploy-docs.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+
+      - name: Setup Quarto
+        uses: quarto-dev/quarto-actions/setup@v2
+        with:
+          version: '1.4.549'
+
+      - name: Install dependencies (main project)
+        run: npm ci
+
+      - name: Install dependencies (screenshots)
+        working-directory: scripts/screenshots
+        run: npm ci
+
+      - name: Install Playwright browsers
+        working-directory: scripts/screenshots
+        run: npx playwright install --with-deps chromium
+
+      - name: Build ozen-web app
+        run: npm run build
+
+      - name: Copy build to docs/live for embedded examples
+        run: ./scripts/copy-build-to-docs.sh
+
+      - name: Start preview server & capture screenshots
+        run: |
+          # Start preview server in background
+          npm run preview &
+          PREVIEW_PID=$!
+
+          # Wait for server to be ready
+          echo "Waiting for preview server..."
+          npx wait-on http://localhost:4173 --timeout 60000
+
+          # Capture screenshots
+          cd scripts/screenshots
+          npm run capture:prod || echo "Screenshot capture failed, continuing..."
+
+          # Stop preview server
+          kill $PREVIEW_PID || true
+
+      - name: Render Quarto documentation
+        run: |
+          cd docs
+          quarto render
+
+      - name: Commit rendered documentation
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add docs/*.html docs/**/*.html docs/site_libs/
+          if git diff --staged --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "Update rendered documentation [skip ci]"
+            git push
+          fi

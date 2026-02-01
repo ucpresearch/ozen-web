@@ -1,0 +1,144 @@
+project:
+  type: website
+  output-dir: .
+
+website:
+  title: "ozen-web"
+  site-url: "https://ucpresearch.github.io/ozen-web"
+  repo-url: "https://github.com/ucpresearch/ozen-web"
+  repo-actions: [edit, issue]
+
+  page-navigation: true
+  back-to-top-navigation: true
+  bread-crumbs: true
+
+  navbar:
+    background: primary
+    logo: "assets/logo.png"
+    left:
+      - text: "Home"
+        href: index.qmd
+      - text: "Getting Started"
+        href: getting-started.qmd
+      - text: "Tutorial"
+        href: tutorial/index.qmd
+      - text: "Features"
+        menu:
+          - text: "Overview"
+            href: features/overview.qmd
+          - text: "Spectrogram"
+            href: features/spectrogram.qmd
+          - text: "Waveform"
+            href: features/waveform.qmd
+          - text: "Annotations"
+            href: features/annotations.qmd
+          - text: "Acoustic Overlays"
+            href: features/acoustic-overlays.qmd
+          - text: "Data Points"
+            href: features/data-points.qmd
+          - text: "Audio Playback"
+            href: features/audio-playback.qmd
+          - text: "Mobile Viewer"
+            href: features/mobile-viewer.qmd
+      - text: "Embedding"
+        href: embedding/overview.qmd
+      - text: "Reference"
+        menu:
+          - text: "Keyboard Shortcuts"
+            href: reference/keyboard-shortcuts.qmd
+          - text: "Configuration"
+            href: reference/configuration.qmd
+          - text: "WASM Backends"
+            href: reference/backends.qmd
+          - text: "File Formats"
+            href: reference/file-formats.qmd
+      - text: "Development"
+        href: development/setup.qmd
+    right:
+      - icon: github
+        href: "https://github.com/ucpresearch/ozen-web"
+        aria-label: "GitHub repository"
+
+  sidebar:
+    - title: "Tutorial"
+      style: "docked"
+      background: light
+      contents:
+        - section: "Complete Workflow"
+          contents:
+            - tutorial/index.qmd
+            - tutorial/01-loading-audio.qmd
+            - tutorial/02-exploring-audio.qmd
+            - tutorial/03-acoustic-analysis.qmd
+            - tutorial/04-annotations.qmd
+            - tutorial/05-data-collection.qmd
+            - tutorial/06-exporting.qmd
+
+    - title: "Features"
+      contents:
+        - features/overview.qmd
+        - features/spectrogram.qmd
+        - features/waveform.qmd
+        - features/annotations.qmd
+        - features/acoustic-overlays.qmd
+        - features/data-points.qmd
+        - features/audio-playback.qmd
+        - features/mobile-viewer.qmd
+
+    - title: "Embedding"
+      contents:
+        - embedding/overview.qmd
+        - embedding/basic-usage.qmd
+        - embedding/quarto-integration.qmd
+        - embedding/url-parameters.qmd
+        - embedding/examples.qmd
+
+    - title: "Reference"
+      contents:
+        - reference/keyboard-shortcuts.qmd
+        - reference/configuration.qmd
+        - reference/backends.qmd
+        - reference/file-formats.qmd
+
+    - title: "Development"
+      contents:
+        - development/setup.qmd
+        - development/architecture.qmd
+        - development/stores.qmd
+        - development/wasm-integration.qmd
+        - development/contributing.qmd
+
+  page-footer:
+    left: |
+      Built with [Quarto](https://quarto.org/)
+    right: |
+      [GitHub](https://github.com/ucpresearch/ozen-web) |
+      [Issues](https://github.com/ucpresearch/ozen-web/issues)
+
+format:
+  html:
+    theme:
+      - cosmo
+      - assets/styles.css
+    toc: true
+    toc-depth: 3
+    toc-location: right
+    code-copy: true
+    code-fold: false
+    code-tools: true
+    code-block-bg: true
+    code-block-border-left: "#31BAE9"
+    link-external-newwindow: true
+    link-external-icon: true
+    smooth-scroll: true
+    anchor-sections: true
+    fig-responsive: true
+
+    mainfont: 'system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif'
+    monofont: '"SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace'
+
+filters:
+  - quarto
+
+metadata-files:
+  - _metadata.yml

@@ -26,3 +26,16 @@ static/pkg/
 # Logs
 *.log
 npm-debug.log*
+
+# Deployment documentation (local reference only)
+DEPLOYMENT_READY.md
+DOCUMENTATION_IMPLEMENTATION.md
+SCREENSHOTS_EXPLAINED.md
+
+# Quarto
+/.quarto/
+docs/.quarto/
+docs/_site/
+docs/*_cache/
+docs/*_files/
+docs/*.knit.md
