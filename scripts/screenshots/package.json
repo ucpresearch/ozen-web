@@ -1,0 +1,19 @@
+{
+  "name": "ozen-web-screenshots",
+  "version": "1.0.0",
+  "description": "Automated screenshot capture for ozen-web documentation",
+  "type": "module",
+  "scripts": {
+    "capture": "node capture-screenshots.js",
+    "capture:dev": "OZEN_URL=http://localhost:5173 node capture-screenshots.js",
+    "capture:prod": "OZEN_URL=http://localhost:4173 node capture-screenshots.js",
+    "install-browsers": "playwright install chromium"
+  },
+  "keywords": ["screenshots", "playwright", "documentation"],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@playwright/test": "^1.40.0",
+    "sharp": "^0.33.0"
+  }
+}

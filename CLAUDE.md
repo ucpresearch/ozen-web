@@ -108,6 +108,26 @@ ozen-web/
 │   ├── icon-512.png          # PWA splash icon
 │   ├── apple-touch-icon.png  # iOS home screen icon
 │   └── config.yaml           # Optional configuration
+├── docs/                     # Documentation (Quarto)
+│   ├── _quarto.yml           # Quarto configuration
+│   ├── index.qmd             # Landing page
+│   ├── getting-started.qmd   # Quick start guide
+│   ├── tutorial/             # Step-by-step tutorials (7 pages)
+│   ├── features/             # Feature documentation (8 pages)
+│   ├── embedding/            # Embedding guides (5 pages)
+│   ├── reference/            # Technical reference (4 pages)
+│   ├── development/          # Developer guides (5 pages)
+│   ├── screenshots/          # Generated screenshots
+│   └── _site/                # Rendered site (after quarto render)
+├── scripts/
+│   ├── create-iframe.R       # R embedding helper
+│   ├── create-iframe.py      # Python embedding helper
+│   ├── fix-relative-paths.js # Build script
+│   └── screenshots/          # Playwright screenshot automation
+│       ├── package.json
+│       ├── playwright.config.ts
+│       ├── capture-screenshots.js
+│       └── screenshot-config.json
 ├── package.json
 ├── svelte.config.js
 ├── vite.config.ts
@@ -352,6 +372,373 @@ spectrogram.free();
 
 **Important:** Always use the abstraction functions (`computePitch`, `getSpectrogramInfo`, etc.) instead of calling WASM methods directly. This ensures compatibility across all backends.
 
+## Embedding in Quarto/R Markdown
+
+The viewer can be embedded in Quarto/R Markdown documents using helper scripts that generate iframe HTML with proper paths and configuration.
+
+### Helper Scripts
+
+**Location:** `scripts/create-iframe.R` and `scripts/create-iframe.py`
+
+Both scripts:
+- Calculate correct relative paths from viewer to audio file
+- Generate iframe HTML with `data-external="1"` attribute (prevents Quarto from embedding as data URL)
+- Support customizable height (pixels or percentages)
+- Include all necessary parameters for the viewer
+
+### Usage
+
+**R (in .qmd/.Rmd):**
+```r
+source("scripts/create-iframe.R")
+
+# Basic usage (default: height=600)
+html <- create_embedded_viewer("audio.wav")
+
+# With custom overlays and height
+html <- create_embedded_viewer(
+  "audio.wav",
+  overlays = "pitch,formants,hnr",
+  height = 800           # Pixels
+)
+
+# Height as percentage
+html <- create_embedded_viewer(
+  "audio.wav",
+  overlays = "pitch,formants",
+  height = "80%"         # Percentage
+)
+
+# Render in document
+htmltools::HTML(html)
+```
+
+**Python (in .qmd/.ipynb):**
+```python
+import sys
+sys.path.append('scripts')
+from create_iframe import create_embedded_viewer
+
+# Basic usage
+html = create_embedded_viewer("audio.wav")
+
+# With custom parameters
+html = create_embedded_viewer(
+    "audio.wav",
+    overlays="pitch,formants,hnr",
+    height=800             # Pixels
+)
+
+# Height as percentage
+html = create_embedded_viewer(
+    "audio.wav",
+    overlays="pitch,formants",
+    height="80%"           # String for percentage
+)
+
+print(html)
+```
+
+**Command line:**
+```bash
+# R
+Rscript scripts/create-iframe.R audio.wav "pitch,formants" "./ozen-web/viewer.html" 800
+Rscript scripts/create-iframe.R audio.wav "pitch,formants" "./ozen-web/viewer.html" "80%"
+
+# Python
+python scripts/create-iframe.py audio.wav --overlays pitch,formants --height 800
+python scripts/create-iframe.py audio.wav --overlays pitch,formants --height 80%
+```
+
+### Parameters
+
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `audio_path` | string | required | Path to audio file (relative to current directory) |
+| `overlays` | string | `"pitch,formants"` | Comma-separated overlays: `pitch`, `formants`, `intensity`, `hnr`, `cog`, `spectraltilt`, `a1p0`, or `all` |
+| `viewer_url` | string | `"./ozen-web/viewer.html"` | Path to viewer.html |
+| `height` | int/string | `600` | Iframe height: number (pixels) or string (`"80%"`, `"90vh"`) |
+
+### Critical: Quarto `embed-resources` Setting
+
+**IMPORTANT:** The generated iframes include `data-external="1"` to prevent Quarto from converting them to data URLs when `embed-resources: true` is set.
+
+**Why this matters:**
+- Quarto's `embed-resources: true` normally embeds iframe sources as data URLs
+- ES6 module imports (used by the viewer) **cannot resolve in data URL contexts** (browser limitation)
+- Without `data-external="1"`, you'll see errors like:
+  ```
+  <link rel=modulepreload> has no `href` value
+  Failed to resolve module specifier './_app/immutable/entry/start.js'
+  ```
+
+**The scripts automatically include this attribute**, so iframes work correctly regardless of Quarto's embed-resources setting.
+
+### Serving Quarto Documents
+
+Browsers block `file://` URLs from loading iframes. You **must** serve documents over HTTP:
+
+**Python:**
+```bash
+python scripts/serve-quarto.py [directory] [port]
+# Or: python -m http.server 8000
+```
+
+**R:**
+```r
+source("scripts/serve-quarto.R")
+serve_quarto()  # Serves on http://localhost:8000
+```
+
+Then open `http://localhost:8000/your-document.html`
+
+### Example Output
+
+The scripts generate HTML like:
+```html
+<iframe
+  data-external="1"
+  src="./ozen-web/viewer.html?audio=../audio.wav&overlays=pitch,formants"
+  width="100%"
+  height="600"
+  frameborder="0"
+  style="border: 1px solid #ddd; border-radius: 4px;">
+</iframe>
+```
+
+## Documentation
+
+### Overview
+
+ozen-web includes comprehensive documentation built with **Quarto**, totaling **~36,000 words across 31 pages**. The documentation covers everything from beginner tutorials to advanced developer guides.
+
+**Location:** `docs/` directory
+
+**Rendered site:** `docs/_site/` (after building)
+
+**Live site:** https://ucpresearch.github.io/ozen-web/ (when deployed to GitHub Pages)
+
+### Documentation Structure
+
+```
+docs/
+├── index.qmd                    # Landing page (587 words)
+├── getting-started.qmd          # Quick start guide (968 words)
+├── tutorial/                    # Step-by-step tutorials (7,256 words)
+│   ├── index.qmd
+│   ├── 01-loading-audio.qmd
+│   ├── 02-exploring-audio.qmd
+│   ├── 03-acoustic-analysis.qmd
+│   ├── 04-annotations.qmd
+│   ├── 05-data-collection.qmd
+│   └── 06-exporting.qmd
+├── features/                    # Feature documentation (8,208 words)
+│   ├── overview.qmd
+│   ├── spectrogram.qmd
+│   ├── acoustic-overlays.qmd
+│   ├── annotations.qmd
+│   ├── data-points.qmd
+│   ├── waveform.qmd
+│   ├── audio-playback.qmd
+│   └── mobile-viewer.qmd
+├── embedding/                   # Embedding guides (4,984 words)
+│   ├── overview.qmd
+│   ├── basic-usage.qmd
+│   ├── url-parameters.qmd
+│   ├── quarto-integration.qmd
+│   └── examples.qmd
+├── reference/                   # Technical reference (4,496 words)
+│   ├── keyboard-shortcuts.qmd
+│   ├── configuration.qmd
+│   ├── backends.qmd
+│   └── file-formats.qmd
+├── development/                 # Developer guides (9,872 words)
+│   ├── setup.qmd
+│   ├── architecture.qmd
+│   ├── stores.qmd
+│   ├── wasm-integration.qmd
+│   └── contributing.qmd
+├── screenshots/                 # Generated screenshots (20 images)
+├── _quarto.yml                  # Quarto configuration
+└── assets/
+    └── styles.css               # Custom CSS
+```
+
+### Content Breakdown
+
+| Section | Pages | Words | Description |
+|---------|-------|-------|-------------|
+| **Landing & Getting Started** | 2 | 1,555 | Project overview and quick start |
+| **Tutorial** | 7 | 7,256 | Complete beginner workflow |
+| **Features** | 8 | 8,208 | Detailed feature documentation |
+| **Embedding** | 5 | 4,984 | Integration guides with examples |
+| **Reference** | 4 | 4,496 | Technical specifications |
+| **Development** | 5 | 9,872 | Comprehensive developer guide |
+| **TOTAL** | **31** | **36,371** | Complete documentation |
+
+### Building the Documentation
+
+**Prerequisites:**
+- Quarto 1.4.549 or later
+- Pandoc (included with Quarto)
+
+**Build commands:**
+
+```bash
+# Preview locally (with hot reload)
+cd docs
+quarto preview
+
+# Render to HTML (output: docs/_site/)
+cd docs
+quarto render
+
+# Check output
+ls -la _site/
+```
+
+**Accessing the rendered site:**
+```bash
+# After rendering, open in browser:
+open _site/index.html  # macOS
+xdg-open _site/index.html  # Linux
+start _site/index.html  # Windows
+
+# Or serve with HTTP server (required for some features):
+cd _site
+python -m http.server 8000
+# Visit http://localhost:8000
+```
+
+### Screenshot Automation
+
+The documentation includes automated screenshot capture using **Playwright**:
+
+**Location:** `scripts/screenshots/`
+
+**Generates:** 20 screenshots covering all major features
+
+**Usage:**
+```bash
+# Start dev server (terminal 1)
+npm run dev
+
+# Capture screenshots (terminal 2)
+cd scripts/screenshots
+npm install  # First time only
+npm run capture:dev
+
+# Output: docs/screenshots/*.png
+```
+
+**Screenshot scenarios:**
+- Main interface overview
+- Spectrogram with overlays
+- Annotation editing
+- Data point collection
+- Mobile viewer
+- Settings panels
+- Tutorial step-by-step visuals
+
+### Deployment to GitHub Pages
+
+**Automated deployment** via GitHub Actions (see `.github/workflows/deploy-docs.yml`):
+
+```yaml
+# On push to master (docs/** changes)
+- Build ozen-web app
+- Start preview server
+- Capture screenshots
+- Render Quarto docs
+- Deploy to gh-pages branch
+```
+
+**Manual deployment:**
+```bash
+# From docs/ directory
+quarto publish gh-pages
+
+# Or via GitHub Actions
+git push origin master  # Triggers workflow
+```
+
+**Live site:** Once deployed, documentation is available at:
+```
+https://USERNAME.github.io/ozen-web/
+```
+
+### Documentation Features
+
+**Navigation:**
+- Top navbar with main sections
+- Context-aware sidebar
+- Breadcrumbs
+- Previous/Next links in tutorial
+- Full-text search
+
+**Content:**
+- Mermaid diagrams for architecture
+- Syntax-highlighted code blocks
+- Copy buttons on code blocks
+- Tables for reference data
+- Callout boxes for warnings/notes
+- Cross-references between pages
+
+**Responsive:**
+- Mobile-friendly layout
+- Adaptive navigation
+- Touch-friendly controls
+
+### Key Documentation Pages
+
+**For users:**
+- [Getting Started](docs/getting-started.qmd) - Installation and first steps
+- [Tutorial](docs/tutorial/) - Complete workflow from loading to exporting
+- [Features](docs/features/) - All features with screenshots
+- [Keyboard Shortcuts](docs/reference/keyboard-shortcuts.qmd) - Quick reference
+
+**For embedding:**
+- [Basic Usage](docs/embedding/basic-usage.qmd) - iframe embedding guide
+- [URL Parameters](docs/embedding/url-parameters.qmd) - Complete parameter reference
+- [Quarto Integration](docs/embedding/quarto-integration.qmd) - R/Python helper scripts
+- [Examples](docs/embedding/examples.qmd) - 10 real-world copy-paste examples
+
+**For developers:**
+- [Setup](docs/development/setup.qmd) - Development environment
+- [Architecture](docs/development/architecture.qmd) - System design (2,410 words)
+- [Stores](docs/development/stores.qmd) - State management guide (2,529 words)
+- [WASM Integration](docs/development/wasm-integration.qmd) - Backend development (2,122 words)
+- [Contributing](docs/development/contributing.qmd) - Contribution workflow (2,090 words)
+
+### Maintenance
+
+**Updating documentation:**
+```bash
+# Edit .qmd files in docs/
+vim docs/tutorial/01-loading-audio.qmd
+
+# Preview changes live
+cd docs
+quarto preview  # Auto-reloads on save
+
+# Commit and push
+git add docs/
+git commit -m "docs: Update loading audio tutorial"
+git push
+```
+
+**Regenerating screenshots:**
+```bash
+# Update screenshot scenarios in scripts/screenshots/screenshot-config.json
+# Then recapture:
+npm run dev  # Terminal 1
+cd scripts/screenshots && npm run capture:dev  # Terminal 2
+```
+
+**Weekly automated updates:**
+- Screenshots refreshed via GitHub Actions (Mondays 2am UTC)
+- Ensures screenshots stay current with UI changes
+
 ## Related Projects
 
 - [ozen](../ozen) - Desktop version (Python/PyQt6)
@@ -363,3 +750,4 @@ spectrogram.free();
 - [SvelteKit documentation](https://kit.svelte.dev/docs)
 - [Web Audio API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API)
 - [Canvas API](https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API)
+- [Quarto documentation](https://quarto.org/docs/guide/) - Documentation framework

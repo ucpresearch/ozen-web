@@ -1,0 +1,221 @@
+{
+  "screenshots": [
+    {
+      "name": "main-interface-overview",
+      "route": "/",
+      "viewport": {"width": 1280, "height": 720},
+      "actions": [
+        {"type": "loadAudio", "file": "test-audio/sample.wav"},
+        {"type": "wait", "ms": 2000},
+        {"type": "toggleOverlay", "overlay": "pitch"},
+        {"type": "toggleOverlay", "overlay": "formants"},
+        {"type": "wait", "ms": 1000}
+      ],
+      "clip": null,
+      "description": "Main interface with audio loaded, pitch and formants overlays"
+    },
+    {
+      "name": "tutorial-01-empty-interface",
+      "route": "/",
+      "viewport": {"width": 1280, "height": 720},
+      "actions": [],
+      "clip": null,
+      "description": "Empty interface showing file drop zone"
+    },
+    {
+      "name": "tutorial-01-drag-drop",
+      "route": "/",
+      "viewport": {"width": 1280, "height": 720},
+      "actions": [
+        {"type": "wait", "ms": 1000}
+      ],
+      "clip": null,
+      "description": "Drag-drop interface (shows empty state - manual screenshot recommended for actual drag effect)"
+    },
+    {
+      "name": "tutorial-01-audio-loaded",
+      "route": "/",
+      "viewport": {"width": 1280, "height": 720},
+      "actions": [
+        {"type": "loadAudio", "file": "test-audio/sample.wav"},
+        {"type": "wait", "ms": 2000}
+      ],
+      "clip": null,
+      "description": "Audio successfully loaded with waveform visible"
+    },
+    {
+      "name": "tutorial-02-cursor-placement",
+      "route": "/",
+      "viewport": {"width": 1280, "height": 720},
+      "actions": [
+        {"type": "loadAudio", "file": "test-audio/sample.wav"},
+        {"type": "wait", "ms": 3000},
+        {"type": "click", "position": {"x": 640, "y": 300}}
+      ],
+      "clip": null,
+      "description": "Cursor placed at specific time position"
+    },
+    {
+      "name": "tutorial-02-selection",
+      "route": "/",
+      "viewport": {"width": 1280, "height": 720},
+      "actions": [
+        {"type": "loadAudio", "file": "test-audio/sample.wav"},
+        {"type": "wait", "ms": 3000},
+        {"type": "dragSelect", "start": {"x": 400, "y": 300}, "end": {"x": 700, "y": 300}}
+      ],
+      "clip": null,
+      "description": "Selected audio region highlighted"
+    },
+    {
+      "name": "tutorial-02-zoom-demo",
+      "route": "/",
+      "viewport": {"width": 1280, "height": 720},
+      "actions": [
+        {"type": "loadAudio", "file": "test-audio/sample.wav"},
+        {"type": "wait", "ms": 3000}
+      ],
+      "clip": null,
+      "description": "Zoom demonstration (shows default zoom - manual before/after composite recommended)"
+    },
+    {
+      "name": "tutorial-03-pitch-overlay",
+      "route": "/",
+      "viewport": {"width": 1280, "height": 720},
+      "actions": [
+        {"type": "loadAudio", "file": "test-audio/sample.wav"},
+        {"type": "wait", "ms": 2000},
+        {"type": "toggleOverlay", "overlay": "pitch"},
+        {"type": "wait", "ms": 1000}
+      ],
+      "clip": null,
+      "description": "Spectrogram with pitch overlay enabled"
+    },
+    {
+      "name": "tutorial-03-formant-overlay",
+      "route": "/",
+      "viewport": {"width": 1280, "height": 720},
+      "actions": [
+        {"type": "loadAudio", "file": "test-audio/sample.wav"},
+        {"type": "wait", "ms": 2000},
+        {"type": "toggleOverlay", "overlay": "formants"},
+        {"type": "wait", "ms": 1000}
+      ],
+      "clip": null,
+      "description": "Spectrogram with formant overlay enabled"
+    },
+    {
+      "name": "tutorial-03-all-overlays",
+      "route": "/",
+      "viewport": {"width": 1280, "height": 720},
+      "actions": [
+        {"type": "loadAudio", "file": "test-audio/sample.wav"},
+        {"type": "wait", "ms": 2000},
+        {"type": "toggleOverlay", "overlay": "pitch"},
+        {"type": "toggleOverlay", "overlay": "formants"},
+        {"type": "toggleOverlay", "overlay": "intensity"},
+        {"type": "wait", "ms": 1000}
+      ],
+      "clip": null,
+      "description": "All acoustic overlays enabled"
+    },
+    {
+      "name": "tutorial-04-multitiered",
+      "route": "/",
+      "viewport": {"width": 1280, "height": 720},
+      "actions": [
+        {"type": "loadAudio", "file": "test-audio/sample.wav"},
+        {"type": "wait", "ms": 2000},
+        {"type": "addTier", "name": "words"},
+        {"type": "addTier", "name": "phones"},
+        {"type": "wait", "ms": 500}
+      ],
+      "clip": null,
+      "description": "Multiple annotation tiers"
+    },
+    {
+      "name": "tutorial-05-datapoint-values",
+      "route": "/",
+      "viewport": {"width": 1280, "height": 720},
+      "actions": [
+        {"type": "loadAudio", "file": "test-audio/sample.wav"},
+        {"type": "wait", "ms": 3000},
+        {"type": "toggleOverlay", "overlay": "pitch"},
+        {"type": "wait", "ms": 1000},
+        {"type": "toggleOverlay", "overlay": "formants"},
+        {"type": "wait", "ms": 1000},
+        {"type": "addDataPoint", "position": {"x": 640, "y": 300}},
+        {"type": "wait", "ms": 500}
+      ],
+      "clip": null,
+      "description": "Data point with values panel showing measurements"
+    },
+    {
+      "name": "tutorial-06-export-textgrid",
+      "route": "/",
+      "viewport": {"width": 1280, "height": 720},
+      "actions": [
+        {"type": "loadAudio", "file": "test-audio/sample.wav"},
+        {"type": "wait", "ms": 3000},
+        {"type": "addTier", "name": "words"}
+      ],
+      "clip": null,
+      "description": "Interface ready for TextGrid export (native save dialog not capturable - manual screenshot recommended)"
+    },
+    {
+      "name": "mobile-viewer-landscape",
+      "route": "/viewer",
+      "viewport": {"width": 844, "height": 390},
+      "actions": [
+        {"type": "wait", "ms": 1000}
+      ],
+      "clip": null,
+      "description": "Mobile viewer in landscape mode"
+    },
+    {
+      "name": "mobile-viewer-portrait",
+      "route": "/viewer",
+      "viewport": {"width": 390, "height": 844},
+      "actions": [
+        {"type": "wait", "ms": 1000}
+      ],
+      "clip": null,
+      "description": "Mobile viewer in portrait mode"
+    },
+    {
+      "name": "data-points-collection",
+      "route": "/",
+      "viewport": {"width": 1280, "height": 720},
+      "actions": [
+        {"type": "loadAudio", "file": "test-audio/sample.wav"},
+        {"type": "wait", "ms": 3000},
+        {"type": "toggleOverlay", "overlay": "formants"},
+        {"type": "wait", "ms": 1000},
+        {"type": "addDataPoint", "position": {"x": 400, "y": 300}},
+        {"type": "wait", "ms": 300},
+        {"type": "addDataPoint", "position": {"x": 640, "y": 350}},
+        {"type": "wait", "ms": 300},
+        {"type": "addDataPoint", "position": {"x": 880, "y": 280}},
+        {"type": "wait", "ms": 500}
+      ],
+      "clip": null,
+      "description": "Multiple data points on spectrogram"
+    },
+    {
+      "name": "acoustic-overlays-all",
+      "route": "/",
+      "viewport": {"width": 1280, "height": 720},
+      "actions": [
+        {"type": "loadAudio", "file": "test-audio/sample.wav"},
+        {"type": "wait", "ms": 2000},
+        {"type": "toggleOverlay", "overlay": "pitch"},
+        {"type": "toggleOverlay", "overlay": "formants"},
+        {"type": "toggleOverlay", "overlay": "intensity"},
+        {"type": "toggleOverlay", "overlay": "hnr"},
+        {"type": "wait", "ms": 1000}
+      ],
+      "clip": null,
+      "description": "All acoustic overlays enabled with annotations"
+    }
+  ]
+}

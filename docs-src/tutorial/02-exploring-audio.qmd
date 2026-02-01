@@ -70,22 +70,23 @@ Try selecting a single word or syllable in your audio. The selection will be use
 
 Zooming lets you see fine-grained detail in the audio.
 
-### Zoom with Mouse Wheel
-
 ::: {.tutorial-steps}
-1. **Hover your mouse** over the spectrogram or waveform
+1. **Use Up/Down arrow keys**:
+   - **Up arrow** → Zoom in (expands time scale)
+   - **Down arrow** → Zoom out (compresses time scale)
+   - Zoom is centered on the **cursor position**
 
-2. **Scroll the mouse wheel**:
-   - **Scroll up** → Zoom in (expands time scale)
-   - **Scroll down** → Zoom out (compresses time scale)
+   OR
 
-3. Zoom is **centered on the mouse cursor position**
+2. **Use mouse wheel** (centered on mouse position):
+   - **Scroll up** → Zoom in
+   - **Scroll down** → Zoom out
 
    ![Zoom demonstration](../screenshots/tutorial-02-zoom-demo.png){.screenshot}
 :::
 
 ::: {.callout-tip}
-Zoom is centered on your mouse position, so place the mouse over the region you want to examine before scrolling.
+**Arrow keys** zoom centered on the cursor position, while **mouse wheel** zooms centered on the mouse pointer. Use whichever is more convenient!
 :::
 
 ### Zoom Levels
@@ -108,25 +109,20 @@ For files >60 seconds, the spectrogram only computes for the visible time window
 
 Pan the view to explore different parts of the audio horizontally.
 
-### Trackpad Users
-
-**Two-finger horizontal swipe** pans smoothly left/right.
-
-### Mouse Users
-
-Mouse panning options vary by browser/OS:
-
 ::: {.tutorial-steps}
-1. **Try Shift+Scroll** — Some systems translate this to horizontal scroll
-2. **If that doesn't work**, use the **zoom-to-navigate** approach:
-   - Click where you want to center the view
-   - Zoom in (scroll up) to focus on that location
-   - Zoom out (scroll down) to see more context
-   - Repeat to navigate
+1. **Press Left/Right arrow keys** to pan left or right (10% of visible window per press)
+
+   OR
+
+2. **Two-finger horizontal swipe** on trackpad
+
+   OR
+
+3. **Shift+Scroll** on some mouse/browser combinations
 :::
 
-::: {.callout-note}
-**No native mouse drag panning**: The app reserves click-and-drag for selecting audio regions. Horizontal scrolling (via trackpad or Shift+scroll) is currently the only direct panning method.
+::: {.callout-tip}
+**Arrow keys** are the recommended way to pan for all users - they work consistently across all platforms and browsers.
 :::
 
 ## Playing Audio

@@ -174,6 +174,23 @@
 				e.preventDefault();
 				playVisible();
 				break;
+			// Arrow keys for navigation
+			case 'ArrowLeft':
+				e.preventDefault();
+				panView(-0.1); // Pan left (10% of visible window)
+				break;
+			case 'ArrowRight':
+				e.preventDefault();
+				panView(0.1); // Pan right (10% of visible window)
+				break;
+			case 'ArrowUp':
+				e.preventDefault();
+				zoomView(0.91); // Zoom in (same as scroll up)
+				break;
+			case 'ArrowDown':
+				e.preventDefault();
+				zoomView(1.1); // Zoom out (same as scroll down)
+				break;
 			// Number keys 1-5 to switch tiers
 			case 'Digit1':
 			case 'Digit2':
@@ -186,6 +203,62 @@
 				}
 				break;
 		}
+	}
+
+	/**
+	 * Pan the view left or right by a fraction of the visible window.
+	 * @param fraction - Fraction of current window to pan (negative = left, positive = right)
+	 */
+	function panView(fraction: number) {
+		if (!$audioBuffer) return;
+
+		const duration = $audioBuffer.length / $sampleRate;
+		const { start, end } = $timeRange;
+		const currentDuration = end - start;
+		const panAmount = currentDuration * fraction;
+
+		let newStart = start + panAmount;
+		let newEnd = end + panAmount;
+
+		// Clamp to audio bounds
+		if (newStart < 0) {
+			newStart = 0;
+			newEnd = currentDuration;
+		}
+		if (newEnd > duration) {
+			newEnd = duration;
+			newStart = duration - currentDuration;
+		}
+
+		timeRange.set({ start: newStart, end: newEnd });
+	}
+
+	/**
+	 * Zoom in or out, centered on the current cursor position.
+	 * @param factor - Zoom factor (< 1 = zoom in, > 1 = zoom out)
+	 */
+	function zoomView(factor: number) {
+		if (!$audioBuffer) return;
+
+		const duration = $audioBuffer.length / $sampleRate;
+		const { start, end } = $timeRange;
+		const currentDuration = end - start;
+		const centerTime = $cursorPosition;
+
+		// Calculate new duration
+		const newDuration = Math.max(0.01, Math.min(duration, currentDuration * factor));
+
+		// Zoom centered on cursor position
+		const ratio = (centerTime - start) / currentDuration;
+		let newStart = Math.max(0, centerTime - ratio * newDuration);
+		let newEnd = Math.min(duration, newStart + newDuration);
+
+		// Adjust if we hit the end boundary
+		if (newEnd === duration) {
+			newStart = Math.max(0, newEnd - newDuration);
+		}
+
+		timeRange.set({ start: newStart, end: newEnd });
 	}
 
 	async function handleFile(file: File) {
@@ -746,7 +819,7 @@
 
 			<footer class="status-bar">
 				<span>View: {formatTime($timeRange.start)} - {formatTime($timeRange.end)}</span>
-				<span>Space: play | Tab: play visible | Scroll: zoom</span>
+				<span>Space: play | Tab: play visible | Arrows: navigate/zoom</span>
 			</footer>
 		</div>
 	{/if}

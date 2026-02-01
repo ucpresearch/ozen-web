@@ -6,6 +6,8 @@ Usage:
     python create-iframe.py audio.wav
     python create-iframe.py audio.wav --overlays pitch,formants,hnr
     python create-iframe.py samples/audio.wav --viewer-url ./ozen-web/viewer.html
+    python create-iframe.py audio.wav --overlays pitch,formants --height 800
+    python create-iframe.py audio.wav --overlays pitch,formants --height 80%
 
 The script calculates the correct relative path from the viewer to the audio file.
 
@@ -61,8 +63,19 @@ def calculate_relative_path(audio_path, viewer_url):
         path_parts = ['..'] * ups + list(downs)
         return '/'.join(path_parts)
 
-def create_embedded_viewer(audio_path, overlays="pitch,formants", viewer_url="./ozen-web/viewer.html"):
-    """Create iframe HTML with audio path."""
+def create_embedded_viewer(audio_path, overlays="pitch,formants", viewer_url="./ozen-web/viewer.html", height=600):
+    """
+    Create iframe HTML with audio path.
+
+    Args:
+        audio_path: Path to audio file
+        overlays: Comma-separated list of overlays (default: "pitch,formants")
+        viewer_url: Path to viewer.html (default: "./ozen-web/viewer.html")
+        height: Iframe height - int (pixels) or str (e.g., "80%") (default: 600)
+
+    Returns:
+        HTML string for iframe
+    """
     audio_file = Path(audio_path)
 
     if not audio_file.exists():
@@ -74,11 +87,15 @@ def create_embedded_viewer(audio_path, overlays="pitch,formants", viewer_url="./
     # URL encode the path (keep slashes for readability)
     encoded_path = quote(audio_relative, safe='/')
 
-    # Create iframe
+    # Format height - convert int to string, keep strings as-is
+    height_str = str(height)
+
+    # Create iframe with data-external="1" to prevent Quarto from embedding it as data URL
     iframe = f'''<iframe
+  data-external="1"
   src="{viewer_url}?audio={encoded_path}&overlays={overlays}"
   width="100%"
-  height="600"
+  height="{height_str}"
   frameborder="0"
   style="border: 1px solid #ddd; border-radius: 4px;">
 </iframe>'''
@@ -87,13 +104,16 @@ def create_embedded_viewer(audio_path, overlays="pitch,formants", viewer_url="./
 
 if __name__ == "__main__":
     if len(sys.argv) < 2:
-        print("Usage: python create-iframe.py <audio-file> [--overlays pitch,formants] [--viewer-url ./ozen-web/viewer.html]")
-        print("\nExample: python create-iframe.py audio.wav --overlays pitch,formants,hnr")
+        print("Usage: python create-iframe.py <audio-file> [--overlays pitch,formants] [--viewer-url ./ozen-web/viewer.html] [--height 600]")
+        print("\nExamples:")
+        print("  python create-iframe.py audio.wav --overlays pitch,formants,hnr --height 800")
+        print("  python create-iframe.py audio.wav --overlays pitch,formants --height 80%")
         sys.exit(1)
 
     audio_path = sys.argv[1]
     overlays = "pitch,formants"
     viewer_url = "./ozen-web/viewer.html"
+    height = 600
 
     # Parse optional arguments
     i = 2
@@ -104,12 +124,21 @@ if __name__ == "__main__":
         elif sys.argv[i] == "--viewer-url" and i + 1 < len(sys.argv):
             viewer_url = sys.argv[i + 1]
             i += 2
+        elif sys.argv[i] == "--height" and i + 1 < len(sys.argv):
+            # Height can be numeric (pixels) or string (percentage)
+            height_arg = sys.argv[i + 1]
+            # Try to convert to int if numeric, otherwise keep as string
+            try:
+                height = int(height_arg)
+            except ValueError:
+                height = height_arg
+            i += 2
         else:
             print(f"Unknown argument: {sys.argv[i]}", file=sys.stderr)
             sys.exit(1)
 
     try:
-        html = create_embedded_viewer(audio_path, overlays, viewer_url)
+        html = create_embedded_viewer(audio_path, overlays, viewer_url, height)
         print(html)
     except Exception as e:
         print(f"Error: {e}", file=sys.stderr)

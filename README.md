@@ -2,6 +2,16 @@
 
 A web-based acoustic analysis and annotation tool for speech research. This is the browser version of [Ozen](https://github.com/your-repo/ozen), providing Praat-compatible analysis entirely in the browser.
 
+## Documentation
+
+**📚 Full documentation available at:** [https://ucpresearch.github.io/ozen-web/](https://ucpresearch.github.io/ozen-web/)
+
+- **[Getting Started](https://ucpresearch.github.io/ozen-web/getting-started.html)** — Installation and first use
+- **[Tutorial](https://ucpresearch.github.io/ozen-web/tutorial/)** — Complete workflow guide (30 minutes)
+- **[Features](https://ucpresearch.github.io/ozen-web/features/)** — Detailed feature documentation
+- **[Embedding Guide](https://ucpresearch.github.io/ozen-web/embedding/)** — Embed in websites and documents
+- **[Reference](https://ucpresearch.github.io/ozen-web/reference/)** — Keyboard shortcuts, configuration, file formats
+
 ## Features
 
 - **Audio Analysis**: Load WAV, FLAC, MP3, or OGG files for acoustic analysis
@@ -103,12 +113,15 @@ your-project/
 
 ```html
 <iframe
+  data-external="1"
   src="./ozen-web/viewer.html?audio=https://cdn.example.com/audio.wav&overlays=pitch,formants,hnr"
   width="100%"
   height="600"
   frameborder="0">
 </iframe>
 ```
+
+**Note**: The `data-external="1"` attribute is required when using Quarto with `embed-resources: true` (see Important section below).
 
 ### URL Parameters
 
@@ -166,6 +179,7 @@ Control which acoustic overlays are displayed.
 ```bash
 python scripts/create-iframe.py audio.wav
 python scripts/create-iframe.py audio.wav --overlays pitch,formants,hnr
+python scripts/create-iframe.py audio.wav --overlays pitch,formants --height 800
 python scripts/create-iframe.py samples/audio.wav --viewer-url ./ozen-web/viewer.html
 ```
 
@@ -175,8 +189,14 @@ import sys
 sys.path.append('scripts')
 from create_iframe import create_embedded_viewer
 
-# Generate iframe HTML
+# Generate iframe HTML (default height: 600)
 html = create_embedded_viewer("audio.wav", overlays="pitch,formants,hnr")
+
+# Custom height in pixels
+html = create_embedded_viewer("audio.wav", overlays="pitch,formants", height=800)
+
+# Custom height as percentage
+html = create_embedded_viewer("audio.wav", overlays="pitch,formants", height="80%")
 print(html)
 ```
 
@@ -184,15 +204,22 @@ print(html)
 ```bash
 Rscript scripts/create-iframe.R audio.wav
 Rscript scripts/create-iframe.R audio.wav "pitch,formants,hnr"
-Rscript scripts/create-iframe.R samples/audio.wav "pitch,formants" "./ozen-web/viewer.html"
+Rscript scripts/create-iframe.R audio.wav "pitch,formants" "./ozen-web/viewer.html"
+Rscript scripts/create-iframe.R audio.wav "pitch,formants" "./ozen-web/viewer.html" 800
 ```
 
 **R (In R Markdown/Quarto):**
 ```r
 source("scripts/create-iframe.R")
 
-# Generate iframe HTML
+# Generate iframe HTML (default height: 600)
 html <- create_embedded_viewer("audio.wav", overlays = "pitch,formants,hnr")
+
+# Custom height in pixels
+html <- create_embedded_viewer("audio.wav", overlays = "pitch,formants", height = 800)
+
+# Custom height as percentage
+html <- create_embedded_viewer("audio.wav", overlays = "pitch,formants", height = "80%")
 htmltools::HTML(html)
 ```
 
@@ -202,27 +229,27 @@ The scripts automatically calculate the correct relative path from the viewer to
 
 **Minimal** (defaults):
 ```html
-<iframe src="./ozen-web/viewer.html?audio=audio.wav"></iframe>
+<iframe data-external="1" src="./ozen-web/viewer.html?audio=audio.wav"></iframe>
 ```
 
 **Custom overlays**:
 ```html
-<iframe src="./ozen-web/viewer.html?audio=audio.wav&overlays=pitch,formants,intensity,hnr"></iframe>
+<iframe data-external="1" src="./ozen-web/viewer.html?audio=audio.wav&overlays=pitch,formants,intensity,hnr"></iframe>
 ```
 
 **All overlays**:
 ```html
-<iframe src="./ozen-web/viewer.html?audio=audio.wav&overlays=all"></iframe>
+<iframe data-external="1" src="./ozen-web/viewer.html?audio=audio.wav&overlays=all"></iframe>
 ```
 
 **Remote CDN**:
 ```html
-<iframe src="./ozen-web/viewer.html?audio=https://cdn.example.com/sample.wav&overlays=pitch,formants"></iframe>
+<iframe data-external="1" src="./ozen-web/viewer.html?audio=https://cdn.example.com/sample.wav&overlays=pitch,formants"></iframe>
 ```
 
 **Relative path (use helper scripts for correct calculation)**:
 ```html
-<iframe src="./ozen-web/viewer.html?audio=../audio.wav&overlays=pitch,formants"></iframe>
+<iframe data-external="1" src="./ozen-web/viewer.html?audio=../audio.wav&overlays=pitch,formants"></iframe>
 ```
 
 ### Error Handling
@@ -233,6 +260,28 @@ If audio fails to load:
 3. Manual file load/record options remain available
 
 User can still toggle overlays via settings drawer regardless of URL configuration.
+
+### Important: Quarto `embed-resources` Setting
+
+**CRITICAL**: When using Quarto with `embed-resources: true`, you **must** add `data-external="1"` to iframe tags to prevent Quarto from embedding the viewer as a data URL:
+
+```html
+<iframe
+  data-external="1"
+  src="./ozen-web/viewer.html?audio=audio.wav&overlays=pitch,formants"
+  width="100%"
+  height="600">
+</iframe>
+```
+
+**Why?** Quarto's `embed-resources: true` converts iframe sources to data URLs by default. However, the viewer uses ES6 module imports which **cannot resolve** in data URL contexts - this is a browser limitation. Without `data-external="1"`, you'll see console errors like:
+
+```
+<link rel=modulepreload> has no `href` value
+Failed to resolve module specifier './_app/immutable/entry/start.js'
+```
+
+**The helper scripts (`create-iframe.R` and `create-iframe.py`) automatically include this attribute**, so use them when possible.
 
 ### Important: Serving Quarto/R Markdown Documents
 
@@ -270,6 +319,7 @@ servr::httd(port = 8000)
 
 ### Limitations
 
+- **Quarto embed-resources**: Must use `data-external="1"` attribute on iframes (see section above)
 - **Remote files**: Recommended <100MB (browser memory)
 - **HTTPS**: Remote URLs require HTTPS on HTTPS pages
 - **Local viewing**: Must use HTTP server, not `file://` URLs (browsers block file:// iframes)

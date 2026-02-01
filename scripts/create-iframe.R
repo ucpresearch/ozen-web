@@ -5,10 +5,14 @@
 #'   Rscript create-iframe.R audio.wav
 #'   Rscript create-iframe.R audio.wav "pitch,formants,hnr"
 #'   Rscript create-iframe.R audio.wav "pitch,formants" "./ozen-web/viewer.html"
+#'   Rscript create-iframe.R audio.wav "pitch,formants" "./ozen-web/viewer.html" 800
+#'   Rscript create-iframe.R audio.wav "pitch,formants" "./ozen-web/viewer.html" "80%"
 #'
 #' Usage in R Markdown/Quarto:
 #'   source("scripts/create-iframe.R")
 #'   html <- create_embedded_viewer("audio.wav", overlays = "pitch,formants,hnr")
+#'   html <- create_embedded_viewer("audio.wav", overlays = "pitch,formants", height = 800)
+#'   html <- create_embedded_viewer("audio.wav", overlays = "pitch,formants", height = "80%")
 #'   htmltools::HTML(html)
 #'
 #' IMPORTANT: To view the generated HTML locally, you must serve it over HTTP:
@@ -44,12 +48,13 @@ calculate_relative_path <- function(audio_path, viewer_url) {
   return(relative_path)
 }
 
-create_embedded_viewer <- function(audio_path, overlays = "pitch,formants", viewer_url = "./ozen-web/viewer.html") {
+create_embedded_viewer <- function(audio_path, overlays = "pitch,formants", viewer_url = "./ozen-web/viewer.html", height = 600) {
   #' Create iframe HTML with audio path
   #'
   #' @param audio_path Path to audio file
   #' @param overlays Comma-separated list of overlays (default: "pitch,formants")
   #' @param viewer_url Path to viewer.html (default: "./ozen-web/viewer.html")
+  #' @param height Iframe height: number (pixels) or string (e.g., "80%") (default: 600)
   #' @return HTML string for iframe
 
   # Check file exists
@@ -63,18 +68,23 @@ create_embedded_viewer <- function(audio_path, overlays = "pitch,formants", view
   # URL encode (keep slashes for readability)
   encoded <- URLencode(audio_relative, reserved = FALSE)
 
-  # Create iframe
+  # Format height - convert number to string, keep strings as-is
+  height_str <- as.character(height)
+
+  # Create iframe with data-external="1" to prevent Quarto from embedding it as data URL
   iframe <- sprintf(
     '<iframe
+  data-external="1"
   src="%s?audio=%s&overlays=%s"
   width="100%%"
-  height="600"
+  height="%s"
   frameborder="0"
   style="border: 1px solid #ddd; border-radius: 4px;">
 </iframe>',
     viewer_url,
     encoded,
-    overlays
+    overlays,
+    height_str
   )
 
   return(iframe)
@@ -85,17 +95,20 @@ if (sys.nframe() == 0) {
   args <- commandArgs(trailingOnly = TRUE)
 
   if (length(args) < 1) {
-    cat("Usage: Rscript create-iframe.R <audio-file> [overlays] [viewer-url]\n")
-    cat("Example: Rscript create-iframe.R audio.wav 'pitch,formants,hnr' './ozen-web/viewer.html'\n")
+    cat("Usage: Rscript create-iframe.R <audio-file> [overlays] [viewer-url] [height]\n")
+    cat("Example: Rscript create-iframe.R audio.wav 'pitch,formants,hnr' './ozen-web/viewer.html' 800\n")
+    cat("         Rscript create-iframe.R audio.wav 'pitch,formants' './ozen-web/viewer.html' '80%'\n")
     quit(status = 1)
   }
 
   audio_path <- args[1]
   overlays <- if (length(args) >= 2) args[2] else "pitch,formants"
   viewer_url <- if (length(args) >= 3) args[3] else "./ozen-web/viewer.html"
+  # Height can be numeric (pixels) or string (percentage)
+  height <- if (length(args) >= 4) args[4] else 600
 
   tryCatch({
-    html <- create_embedded_viewer(audio_path, overlays, viewer_url)
+    html <- create_embedded_viewer(audio_path, overlays, viewer_url, height)
     cat(html, "\n")
   }, error = function(e) {
     cat("Error:", conditionMessage(e), "\n", file = stderr())

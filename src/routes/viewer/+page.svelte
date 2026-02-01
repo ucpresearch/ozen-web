@@ -60,6 +60,9 @@
 	/** Maximum frequency for spectrogram display (Hz) */
 	let maxFrequency = 5000;
 
+	/** Whether to show the debug console (Eruda) */
+	let showDebugConsole = false;
+
 	/** Start time for drag-to-select gesture */
 	let selectionStartTime: number | null = null;
 
@@ -695,6 +698,32 @@
 		showSettings = false;
 	}
 
+	/**
+	 * Toggle debug console (Eruda).
+	 * Loads Eruda dynamically when first enabled.
+	 */
+	function toggleDebugConsole() {
+		showDebugConsole = !showDebugConsole;
+
+		if (showDebugConsole) {
+			// Load Eruda dynamically
+			if (!(window as any).eruda) {
+				const script = document.createElement('script');
+				script.src = 'https://cdn.jsdelivr.net/npm/eruda';
+				script.onload = () => {
+					(window as any).eruda.init();
+				};
+				document.head.appendChild(script);
+			} else {
+				(window as any).eruda.show();
+			}
+		} else {
+			if ((window as any).eruda) {
+				(window as any).eruda.hide();
+			}
+		}
+	}
+
 	// ─────────────────────────────────────────────────────────────────────────────
 	// Value Formatting Helpers
 	// ─────────────────────────────────────────────────────────────────────────────
@@ -772,6 +801,52 @@
 	// Clipboard Copy Functions
 	// ─────────────────────────────────────────────────────────────────────────────
 
+	// ─────────────────────────────────────────────────────────────────────────────
+	// Copy Notification State
+	// ─────────────────────────────────────────────────────────────────────────────
+
+	let showCopyNotification = false;
+	let copyNotificationTimer: ReturnType<typeof setTimeout> | null = null;
+
+	/**
+	 * Show a brief "Copied!" notification.
+	 */
+	function showCopyFeedback() {
+		showCopyNotification = true;
+		if (copyNotificationTimer) {
+			clearTimeout(copyNotificationTimer);
+		}
+		copyNotificationTimer = setTimeout(() => {
+			showCopyNotification = false;
+			copyNotificationTimer = null;
+		}, 2000);
+	}
+
+	/**
+	 * Copy text to clipboard using fallback method for mobile.
+	 * Uses document.execCommand('copy') which works better with setTimeout.
+	 */
+	function copyToClipboardFallback(text: string): boolean {
+		const textarea = document.createElement('textarea');
+		textarea.value = text;
+		textarea.style.position = 'fixed';
+		textarea.style.top = '0';
+		textarea.style.left = '0';
+		textarea.style.opacity = '0';
+		document.body.appendChild(textarea);
+		textarea.focus();
+		textarea.select();
+
+		try {
+			const successful = document.execCommand('copy');
+			document.body.removeChild(textarea);
+			return successful;
+		} catch (err) {
+			document.body.removeChild(textarea);
+			return false;
+		}
+	}
+
 	/**
 	 * Copy acoustic values at cursor to clipboard.
 	 * Only includes values for currently visible overlays.
@@ -779,7 +854,6 @@
 	 */
 	async function copyValuesToClipboard() {
 		if (!cursorValues) {
-			console.log('No values at cursor');
 			return;
 		}
 
@@ -838,11 +912,16 @@
 
 		const text = parts.join(', ');
 
+		// Try modern clipboard API first, fall back to execCommand for mobile
 		try {
 			await navigator.clipboard.writeText(text);
-			console.log('Copied values to clipboard:', text);
+			showCopyFeedback();
 		} catch (err) {
-			console.error('Failed to copy to clipboard:', err);
+			// Fallback for mobile browsers where clipboard API doesn't work with setTimeout
+			const success = copyToClipboardFallback(text);
+			if (success) {
+				showCopyFeedback();
+			}
 		}
 	}
 
@@ -862,7 +941,10 @@
 	// ─────────────────────────────────────────────────────────────────────────────
 
 	let longPressTimer: number | null = null;
+	let longPressStartX: number | null = null;
+	let longPressStartY: number | null = null;
 	const LONG_PRESS_DURATION = 500; // ms
+	const LONG_PRESS_MOVE_THRESHOLD = 10; // pixels - allow small movements
 
 	/**
 	 * Start long press timer on touch start.
@@ -871,25 +953,57 @@
 		// Only trigger on single finger touch
 		if (e.touches.length !== 1) return;
 
+		const touch = e.touches[0];
+		longPressStartX = touch.clientX;
+		longPressStartY = touch.clientY;
+
 		longPressTimer = window.setTimeout(() => {
 			copyValuesToClipboard();
 			longPressTimer = null;
+			longPressStartX = null;
+			longPressStartY = null;
 		}, LONG_PRESS_DURATION);
 	}
 
 	/**
-	 * Cancel long press timer on touch end/move.
+	 * Cancel long press timer if moved too far.
+	 */
+	function handleTouchMove(e: TouchEvent) {
+		if (longPressTimer === null || e.touches.length !== 1) return;
+		if (longPressStartX === null || longPressStartY === null) return;
+
+		const touch = e.touches[0];
+		const dx = touch.clientX - longPressStartX;
+		const dy = touch.clientY - longPressStartY;
+		const distance = Math.sqrt(dx * dx + dy * dy);
+
+		// Only cancel if movement exceeds threshold
+		if (distance > LONG_PRESS_MOVE_THRESHOLD) {
+			clearTimeout(longPressTimer);
+			longPressTimer = null;
+			longPressStartX = null;
+			longPressStartY = null;
+		}
+	}
+
+	/**
+	 * Cancel long press timer on touch end.
 	 */
 	function handleTouchEnd() {
 		if (longPressTimer !== null) {
 			clearTimeout(longPressTimer);
 			longPressTimer = null;
 		}
+		longPressStartX = null;
+		longPressStartY = null;
 	}
 
 	onDestroy(() => {
 		if (longPressTimer !== null) {
 			clearTimeout(longPressTimer);
+		}
+		if (copyNotificationTimer !== null) {
+			clearTimeout(copyNotificationTimer);
 		}
 	});
 </script>
@@ -1081,9 +1195,9 @@
 			class="gesture-container"
 			bind:this={gestureContainer}
 			on:touchstart={handleTouchStart}
+			on:touchmove={handleTouchMove}
 			on:touchend={handleTouchEnd}
 			on:touchcancel={handleTouchEnd}
-			on:touchmove={handleTouchEnd}
 		>
 			<div class="waveform-panel">
 				<Waveform />
@@ -1126,6 +1240,13 @@
 				</svg>
 			{/if}
 		</button>
+
+		<!-- Copy notification toast -->
+		{#if showCopyNotification}
+			<div class="copy-notification">
+				Copied!
+			</div>
+		{/if}
 
 		<!-- Settings drawer -->
 		{#if showSettings}
@@ -1180,9 +1301,16 @@
 					</select>
 				</label>
 
+				<h4>Developer</h4>
+				<label class="toggle-row">
+					<input type="checkbox" checked={showDebugConsole} on:change={toggleDebugConsole} />
+					<span class="toggle-label">Debug Console</span>
+				</label>
+
 				<div class="help-text">
 					<strong>Gestures:</strong><br/>
 					Tap: position cursor<br/>
+					Long press: copy values<br/>
 					Drag (1 finger): select region<br/>
 					Drag (2 fingers): pan view<br/>
 					Pinch: zoom in/out
@@ -1623,6 +1751,34 @@
 	.time-axis-panel {
 		height: 20px;
 		flex-shrink: 0;
+	}
+
+	/* ═══════════════════════════════════════════════════════════════════════════
+	   COPY NOTIFICATION
+	   Toast notification that appears briefly when values are copied
+	   ═══════════════════════════════════════════════════════════════════════════ */
+	.copy-notification {
+		position: fixed;
+		top: calc(50% - 30px);
+		left: 50%;
+		transform: translateX(-50%);
+		padding: 0.75rem 1.5rem;
+		background: rgba(0, 0, 0, 0.85);
+		color: white;
+		border-radius: 8px;
+		font-size: 0.9rem;
+		font-weight: 500;
+		z-index: 300;
+		pointer-events: none;
+		box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+		animation: fadeInOut 2s ease-in-out;
+	}
+
+	@keyframes fadeInOut {
+		0% { opacity: 0; transform: translateX(-50%) translateY(-10px); }
+		10% { opacity: 1; transform: translateX(-50%) translateY(0); }
+		90% { opacity: 1; transform: translateX(-50%) translateY(0); }
+		100% { opacity: 0; transform: translateX(-50%) translateY(-10px); }
 	}
 
 	/* ═══════════════════════════════════════════════════════════════════════════

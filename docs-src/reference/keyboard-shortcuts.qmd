@@ -23,9 +23,11 @@ Keyboard shortcuts dramatically speed up your workflow in Ozen-web. This page li
 
 | Key | Action | Notes |
 |-----|--------|-------|
-| <kbd>Mouse Wheel</kbd> | Zoom in/out | Centered on mouse cursor position |
-| <kbd>Horizontal Scroll</kbd> | Pan view | Two-finger swipe on trackpads, or Shift+scroll on some systems |
-| <kbd>Shift</kbd>+<kbd>Scroll</kbd> | Pan view (maybe) | Browser/OS dependent — may produce horizontal scroll |
+| <kbd>←</kbd> <kbd>→</kbd> | Pan left/right | Pan by 10% of visible window |
+| <kbd>↑</kbd> <kbd>↓</kbd> | Zoom in/out | Centered on cursor position |
+| <kbd>Mouse Wheel</kbd> | Zoom in/out | Centered on mouse position |
+| <kbd>Horizontal Scroll</kbd> | Pan view | Two-finger swipe on trackpads |
+| <kbd>Shift</kbd>+<kbd>Scroll</kbd> | Pan view (maybe) | Browser/OS dependent |
 
 ## Editing (Annotations & Data Points)
 
@@ -148,8 +150,10 @@ Print-friendly quick reference:
 | **Playback** | Space | Play selection |
 | | Tab | Play window |
 | | Esc | Stop |
-| **Navigate** | Wheel | Zoom (vertical scroll) |
-| | Horizontal scroll | Pan (trackpad or Shift+scroll) |
+| **Navigate** | ←→ | Pan left/right |
+| | ↑↓ | Zoom in/out |
+| | Wheel | Zoom (centered on mouse) |
+| | Horizontal scroll | Pan (trackpad) |
 | **Edit** | Ctrl+Z | Undo |
 | | Ctrl+Y | Redo |
 | | Ctrl+C | Copy data points |
@@ -161,21 +165,10 @@ Print-friendly quick reference:
 | | Right-click | Remove |
 :::
 
-## Mouse-Only Users
+::: {.callout-tip}
+## Arrow Keys Work Everywhere
 
-::: {.callout-warning}
-## Panning Limitation
-
-Ozen-web currently lacks click-and-drag panning for mouse users. Horizontal panning requires:
-
-- **Trackpad**: Two-finger horizontal swipe
-- **Mouse**: Shift+Scroll (works on some browsers/OS combinations)
-
-**If Shift+Scroll doesn't work**, use this workaround:
-1. Click on the waveform/spectrogram where you want to focus
-2. Zoom in (scroll up) to center on that location
-3. Zoom out (scroll down) to see more context
-4. Repeat to navigate different regions
+The **arrow keys** (←→ for panning, ↑↓ for zooming) work consistently across all browsers and operating systems, making them the most reliable navigation method.
 :::
 
 ## Browser-Specific Notes

@@ -43,7 +43,7 @@ function fixHtmlFile(filePath) {
 	// This pattern appears when rebuild occurs after a previous build
 	content = content.replace(
 		/base:\s*new URL\("\."\s*,\s*location\)\.pathname\.slice\(0,\s*-1\)/g,
-		'base: location.protocol === "data:" ? "" : new URL(".", location).pathname.slice(0, -1)'
+		'base: location.protocol === "data:" ? "" : new URL(".", location.href).pathname.slice(0, -1)'
 	);
 
 	if (content !== originalContent) {

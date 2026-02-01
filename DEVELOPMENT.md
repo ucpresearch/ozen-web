@@ -2,6 +2,17 @@
 
 This guide covers setting up ozen-web for development and deployment.
 
+## Documentation
+
+**📚 Full documentation:** [https://ucpresearch.github.io/ozen-web/](https://ucpresearch.github.io/ozen-web/)
+
+For detailed development documentation, see:
+
+- **[Architecture](https://ucpresearch.github.io/ozen-web/development/architecture.html)** — Technical design and system overview
+- **[Development Setup](https://ucpresearch.github.io/ozen-web/development/setup.html)** — Detailed setup instructions
+- **[WASM Integration](https://ucpresearch.github.io/ozen-web/development/wasm-integration.html)** — Working with acoustic backends
+- **[Contributing Guide](https://ucpresearch.github.io/ozen-web/development/contributing.html)** — How to contribute
+
 ## Prerequisites
 
 - [Node.js](https://nodejs.org/) 18+
