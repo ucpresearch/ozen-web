@@ -516,7 +516,7 @@
     "href": "reference/keyboard-shortcuts.html#navigation",
     "title": "Keyboard Shortcuts",
     "section": "Navigation",
-    "text": "Navigation\n\n\n\n\n\n\n\n\nKey\nAction\nNotes\n\n\n\n\nMouse Wheel\nZoom in/out\nCentered on mouse cursor position\n\n\nHorizontal Scroll\nPan view\nTwo-finger swipe on trackpads, or Shift+scroll on some systems\n\n\nShift+Scroll\nPan view (maybe)\nBrowser/OS dependent — may produce horizontal scroll",
+    "text": "Navigation\n\n\n\n\n\n\n\n\nKey\nAction\nNotes\n\n\n\n\n← →\nPan left/right\nPan by 10% of visible window\n\n\n↑ ↓\nZoom in/out\nCentered on cursor position\n\n\nMouse Wheel\nZoom in/out\nCentered on mouse position\n\n\nHorizontal Scroll\nPan view\nTwo-finger swipe on trackpads\n\n\nShift+Scroll\nPan view (maybe)\nBrowser/OS dependent",
     "crumbs": [
       "Keyboard Shortcuts"
     ]
@@ -606,17 +606,7 @@
     "href": "reference/keyboard-shortcuts.html#quick-reference-card",
     "title": "Keyboard Shortcuts",
     "section": "Quick Reference Card",
-    "text": "Quick Reference Card\nPrint-friendly quick reference:\n\n\n\n\nCategory\nKey\nAction\n\n\n\n\nPlayback\nSpace\nPlay selection\n\n\n\nTab\nPlay window\n\n\n\nEsc\nStop\n\n\nNavigate\nWheel\nZoom (vertical scroll)\n\n\n\nHorizontal scroll\nPan (trackpad or Shift+scroll)\n\n\nEdit\nCtrl+Z\nUndo\n\n\n\nCtrl+Y\nRedo\n\n\n\nCtrl+C\nCopy data points\n\n\n\nEnter\nSave label\n\n\nTiers\n1-5\nSelect tier\n\n\n\nDbl-click tier\nAdd boundary\n\n\n\nDbl-click interval\nEdit label\n\n\nData\nDbl-click spectrogram\nAdd point\n\n\n\nRight-click\nRemove",
-    "crumbs": [
-      "Keyboard Shortcuts"
-    ]
-  },
-  {
-    "objectID": "reference/keyboard-shortcuts.html#mouse-only-users",
-    "href": "reference/keyboard-shortcuts.html#mouse-only-users",
-    "title": "Keyboard Shortcuts",
-    "section": "Mouse-Only Users",
-    "text": "Mouse-Only Users\n\n\n\n\n\n\nWarningPanning Limitation\n\n\n\nOzen-web currently lacks click-and-drag panning for mouse users. Horizontal panning requires:\n\nTrackpad: Two-finger horizontal swipe\nMouse: Shift+Scroll (works on some browsers/OS combinations)\n\nIf Shift+Scroll doesn’t work, use this workaround: 1. Click on the waveform/spectrogram where you want to focus 2. Zoom in (scroll up) to center on that location 3. Zoom out (scroll down) to see more context 4. Repeat to navigate different regions",
+    "text": "Quick Reference Card\nPrint-friendly quick reference:\n\n\n\n\nCategory\nKey\nAction\n\n\n\n\nPlayback\nSpace\nPlay selection\n\n\n\nTab\nPlay window\n\n\n\nEsc\nStop\n\n\nNavigate\n←→\nPan left/right\n\n\n\n↑↓\nZoom in/out\n\n\n\nWheel\nZoom (centered on mouse)\n\n\n\nHorizontal scroll\nPan (trackpad)\n\n\nEdit\nCtrl+Z\nUndo\n\n\n\nCtrl+Y\nRedo\n\n\n\nCtrl+C\nCopy data points\n\n\n\nEnter\nSave label\n\n\nTiers\n1-5\nSelect tier\n\n\n\nDbl-click tier\nAdd boundary\n\n\n\nDbl-click interval\nEdit label\n\n\nData\nDbl-click spectrogram\nAdd point\n\n\n\nRight-click\nRemove\n\n\n\n\n\n\n\n\n\n\nTipArrow Keys Work Everywhere\n\n\n\nThe arrow keys (←→ for panning, ↑↓ for zooming) work consistently across all browsers and operating systems, making them the most reliable navigation method.",
     "crumbs": [
       "Keyboard Shortcuts"
     ]
@@ -3053,7 +3043,7 @@
     "href": "tutorial/02-exploring-audio.html#zooming",
     "title": "2. Exploring Audio",
     "section": "Zooming",
-    "text": "Zooming\nZooming lets you see fine-grained detail in the audio.\n\nZoom with Mouse Wheel\n\n\nHover your mouse over the spectrogram or waveform\nScroll the mouse wheel:\n\nScroll up → Zoom in (expands time scale)\nScroll down → Zoom out (compresses time scale)\n\nZoom is centered on the mouse cursor position\n\n\n\nZoom demonstration\n\n\n\n\n\n\n\n\n\n\nTip\n\n\n\nZoom is centered on your mouse position, so place the mouse over the region you want to examine before scrolling.\n\n\n\n\nZoom Levels\nYou can zoom from:\n\nMaximum zoom out: Entire audio file visible (e.g., 0-300s)\nMaximum zoom in: Individual pitch periods visible (~20-50ms windows)\n\n\n\n\n\n\n\nNote\n\n\n\nFor files &gt;60 seconds, the spectrogram only computes for the visible time window when zoomed. This prevents UI freezing on long recordings.\n\n\nKeyboard shortcuts:\n\n+ / - keys — Zoom in/out centered on cursor\nMouse wheel — Zoom centered on mouse position (recommended)",
+    "text": "Zooming\nZooming lets you see fine-grained detail in the audio.\n\n\nUse Up/Down arrow keys:\n\nUp arrow → Zoom in (expands time scale)\nDown arrow → Zoom out (compresses time scale)\nZoom is centered on the cursor position\n\nOR\nUse mouse wheel (centered on mouse position):\n\nScroll up → Zoom in\nScroll down → Zoom out\n\n\n\n\nZoom demonstration\n\n\n\n\n\n\n\n\n\n\nTip\n\n\n\nArrow keys zoom centered on the cursor position, while mouse wheel zooms centered on the mouse pointer. Use whichever is more convenient!\n\n\n\nZoom Levels\nYou can zoom from:\n\nMaximum zoom out: Entire audio file visible (e.g., 0-300s)\nMaximum zoom in: Individual pitch periods visible (~20-50ms windows)\n\n\n\n\n\n\n\nNote\n\n\n\nFor files &gt;60 seconds, the spectrogram only computes for the visible time window when zoomed. This prevents UI freezing on long recordings.\n\n\nKeyboard shortcuts:\n\n+ / - keys — Zoom in/out centered on cursor\nMouse wheel — Zoom centered on mouse position (recommended)",
     "crumbs": [
       "Tutorial",
       "Complete Workflow",
@@ -3065,7 +3055,7 @@
     "href": "tutorial/02-exploring-audio.html#panning",
     "title": "2. Exploring Audio",
     "section": "Panning",
-    "text": "Panning\nPan the view to explore different parts of the audio horizontally.\n\nTrackpad Users\nTwo-finger horizontal swipe pans smoothly left/right.\n\n\nMouse Users\nMouse panning options vary by browser/OS:\n\n\nTry Shift+Scroll — Some systems translate this to horizontal scroll\nIf that doesn’t work, use the zoom-to-navigate approach:\n\nClick where you want to center the view\nZoom in (scroll up) to focus on that location\nZoom out (scroll down) to see more context\nRepeat to navigate\n\n\n\n\n\n\n\n\n\nNote\n\n\n\nNo native mouse drag panning: The app reserves click-and-drag for selecting audio regions. Horizontal scrolling (via trackpad or Shift+scroll) is currently the only direct panning method.",
+    "text": "Panning\nPan the view to explore different parts of the audio horizontally.\n\n\nPress Left/Right arrow keys to pan left or right (10% of visible window per press)\nOR\nTwo-finger horizontal swipe on trackpad\nOR\nShift+Scroll on some mouse/browser combinations\n\n\n\n\n\n\n\n\nTip\n\n\n\nArrow keys are the recommended way to pan for all users - they work consistently across all platforms and browsers.",
     "crumbs": [
       "Tutorial",
       "Complete Workflow",
