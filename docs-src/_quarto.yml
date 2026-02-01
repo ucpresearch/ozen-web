@@ -136,7 +136,7 @@ format:
     fig-responsive: true
 
     mainfont: '"Noto Sans", "DejaVu Sans", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif'
-    monofont: '"Noto Sans Mono", "DejaVu Sans Mono", "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace'
+    monofont: '"DejaVu Sans Mono", FreeMono, Cousine, "Liberation Mono", "SFMono-Regular", Consolas, Menlo, "Courier New", monospace'
 
 filters:
   - quarto
