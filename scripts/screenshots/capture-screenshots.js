@@ -45,10 +45,10 @@ for (const screenshot of config.screenshots) {
 
     // Navigate to page
     const url = `${BASE_URL}${screenshot.route}`;
-    await page.goto(url, { waitUntil: 'networkidle' });
+    await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 60000 });
 
     // Wait for app to be ready (wait for WASM to load)
-    await page.waitForTimeout(1000);
+    await page.waitForTimeout(3000);
 
     // Execute actions
     for (const action of screenshot.actions) {
