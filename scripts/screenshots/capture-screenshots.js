@@ -7,7 +7,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const BASE_URL = process.env.OZEN_URL || 'http://localhost:4173';
-const OUTPUT_DIR = path.join(__dirname, '../../docs/screenshots');
+const OUTPUT_DIR = path.join(__dirname, '../../docs-src/screenshots');
 const CONFIG_FILE = path.join(__dirname, 'screenshot-config.json');
 
 // Ensure output directory exists

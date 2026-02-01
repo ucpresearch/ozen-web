@@ -40,3 +40,7 @@ docs-src/*_cache/
 docs-src/*_files/
 docs-src/*.knit.md
 *.qmd~
+
+# Quarto output (generated from docs-src/)
+# docs/ is committed but screenshots are copied from docs-src/screenshots/
+docs/screenshots/
