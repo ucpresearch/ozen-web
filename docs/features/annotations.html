@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.29">
+<meta name="generator" content="quarto-1.8.25">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Annotations – ozen-web</title>
+<title>Annotations – Ozen-web</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -69,14 +69,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../features/waveform.html" rel="prev">
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-0815c480559380816a4d1ea211a47e91.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-da67e8c4bf892742008e2f79db78be0d.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-959c4db58b3c37e28c4d50a75de65b15.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -117,10 +118,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
     <a href="../index.html" class="navbar-brand navbar-brand-logo">
-    <img src="../assets/logo.png" alt="" class="navbar-logo">
+    <img src="../assets/logo.png" alt="" class="navbar-logo light-content">
+    <img src="../assets/logo.png" alt="" class="navbar-logo dark-content">
     </a>
     <a class="navbar-brand" href="../index.html">
-    <span class="navbar-title">ozen-web</span>
+    <span class="navbar-title">Ozen-web</span>
     </a>
   </div>
             <div id="quarto-search" class="" title="Search"></div>
@@ -130,7 +132,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../index.html"> 
+    <a class="nav-link active" href="../index.html" aria-current="page"> 
 <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
@@ -239,6 +241,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
+      <a href="../index.html" class="sidebar-logo-link">
+      </a>
+      </div>
     <div class="sidebar-menu-container"> 
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
@@ -376,7 +382,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <section id="overview" class="level2">
 <h2 class="anchored" data-anchor-id="overview">Overview</h2>
-<p>ozen-web provides a complete TextGrid-compatible annotation system for transcription, labeling, and segmentation. Create multi-tiered annotations with interval and point tiers, compatible with Praat.</p>
+<p>Ozen-web provides a complete TextGrid-compatible annotation system for transcription, labeling, and segmentation. Create multi-tiered annotations with interval and point tiers, compatible with Praat.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="../screenshots/tutorial-04-multitiered.png" class="img-fluid figure-img"></p>
@@ -442,7 +448,7 @@ Warning
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Quick Annotation Workflow
+<span class="screen-reader-only">Tip</span>Quick Annotation Workflow
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -478,7 +484,7 @@ phones: | h | e | l | o | w | o | r | l | d |</code></pre>
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Undo Support
+<span class="screen-reader-only">Note</span>Undo Support
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -554,7 +560,7 @@ Undo Support
 </section>
 <section id="undo-system" class="level2">
 <h2 class="anchored" data-anchor-id="undo-system">Undo System</h2>
-<p>ozen-web features a unified undo/redo system for annotation operations:</p>
+<p>Ozen-web features a unified undo/redo system for annotation operations:</p>
 <p><strong>Undoable operations:</strong> - Adding boundaries - Removing boundaries - Moving boundaries - Editing interval text</p>
 <p><strong>Non-undoable operations:</strong> - Adding/removing tiers (permanent) - Loading files</p>
 <div class="callout callout-style-default callout-tip callout-titled">
@@ -563,7 +569,7 @@ Undo Support
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Undo History
+<span class="screen-reader-only">Tip</span>Undo History
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -585,7 +591,7 @@ Undo History
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-TextGrid Without Audio
+<span class="screen-reader-only">Note</span>TextGrid Without Audio
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -645,7 +651,7 @@ quality:   |        | good      |           | noisy  |            |</code></pre>
 1.234   720     245    720   "cat"        "æ"
 1.567   1240    250    850   "sat"        "æ"</code></pre>
 <p>This enables correlation analysis between acoustic measurements and annotation categories.</p>
-<p>See <a href="../features/data-points.html">Data Points</a> for details.</p>
+<p>See <a href="data-points.html">Data Points</a> for details.</p>
 </section>
 <section id="best-practices" class="level2">
 <h2 class="anchored" data-anchor-id="best-practices">Best Practices</h2>
@@ -691,7 +697,7 @@ quality:   |        | good      |           | noisy  |            |</code></pre>
 <li><a href="../tutorial/04-annotations.html">Tutorial: Annotations</a> - Step-by-step guide</li>
 <li><a href="../reference/keyboard-shortcuts.html">Keyboard Shortcuts</a> - Full shortcut reference</li>
 <li><a href="../reference/file-formats.html">File Formats</a> - TextGrid format details</li>
-<li><a href="../features/data-points.html">Data Points</a> - Collecting measurements at annotations</li>
+<li><a href="data-points.html">Data Points</a> - Collecting measurements at annotations</li>
 </ul>
 
 
@@ -751,13 +757,14 @@ quality:   |        | good      |           | noisy  |            |</code></pre>
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-        const codeEl = trigger.previousElementSibling.cloneNode(true);
-        for (const childEl of codeEl.children) {
-          if (isCodeAnnotation(childEl)) {
-            childEl.remove();
-          }
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
         }
-        return codeEl.innerText;
+      }
+      return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy
@@ -1169,14 +1176,14 @@ quality:   |        | good      |           | noisy  |            |</code></pre>
       </a>
   </div>
 </nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
-<div class="sourceCode" id="cb8" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Annotations"</span></span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="an">subtitle:</span><span class="co"> "Multi-tier TextGrid annotation system"</span></span>
 <span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
 <span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="fu">## Overview</span></span>
 <span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>ozen-web provides a complete TextGrid-compatible annotation system for transcription, labeling, and segmentation. Create multi-tiered annotations with interval and point tiers, compatible with Praat.</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>Ozen-web provides a complete TextGrid-compatible annotation system for transcription, labeling, and segmentation. Create multi-tiered annotations with interval and point tiers, compatible with Praat.</span>
 <span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="al">![Multi-tier annotation example](../screenshots/tutorial-04-multitiered.png)</span></span>
 <span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a></span>
@@ -1323,11 +1330,11 @@ quality:   |        | good      |           | noisy  |            |</code></pre>
 <span id="cb8-152"><a href="#cb8-152" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Delete / Backspace <span class="pp">|</span> Remove selected boundary <span class="pp">|</span></span>
 <span id="cb8-153"><a href="#cb8-153" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 1-5 <span class="pp">|</span> Switch to tier 1-5 <span class="pp">|</span></span>
 <span id="cb8-154"><a href="#cb8-154" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-155"><a href="#cb8-155" aria-hidden="true" tabindex="-1"></a>See <span class="co">[</span><span class="ot">Keyboard Shortcuts Reference</span><span class="co">](../reference/keyboard-shortcuts.qmd)</span> for complete list.</span>
+<span id="cb8-155"><a href="#cb8-155" aria-hidden="true" tabindex="-1"></a>See <span class="co">[</span><span class="ot">Keyboard Shortcuts Reference</span><span class="co">](../reference/keyboard-shortcuts.html)</span> for complete list.</span>
 <span id="cb8-156"><a href="#cb8-156" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-157"><a href="#cb8-157" aria-hidden="true" tabindex="-1"></a><span class="fu">## Undo System</span></span>
 <span id="cb8-158"><a href="#cb8-158" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-159"><a href="#cb8-159" aria-hidden="true" tabindex="-1"></a>ozen-web features a unified undo/redo system for annotation operations:</span>
+<span id="cb8-159"><a href="#cb8-159" aria-hidden="true" tabindex="-1"></a>Ozen-web features a unified undo/redo system for annotation operations:</span>
 <span id="cb8-160"><a href="#cb8-160" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-161"><a href="#cb8-161" aria-hidden="true" tabindex="-1"></a>**Undoable operations:**</span>
 <span id="cb8-162"><a href="#cb8-162" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Adding boundaries</span>
@@ -1446,7 +1453,7 @@ quality:   |        | good      |           | noisy  |            |</code></pre>
 <span id="cb8-275"><a href="#cb8-275" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-276"><a href="#cb8-276" aria-hidden="true" tabindex="-1"></a>This enables correlation analysis between acoustic measurements and annotation categories.</span>
 <span id="cb8-277"><a href="#cb8-277" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-278"><a href="#cb8-278" aria-hidden="true" tabindex="-1"></a>See <span class="co">[</span><span class="ot">Data Points</span><span class="co">](data-points.qmd)</span> for details.</span>
+<span id="cb8-278"><a href="#cb8-278" aria-hidden="true" tabindex="-1"></a>See <span class="co">[</span><span class="ot">Data Points</span><span class="co">](data-points.html)</span> for details.</span>
 <span id="cb8-279"><a href="#cb8-279" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-280"><a href="#cb8-280" aria-hidden="true" tabindex="-1"></a><span class="fu">## Best Practices</span></span>
 <span id="cb8-281"><a href="#cb8-281" aria-hidden="true" tabindex="-1"></a></span>
@@ -1524,10 +1531,10 @@ quality:   |        | good      |           | noisy  |            |</code></pre>
 <span id="cb8-353"><a href="#cb8-353" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-354"><a href="#cb8-354" aria-hidden="true" tabindex="-1"></a><span class="fu">## See Also</span></span>
 <span id="cb8-355"><a href="#cb8-355" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-356"><a href="#cb8-356" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Tutorial: Annotations</span><span class="co">](../tutorial/04-annotations.qmd)</span> - Step-by-step guide</span>
-<span id="cb8-357"><a href="#cb8-357" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Keyboard Shortcuts</span><span class="co">](../reference/keyboard-shortcuts.qmd)</span> - Full shortcut reference</span>
-<span id="cb8-358"><a href="#cb8-358" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">File Formats</span><span class="co">](../reference/file-formats.qmd)</span> - TextGrid format details</span>
-<span id="cb8-359"><a href="#cb8-359" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Data Points</span><span class="co">](data-points.qmd)</span> - Collecting measurements at annotations</span></code><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></pre></div>
+<span id="cb8-356"><a href="#cb8-356" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Tutorial: Annotations</span><span class="co">](../tutorial/04-annotations.html)</span> - Step-by-step guide</span>
+<span id="cb8-357"><a href="#cb8-357" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Keyboard Shortcuts</span><span class="co">](../reference/keyboard-shortcuts.html)</span> - Full shortcut reference</span>
+<span id="cb8-358"><a href="#cb8-358" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">File Formats</span><span class="co">](../reference/file-formats.html)</span> - TextGrid format details</span>
+<span id="cb8-359"><a href="#cb8-359" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Data Points</span><span class="co">](data-points.html)</span> - Collecting measurements at annotations</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 <footer class="footer">

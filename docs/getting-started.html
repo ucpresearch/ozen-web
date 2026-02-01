@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.29">
+<meta name="generator" content="quarto-1.8.25">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Getting Started – ozen-web</title>
+<title>Getting Started – Ozen-web</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -67,14 +67,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <meta name="quarto:offset" content="./">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-0815c480559380816a4d1ea211a47e91.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-da67e8c4bf892742008e2f79db78be0d.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-959c4db58b3c37e28c4d50a75de65b15.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -115,10 +116,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
     <a href="./index.html" class="navbar-brand navbar-brand-logo">
-    <img src="./assets/logo.png" alt="" class="navbar-logo">
+    <img src="./assets/logo.png" alt="" class="navbar-logo light-content">
+    <img src="./assets/logo.png" alt="" class="navbar-logo dark-content">
     </a>
     <a class="navbar-brand" href="./index.html">
-    <span class="navbar-title">ozen-web</span>
+    <span class="navbar-title">Ozen-web</span>
     </a>
   </div>
             <div id="quarto-search" class="" title="Search"></div>
@@ -233,13 +235,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
    
   <ul>
   <li><a href="#overview" id="toc-overview" class="nav-link active" data-scroll-target="#overview">Overview</a></li>
-  <li><a href="#option-1-use-hosted-version" id="toc-option-1-use-hosted-version" class="nav-link" data-scroll-target="#option-1-use-hosted-version">Option 1: Use Hosted Version</a></li>
+  <li><a href="#option-1-use-hosted-version" id="toc-option-1-use-hosted-version" class="nav-link" data-scroll-target="#option-1-use-hosted-version">Option 1: Use Hosted Version</a>
+  <ul class="collapse">
+  <li><a href="#loading-your-first-audio-file" id="toc-loading-your-first-audio-file" class="nav-link" data-scroll-target="#loading-your-first-audio-file">Loading Your First Audio File</a></li>
+  <li><a href="#whats-next" id="toc-whats-next" class="nav-link" data-scroll-target="#whats-next">What’s Next?</a></li>
+  </ul></li>
   <li><a href="#option-2-run-locally" id="toc-option-2-run-locally" class="nav-link" data-scroll-target="#option-2-run-locally">Option 2: Run Locally</a>
   <ul class="collapse">
   <li><a href="#prerequisites" id="toc-prerequisites" class="nav-link" data-scroll-target="#prerequisites">Prerequisites</a></li>
-  <li><a href="#installation-steps" id="toc-installation-steps" class="nav-link" data-scroll-target="#installation-steps">Installation Steps</a></li>
-  <li><a href="#loading-your-first-audio-file" id="toc-loading-your-first-audio-file" class="nav-link" data-scroll-target="#loading-your-first-audio-file">Loading Your First Audio File</a></li>
-  <li><a href="#whats-next" id="toc-whats-next" class="nav-link" data-scroll-target="#whats-next">What’s Next?</a></li>
+  <li><a href="#download" id="toc-download" class="nav-link" data-scroll-target="#download">Download</a></li>
   </ul></li>
   <li><a href="#option-3-deploy-your-own-instance" id="toc-option-3-deploy-your-own-instance" class="nav-link" data-scroll-target="#option-3-deploy-your-own-instance">Option 3: Deploy Your Own Instance</a></li>
   <li><a href="#configuration" id="toc-configuration" class="nav-link" data-scroll-target="#configuration">Configuration</a>
@@ -264,7 +268,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
 <div class="quarto-title-block"><div><h1 class="title">Getting Started</h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
-<p class="subtitle lead">Install and run ozen-web in 5 minutes</p>
+<p class="subtitle lead">Install and run Ozen-web in 5 minutes</p>
 </div>
 
 
@@ -283,7 +287,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <section id="overview" class="level2">
 <h2 class="anchored" data-anchor-id="overview">Overview</h2>
-<p>ozen-web is a static web application that runs entirely in your browser. You can:</p>
+<p>Ozen-web is a static web application that runs entirely in your browser. You can:</p>
 <ol type="1">
 <li><strong>Use the hosted version</strong> (easiest) — No setup required</li>
 <li><strong>Run locally for development</strong> — Full control and offline access</li>
@@ -293,7 +297,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="option-1-use-hosted-version" class="level2">
 <h2 class="anchored" data-anchor-id="option-1-use-hosted-version">Option 1: Use Hosted Version</h2>
 <p>The fastest way to get started is using the hosted version:</p>
-<p><strong>🌐 <a href="https://ucpresearch.github.io/ozen-web/">https://ucpresearch.github.io/ozen-web/</a></strong></p>
+<p><strong>🌐 <a href="https://ucpresearch.github.io/ozen-web/live/index.html">https://ucpresearch.github.io/ozen-web/live/</a></strong></p>
 <p>Simply visit the URL and drag an audio file (WAV, MP3, OGG) to begin analyzing.</p>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -308,76 +312,6 @@ Tip
 <p>Bookmark the URL for quick access. All processing happens locally in your browser — no data is uploaded to servers.</p>
 </div>
 </div>
-</section>
-<section id="option-2-run-locally" class="level2">
-<h2 class="anchored" data-anchor-id="option-2-run-locally">Option 2: Run Locally</h2>
-<p>For development or offline use, run ozen-web on your machine.</p>
-<section id="prerequisites" class="level3">
-<h3 class="anchored" data-anchor-id="prerequisites">Prerequisites</h3>
-<ul>
-<li><strong>Node.js</strong> 18 or later (<a href="https://nodejs.org/">download here</a>)</li>
-<li><strong>npm</strong> (included with Node.js)</li>
-<li><strong>Git</strong> (for cloning repository)</li>
-<li>Or any local web server, e.g.&nbsp;<code>python -m http.server</code></li>
-</ul>
-<p>Check your versions:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">node</span> <span class="at">--version</span>  <span class="co"># Should show v18.0.0 or higher</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="ex">npm</span> <span class="at">--version</span>   <span class="co"># Should show 8.0.0 or higher</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</section>
-<section id="installation-steps" class="level3">
-<h3 class="anchored" data-anchor-id="installation-steps">Installation Steps</h3>
-<section id="clone-repository" class="level4">
-<h4 class="anchored" data-anchor-id="clone-repository">1. Clone Repository</h4>
-<div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone https://github.com/ucpresearch/ozen-web.git</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ozen-web</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</section>
-<section id="install-dependencies" class="level4">
-<h4 class="anchored" data-anchor-id="install-dependencies">2. Install Dependencies</h4>
-<div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">npm</span> install</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>This downloads all required packages (~100MB, takes 1-2 minutes).</p>
-</section>
-<section id="set-up-wasm-backend" class="level4">
-<h4 class="anchored" data-anchor-id="set-up-wasm-backend">3. Set Up WASM Backend</h4>
-<p><strong>Option A: Use CDN Backend (No Setup)</strong></p>
-<p>The default configuration uses the <code>praatfan</code> CDN backend, which downloads WASM files from GitHub Pages on first load. No additional setup required.</p>
-<p><strong>Option B: Use Local Backend (Faster, Offline)</strong></p>
-<p>For faster load times and offline use, copy the local WASM package:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># If you have praatfan-core-clean repository</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> <span class="at">-p</span> static/wasm/praatfan</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="fu">cp</span> <span class="at">-r</span> ../praatfan-core-clean/rust/pkg/<span class="pp">*</span> static/wasm/praatfan/</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co"># OR download pre-built package</span></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> <span class="at">-L</span> https://github.com/ucpresearch/praatfan-core-rs/releases/latest/download/praatfan-pkg.tar.gz <span class="kw">|</span> <span class="fu">tar</span> xz <span class="at">-C</span> static/wasm/</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Then select “praatfan-local” in the backend dropdown when running the app.</p>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Note
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>The local backend requires ~5MB of WASM files in <code>static/wasm/praatfan/</code>.</p>
-</div>
-</div>
-</section>
-<section id="start-development-server" class="level4">
-<h4 class="anchored" data-anchor-id="start-development-server">4. Start Development Server</h4>
-<div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">npm</span> run dev</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>You should see:</p>
-<pre><code>  VITE v5.0.0  ready in 500 ms
-
-  ➜  Local:   http://localhost:5173/
-  ➜  Network: use --host to expose</code></pre>
-</section>
-<section id="open-in-browser" class="level4">
-<h4 class="anchored" data-anchor-id="open-in-browser">5. Open in Browser</h4>
-<p>Navigate to <a href="http://localhost:5173">http://localhost:5173</a></p>
-<p>You should see the ozen-web interface with a file drop zone.</p>
-</section>
-</section>
 <section id="loading-your-first-audio-file" class="level3">
 <h3 class="anchored" data-anchor-id="loading-your-first-audio-file">Loading Your First Audio File</h3>
 <div class="tutorial-steps">
@@ -397,15 +331,35 @@ Note
 <section id="whats-next" class="level3">
 <h3 class="anchored" data-anchor-id="whats-next">What’s Next?</h3>
 <ul>
-<li>Follow the <a href="./tutorial/index.html">Complete Tutorial</a> for a guided walkthrough</li>
-<li>Explore <a href="./features/overview.html">Features Documentation</a> for detailed feature guides</li>
-<li>Check <a href="./reference/keyboard-shortcuts.html">Keyboard Shortcuts</a> for efficient workflow</li>
+<li>Follow the <a href="tutorial/index.html">Complete Tutorial</a> for a guided walkthrough</li>
+<li>Explore <a href="features/overview.html">Features Documentation</a> for detailed feature guides</li>
+<li>Check <a href="reference/keyboard-shortcuts.html">Keyboard Shortcuts</a> for efficient workflow</li>
+</ul>
+</section>
+</section>
+<section id="option-2-run-locally" class="level2">
+<h2 class="anchored" data-anchor-id="option-2-run-locally">Option 2: Run Locally</h2>
+<p>For development or offline use, run Ozen-web on your machine.</p>
+<section id="prerequisites" class="level3">
+<h3 class="anchored" data-anchor-id="prerequisites">Prerequisites</h3>
+<ul>
+<li>Any local web server, for instance <code>python -m http.server 8080</code>, started from one of the parent directories</li>
+</ul>
+</section>
+<section id="download" class="level3">
+<h3 class="anchored" data-anchor-id="download">Download</h3>
+<ul>
+<li><p><code>git clone https://github.com/ucpresearch/ozen-web.git</code></p></li>
+<li><p><code>cd ozen-web/docs</code></p></li>
+<li><p><code>python -m http.server 8080</code> (adapt the port – 8080 – as necessary)</p></li>
+<li><p>Open the following url (adapt the port as necessary): (http://localhost:8080/live/index.html)[http://localhost:8080/live/index.html]<br>
+notice that this method doesn’t use https, and your browser may complain about it</p></li>
 </ul>
 </section>
 </section>
 <section id="option-3-deploy-your-own-instance" class="level2">
 <h2 class="anchored" data-anchor-id="option-3-deploy-your-own-instance">Option 3: Deploy Your Own Instance</h2>
-<p>The <code>build/</code> folder works with any static file host:</p>
+<p>The <code>build/</code> or <code>docs/live</code> (same content) folder will work with any static file host:</p>
 <ul>
 <li><strong>AWS S3</strong> + CloudFront</li>
 <li><strong>Google Cloud Storage</strong></li>
@@ -413,13 +367,13 @@ Note
 <li><strong>Cloudflare Pages</strong></li>
 <li><strong>GitLab Pages</strong></li>
 </ul>
-<p>Just upload the <code>build/</code> folder contents.</p>
+<p>Just upload the <code>build/</code> folder’s contents.</p>
 </section>
 <section id="configuration" class="level2">
 <h2 class="anchored" data-anchor-id="configuration">Configuration</h2>
 <section id="backend-selection" class="level3">
 <h3 class="anchored" data-anchor-id="backend-selection">Backend Selection</h3>
-<p>ozen-web supports multiple WASM backends:</p>
+<p>Ozen-web supports multiple WASM backends:</p>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 21%">
@@ -462,18 +416,18 @@ Note
 </tbody>
 </table>
 <p>Select the backend using the dropdown in the app interface.</p>
-<p>See <a href="./reference/backends.html">WASM Backends Reference</a> for detailed comparison.</p>
+<p>See <a href="reference/backends.html">WASM Backends Reference</a> for detailed comparison.</p>
 </section>
 <section id="custom-configuration" class="level3">
 <h3 class="anchored" data-anchor-id="custom-configuration">Custom Configuration</h3>
 <p>Create <code>static/config.yaml</code> to customize default settings:</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Example configuration</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">backend</span><span class="kw">:</span><span class="at"> </span><span class="st">"praatfan-local"</span></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="fu">maxFrequency</span><span class="kw">:</span><span class="at"> </span><span class="dv">5000</span></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="fu">showPitch</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="fu">showFormants</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="fu">theme</span><span class="kw">:</span><span class="at"> </span><span class="st">"dark"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>See <a href="./reference/configuration.html">Configuration Reference</a> for all options.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Example configuration</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">backend</span><span class="kw">:</span><span class="at"> </span><span class="st">"praatfan-local"</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">maxFrequency</span><span class="kw">:</span><span class="at"> </span><span class="dv">5000</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">showPitch</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">showFormants</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">theme</span><span class="kw">:</span><span class="at"> </span><span class="st">"dark"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>See <a href="reference/configuration.html">Configuration Reference</a> for all options.</p>
 </section>
 </section>
 <section id="troubleshooting" class="level2">
@@ -497,14 +451,14 @@ Note
 <section id="long-audio-files-show-zoom-in-for-spectrogram" class="level3">
 <h3 class="anchored" data-anchor-id="long-audio-files-show-zoom-in-for-spectrogram">Long Audio Files Show “Zoom in for spectrogram”</h3>
 <p>This is expected behavior for files &gt;60 seconds. Zoom in to a window ≤60s to trigger analysis.</p>
-<p>See <a href="./features/overview.html#long-audio-handling">Features: Long Audio Handling</a> for details.</p>
+<p>See <a href="features/overview.html#long-audio-handling">Features: Long Audio Handling</a> for details.</p>
 </section>
 </section>
 <section id="getting-help" class="level2">
 <h2 class="anchored" data-anchor-id="getting-help">Getting Help</h2>
 <ul>
-<li><strong>Documentation</strong>: Browse <a href="./features/overview.html">Features</a> and <a href="./reference/keyboard-shortcuts.html">Reference</a> sections</li>
-<li><strong>Tutorial</strong>: Follow the <a href="./tutorial/index.html">step-by-step guide</a></li>
+<li><strong>Documentation</strong>: Browse <a href="features/overview.html">Features</a> and <a href="reference/keyboard-shortcuts.html">Reference</a> sections</li>
+<li><strong>Tutorial</strong>: Follow the <a href="tutorial/index.html">step-by-step guide</a></li>
 <li><strong>Issues</strong>: Report bugs at <a href="https://github.com/ucpresearch/ozen-web/issues">GitHub Issues</a></li>
 </ul>
 </section>
@@ -512,12 +466,12 @@ Note
 <h2 class="anchored" data-anchor-id="whats-next-1">What’s Next?</h2>
 <p>Ready to dive deeper? Try the:</p>
 <ul>
-<li><strong><a href="./tutorial/index.html">Complete Tutorial</a></strong> — Guided walkthrough from loading audio to exporting data</li>
-<li><strong><a href="./features/overview.html">Features Overview</a></strong> — Detailed documentation of all features</li>
-<li><strong><a href="./embedding/overview.html">Embedding Guide</a></strong> — Embed ozen-web in your websites or documents</li>
+<li><strong><a href="tutorial/index.html">Complete Tutorial</a></strong> — Guided walkthrough from loading audio to exporting data</li>
+<li><strong><a href="features/overview.html">Features Overview</a></strong> — Detailed documentation of all features</li>
+<li><strong><a href="embedding/overview.html">Embedding Guide</a></strong> — Embed Ozen-web in your websites or documents</li>
 </ul>
 <hr>
-<p><strong>All set?</strong> Head to the <a href="./tutorial/index.html">Tutorial</a> to learn the complete workflow. →</p>
+<p><strong>All set?</strong> Head to the <a href="tutorial/index.html">Tutorial</a> to learn the complete workflow. →</p>
 
 
 <!-- -->
@@ -576,13 +530,14 @@ Note
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-        const codeEl = trigger.previousElementSibling.cloneNode(true);
-        for (const childEl of codeEl.children) {
-          if (isCodeAnnotation(childEl)) {
-            childEl.remove();
-          }
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
         }
-        return codeEl.innerText;
+      }
+      return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy
@@ -982,218 +937,161 @@ Note
     }
   });
   </script><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
-<div class="sourceCode" id="cb8" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Getting Started"</span></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="an">subtitle:</span><span class="co"> "Install and run ozen-web in 5 minutes"</span></span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="fu">## Overview</span></span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>ozen-web is a static web application that runs entirely in your browser. You can:</span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**Use the hosted version** (easiest) — No setup required</span>
-<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>**Run locally for development** — Full control and offline access</span>
-<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>**Deploy your own instance** — Host on GitHub Pages, Netlify, or any static host</span>
-<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a><span class="fu">## Option 1: Use Hosted Version</span></span>
-<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>The fastest way to get started is using the hosted version:</span>
-<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>**🌐 [https://ucpresearch.github.io/ozen-web/](https://ucpresearch.github.io/ozen-web/)**</span>
-<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a>Simply visit the URL and drag an audio file (WAV, MP3, OGG) to begin analyzing.</span>
-<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip}</span>
-<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a>Bookmark the URL for quick access. All processing happens locally in your browser — no data is uploaded to servers.</span>
-<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a><span class="fu">## Option 2: Run Locally</span></span>
-<span id="cb8-27"><a href="#cb8-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-28"><a href="#cb8-28" aria-hidden="true" tabindex="-1"></a>For development or offline use, run ozen-web on your machine.</span>
-<span id="cb8-29"><a href="#cb8-29" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-30"><a href="#cb8-30" aria-hidden="true" tabindex="-1"></a><span class="fu">### Prerequisites</span></span>
-<span id="cb8-31"><a href="#cb8-31" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-32"><a href="#cb8-32" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Node.js** 18 or later (<span class="co">[</span><span class="ot">download here</span><span class="co">](https://nodejs.org/)</span>)</span>
-<span id="cb8-33"><a href="#cb8-33" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**npm** (included with Node.js)</span>
-<span id="cb8-34"><a href="#cb8-34" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Git** (for cloning repository)</span>
-<span id="cb8-35"><a href="#cb8-35" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Or any local web server, e.g. <span class="in">`python -m http.server`</span></span>
-<span id="cb8-36"><a href="#cb8-36" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-37"><a href="#cb8-37" aria-hidden="true" tabindex="-1"></a>Check your versions:</span>
-<span id="cb8-38"><a href="#cb8-38" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-39"><a href="#cb8-39" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
-<span id="cb8-40"><a href="#cb8-40" aria-hidden="true" tabindex="-1"></a><span class="ex">node</span> <span class="at">--version</span>  <span class="co"># Should show v18.0.0 or higher</span></span>
-<span id="cb8-41"><a href="#cb8-41" aria-hidden="true" tabindex="-1"></a><span class="ex">npm</span> <span class="at">--version</span>   <span class="co"># Should show 8.0.0 or higher</span></span>
-<span id="cb8-42"><a href="#cb8-42" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb8-43"><a href="#cb8-43" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-44"><a href="#cb8-44" aria-hidden="true" tabindex="-1"></a><span class="fu">### Installation Steps</span></span>
-<span id="cb8-45"><a href="#cb8-45" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-46"><a href="#cb8-46" aria-hidden="true" tabindex="-1"></a><span class="fu">#### 1. Clone Repository</span></span>
-<span id="cb8-47"><a href="#cb8-47" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-48"><a href="#cb8-48" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
-<span id="cb8-49"><a href="#cb8-49" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone https://github.com/ucpresearch/ozen-web.git</span>
-<span id="cb8-50"><a href="#cb8-50" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ozen-web</span>
-<span id="cb8-51"><a href="#cb8-51" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb8-52"><a href="#cb8-52" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-53"><a href="#cb8-53" aria-hidden="true" tabindex="-1"></a><span class="fu">#### 2. Install Dependencies</span></span>
-<span id="cb8-54"><a href="#cb8-54" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-55"><a href="#cb8-55" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
-<span id="cb8-56"><a href="#cb8-56" aria-hidden="true" tabindex="-1"></a><span class="ex">npm</span> install</span>
-<span id="cb8-57"><a href="#cb8-57" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb8-58"><a href="#cb8-58" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-59"><a href="#cb8-59" aria-hidden="true" tabindex="-1"></a>This downloads all required packages (~100MB, takes 1-2 minutes).</span>
-<span id="cb8-60"><a href="#cb8-60" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-61"><a href="#cb8-61" aria-hidden="true" tabindex="-1"></a><span class="fu">#### 3. Set Up WASM Backend</span></span>
-<span id="cb8-62"><a href="#cb8-62" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-63"><a href="#cb8-63" aria-hidden="true" tabindex="-1"></a>**Option A: Use CDN Backend (No Setup)**</span>
-<span id="cb8-64"><a href="#cb8-64" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-65"><a href="#cb8-65" aria-hidden="true" tabindex="-1"></a>The default configuration uses the <span class="in">`praatfan`</span> CDN backend, which downloads WASM files from GitHub Pages on first load. No additional setup required.</span>
-<span id="cb8-66"><a href="#cb8-66" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-67"><a href="#cb8-67" aria-hidden="true" tabindex="-1"></a>**Option B: Use Local Backend (Faster, Offline)**</span>
-<span id="cb8-68"><a href="#cb8-68" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-69"><a href="#cb8-69" aria-hidden="true" tabindex="-1"></a>For faster load times and offline use, copy the local WASM package:</span>
-<span id="cb8-70"><a href="#cb8-70" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-71"><a href="#cb8-71" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
-<span id="cb8-72"><a href="#cb8-72" aria-hidden="true" tabindex="-1"></a><span class="co"># If you have praatfan-core-clean repository</span></span>
-<span id="cb8-73"><a href="#cb8-73" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> <span class="at">-p</span> static/wasm/praatfan</span>
-<span id="cb8-74"><a href="#cb8-74" aria-hidden="true" tabindex="-1"></a><span class="fu">cp</span> <span class="at">-r</span> ../praatfan-core-clean/rust/pkg/<span class="pp">*</span> static/wasm/praatfan/</span>
-<span id="cb8-75"><a href="#cb8-75" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-76"><a href="#cb8-76" aria-hidden="true" tabindex="-1"></a><span class="co"># OR download pre-built package</span></span>
-<span id="cb8-77"><a href="#cb8-77" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> <span class="at">-L</span> https://github.com/ucpresearch/praatfan-core-rs/releases/latest/download/praatfan-pkg.tar.gz <span class="kw">|</span> <span class="fu">tar</span> xz <span class="at">-C</span> static/wasm/</span>
-<span id="cb8-78"><a href="#cb8-78" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb8-79"><a href="#cb8-79" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-80"><a href="#cb8-80" aria-hidden="true" tabindex="-1"></a>Then select "praatfan-local" in the backend dropdown when running the app.</span>
-<span id="cb8-81"><a href="#cb8-81" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-82"><a href="#cb8-82" aria-hidden="true" tabindex="-1"></a>::: {.callout-note}</span>
-<span id="cb8-83"><a href="#cb8-83" aria-hidden="true" tabindex="-1"></a>The local backend requires ~5MB of WASM files in <span class="in">`static/wasm/praatfan/`</span>.</span>
-<span id="cb8-84"><a href="#cb8-84" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb8-85"><a href="#cb8-85" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-86"><a href="#cb8-86" aria-hidden="true" tabindex="-1"></a><span class="fu">#### 4. Start Development Server</span></span>
-<span id="cb8-87"><a href="#cb8-87" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-88"><a href="#cb8-88" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
-<span id="cb8-89"><a href="#cb8-89" aria-hidden="true" tabindex="-1"></a><span class="ex">npm</span> run dev</span>
-<span id="cb8-90"><a href="#cb8-90" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb8-91"><a href="#cb8-91" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-92"><a href="#cb8-92" aria-hidden="true" tabindex="-1"></a>You should see:</span>
-<span id="cb8-93"><a href="#cb8-93" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-94"><a href="#cb8-94" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb8-95"><a href="#cb8-95" aria-hidden="true" tabindex="-1"></a><span class="in">  VITE v5.0.0  ready in 500 ms</span></span>
-<span id="cb8-96"><a href="#cb8-96" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-97"><a href="#cb8-97" aria-hidden="true" tabindex="-1"></a><span class="in">  ➜  Local:   http://localhost:5173/</span></span>
-<span id="cb8-98"><a href="#cb8-98" aria-hidden="true" tabindex="-1"></a><span class="in">  ➜  Network: use --host to expose</span></span>
-<span id="cb8-99"><a href="#cb8-99" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb8-100"><a href="#cb8-100" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-101"><a href="#cb8-101" aria-hidden="true" tabindex="-1"></a><span class="fu">#### 5. Open in Browser</span></span>
-<span id="cb8-102"><a href="#cb8-102" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-103"><a href="#cb8-103" aria-hidden="true" tabindex="-1"></a>Navigate to <span class="co">[</span><span class="ot">http://localhost:5173</span><span class="co">](http://localhost:5173)</span></span>
-<span id="cb8-104"><a href="#cb8-104" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-105"><a href="#cb8-105" aria-hidden="true" tabindex="-1"></a>You should see the ozen-web interface with a file drop zone.</span>
-<span id="cb8-106"><a href="#cb8-106" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-107"><a href="#cb8-107" aria-hidden="true" tabindex="-1"></a><span class="fu">### Loading Your First Audio File</span></span>
-<span id="cb8-108"><a href="#cb8-108" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-109"><a href="#cb8-109" aria-hidden="true" tabindex="-1"></a>::: {.tutorial-steps}</span>
-<span id="cb8-110"><a href="#cb8-110" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**Drag and drop** a WAV, MP3, or OGG file onto the interface</span>
-<span id="cb8-111"><a href="#cb8-111" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-112"><a href="#cb8-112" aria-hidden="true" tabindex="-1"></a>   OR</span>
-<span id="cb8-113"><a href="#cb8-113" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-114"><a href="#cb8-114" aria-hidden="true" tabindex="-1"></a>   **Click "Load Audio"** button and select a file</span>
-<span id="cb8-115"><a href="#cb8-115" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-116"><a href="#cb8-116" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>Wait for the waveform to appear (1-2 seconds for typical files)</span>
-<span id="cb8-117"><a href="#cb8-117" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-118"><a href="#cb8-118" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>The spectrogram will load automatically (or zoom in for long files)</span>
-<span id="cb8-119"><a href="#cb8-119" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-120"><a href="#cb8-120" aria-hidden="true" tabindex="-1"></a><span class="ss">4. </span>Enable acoustic overlays using checkboxes: Pitch, Formants, Intensity</span>
-<span id="cb8-121"><a href="#cb8-121" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb8-122"><a href="#cb8-122" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-123"><a href="#cb8-123" aria-hidden="true" tabindex="-1"></a>::: {.callout-try}</span>
-<span id="cb8-124"><a href="#cb8-124" aria-hidden="true" tabindex="-1"></a>Don't have an audio file handy? Record directly in the browser by clicking the microphone icon 🎤 (requires microphone permission).</span>
-<span id="cb8-125"><a href="#cb8-125" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb8-126"><a href="#cb8-126" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-127"><a href="#cb8-127" aria-hidden="true" tabindex="-1"></a><span class="fu">### What's Next?</span></span>
-<span id="cb8-128"><a href="#cb8-128" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-129"><a href="#cb8-129" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Follow the <span class="co">[</span><span class="ot">Complete Tutorial</span><span class="co">](tutorial/index.qmd)</span> for a guided walkthrough</span>
-<span id="cb8-130"><a href="#cb8-130" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Explore <span class="co">[</span><span class="ot">Features Documentation</span><span class="co">](features/overview.qmd)</span> for detailed feature guides</span>
-<span id="cb8-131"><a href="#cb8-131" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Check <span class="co">[</span><span class="ot">Keyboard Shortcuts</span><span class="co">](reference/keyboard-shortcuts.qmd)</span> for efficient workflow</span>
-<span id="cb8-132"><a href="#cb8-132" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-133"><a href="#cb8-133" aria-hidden="true" tabindex="-1"></a><span class="fu">## Option 3: Deploy Your Own Instance</span></span>
-<span id="cb8-134"><a href="#cb8-134" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-135"><a href="#cb8-135" aria-hidden="true" tabindex="-1"></a>The <span class="in">`build/`</span> folder works with any static file host:</span>
-<span id="cb8-136"><a href="#cb8-136" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-137"><a href="#cb8-137" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**AWS S3** + CloudFront</span>
-<span id="cb8-138"><a href="#cb8-138" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Google Cloud Storage**</span>
-<span id="cb8-139"><a href="#cb8-139" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Azure Static Web Apps**</span>
-<span id="cb8-140"><a href="#cb8-140" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Cloudflare Pages**</span>
-<span id="cb8-141"><a href="#cb8-141" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**GitLab Pages**</span>
-<span id="cb8-142"><a href="#cb8-142" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-143"><a href="#cb8-143" aria-hidden="true" tabindex="-1"></a>Just upload the <span class="in">`build/`</span> folder contents.</span>
-<span id="cb8-144"><a href="#cb8-144" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-145"><a href="#cb8-145" aria-hidden="true" tabindex="-1"></a><span class="fu">## Configuration</span></span>
-<span id="cb8-146"><a href="#cb8-146" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-147"><a href="#cb8-147" aria-hidden="true" tabindex="-1"></a><span class="fu">### Backend Selection</span></span>
-<span id="cb8-148"><a href="#cb8-148" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-149"><a href="#cb8-149" aria-hidden="true" tabindex="-1"></a>ozen-web supports multiple WASM backends:</span>
-<span id="cb8-150"><a href="#cb8-150" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-151"><a href="#cb8-151" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Backend <span class="pp">|</span> Source <span class="pp">|</span> License <span class="pp">|</span> Speed <span class="pp">|</span> Offline <span class="pp">|</span></span>
-<span id="cb8-152"><a href="#cb8-152" aria-hidden="true" tabindex="-1"></a><span class="pp">|---------|--------|---------|-------|---------|</span></span>
-<span id="cb8-153"><a href="#cb8-153" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`praatfan-local`</span> <span class="pp">|</span> <span class="in">`static/wasm/`</span> <span class="pp">|</span> MIT/Apache-2.0 <span class="pp">|</span> Fastest <span class="pp">|</span> ✅ Yes <span class="pp">|</span></span>
-<span id="cb8-154"><a href="#cb8-154" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`praatfan`</span> <span class="pp">|</span> GitHub Pages CDN <span class="pp">|</span> MIT/Apache-2.0 <span class="pp">|</span> Fast <span class="pp">|</span> ❌ No <span class="pp">|</span></span>
-<span id="cb8-155"><a href="#cb8-155" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`praatfan-gpl`</span> <span class="pp">|</span> GitHub Pages CDN <span class="pp">|</span> GPL <span class="pp">|</span> Fast <span class="pp">|</span> ❌ No <span class="pp">|</span></span>
-<span id="cb8-156"><a href="#cb8-156" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-157"><a href="#cb8-157" aria-hidden="true" tabindex="-1"></a>Select the backend using the dropdown in the app interface.</span>
-<span id="cb8-158"><a href="#cb8-158" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-159"><a href="#cb8-159" aria-hidden="true" tabindex="-1"></a>See <span class="co">[</span><span class="ot">WASM Backends Reference</span><span class="co">](reference/backends.qmd)</span> for detailed comparison.</span>
-<span id="cb8-160"><a href="#cb8-160" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-161"><a href="#cb8-161" aria-hidden="true" tabindex="-1"></a><span class="fu">### Custom Configuration</span></span>
-<span id="cb8-162"><a href="#cb8-162" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-163"><a href="#cb8-163" aria-hidden="true" tabindex="-1"></a>Create <span class="in">`static/config.yaml`</span> to customize default settings:</span>
-<span id="cb8-164"><a href="#cb8-164" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-165"><a href="#cb8-165" aria-hidden="true" tabindex="-1"></a><span class="in">```yaml</span></span>
-<span id="cb8-166"><a href="#cb8-166" aria-hidden="true" tabindex="-1"></a><span class="co"># Example configuration</span></span>
-<span id="cb8-167"><a href="#cb8-167" aria-hidden="true" tabindex="-1"></a><span class="fu">backend</span><span class="kw">:</span><span class="at"> </span><span class="st">"praatfan-local"</span></span>
-<span id="cb8-168"><a href="#cb8-168" aria-hidden="true" tabindex="-1"></a><span class="fu">maxFrequency</span><span class="kw">:</span><span class="at"> </span><span class="dv">5000</span></span>
-<span id="cb8-169"><a href="#cb8-169" aria-hidden="true" tabindex="-1"></a><span class="fu">showPitch</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
-<span id="cb8-170"><a href="#cb8-170" aria-hidden="true" tabindex="-1"></a><span class="fu">showFormants</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
-<span id="cb8-171"><a href="#cb8-171" aria-hidden="true" tabindex="-1"></a><span class="fu">theme</span><span class="kw">:</span><span class="at"> </span><span class="st">"dark"</span></span>
-<span id="cb8-172"><a href="#cb8-172" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb8-173"><a href="#cb8-173" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-174"><a href="#cb8-174" aria-hidden="true" tabindex="-1"></a>See <span class="co">[</span><span class="ot">Configuration Reference</span><span class="co">](reference/configuration.qmd)</span> for all options.</span>
-<span id="cb8-175"><a href="#cb8-175" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-176"><a href="#cb8-176" aria-hidden="true" tabindex="-1"></a><span class="fu">## Troubleshooting</span></span>
-<span id="cb8-177"><a href="#cb8-177" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-178"><a href="#cb8-178" aria-hidden="true" tabindex="-1"></a><span class="fu">### WASM Fails to Load</span></span>
-<span id="cb8-179"><a href="#cb8-179" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-180"><a href="#cb8-180" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Check backend selection**: Try switching between backends in the dropdown</span>
-<span id="cb8-181"><a href="#cb8-181" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Clear browser cache**: Hard refresh with Ctrl+Shift+R (Cmd+Shift+R on Mac)</span>
-<span id="cb8-182"><a href="#cb8-182" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Check browser console**: Open DevTools (F12) → Console tab for error messages</span>
-<span id="cb8-183"><a href="#cb8-183" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-184"><a href="#cb8-184" aria-hidden="true" tabindex="-1"></a><span class="fu">### Audio File Won't Load</span></span>
-<span id="cb8-185"><a href="#cb8-185" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-186"><a href="#cb8-186" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Supported formats**: WAV, MP3, OGG (16-bit or 24-bit PCM for WAV)</span>
-<span id="cb8-187"><a href="#cb8-187" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**File size**: Files &gt;100MB may be slow; try shorter clips</span>
-<span id="cb8-188"><a href="#cb8-188" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Browser support**: Some browsers have codec limitations (try Chrome/Edge)</span>
-<span id="cb8-189"><a href="#cb8-189" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-190"><a href="#cb8-190" aria-hidden="true" tabindex="-1"></a><span class="fu">### Long Audio Files Show "Zoom in for spectrogram"</span></span>
-<span id="cb8-191"><a href="#cb8-191" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-192"><a href="#cb8-192" aria-hidden="true" tabindex="-1"></a>This is expected behavior for files &gt;60 seconds. Zoom in to a window ≤60s to trigger analysis.</span>
-<span id="cb8-193"><a href="#cb8-193" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-194"><a href="#cb8-194" aria-hidden="true" tabindex="-1"></a>See <span class="co">[</span><span class="ot">Features: Long Audio Handling</span><span class="co">](features/overview.qmd#long-audio-handling)</span> for details.</span>
-<span id="cb8-195"><a href="#cb8-195" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-196"><a href="#cb8-196" aria-hidden="true" tabindex="-1"></a><span class="fu">## Getting Help</span></span>
-<span id="cb8-197"><a href="#cb8-197" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-198"><a href="#cb8-198" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Documentation**: Browse <span class="co">[</span><span class="ot">Features</span><span class="co">](features/overview.qmd)</span> and <span class="co">[</span><span class="ot">Reference</span><span class="co">](reference/keyboard-shortcuts.qmd)</span> sections</span>
-<span id="cb8-199"><a href="#cb8-199" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Tutorial**: Follow the <span class="co">[</span><span class="ot">step-by-step guide</span><span class="co">](tutorial/index.qmd)</span></span>
-<span id="cb8-200"><a href="#cb8-200" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Issues**: Report bugs at <span class="co">[</span><span class="ot">GitHub Issues</span><span class="co">](https://github.com/ucpresearch/ozen-web/issues)</span></span>
-<span id="cb8-201"><a href="#cb8-201" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-202"><a href="#cb8-202" aria-hidden="true" tabindex="-1"></a><span class="fu">## What's Next?</span></span>
-<span id="cb8-203"><a href="#cb8-203" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-204"><a href="#cb8-204" aria-hidden="true" tabindex="-1"></a>Ready to dive deeper? Try the:</span>
-<span id="cb8-205"><a href="#cb8-205" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-206"><a href="#cb8-206" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**[Complete Tutorial](tutorial/index.qmd)** — Guided walkthrough from loading audio to exporting data</span>
-<span id="cb8-207"><a href="#cb8-207" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**[Features Overview](features/overview.qmd)** — Detailed documentation of all features</span>
-<span id="cb8-208"><a href="#cb8-208" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**[Embedding Guide](embedding/overview.qmd)** — Embed ozen-web in your websites or documents</span>
-<span id="cb8-209"><a href="#cb8-209" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-210"><a href="#cb8-210" aria-hidden="true" tabindex="-1"></a>---</span>
-<span id="cb8-211"><a href="#cb8-211" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-212"><a href="#cb8-212" aria-hidden="true" tabindex="-1"></a>**All set?** Head to the <span class="co">[</span><span class="ot">Tutorial</span><span class="co">](tutorial/index.qmd)</span> to learn the complete workflow. →</span></code><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Getting Started"</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="an">subtitle:</span><span class="co"> "Install and run Ozen-web in 5 minutes"</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="fu">## Overview</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>Ozen-web is a static web application that runs entirely in your browser. You can:</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**Use the hosted version** (easiest) — No setup required</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>**Run locally for development** — Full control and offline access</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>**Deploy your own instance** — Host on GitHub Pages, Netlify, or any static host</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="fu">## Option 1: Use Hosted Version</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>The fastest way to get started is using the hosted version:</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>**🌐 [https://ucpresearch.github.io/ozen-web/live/](https://ucpresearch.github.io/ozen-web/live/index.html)**</span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>Simply visit the URL and drag an audio file (WAV, MP3, OGG) to begin analyzing.</span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip}</span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>Bookmark the URL for quick access. All processing happens locally in your browser — no data is uploaded to servers.</span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a><span class="fu">### Loading Your First Audio File</span></span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>::: {.tutorial-steps}</span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**Drag and drop** a WAV, MP3, or OGG file onto the interface</span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a>   OR</span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a>   **Click "Load Audio"** button and select a file</span>
+<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>Wait for the waveform to appear (1-2 seconds for typical files)</span>
+<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>The spectrogram will load automatically (or zoom in for long files)</span>
+<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-39"><a href="#cb2-39" aria-hidden="true" tabindex="-1"></a><span class="ss">4. </span>Enable acoustic overlays using checkboxes: Pitch, Formants, Intensity</span>
+<span id="cb2-40"><a href="#cb2-40" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb2-41"><a href="#cb2-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-42"><a href="#cb2-42" aria-hidden="true" tabindex="-1"></a>::: {.callout-try}</span>
+<span id="cb2-43"><a href="#cb2-43" aria-hidden="true" tabindex="-1"></a>Don't have an audio file handy? Record directly in the browser by clicking the microphone icon 🎤 (requires microphone permission).</span>
+<span id="cb2-44"><a href="#cb2-44" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb2-45"><a href="#cb2-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-46"><a href="#cb2-46" aria-hidden="true" tabindex="-1"></a><span class="fu">### What's Next?</span></span>
+<span id="cb2-47"><a href="#cb2-47" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-48"><a href="#cb2-48" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Follow the <span class="co">[</span><span class="ot">Complete Tutorial</span><span class="co">](tutorial/index.html)</span> for a guided walkthrough</span>
+<span id="cb2-49"><a href="#cb2-49" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Explore <span class="co">[</span><span class="ot">Features Documentation</span><span class="co">](features/overview.html)</span> for detailed feature guides</span>
+<span id="cb2-50"><a href="#cb2-50" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Check <span class="co">[</span><span class="ot">Keyboard Shortcuts</span><span class="co">](reference/keyboard-shortcuts.html)</span> for efficient workflow</span>
+<span id="cb2-51"><a href="#cb2-51" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-52"><a href="#cb2-52" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-53"><a href="#cb2-53" aria-hidden="true" tabindex="-1"></a><span class="fu">## Option 2: Run Locally</span></span>
+<span id="cb2-54"><a href="#cb2-54" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-55"><a href="#cb2-55" aria-hidden="true" tabindex="-1"></a>For development or offline use, run Ozen-web on your machine.</span>
+<span id="cb2-56"><a href="#cb2-56" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-57"><a href="#cb2-57" aria-hidden="true" tabindex="-1"></a><span class="fu">### Prerequisites</span></span>
+<span id="cb2-58"><a href="#cb2-58" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-59"><a href="#cb2-59" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Any local web server, for instance <span class="in">`python -m http.server 8080`</span>,</span>
+<span id="cb2-60"><a href="#cb2-60" aria-hidden="true" tabindex="-1"></a>  started from one of the parent directories</span>
+<span id="cb2-61"><a href="#cb2-61" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-62"><a href="#cb2-62" aria-hidden="true" tabindex="-1"></a><span class="fu">### Download</span></span>
+<span id="cb2-63"><a href="#cb2-63" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-64"><a href="#cb2-64" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`git clone https://github.com/ucpresearch/ozen-web.git`</span></span>
+<span id="cb2-65"><a href="#cb2-65" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-66"><a href="#cb2-66" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`cd ozen-web/docs`</span></span>
+<span id="cb2-67"><a href="#cb2-67" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-68"><a href="#cb2-68" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`python -m http.server 8080`</span> (adapt the port -- 8080 --  as necessary)</span>
+<span id="cb2-69"><a href="#cb2-69" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-70"><a href="#cb2-70" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Open the following url (adapt the port as necessary):</span>
+<span id="cb2-71"><a href="#cb2-71" aria-hidden="true" tabindex="-1"></a>  (http://localhost:8080/live/index.html)<span class="co">[</span><span class="ot">http://localhost:8080/live/index.html</span><span class="co">]</span>  </span>
+<span id="cb2-72"><a href="#cb2-72" aria-hidden="true" tabindex="-1"></a>  notice that this method doesn't use https, and your browser may</span>
+<span id="cb2-73"><a href="#cb2-73" aria-hidden="true" tabindex="-1"></a>  complain about it</span>
+<span id="cb2-74"><a href="#cb2-74" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-75"><a href="#cb2-75" aria-hidden="true" tabindex="-1"></a><span class="fu">## Option 3: Deploy Your Own Instance</span></span>
+<span id="cb2-76"><a href="#cb2-76" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-77"><a href="#cb2-77" aria-hidden="true" tabindex="-1"></a>The <span class="in">`build/`</span> or <span class="in">`docs/live`</span> (same content) folder will work with any</span>
+<span id="cb2-78"><a href="#cb2-78" aria-hidden="true" tabindex="-1"></a>static file host:</span>
+<span id="cb2-79"><a href="#cb2-79" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-80"><a href="#cb2-80" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**AWS S3** + CloudFront</span>
+<span id="cb2-81"><a href="#cb2-81" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Google Cloud Storage**</span>
+<span id="cb2-82"><a href="#cb2-82" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Azure Static Web Apps**</span>
+<span id="cb2-83"><a href="#cb2-83" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Cloudflare Pages**</span>
+<span id="cb2-84"><a href="#cb2-84" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**GitLab Pages**</span>
+<span id="cb2-85"><a href="#cb2-85" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-86"><a href="#cb2-86" aria-hidden="true" tabindex="-1"></a>Just upload the <span class="in">`build/`</span> folder's contents.</span>
+<span id="cb2-87"><a href="#cb2-87" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-88"><a href="#cb2-88" aria-hidden="true" tabindex="-1"></a><span class="fu">## Configuration</span></span>
+<span id="cb2-89"><a href="#cb2-89" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-90"><a href="#cb2-90" aria-hidden="true" tabindex="-1"></a><span class="fu">### Backend Selection</span></span>
+<span id="cb2-91"><a href="#cb2-91" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-92"><a href="#cb2-92" aria-hidden="true" tabindex="-1"></a>Ozen-web supports multiple WASM backends:</span>
+<span id="cb2-93"><a href="#cb2-93" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-94"><a href="#cb2-94" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Backend <span class="pp">|</span> Source <span class="pp">|</span> License <span class="pp">|</span> Speed <span class="pp">|</span> Offline <span class="pp">|</span></span>
+<span id="cb2-95"><a href="#cb2-95" aria-hidden="true" tabindex="-1"></a><span class="pp">|---------|--------|---------|-------|---------|</span></span>
+<span id="cb2-96"><a href="#cb2-96" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`praatfan-local`</span> <span class="pp">|</span> <span class="in">`static/wasm/`</span> <span class="pp">|</span> MIT/Apache-2.0 <span class="pp">|</span> Fastest <span class="pp">|</span> ✅ Yes <span class="pp">|</span></span>
+<span id="cb2-97"><a href="#cb2-97" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`praatfan`</span> <span class="pp">|</span> GitHub Pages CDN <span class="pp">|</span> MIT/Apache-2.0 <span class="pp">|</span> Fast <span class="pp">|</span> ❌ No <span class="pp">|</span></span>
+<span id="cb2-98"><a href="#cb2-98" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`praatfan-gpl`</span> <span class="pp">|</span> GitHub Pages CDN <span class="pp">|</span> GPL <span class="pp">|</span> Fast <span class="pp">|</span> ❌ No <span class="pp">|</span></span>
+<span id="cb2-99"><a href="#cb2-99" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-100"><a href="#cb2-100" aria-hidden="true" tabindex="-1"></a>Select the backend using the dropdown in the app interface.</span>
+<span id="cb2-101"><a href="#cb2-101" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-102"><a href="#cb2-102" aria-hidden="true" tabindex="-1"></a>See <span class="co">[</span><span class="ot">WASM Backends Reference</span><span class="co">](reference/backends.html)</span> for detailed comparison.</span>
+<span id="cb2-103"><a href="#cb2-103" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-104"><a href="#cb2-104" aria-hidden="true" tabindex="-1"></a><span class="fu">### Custom Configuration</span></span>
+<span id="cb2-105"><a href="#cb2-105" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-106"><a href="#cb2-106" aria-hidden="true" tabindex="-1"></a>Create <span class="in">`static/config.yaml`</span> to customize default settings:</span>
+<span id="cb2-107"><a href="#cb2-107" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-108"><a href="#cb2-108" aria-hidden="true" tabindex="-1"></a><span class="in">```yaml</span></span>
+<span id="cb2-109"><a href="#cb2-109" aria-hidden="true" tabindex="-1"></a><span class="co"># Example configuration</span></span>
+<span id="cb2-110"><a href="#cb2-110" aria-hidden="true" tabindex="-1"></a><span class="fu">backend</span><span class="kw">:</span><span class="at"> </span><span class="st">"praatfan-local"</span></span>
+<span id="cb2-111"><a href="#cb2-111" aria-hidden="true" tabindex="-1"></a><span class="fu">maxFrequency</span><span class="kw">:</span><span class="at"> </span><span class="dv">5000</span></span>
+<span id="cb2-112"><a href="#cb2-112" aria-hidden="true" tabindex="-1"></a><span class="fu">showPitch</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
+<span id="cb2-113"><a href="#cb2-113" aria-hidden="true" tabindex="-1"></a><span class="fu">showFormants</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
+<span id="cb2-114"><a href="#cb2-114" aria-hidden="true" tabindex="-1"></a><span class="fu">theme</span><span class="kw">:</span><span class="at"> </span><span class="st">"dark"</span></span>
+<span id="cb2-115"><a href="#cb2-115" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb2-116"><a href="#cb2-116" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-117"><a href="#cb2-117" aria-hidden="true" tabindex="-1"></a>See <span class="co">[</span><span class="ot">Configuration Reference</span><span class="co">](reference/configuration.html)</span> for all options.</span>
+<span id="cb2-118"><a href="#cb2-118" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-119"><a href="#cb2-119" aria-hidden="true" tabindex="-1"></a><span class="fu">## Troubleshooting</span></span>
+<span id="cb2-120"><a href="#cb2-120" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-121"><a href="#cb2-121" aria-hidden="true" tabindex="-1"></a><span class="fu">### WASM Fails to Load</span></span>
+<span id="cb2-122"><a href="#cb2-122" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-123"><a href="#cb2-123" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Check backend selection**: Try switching between backends in the dropdown</span>
+<span id="cb2-124"><a href="#cb2-124" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Clear browser cache**: Hard refresh with Ctrl+Shift+R (Cmd+Shift+R on Mac)</span>
+<span id="cb2-125"><a href="#cb2-125" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Check browser console**: Open DevTools (F12) → Console tab for error messages</span>
+<span id="cb2-126"><a href="#cb2-126" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-127"><a href="#cb2-127" aria-hidden="true" tabindex="-1"></a><span class="fu">### Audio File Won't Load</span></span>
+<span id="cb2-128"><a href="#cb2-128" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-129"><a href="#cb2-129" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Supported formats**: WAV, MP3, OGG (16-bit or 24-bit PCM for WAV)</span>
+<span id="cb2-130"><a href="#cb2-130" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**File size**: Files &gt;100MB may be slow; try shorter clips</span>
+<span id="cb2-131"><a href="#cb2-131" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Browser support**: Some browsers have codec limitations (try Chrome/Edge)</span>
+<span id="cb2-132"><a href="#cb2-132" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-133"><a href="#cb2-133" aria-hidden="true" tabindex="-1"></a><span class="fu">### Long Audio Files Show "Zoom in for spectrogram"</span></span>
+<span id="cb2-134"><a href="#cb2-134" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-135"><a href="#cb2-135" aria-hidden="true" tabindex="-1"></a>This is expected behavior for files &gt;60 seconds. Zoom in to a window ≤60s to trigger analysis.</span>
+<span id="cb2-136"><a href="#cb2-136" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-137"><a href="#cb2-137" aria-hidden="true" tabindex="-1"></a>See <span class="co">[</span><span class="ot">Features: Long Audio Handling</span><span class="co">](features/overview.html#long-audio-handling)</span> for details.</span>
+<span id="cb2-138"><a href="#cb2-138" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-139"><a href="#cb2-139" aria-hidden="true" tabindex="-1"></a><span class="fu">## Getting Help</span></span>
+<span id="cb2-140"><a href="#cb2-140" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-141"><a href="#cb2-141" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Documentation**: Browse <span class="co">[</span><span class="ot">Features</span><span class="co">](features/overview.html)</span> and <span class="co">[</span><span class="ot">Reference</span><span class="co">](reference/keyboard-shortcuts.html)</span> sections</span>
+<span id="cb2-142"><a href="#cb2-142" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Tutorial**: Follow the <span class="co">[</span><span class="ot">step-by-step guide</span><span class="co">](tutorial/index.html)</span></span>
+<span id="cb2-143"><a href="#cb2-143" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Issues**: Report bugs at <span class="co">[</span><span class="ot">GitHub Issues</span><span class="co">](https://github.com/ucpresearch/ozen-web/issues)</span></span>
+<span id="cb2-144"><a href="#cb2-144" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-145"><a href="#cb2-145" aria-hidden="true" tabindex="-1"></a><span class="fu">## What's Next?</span></span>
+<span id="cb2-146"><a href="#cb2-146" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-147"><a href="#cb2-147" aria-hidden="true" tabindex="-1"></a>Ready to dive deeper? Try the:</span>
+<span id="cb2-148"><a href="#cb2-148" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-149"><a href="#cb2-149" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**[Complete Tutorial](tutorial/index.html)** — Guided walkthrough from loading audio to exporting data</span>
+<span id="cb2-150"><a href="#cb2-150" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**[Features Overview](features/overview.html)** — Detailed documentation of all features</span>
+<span id="cb2-151"><a href="#cb2-151" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**[Embedding Guide](embedding/overview.html)** — Embed Ozen-web in your websites or documents</span>
+<span id="cb2-152"><a href="#cb2-152" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-153"><a href="#cb2-153" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb2-154"><a href="#cb2-154" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-155"><a href="#cb2-155" aria-hidden="true" tabindex="-1"></a>**All set?** Head to the <span class="co">[</span><span class="ot">Tutorial</span><span class="co">](tutorial/index.html)</span> to learn the complete workflow. →</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 <footer class="footer">

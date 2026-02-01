@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.29">
+<meta name="generator" content="quarto-1.8.25">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Architecture – ozen-web</title>
+<title>Architecture – Ozen-web</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -69,14 +69,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../development/setup.html" rel="prev">
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-0815c480559380816a4d1ea211a47e91.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-da67e8c4bf892742008e2f79db78be0d.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-959c4db58b3c37e28c4d50a75de65b15.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -117,10 +118,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
     <a href="../index.html" class="navbar-brand navbar-brand-logo">
-    <img src="../assets/logo.png" alt="" class="navbar-logo">
+    <img src="../assets/logo.png" alt="" class="navbar-logo light-content">
+    <img src="../assets/logo.png" alt="" class="navbar-logo dark-content">
     </a>
     <a class="navbar-brand" href="../index.html">
-    <span class="navbar-title">ozen-web</span>
+    <span class="navbar-title">Ozen-web</span>
     </a>
   </div>
             <div id="quarto-search" class="" title="Search"></div>
@@ -130,7 +132,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../index.html"> 
+    <a class="nav-link active" href="../index.html" aria-current="page"> 
 <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
@@ -208,7 +210,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     </ul>
   </li>
   <li class="nav-item">
-    <a class="nav-link active" href="../development/setup.html" aria-current="page"> 
+    <a class="nav-link" href="../development/setup.html"> 
 <span class="menu-text">Development</span></a>
   </li>  
 </ul>
@@ -239,6 +241,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
+      <a href="../index.html" class="sidebar-logo-link">
+      </a>
+      </div>
     <div class="sidebar-menu-container"> 
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
@@ -376,7 +382,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <section id="overview" class="level2">
 <h2 class="anchored" data-anchor-id="overview">Overview</h2>
-<p>ozen-web is a <strong>fully client-side web application</strong> built with SvelteKit, designed to run entirely in the browser without any backend server. The architecture emphasizes:</p>
+<p>Ozen-web is a <strong>fully client-side web application</strong> built with SvelteKit, designed to run entirely in the browser without any backend server. The architecture emphasizes:</p>
 <ul>
 <li><strong>Reactive state management</strong> via Svelte stores</li>
 <li><strong>WASM-powered analysis</strong> for Praat-accurate acoustic computation</li>
@@ -389,7 +395,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 class="anchored" data-anchor-id="application-structure">Application Structure</h2>
 <section id="routes" class="level3">
 <h3 class="anchored" data-anchor-id="routes">Routes</h3>
-<p>ozen-web uses SvelteKit’s file-based routing with two main routes:</p>
+<p>Ozen-web uses SvelteKit’s file-based routing with two main routes:</p>
 <pre><code>src/routes/
 ├── +page.svelte          # Main desktop application
 ├── +layout.svelte        # App shell (shared layout)
@@ -404,7 +410,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h3 class="anchored" data-anchor-id="build-system">Build System</h3>
 <p><strong>Static Site Generation:</strong> - All routes are <strong>prerendered</strong> at build time (not SPA mode) - Uses relative paths for portable deployment - Post-build script (<code>scripts/fix-relative-paths.js</code>) ensures base path detection works in subdirectories - No server required - deploy to any static host</p>
 <p><strong>Build output:</strong></p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">npm</span> run build    <span class="co"># → build/ directory</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">npm</span> run build    <span class="co"># → build/ directory</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><strong>Deployment flexibility:</strong></p>
 <pre><code># Works at root
 https://example.com/
@@ -567,7 +573,7 @@ https://username.github.io/ozen-web/</code></pre>
 </section>
 <section id="state-management" class="level2">
 <h2 class="anchored" data-anchor-id="state-management">State Management</h2>
-<p>ozen-web uses <strong>Svelte stores</strong> for all shared state. Stores are the single source of truth; components subscribe and react to changes.</p>
+<p>Ozen-web uses <strong>Svelte stores</strong> for all shared state. Stores are the single source of truth; components subscribe and react to changes.</p>
 <section id="store-architecture" class="level3">
 <h3 class="anchored" data-anchor-id="store-architecture">Store Architecture</h3>
 <pre class="mermaid"><code>graph LR
@@ -677,11 +683,11 @@ https://username.github.io/ozen-web/</code></pre>
 <section id="derived-stores" class="level3">
 <h3 class="anchored" data-anchor-id="derived-stores">Derived Stores</h3>
 <p><strong>Computed state</strong> is implemented with derived stores:</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode typescript code-with-copy"><code class="sourceCode typescript"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co">// src/lib/stores/view.ts</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode typescript code-with-copy"><code class="sourceCode typescript"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co">// src/lib/stores/view.ts</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="im">export</span> <span class="kw">const</span> visibleDuration <span class="op">=</span> <span class="fu">derived</span>(</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  timeRange<span class="op">,</span></span>
 <span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  ($timeRange) <span class="kw">=&gt;</span> $timeRange<span class="op">.</span><span class="at">end</span> <span class="op">-</span> $timeRange<span class="op">.</span><span class="at">start</span></span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>)<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Components can subscribe to <code>$visibleDuration</code> which automatically updates when <code>timeRange</code> changes.</p>
 </section>
 </section>
@@ -751,18 +757,18 @@ https://username.github.io/ozen-web/</code></pre>
 <li>Components react to <code>$wasmReady</code> and enable analysis features</li>
 </ol>
 <p><strong>Lazy loading for CDN backends:</strong></p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode typescript code-with-copy"><code class="sourceCode typescript"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co">// praatfan backend downloads ~5MB on first init</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="cf">await</span> <span class="fu">initWasm</span>(<span class="st">'praatfan'</span>)<span class="op">;</span>  <span class="co">// 1-3 second delay</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode typescript code-with-copy"><code class="sourceCode typescript"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co">// praatfan backend downloads ~5MB on first init</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="cf">await</span> <span class="fu">initWasm</span>(<span class="st">'praatfan'</span>)<span class="op">;</span>  <span class="co">// 1-3 second delay</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><strong>Instant for local backend:</strong></p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode typescript code-with-copy"><code class="sourceCode typescript"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co">// praatfan-local uses bundled WASM</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="cf">await</span> <span class="fu">initWasm</span>(<span class="st">'praatfan-local'</span>)<span class="op">;</span>  <span class="co">// ~200ms</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode typescript code-with-copy"><code class="sourceCode typescript"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co">// praatfan-local uses bundled WASM</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="cf">await</span> <span class="fu">initWasm</span>(<span class="st">'praatfan-local'</span>)<span class="op">;</span>  <span class="co">// ~200ms</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 </section>
 <section id="rendering-pipeline" class="level2">
 <h2 class="anchored" data-anchor-id="rendering-pipeline">Rendering Pipeline</h2>
 <section id="canvas-strategy" class="level3">
 <h3 class="anchored" data-anchor-id="canvas-strategy">Canvas Strategy</h3>
-<p>ozen-web uses <strong>HTML5 Canvas</strong> for all visualizations (not SVG/DOM) to handle: - Large datasets (thousands of time points, frequency bins) - Real-time updates (cursor tracking, playback) - Smooth zoom/pan interactions</p>
+<p>Ozen-web uses <strong>HTML5 Canvas</strong> for all visualizations (not SVG/DOM) to handle: - Large datasets (thousands of time points, frequency bins) - Real-time updates (cursor tracking, playback) - Smooth zoom/pan interactions</p>
 </section>
 <section id="spectrogram-rendering" class="level3">
 <h3 class="anchored" data-anchor-id="spectrogram-rendering">Spectrogram Rendering</h3>
@@ -793,7 +799,7 @@ https://username.github.io/ozen-web/</code></pre>
 <section id="waveform-rendering" class="level3">
 <h3 class="anchored" data-anchor-id="waveform-rendering">Waveform Rendering</h3>
 <p><strong>Downsampling strategy:</strong></p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode typescript code-with-copy"><code class="sourceCode typescript"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co">// Pseudocode from Waveform.svelte</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode typescript code-with-copy"><code class="sourceCode typescript"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co">// Pseudocode from Waveform.svelte</span></span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">renderWaveform</span>(audioBuffer<span class="op">,</span> timeRange<span class="op">,</span> canvasWidth) {</span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> samplesPerPixel <span class="op">=</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">ceil</span>(visibleSamples <span class="op">/</span> canvasWidth)<span class="op">;</span></span>
 <span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a></span>
@@ -812,7 +818,7 @@ https://username.github.io/ozen-web/</code></pre>
 <span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a>    <span class="co">// Draw vertical line from min to max</span></span>
 <span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a>    <span class="fu">drawVerticalLine</span>(x<span class="op">,</span> min<span class="op">,</span> max)<span class="op">;</span></span>
 <span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><strong>Result:</strong> One vertical line per pixel showing amplitude range, efficient for any zoom level.</p>
 </section>
 <section id="overlay-rendering" class="level3">
@@ -931,21 +937,21 @@ https://username.github.io/ozen-web/</code></pre>
 <h3 class="anchored" data-anchor-id="saving-files">Saving Files</h3>
 <p><strong>Two approaches based on browser support:</strong></p>
 <p><strong>Modern browsers (File System Access API):</strong></p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode typescript code-with-copy"><code class="sourceCode typescript"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> handle <span class="op">=</span> <span class="cf">await</span> <span class="bu">window</span><span class="op">.</span><span class="fu">showSaveFilePicker</span>({</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17"><pre class="sourceCode typescript code-with-copy"><code class="sourceCode typescript"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> handle <span class="op">=</span> <span class="cf">await</span> <span class="bu">window</span><span class="op">.</span><span class="fu">showSaveFilePicker</span>({</span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  suggestedName<span class="op">:</span> <span class="st">'annotations.TextGrid'</span><span class="op">,</span></span>
 <span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  types<span class="op">:</span> [{ description<span class="op">:</span> <span class="st">'TextGrid'</span><span class="op">,</span> accept<span class="op">:</span> { <span class="st">'text/plain'</span><span class="op">:</span> [<span class="st">'.TextGrid'</span>] } }]</span>
 <span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>})<span class="op">;</span></span>
 <span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> writable <span class="op">=</span> <span class="cf">await</span> handle<span class="op">.</span><span class="fu">createWritable</span>()<span class="op">;</span></span>
 <span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a><span class="cf">await</span> writable<span class="op">.</span><span class="fu">write</span>(textGridContent)<span class="op">;</span></span>
-<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a><span class="cf">await</span> writable<span class="op">.</span><span class="fu">close</span>()<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a><span class="cf">await</span> writable<span class="op">.</span><span class="fu">close</span>()<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><strong>Fallback (Download link):</strong></p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode typescript code-with-copy"><code class="sourceCode typescript"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> blob <span class="op">=</span> <span class="kw">new</span> <span class="bu">Blob</span>([textGridContent]<span class="op">,</span> { type<span class="op">:</span> <span class="st">'text/plain'</span> })<span class="op">;</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18"><pre class="sourceCode typescript code-with-copy"><code class="sourceCode typescript"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> blob <span class="op">=</span> <span class="kw">new</span> <span class="bu">Blob</span>([textGridContent]<span class="op">,</span> { type<span class="op">:</span> <span class="st">'text/plain'</span> })<span class="op">;</span></span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> url <span class="op">=</span> URL<span class="op">.</span><span class="fu">createObjectURL</span>(blob)<span class="op">;</span></span>
 <span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> a <span class="op">=</span> <span class="bu">document</span><span class="op">.</span><span class="fu">createElement</span>(<span class="st">'a'</span>)<span class="op">;</span></span>
 <span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>a<span class="op">.</span><span class="at">href</span> <span class="op">=</span> url<span class="op">;</span></span>
 <span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>a<span class="op">.</span><span class="at">download</span> <span class="op">=</span> <span class="st">'annotations.TextGrid'</span><span class="op">;</span></span>
 <span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>a<span class="op">.</span><span class="fu">click</span>()<span class="op">;</span></span>
-<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>URL<span class="op">.</span><span class="fu">revokeObjectURL</span>(url)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>URL<span class="op">.</span><span class="fu">revokeObjectURL</span>(url)<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><strong>File types supported:</strong></p>
 <table class="caption-top table">
 <thead>
@@ -1019,7 +1025,7 @@ https://username.github.io/ozen-web/</code></pre>
     J --&gt; K[Cache results for this region]
     K --&gt; E</code></pre>
 <p><strong>Implementation:</strong></p>
-<div class="sourceCode" id="cb20"><pre class="sourceCode typescript code-with-copy"><code class="sourceCode typescript"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co">// src/lib/stores/analysis.ts</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb20"><pre class="sourceCode typescript code-with-copy"><code class="sourceCode typescript"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co">// src/lib/stores/analysis.ts</span></span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="im">export</span> <span class="kw">const</span> MAX_ANALYSIS_DURATION <span class="op">=</span> <span class="dv">60</span><span class="op">;</span></span>
 <span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="im">export</span> <span class="kw">async</span> <span class="kw">function</span> <span class="fu">runAnalysis</span>()<span class="op">:</span> <span class="bu">Promise</span><span class="op">&lt;</span><span class="dt">void</span><span class="op">&gt;</span> {</span>
@@ -1043,7 +1049,7 @@ https://username.github.io/ozen-web/</code></pre>
 <span id="cb20-22"><a href="#cb20-22" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb20-23"><a href="#cb20-23" aria-hidden="true" tabindex="-1"></a>  <span class="co">// Compute just for this window</span></span>
 <span id="cb20-24"><a href="#cb20-24" aria-hidden="true" tabindex="-1"></a>  <span class="cf">await</span> <span class="fu">computeFeaturesForRange</span>(start<span class="op">,</span> end)<span class="op">;</span></span>
-<span id="cb20-25"><a href="#cb20-25" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb20-25"><a href="#cb20-25" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><strong>User experience:</strong> - File loads instantly (no hanging) - Waveform always visible - Spectrogram shows “Zoom in to see spectrogram” message - Overlays appear once zoomed to analyzable window</p>
 <p><strong>Code location:</strong> <code>src/lib/stores/analysis.ts</code>, <code>src/lib/components/Spectrogram.svelte</code></p>
 </section>
@@ -1072,7 +1078,7 @@ https://username.github.io/ozen-web/</code></pre>
 </section>
 <section id="usage-pattern" class="level3">
 <h3 class="anchored" data-anchor-id="usage-pattern">Usage Pattern</h3>
-<div class="sourceCode" id="cb22"><pre class="sourceCode typescript code-with-copy"><code class="sourceCode typescript"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> { saveUndo<span class="op">,</span> undo<span class="op">,</span> redo } <span class="im">from</span> <span class="st">'$lib/stores/undoManager'</span><span class="op">;</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb22"><pre class="sourceCode typescript code-with-copy"><code class="sourceCode typescript"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> { saveUndo<span class="op">,</span> undo<span class="op">,</span> redo } <span class="im">from</span> <span class="st">'$lib/stores/undoManager'</span><span class="op">;</span></span>
 <span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="im">export</span> <span class="kw">function</span> <span class="fu">addBoundary</span>(tierIndex<span class="op">:</span> <span class="dt">number</span><span class="op">,</span> time<span class="op">:</span> <span class="dt">number</span>)<span class="op">:</span> <span class="dt">void</span> {</span>
 <span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">saveUndo</span>()<span class="op">;</span>  <span class="co">// MUST call before mutation</span></span>
@@ -1088,7 +1094,7 @@ https://username.github.io/ozen-web/</code></pre>
 <span id="cb22-14"><a href="#cb22-14" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> ((<span class="bu">event</span><span class="op">.</span><span class="at">ctrlKey</span> <span class="op">||</span> <span class="bu">event</span><span class="op">.</span><span class="at">metaKey</span>) <span class="op">&amp;&amp;</span> <span class="bu">event</span><span class="op">.</span><span class="fu">key</span> <span class="op">===</span> <span class="st">'z'</span>) {</span>
 <span id="cb22-15"><a href="#cb22-15" aria-hidden="true" tabindex="-1"></a>    <span class="fu">undo</span>()<span class="op">;</span></span>
 <span id="cb22-16"><a href="#cb22-16" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb22-17"><a href="#cb22-17" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb22-17"><a href="#cb22-17" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><strong>Important:</strong> Always call <code>saveUndo()</code> <em>before</em> the mutation, not after.</p>
 </section>
 </section>
@@ -1108,14 +1114,14 @@ https://username.github.io/ozen-web/</code></pre>
 <section id="playback-modes" class="level3">
 <h3 class="anchored" data-anchor-id="playback-modes">Playback Modes</h3>
 <p><strong>Selection playback:</strong></p>
-<div class="sourceCode" id="cb24"><pre class="sourceCode typescript code-with-copy"><code class="sourceCode typescript"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co">// Play only selected region</span></span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="fu">playSelection</span>(selection<span class="op">.</span><span class="at">start</span><span class="op">,</span> selection<span class="op">.</span><span class="at">end</span>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb24"><pre class="sourceCode typescript code-with-copy"><code class="sourceCode typescript"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co">// Play only selected region</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="fu">playSelection</span>(selection<span class="op">.</span><span class="at">start</span><span class="op">,</span> selection<span class="op">.</span><span class="at">end</span>)<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><strong>Visible window playback:</strong></p>
-<div class="sourceCode" id="cb25"><pre class="sourceCode typescript code-with-copy"><code class="sourceCode typescript"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co">// Play what's currently visible on screen</span></span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="fu">playVisibleWindow</span>(timeRange<span class="op">.</span><span class="at">start</span><span class="op">,</span> timeRange<span class="op">.</span><span class="at">end</span>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb25"><pre class="sourceCode typescript code-with-copy"><code class="sourceCode typescript"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co">// Play what's currently visible on screen</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="fu">playVisibleWindow</span>(timeRange<span class="op">.</span><span class="at">start</span><span class="op">,</span> timeRange<span class="op">.</span><span class="at">end</span>)<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><strong>Full file playback:</strong></p>
-<div class="sourceCode" id="cb26"><pre class="sourceCode typescript code-with-copy"><code class="sourceCode typescript"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co">// Play from cursor to end</span></span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="fu">playFromCursor</span>(cursorPosition<span class="op">,</span> audioDuration)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb26"><pre class="sourceCode typescript code-with-copy"><code class="sourceCode typescript"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co">// Play from cursor to end</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="fu">playFromCursor</span>(cursorPosition<span class="op">,</span> audioDuration)<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="cursor-synchronization" class="level3">
 <h3 class="anchored" data-anchor-id="cursor-synchronization">Cursor Synchronization</h3>
@@ -1140,11 +1146,11 @@ https://username.github.io/ozen-web/</code></pre>
 └── ...                     # Static assets</code></pre>
 <p><strong>Base path handling:</strong></p>
 <p>Post-build script (<code>scripts/fix-relative-paths.js</code>) injects runtime base path detection:</p>
-<div class="sourceCode" id="cb28"><pre class="sourceCode javascript code-with-copy"><code class="sourceCode javascript"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co">// In generated HTML</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb28"><pre class="sourceCode javascript code-with-copy"><code class="sourceCode javascript"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co">// In generated HTML</span></span>
 <span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span>script<span class="op">&gt;</span></span>
 <span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>  <span class="co">// Detect actual deployment path</span></span>
 <span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>  <span class="bu">window</span><span class="op">.</span><span class="at">__base</span> <span class="op">=</span> <span class="bu">document</span><span class="op">.</span><span class="at">currentScript</span><span class="op">.</span><span class="at">src</span><span class="op">.</span><span class="fu">replace</span>(<span class="ss">/</span><span class="sc">\/[^\/]*$</span><span class="ss">/</span><span class="op">,</span> <span class="st">''</span>)<span class="op">.</span><span class="fu">replace</span>(<span class="ss">/</span><span class="sc">\/</span><span class="ss">_app.</span><span class="sc">*</span><span class="ss">/</span><span class="op">,</span> <span class="st">''</span>)<span class="op">;</span></span>
-<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;/</span>script<span class="op">&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;/</span>script<span class="op">&gt;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>This allows deploying to: - Root: <code>https://example.com/</code> - Subdirectory: <code>https://example.com/tools/ozen/</code> - GitHub Pages: <code>https://user.github.io/ozen-web/</code></p>
 <p>No rebuild needed - same build works everywhere.</p>
 </section>
@@ -1170,16 +1176,16 @@ https://username.github.io/ozen-web/</code></pre>
 </section>
 <section id="testing-strategy" class="level2">
 <h2 class="anchored" data-anchor-id="testing-strategy">Testing Strategy</h2>
-<p><strong>Currently:</strong> Manual testing workflow (see <a href="../development/setup.html#testing">Setup</a>)</p>
+<p><strong>Currently:</strong> Manual testing workflow (see <a href="setup.html#testing">Setup</a>)</p>
 <p><strong>Future:</strong> Automated tests could include: - Unit tests for stores (Vitest) - WASM integration tests (mock acoustic.ts) - Component tests (Svelte Testing Library) - E2E tests (Playwright - already used for screenshots)</p>
 </section>
 <section id="see-also" class="level2">
 <h2 class="anchored" data-anchor-id="see-also">See Also</h2>
 <ul>
-<li><a href="../development/setup.html">Setup</a> - Development environment</li>
-<li><a href="../development/stores.html">Stores</a> - Detailed store documentation</li>
-<li><a href="../development/wasm-integration.html">WASM Integration</a> - Backend development</li>
-<li><a href="../development/contributing.html">Contributing</a> - How to contribute</li>
+<li><a href="setup.html">Setup</a> - Development environment</li>
+<li><a href="stores.html">Stores</a> - Detailed store documentation</li>
+<li><a href="wasm-integration.html">WASM Integration</a> - Backend development</li>
+<li><a href="contributing.html">Contributing</a> - How to contribute</li>
 </ul>
 
 
@@ -1239,13 +1245,14 @@ https://username.github.io/ozen-web/</code></pre>
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-        const codeEl = trigger.previousElementSibling.cloneNode(true);
-        for (const childEl of codeEl.children) {
-          if (isCodeAnnotation(childEl)) {
-            childEl.remove();
-          }
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
         }
-        return codeEl.innerText;
+      }
+      return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy
@@ -1657,14 +1664,14 @@ https://username.github.io/ozen-web/</code></pre>
       </a>
   </div>
 </nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
-<div class="sourceCode" id="cb29" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb29" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
 <span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Architecture"</span></span>
 <span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a><span class="an">subtitle:</span><span class="co"> "System design and component structure"</span></span>
 <span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
 <span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a><span class="fu">## Overview</span></span>
 <span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a>ozen-web is a **fully client-side web application** built with SvelteKit, designed to run entirely in the browser without any backend server. The architecture emphasizes:</span>
+<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a>Ozen-web is a **fully client-side web application** built with SvelteKit, designed to run entirely in the browser without any backend server. The architecture emphasizes:</span>
 <span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb29-10"><a href="#cb29-10" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Reactive state management** via Svelte stores</span>
 <span id="cb29-11"><a href="#cb29-11" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**WASM-powered analysis** for Praat-accurate acoustic computation</span>
@@ -1676,7 +1683,7 @@ https://username.github.io/ozen-web/</code></pre>
 <span id="cb29-17"><a href="#cb29-17" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb29-18"><a href="#cb29-18" aria-hidden="true" tabindex="-1"></a><span class="fu">### Routes</span></span>
 <span id="cb29-19"><a href="#cb29-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-20"><a href="#cb29-20" aria-hidden="true" tabindex="-1"></a>ozen-web uses SvelteKit's file-based routing with two main routes:</span>
+<span id="cb29-20"><a href="#cb29-20" aria-hidden="true" tabindex="-1"></a>Ozen-web uses SvelteKit's file-based routing with two main routes:</span>
 <span id="cb29-21"><a href="#cb29-21" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb29-22"><a href="#cb29-22" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb29-23"><a href="#cb29-23" aria-hidden="true" tabindex="-1"></a><span class="in">src/routes/</span></span>
@@ -1785,7 +1792,7 @@ https://username.github.io/ozen-web/</code></pre>
 <span id="cb29-126"><a href="#cb29-126" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb29-127"><a href="#cb29-127" aria-hidden="true" tabindex="-1"></a><span class="fu">## State Management</span></span>
 <span id="cb29-128"><a href="#cb29-128" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-129"><a href="#cb29-129" aria-hidden="true" tabindex="-1"></a>ozen-web uses **Svelte stores** for all shared state. Stores are the single source of truth; components subscribe and react to changes.</span>
+<span id="cb29-129"><a href="#cb29-129" aria-hidden="true" tabindex="-1"></a>Ozen-web uses **Svelte stores** for all shared state. Stores are the single source of truth; components subscribe and react to changes.</span>
 <span id="cb29-130"><a href="#cb29-130" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb29-131"><a href="#cb29-131" aria-hidden="true" tabindex="-1"></a><span class="fu">### Store Architecture</span></span>
 <span id="cb29-132"><a href="#cb29-132" aria-hidden="true" tabindex="-1"></a></span>
@@ -1944,7 +1951,7 @@ https://username.github.io/ozen-web/</code></pre>
 <span id="cb29-285"><a href="#cb29-285" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb29-286"><a href="#cb29-286" aria-hidden="true" tabindex="-1"></a><span class="fu">### Canvas Strategy</span></span>
 <span id="cb29-287"><a href="#cb29-287" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-288"><a href="#cb29-288" aria-hidden="true" tabindex="-1"></a>ozen-web uses **HTML5 Canvas** for all visualizations (not SVG/DOM) to handle:</span>
+<span id="cb29-288"><a href="#cb29-288" aria-hidden="true" tabindex="-1"></a>Ozen-web uses **HTML5 Canvas** for all visualizations (not SVG/DOM) to handle:</span>
 <span id="cb29-289"><a href="#cb29-289" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Large datasets (thousands of time points, frequency bins)</span>
 <span id="cb29-290"><a href="#cb29-290" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Real-time updates (cursor tracking, playback)</span>
 <span id="cb29-291"><a href="#cb29-291" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Smooth zoom/pan interactions</span>
@@ -2400,7 +2407,7 @@ https://username.github.io/ozen-web/</code></pre>
 <span id="cb29-741"><a href="#cb29-741" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb29-742"><a href="#cb29-742" aria-hidden="true" tabindex="-1"></a><span class="fu">## Testing Strategy</span></span>
 <span id="cb29-743"><a href="#cb29-743" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-744"><a href="#cb29-744" aria-hidden="true" tabindex="-1"></a>**Currently:** Manual testing workflow (see <span class="co">[</span><span class="ot">Setup</span><span class="co">](setup.qmd#testing)</span>)</span>
+<span id="cb29-744"><a href="#cb29-744" aria-hidden="true" tabindex="-1"></a>**Currently:** Manual testing workflow (see <span class="co">[</span><span class="ot">Setup</span><span class="co">](setup.html#testing)</span>)</span>
 <span id="cb29-745"><a href="#cb29-745" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb29-746"><a href="#cb29-746" aria-hidden="true" tabindex="-1"></a>**Future:** Automated tests could include:</span>
 <span id="cb29-747"><a href="#cb29-747" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Unit tests for stores (Vitest)</span>
@@ -2410,10 +2417,10 @@ https://username.github.io/ozen-web/</code></pre>
 <span id="cb29-751"><a href="#cb29-751" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb29-752"><a href="#cb29-752" aria-hidden="true" tabindex="-1"></a><span class="fu">## See Also</span></span>
 <span id="cb29-753"><a href="#cb29-753" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-754"><a href="#cb29-754" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Setup</span><span class="co">](setup.qmd)</span> - Development environment</span>
-<span id="cb29-755"><a href="#cb29-755" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Stores</span><span class="co">](stores.qmd)</span> - Detailed store documentation</span>
-<span id="cb29-756"><a href="#cb29-756" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">WASM Integration</span><span class="co">](wasm-integration.qmd)</span> - Backend development</span>
-<span id="cb29-757"><a href="#cb29-757" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Contributing</span><span class="co">](contributing.qmd)</span> - How to contribute</span></code><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></pre></div>
+<span id="cb29-754"><a href="#cb29-754" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Setup</span><span class="co">](setup.html)</span> - Development environment</span>
+<span id="cb29-755"><a href="#cb29-755" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Stores</span><span class="co">](stores.html)</span> - Detailed store documentation</span>
+<span id="cb29-756"><a href="#cb29-756" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">WASM Integration</span><span class="co">](wasm-integration.html)</span> - Backend development</span>
+<span id="cb29-757"><a href="#cb29-757" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Contributing</span><span class="co">](contributing.html)</span> - How to contribute</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 <footer class="footer">

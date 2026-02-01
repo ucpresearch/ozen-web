@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.29">
+<meta name="generator" content="quarto-1.8.25">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>URL Parameters – ozen-web</title>
+<title>URL Parameters – Ozen-web</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -69,14 +69,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../embedding/quarto-integration.html" rel="prev">
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-0815c480559380816a4d1ea211a47e91.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-da67e8c4bf892742008e2f79db78be0d.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-959c4db58b3c37e28c4d50a75de65b15.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -117,10 +118,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
     <a href="../index.html" class="navbar-brand navbar-brand-logo">
-    <img src="../assets/logo.png" alt="" class="navbar-logo">
+    <img src="../assets/logo.png" alt="" class="navbar-logo light-content">
+    <img src="../assets/logo.png" alt="" class="navbar-logo dark-content">
     </a>
     <a class="navbar-brand" href="../index.html">
-    <span class="navbar-title">ozen-web</span>
+    <span class="navbar-title">Ozen-web</span>
     </a>
   </div>
             <div id="quarto-search" class="" title="Search"></div>
@@ -130,7 +132,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../index.html"> 
+    <a class="nav-link active" href="../index.html" aria-current="page"> 
 <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
@@ -181,7 +183,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     </ul>
   </li>
   <li class="nav-item">
-    <a class="nav-link active" href="../embedding/overview.html" aria-current="page"> 
+    <a class="nav-link" href="../embedding/overview.html"> 
 <span class="menu-text">Embedding</span></a>
   </li>  
   <li class="nav-item dropdown ">
@@ -239,6 +241,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
+      <a href="../index.html" class="sidebar-logo-link">
+      </a>
+      </div>
     <div class="sidebar-menu-container"> 
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
@@ -354,7 +360,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <section id="overview" class="level2">
 <h2 class="anchored" data-anchor-id="overview">Overview</h2>
-<p>The ozen-web viewer supports URL parameters for pre-loading audio and configuring the interface. This enables creation of shareable links, embedded examples, and pre-configured analysis views.</p>
+<p>The Ozen-web viewer supports URL parameters for pre-loading audio and configuring the interface. This enables creation of shareable links, embedded examples, and pre-configured analysis views.</p>
 </section>
 <section id="base-url" class="level2">
 <h2 class="anchored" data-anchor-id="base-url">Base URL</h2>
@@ -388,11 +394,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-CORS Required
+<span class="screen-reader-only">Warning</span>CORS Required
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>The audio server must send <code>Access-Control-Allow-Origin: *</code> header. See <a href="../embedding/basic-usage.html#cors-requirements">Basic Embedding</a> for configuration details.</p>
+<p>The audio server must send <code>Access-Control-Allow-Origin: *</code> header. See <a href="basic-usage.html#cors-requirements">Basic Embedding</a> for configuration details.</p>
 </div>
 </div>
 </section>
@@ -576,17 +582,17 @@ CORS Required
 </section>
 <section id="javascript-encoding" class="level3">
 <h3 class="anchored" data-anchor-id="javascript-encoding">JavaScript Encoding</h3>
-<div class="sourceCode" id="cb8"><pre class="sourceCode javascript code-with-copy"><code class="sourceCode javascript"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> params <span class="op">=</span> <span class="kw">new</span> <span class="fu">URLSearchParams</span>({</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode javascript code-with-copy"><code class="sourceCode javascript"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> params <span class="op">=</span> <span class="kw">new</span> <span class="fu">URLSearchParams</span>({</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">audio</span><span class="op">:</span> <span class="st">'https://example.com/my audio.wav'</span><span class="op">,</span></span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">overlays</span><span class="op">:</span> <span class="st">'pitch,formants'</span></span>
 <span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>})<span class="op">;</span></span>
 <span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> url <span class="op">=</span> <span class="vs">`https://ucpresearch.github.io/ozen-web/viewer?</span><span class="sc">${</span>params<span class="sc">}</span><span class="vs">`</span><span class="op">;</span></span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="co">// Result: ...viewer?audio=https%3A%2F%2Fexample.com%2Fmy+audio.wav&amp;overlays=pitch%2Cformants</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="co">// Result: ...viewer?audio=https%3A%2F%2Fexample.com%2Fmy+audio.wav&amp;overlays=pitch%2Cformants</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="r-encoding" class="level3">
 <h3 class="anchored" data-anchor-id="r-encoding">R Encoding</h3>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(urltools)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(urltools)</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>params <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
 <span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">audio =</span> <span class="st">"https://example.com/my audio.wav"</span>,</span>
@@ -596,18 +602,18 @@ CORS Required
 <span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>url <span class="ot">&lt;-</span> <span class="fu">paste0</span>(</span>
 <span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>  <span class="st">"https://ucpresearch.github.io/ozen-web/viewer?"</span>,</span>
 <span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">paste</span>(<span class="fu">names</span>(params), <span class="fu">sapply</span>(params, url_encode), <span class="at">sep =</span> <span class="st">"="</span>, <span class="at">collapse =</span> <span class="st">"&amp;"</span>)</span>
-<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="python-encoding" class="level3">
 <h3 class="anchored" data-anchor-id="python-encoding">Python Encoding</h3>
-<div class="sourceCode" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> urllib.parse <span class="im">import</span> urlencode, quote</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> urllib.parse <span class="im">import</span> urlencode, quote</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>params <span class="op">=</span> {</span>
 <span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">'audio'</span>: <span class="st">'https://example.com/my audio.wav'</span>,</span>
 <span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">'overlays'</span>: <span class="st">'pitch,formants'</span></span>
 <span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>}</span>
 <span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>url <span class="op">=</span> <span class="ss">f"https://ucpresearch.github.io/ozen-web/viewer?</span><span class="sc">{</span>urlencode(params, quote_via<span class="op">=</span>quote)<span class="sc">}</span><span class="ss">"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>url <span class="op">=</span> <span class="ss">f"https://ucpresearch.github.io/ozen-web/viewer?</span><span class="sc">{</span>urlencode(params, quote_via<span class="op">=</span>quote)<span class="sc">}</span><span class="ss">"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 </section>
 <section id="data-url-format" class="level2">
@@ -656,21 +662,21 @@ CORS Required
 <section id="generating-data-urls" class="level3">
 <h3 class="anchored" data-anchor-id="generating-data-urls">Generating Data URLs</h3>
 <p><strong>Command line (Linux/Mac):</strong></p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="at">-n</span> <span class="st">"data:audio/wav;base64,"</span> <span class="kw">&amp;&amp;</span> <span class="fu">base64</span> <span class="at">-w</span> 0 audio.wav</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="at">-n</span> <span class="st">"data:audio/wav;base64,"</span> <span class="kw">&amp;&amp;</span> <span class="fu">base64</span> <span class="at">-w</span> 0 audio.wav</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><strong>Node.js:</strong></p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode javascript code-with-copy"><code class="sourceCode javascript"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> fs <span class="op">=</span> <span class="pp">require</span>(<span class="st">'fs'</span>)<span class="op">;</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode javascript code-with-copy"><code class="sourceCode javascript"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> fs <span class="op">=</span> <span class="pp">require</span>(<span class="st">'fs'</span>)<span class="op">;</span></span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> data <span class="op">=</span> fs<span class="op">.</span><span class="fu">readFileSync</span>(<span class="st">'audio.wav'</span>)<span class="op">;</span></span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> dataURL <span class="op">=</span> <span class="vs">`data:audio/wav;base64,</span><span class="sc">${</span>data<span class="op">.</span><span class="fu">toString</span>(<span class="st">'base64'</span>)<span class="sc">}</span><span class="vs">`</span><span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> dataURL <span class="op">=</span> <span class="vs">`data:audio/wav;base64,</span><span class="sc">${</span>data<span class="op">.</span><span class="fu">toString</span>(<span class="st">'base64'</span>)<span class="sc">}</span><span class="vs">`</span><span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><strong>R:</strong></p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(base64enc)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(base64enc)</span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>audio_data <span class="ot">&lt;-</span> <span class="fu">readBin</span>(<span class="st">"audio.wav"</span>, <span class="st">"raw"</span>, <span class="fu">file.info</span>(<span class="st">"audio.wav"</span>)<span class="sc">$</span>size)</span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>data_url <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">"data:audio/wav;base64,"</span>, <span class="fu">base64encode</span>(audio_data))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>data_url <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">"data:audio/wav;base64,"</span>, <span class="fu">base64encode</span>(audio_data))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><strong>Python:</strong></p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> base64</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> base64</span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> <span class="bu">open</span>(<span class="st">'audio.wav'</span>, <span class="st">'rb'</span>) <span class="im">as</span> f:</span>
 <span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>    audio_data <span class="op">=</span> f.read()</span>
-<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>    data_url <span class="op">=</span> <span class="ss">f"data:audio/wav;base64,</span><span class="sc">{</span>base64<span class="sc">.</span>b64encode(audio_data)<span class="sc">.</span>decode()<span class="sc">}</span><span class="ss">"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>    data_url <span class="op">=</span> <span class="ss">f"data:audio/wav;base64,</span><span class="sc">{</span>base64<span class="sc">.</span>b64encode(audio_data)<span class="sc">.</span>decode()<span class="sc">}</span><span class="ss">"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 </section>
 <section id="complete-examples" class="level2">
@@ -704,7 +710,7 @@ CORS Required
 <h2 class="anchored" data-anchor-id="building-urls-programmatically">Building URLs Programmatically</h2>
 <section id="javascript-helper-function" class="level3">
 <h3 class="anchored" data-anchor-id="javascript-helper-function">JavaScript Helper Function</h3>
-<div class="sourceCode" id="cb23"><pre class="sourceCode javascript code-with-copy"><code class="sourceCode javascript"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">buildViewerURL</span>(audioURL<span class="op">,</span> options <span class="op">=</span> {}) {</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb23"><pre class="sourceCode javascript code-with-copy"><code class="sourceCode javascript"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">buildViewerURL</span>(audioURL<span class="op">,</span> options <span class="op">=</span> {}) {</span>
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> baseURL <span class="op">=</span> <span class="st">'https://ucpresearch.github.io/ozen-web/viewer'</span><span class="op">;</span></span>
 <span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> params <span class="op">=</span> <span class="kw">new</span> <span class="fu">URLSearchParams</span>()<span class="op">;</span></span>
 <span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a></span>
@@ -720,11 +726,11 @@ CORS Required
 <span id="cb23-14"><a href="#cb23-14" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> url <span class="op">=</span> <span class="fu">buildViewerURL</span>(<span class="st">'https://example.com/audio.wav'</span><span class="op">,</span> {</span>
 <span id="cb23-15"><a href="#cb23-15" aria-hidden="true" tabindex="-1"></a>  <span class="dt">overlays</span><span class="op">:</span> <span class="st">'pitch,formants'</span><span class="op">,</span></span>
 <span id="cb23-16"><a href="#cb23-16" aria-hidden="true" tabindex="-1"></a>  <span class="dt">maxFreq</span><span class="op">:</span> <span class="dv">7500</span></span>
-<span id="cb23-17"><a href="#cb23-17" aria-hidden="true" tabindex="-1"></a>})<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb23-17"><a href="#cb23-17" aria-hidden="true" tabindex="-1"></a>})<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="r-helper-function" class="level3">
 <h3 class="anchored" data-anchor-id="r-helper-function">R Helper Function</h3>
-<div class="sourceCode" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>build_viewer_url <span class="ot">&lt;-</span> <span class="cf">function</span>(audio_url, <span class="at">overlays =</span> <span class="cn">NULL</span>, <span class="at">max_freq =</span> <span class="cn">NULL</span>, <span class="at">backend =</span> <span class="cn">NULL</span>) {</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>build_viewer_url <span class="ot">&lt;-</span> <span class="cf">function</span>(audio_url, <span class="at">overlays =</span> <span class="cn">NULL</span>, <span class="at">max_freq =</span> <span class="cn">NULL</span>, <span class="at">backend =</span> <span class="cn">NULL</span>) {</span>
 <span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>  base_url <span class="ot">&lt;-</span> <span class="st">"https://ucpresearch.github.io/ozen-web/viewer"</span></span>
 <span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>  params <span class="ot">&lt;-</span> <span class="fu">list</span>()</span>
@@ -746,11 +752,11 @@ CORS Required
 <span id="cb24-20"><a href="#cb24-20" aria-hidden="true" tabindex="-1"></a>  <span class="st">"https://example.com/audio.wav"</span>,</span>
 <span id="cb24-21"><a href="#cb24-21" aria-hidden="true" tabindex="-1"></a>  <span class="at">overlays =</span> <span class="st">"pitch,formants"</span>,</span>
 <span id="cb24-22"><a href="#cb24-22" aria-hidden="true" tabindex="-1"></a>  <span class="at">max_freq =</span> <span class="dv">7500</span></span>
-<span id="cb24-23"><a href="#cb24-23" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb24-23"><a href="#cb24-23" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="python-helper-function" class="level3">
 <h3 class="anchored" data-anchor-id="python-helper-function">Python Helper Function</h3>
-<div class="sourceCode" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> urllib.parse <span class="im">import</span> urlencode</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> urllib.parse <span class="im">import</span> urlencode</span>
 <span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> build_viewer_url(audio_url, overlays<span class="op">=</span><span class="va">None</span>, max_freq<span class="op">=</span><span class="va">None</span>, backend<span class="op">=</span><span class="va">None</span>):</span>
 <span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>    base_url <span class="op">=</span> <span class="st">'https://ucpresearch.github.io/ozen-web/viewer'</span></span>
@@ -774,7 +780,7 @@ CORS Required
 <span id="cb25-22"><a href="#cb25-22" aria-hidden="true" tabindex="-1"></a>    <span class="st">'https://example.com/audio.wav'</span>,</span>
 <span id="cb25-23"><a href="#cb25-23" aria-hidden="true" tabindex="-1"></a>    overlays<span class="op">=</span><span class="st">'pitch,formants'</span>,</span>
 <span id="cb25-24"><a href="#cb25-24" aria-hidden="true" tabindex="-1"></a>    max_freq<span class="op">=</span><span class="dv">7500</span></span>
-<span id="cb25-25"><a href="#cb25-25" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb25-25"><a href="#cb25-25" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 </section>
 <section id="troubleshooting" class="level2">
@@ -801,8 +807,8 @@ CORS Required
 <section id="see-also" class="level2">
 <h2 class="anchored" data-anchor-id="see-also">See Also</h2>
 <ul>
-<li><a href="../embedding/basic-usage.html">Basic Embedding</a> - iframe integration guide</li>
-<li><a href="../embedding/examples.html">Examples</a> - Real-world URL examples</li>
+<li><a href="basic-usage.html">Basic Embedding</a> - iframe integration guide</li>
+<li><a href="examples.html">Examples</a> - Real-world URL examples</li>
 <li><a href="../reference/backends.html">Backends Reference</a> - WASM backend details</li>
 <li><a href="../reference/configuration.html">Configuration</a> - Advanced settings</li>
 </ul>
@@ -864,13 +870,14 @@ CORS Required
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-        const codeEl = trigger.previousElementSibling.cloneNode(true);
-        for (const childEl of codeEl.children) {
-          if (isCodeAnnotation(childEl)) {
-            childEl.remove();
-          }
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
         }
-        return codeEl.innerText;
+      }
+      return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy
@@ -1282,14 +1289,14 @@ CORS Required
       </a>
   </div>
 </nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
-<div class="sourceCode" id="cb26" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb26" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
 <span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "URL Parameters"</span></span>
 <span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a><span class="an">subtitle:</span><span class="co"> "Complete reference for viewer URL parameters"</span></span>
 <span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
 <span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a><span class="fu">## Overview</span></span>
 <span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a>The ozen-web viewer supports URL parameters for pre-loading audio and configuring the interface. This enables creation of shareable links, embedded examples, and pre-configured analysis views.</span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a>The Ozen-web viewer supports URL parameters for pre-loading audio and configuring the interface. This enables creation of shareable links, embedded examples, and pre-configured analysis views.</span>
 <span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a><span class="fu">## Base URL</span></span>
 <span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a></span>
@@ -1342,7 +1349,7 @@ CORS Required
 <span id="cb26-58"><a href="#cb26-58" aria-hidden="true" tabindex="-1"></a>::: {.callout-warning}</span>
 <span id="cb26-59"><a href="#cb26-59" aria-hidden="true" tabindex="-1"></a><span class="fu">## CORS Required</span></span>
 <span id="cb26-60"><a href="#cb26-60" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-61"><a href="#cb26-61" aria-hidden="true" tabindex="-1"></a>The audio server must send <span class="in">`Access-Control-Allow-Origin: *`</span> header. See <span class="co">[</span><span class="ot">Basic Embedding</span><span class="co">](basic-usage.qmd#cors-requirements)</span> for configuration details.</span>
+<span id="cb26-61"><a href="#cb26-61" aria-hidden="true" tabindex="-1"></a>The audio server must send <span class="in">`Access-Control-Allow-Origin: *`</span> header. See <span class="co">[</span><span class="ot">Basic Embedding</span><span class="co">](basic-usage.html#cors-requirements)</span> for configuration details.</span>
 <span id="cb26-62"><a href="#cb26-62" aria-hidden="true" tabindex="-1"></a>:::</span>
 <span id="cb26-63"><a href="#cb26-63" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb26-64"><a href="#cb26-64" aria-hidden="true" tabindex="-1"></a><span class="fu">### overlays</span></span>
@@ -1449,7 +1456,7 @@ CORS Required
 <span id="cb26-165"><a href="#cb26-165" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>CDN backends download ~5 MB on first load</span>
 <span id="cb26-166"><a href="#cb26-166" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>All backends produce identical results</span>
 <span id="cb26-167"><a href="#cb26-167" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-168"><a href="#cb26-168" aria-hidden="true" tabindex="-1"></a>See <span class="co">[</span><span class="ot">Backends Reference</span><span class="co">](../reference/backends.qmd)</span> for details.</span>
+<span id="cb26-168"><a href="#cb26-168" aria-hidden="true" tabindex="-1"></a>See <span class="co">[</span><span class="ot">Backends Reference</span><span class="co">](../reference/backends.html)</span> for details.</span>
 <span id="cb26-169"><a href="#cb26-169" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb26-170"><a href="#cb26-170" aria-hidden="true" tabindex="-1"></a><span class="fu">## URL Encoding</span></span>
 <span id="cb26-171"><a href="#cb26-171" aria-hidden="true" tabindex="-1"></a></span>
@@ -1746,10 +1753,10 @@ CORS Required
 <span id="cb26-462"><a href="#cb26-462" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb26-463"><a href="#cb26-463" aria-hidden="true" tabindex="-1"></a><span class="fu">## See Also</span></span>
 <span id="cb26-464"><a href="#cb26-464" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-465"><a href="#cb26-465" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Basic Embedding</span><span class="co">](basic-usage.qmd)</span> - iframe integration guide</span>
-<span id="cb26-466"><a href="#cb26-466" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Examples</span><span class="co">](examples.qmd)</span> - Real-world URL examples</span>
-<span id="cb26-467"><a href="#cb26-467" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Backends Reference</span><span class="co">](../reference/backends.qmd)</span> - WASM backend details</span>
-<span id="cb26-468"><a href="#cb26-468" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Configuration</span><span class="co">](../reference/configuration.qmd)</span> - Advanced settings</span></code><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></pre></div>
+<span id="cb26-465"><a href="#cb26-465" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Basic Embedding</span><span class="co">](basic-usage.html)</span> - iframe integration guide</span>
+<span id="cb26-466"><a href="#cb26-466" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Examples</span><span class="co">](examples.html)</span> - Real-world URL examples</span>
+<span id="cb26-467"><a href="#cb26-467" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Backends Reference</span><span class="co">](../reference/backends.html)</span> - WASM backend details</span>
+<span id="cb26-468"><a href="#cb26-468" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Configuration</span><span class="co">](../reference/configuration.html)</span> - Advanced settings</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 <footer class="footer">

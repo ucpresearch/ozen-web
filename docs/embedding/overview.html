@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.29">
+<meta name="generator" content="quarto-1.8.25">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Embedding Guide – ozen-web</title>
+<title>Embedding Guide – Ozen-web</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -68,14 +68,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../embedding/basic-usage.html" rel="next">
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-0815c480559380816a4d1ea211a47e91.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-da67e8c4bf892742008e2f79db78be0d.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-959c4db58b3c37e28c4d50a75de65b15.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -116,10 +117,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
     <a href="../index.html" class="navbar-brand navbar-brand-logo">
-    <img src="../assets/logo.png" alt="" class="navbar-logo">
+    <img src="../assets/logo.png" alt="" class="navbar-logo light-content">
+    <img src="../assets/logo.png" alt="" class="navbar-logo dark-content">
     </a>
     <a class="navbar-brand" href="../index.html">
-    <span class="navbar-title">ozen-web</span>
+    <span class="navbar-title">Ozen-web</span>
     </a>
   </div>
             <div id="quarto-search" class="" title="Search"></div>
@@ -129,7 +131,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../index.html"> 
+    <a class="nav-link active" href="../index.html" aria-current="page"> 
 <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
@@ -180,7 +182,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     </ul>
   </li>
   <li class="nav-item">
-    <a class="nav-link active" href="../embedding/overview.html" aria-current="page"> 
+    <a class="nav-link" href="../embedding/overview.html"> 
 <span class="menu-text">Embedding</span></a>
   </li>  
   <li class="nav-item dropdown ">
@@ -238,6 +240,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
+      <a href="../index.html" class="sidebar-logo-link">
+      </a>
+      </div>
     <div class="sidebar-menu-container"> 
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
@@ -318,7 +324,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
 <div class="quarto-title-block"><div><h1 class="title">Embedding Guide</h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
-<p class="subtitle lead">Embed ozen-web in websites and documents</p>
+<p class="subtitle lead">Embed Ozen-web in websites and documents</p>
 </div>
 
 
@@ -337,7 +343,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <section id="introduction" class="level2">
 <h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
-<p>ozen-web’s mobile viewer can be embedded in websites, Quarto documents, R Markdown, Jupyter notebooks, and any web page via iframes. This allows creating interactive acoustic visualizations in:</p>
+<p>Ozen-web’s mobile viewer can be embedded in websites, Quarto documents, R Markdown, Jupyter notebooks, and any web page via iframes. This allows creating interactive acoustic visualizations in:</p>
 <ul>
 <li>Research papers and presentations</li>
 <li>Course materials and textbooks</li>
@@ -348,13 +354,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="quick-start" class="level2">
 <h2 class="anchored" data-anchor-id="quick-start">Quick Start</h2>
 <p><strong>Basic embedding:</strong></p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode html code-with-copy"><code class="sourceCode html"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">iframe</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode html code-with-copy"><code class="sourceCode html"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">iframe</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="ot">  data-external</span><span class="op">=</span><span class="st">"1"</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="ot">  src</span><span class="op">=</span><span class="st">"./ozen-web/viewer.html?audio=audio.wav</span><span class="er">&amp;</span><span class="st">overlays=pitch,formants"</span></span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="ot">  width</span><span class="op">=</span><span class="st">"100%"</span></span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="ot">  height</span><span class="op">=</span><span class="st">"600"</span></span>
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="ot">  frameborder</span><span class="op">=</span><span class="st">"0"</span><span class="dt">&gt;</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">iframe</span><span class="dt">&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">iframe</span><span class="dt">&gt;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><strong>Key points:</strong></p>
 <ul>
 <li><code>data-external="1"</code> is <strong>required</strong> for Quarto with <code>embed-resources: true</code></li>
@@ -362,13 +368,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><code>?overlays=</code> parameter configures which features to display</li>
 <li>Viewer works from any subdirectory</li>
 </ul>
-<p><strong>See:</strong> <a href="../embedding/url-parameters.html">URL Parameters Reference</a> for all available options</p>
+<p><strong>See:</strong> <a href="url-parameters.html">URL Parameters Reference</a> for all available options</p>
 </section>
 <section id="directory-structure" class="level2">
 <h2 class="anchored" data-anchor-id="directory-structure">Directory Structure</h2>
 <p><strong>Recommended setup for Quarto/R Markdown projects:</strong></p>
 <pre><code>my-project/
-├── document.qmd                # Your Quarto document
+├── document.html                # Your Quarto document
 ├── document.html               # Rendered output
 ├── audio/                      # Your audio files
 │   ├── sample1.wav
@@ -388,11 +394,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="python" class="level3">
 <h3 class="anchored" data-anchor-id="python">Python</h3>
 <p><strong>Command line:</strong></p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> scripts/create-iframe.py audio/sample.wav</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> scripts/create-iframe.py audio/sample.wav</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> scripts/create-iframe.py audio/sample.wav <span class="at">--overlays</span> pitch,formants,hnr</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> scripts/create-iframe.py audio/sample.wav <span class="at">--height</span> 800</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> scripts/create-iframe.py audio/sample.wav <span class="at">--height</span> 800</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><strong>In Jupyter/Quarto:</strong></p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> sys</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> sys</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>sys.path.append(<span class="st">'scripts'</span>)</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> create_iframe <span class="im">import</span> create_embedded_viewer</span>
 <span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
@@ -400,23 +406,23 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>html <span class="op">=</span> create_embedded_viewer(<span class="st">"audio/sample.wav"</span>,</span>
 <span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>                              overlays<span class="op">=</span><span class="st">"pitch,formants,hnr"</span>,</span>
 <span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>                              height<span class="op">=</span><span class="dv">600</span>)</span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(html)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(html)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="r" class="level3">
 <h3 class="anchored" data-anchor-id="r">R</h3>
 <p><strong>Command line:</strong></p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">Rscript</span> scripts/create-iframe.R audio/sample.wav</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">Rscript</span> scripts/create-iframe.R audio/sample.wav</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="ex">Rscript</span> scripts/create-iframe.R audio/sample.wav <span class="st">"pitch,formants,hnr"</span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="ex">Rscript</span> scripts/create-iframe.R audio/sample.wav <span class="st">"pitch,formants"</span> <span class="st">"./ozen-web/viewer.html"</span> 800</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="ex">Rscript</span> scripts/create-iframe.R audio/sample.wav <span class="st">"pitch,formants"</span> <span class="st">"./ozen-web/viewer.html"</span> 800</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><strong>In R Markdown/Quarto:</strong></p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="st">"scripts/create-iframe.R"</span>)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="st">"scripts/create-iframe.R"</span>)</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate iframe HTML</span></span>
 <span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>html <span class="ot">&lt;-</span> <span class="fu">create_embedded_viewer</span>(<span class="st">"audio/sample.wav"</span>,</span>
 <span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>                               <span class="at">overlays =</span> <span class="st">"pitch,formants,hnr"</span>,</span>
 <span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>                               <span class="at">height =</span> <span class="dv">600</span>)</span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>htmltools<span class="sc">::</span><span class="fu">HTML</span>(html)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p><strong>See:</strong> <a href="../embedding/basic-usage.html#helper-scripts">Helper Scripts Documentation</a></p>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>htmltools<span class="sc">::</span><span class="fu">HTML</span>(html)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>See:</strong> <a href="basic-usage.html#helper-scripts">Helper Scripts Documentation</a></p>
 </section>
 </section>
 <section id="use-cases" class="level2">
@@ -424,7 +430,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="research-papers-quarto" class="level3">
 <h3 class="anchored" data-anchor-id="research-papers-quarto">Research Papers (Quarto)</h3>
 <p>Embed interactive spectrograms in academic papers:</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Vowel Duration in Stress-Timed Languages"</span></span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="an">format:</span></span>
 <span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="co">  html:</span></span>
@@ -447,12 +453,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>:::</span>
 <span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a>Readers can zoom, play, and explore the audio interactively.</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a>Readers can zoom, play, and explore the audio interactively.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="course-materials" class="level3">
 <h3 class="anchored" data-anchor-id="course-materials">Course Materials</h3>
 <p>Create interactive phonetics exercises:</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode html code-with-copy"><code class="sourceCode html"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">h3</span><span class="dt">&gt;</span>Exercise 1: Identify the vowel<span class="dt">&lt;/</span><span class="kw">h3</span><span class="dt">&gt;</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode html code-with-copy"><code class="sourceCode html"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">h3</span><span class="dt">&gt;</span>Exercise 1: Identify the vowel<span class="dt">&lt;/</span><span class="kw">h3</span><span class="dt">&gt;</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">p</span><span class="dt">&gt;</span>Listen to the audio and examine F1 and F2:<span class="dt">&lt;/</span><span class="kw">p</span><span class="dt">&gt;</span></span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">iframe</span></span>
@@ -465,30 +471,30 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">details</span><span class="dt">&gt;</span></span>
 <span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">summary</span><span class="dt">&gt;</span>Answer<span class="dt">&lt;/</span><span class="kw">summary</span><span class="dt">&gt;</span></span>
 <span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>The vowel is [i] (high front), with F1≈300 Hz and F2≈2300 Hz.</span>
-<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">details</span><span class="dt">&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">details</span><span class="dt">&gt;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="blog-posts" class="level3">
 <h3 class="anchored" data-anchor-id="blog-posts">Blog Posts</h3>
 <p>Share audio examples with readers:</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode html code-with-copy"><code class="sourceCode html"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">p</span><span class="dt">&gt;</span>Here's what a rising intonation pattern looks like:<span class="dt">&lt;/</span><span class="kw">p</span><span class="dt">&gt;</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode html code-with-copy"><code class="sourceCode html"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">p</span><span class="dt">&gt;</span>Here's what a rising intonation pattern looks like:<span class="dt">&lt;/</span><span class="kw">p</span><span class="dt">&gt;</span></span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">iframe</span></span>
 <span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="ot">  data-external</span><span class="op">=</span><span class="st">"1"</span></span>
 <span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="ot">  src</span><span class="op">=</span><span class="st">"https://yoursite.com/ozen-web/viewer.html?audio=https://cdn.example.com/question.wav</span><span class="er">&amp;</span><span class="st">overlays=pitch"</span></span>
 <span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="ot">  width</span><span class="op">=</span><span class="st">"100%"</span></span>
 <span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="ot">  height</span><span class="op">=</span><span class="st">"600"</span><span class="dt">&gt;</span></span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">iframe</span><span class="dt">&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">iframe</span><span class="dt">&gt;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="jupyter-notebooks" class="level3">
 <h3 class="anchored" data-anchor-id="jupyter-notebooks">Jupyter Notebooks</h3>
 <p>Analyze data with embedded visualizations:</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> IPython.display <span class="im">import</span> IFrame</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> IPython.display <span class="im">import</span> IFrame</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Display embedded viewer</span></span>
 <span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>IFrame(src<span class="op">=</span><span class="st">'./ozen-web/viewer.html?audio=data/recording.wav&amp;overlays=all'</span>,</span>
 <span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>       width<span class="op">=</span><span class="st">'100%'</span>,</span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>       height<span class="op">=</span><span class="dv">600</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p><strong>See:</strong> <a href="../embedding/examples.html">Examples Page</a> for more use cases</p>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>       height<span class="op">=</span><span class="dv">600</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>See:</strong> <a href="examples.html">Examples Page</a> for more use cases</p>
 </section>
 </section>
 <section id="deployment" class="level2">
@@ -496,7 +502,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="github-pages" class="level3">
 <h3 class="anchored" data-anchor-id="github-pages">GitHub Pages</h3>
 <ol type="1">
-<li>Build ozen-web: <code>npm run build</code></li>
+<li>Build Ozen-web: <code>npm run build</code></li>
 <li>Copy <code>build/</code> to your project as <code>ozen-web/</code></li>
 <li>Push to GitHub</li>
 <li>Enable GitHub Pages in repository settings</li>
@@ -509,7 +515,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="static-site-generators" class="level3">
 <h3 class="anchored" data-anchor-id="static-site-generators">Static Site Generators</h3>
-<p>ozen-web works with all static site generators:</p>
+<p>Ozen-web works with all static site generators:</p>
 <ul>
 <li>Hugo</li>
 <li>Jekyll</li>
@@ -526,10 +532,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="quarto-embed-resources-true" class="level3">
 <h3 class="anchored" data-anchor-id="quarto-embed-resources-true">Quarto <code>embed-resources: true</code></h3>
 <p><strong>CRITICAL:</strong> When using Quarto with <code>embed-resources: true</code>, you <strong>must</strong> include <code>data-external="1"</code> in all iframe tags:</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode html code-with-copy"><code class="sourceCode html"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">iframe</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode html code-with-copy"><code class="sourceCode html"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">iframe</span></span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="ot">  data-external</span><span class="op">=</span><span class="st">"1"</span><span class="ot">    </span><span class="er">&lt;!--</span><span class="ot"> REQUIRED </span><span class="er">--</span><span class="dt">&gt;</span></span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  src="./ozen-web/viewer.html?audio=audio.wav"&gt;</span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">iframe</span><span class="dt">&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">iframe</span><span class="dt">&gt;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><strong>Why?</strong> Quarto’s <code>embed-resources: true</code> converts iframe sources to data URLs. However, the viewer uses ES6 module imports which cannot resolve in data URL contexts (browser limitation).</p>
 <p>Without <code>data-external="1"</code>, you’ll see console errors:</p>
 <pre><code>Failed to resolve module specifier './_app/immutable/entry/start.js'</code></pre>
@@ -540,37 +546,37 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Browsers block <code>file://</code> URLs from loading iframes for security. When you open a rendered HTML file directly (double-click), iframes fail with:</p>
 <pre><code>Not allowed to load local resource: file:///...</code></pre>
 <p><strong>Solution:</strong> Serve over HTTP:</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Python</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Python</span></span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> http.server 8000</span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="co"># R</span></span>
 <span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="ex">servr::httd</span><span class="er">(</span><span class="ex">port</span> = 8000<span class="kw">)</span></span>
 <span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Then open: http://localhost:8000/document.html</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Then open: http://localhost:8000/document.html</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><strong>Or deploy to a web server</strong> where HTTP is automatic.</p>
-<p><strong>See:</strong> <a href="../embedding/basic-usage.html#serving-documents">Basic Usage: Serving Documents</a></p>
+<p><strong>See:</strong> <a href="basic-usage.html#serving-documents">Basic Usage: Serving Documents</a></p>
 </section>
 <section id="cors-for-remote-audio" class="level3">
 <h3 class="anchored" data-anchor-id="cors-for-remote-audio">CORS for Remote Audio</h3>
 <p>Remote audio URLs must send <code>Access-Control-Allow-Origin</code> header.</p>
 <p><strong>Apache (<code>.htaccess</code>):</strong></p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode apache code-with-copy"><code class="sourceCode apache"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">&lt;FilesMatch</span><span class="at"> "\.(wav|mp3|ogg|flac)$"</span><span class="fu">&gt;</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="sourceCode apache code-with-copy"><code class="sourceCode apache"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">&lt;FilesMatch</span><span class="at"> "\.(wav|mp3|ogg|flac)$"</span><span class="fu">&gt;</span></span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  Header<span class="st"> set Access-Control-Allow-Origin "*"</span></span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="fu">&lt;/FilesMatch&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="fu">&lt;/FilesMatch&gt;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><strong>Nginx:</strong></p>
 <pre class="nginx"><code>location ~* \.(wav|mp3|ogg|flac)$ {
     add_header Access-Control-Allow-Origin *;
 }</code></pre>
-<p><strong>See:</strong> <a href="../embedding/url-parameters.html#cors-requirements">URL Parameters: CORS</a></p>
+<p><strong>See:</strong> <a href="url-parameters.html#cors-requirements">URL Parameters: CORS</a></p>
 </section>
 </section>
 <section id="next-steps" class="level2">
 <h2 class="anchored" data-anchor-id="next-steps">Next Steps</h2>
 <ul>
-<li><strong><a href="../embedding/basic-usage.html">Basic Usage</a></strong> — Detailed embedding instructions</li>
-<li><strong><a href="../embedding/quarto-integration.html">Quarto Integration</a></strong> — Quarto-specific guide</li>
-<li><strong><a href="../embedding/url-parameters.html">URL Parameters</a></strong> — Complete parameter reference</li>
-<li><strong><a href="../embedding/examples.html">Examples</a></strong> — Working examples for all use cases</li>
+<li><strong><a href="basic-usage.html">Basic Usage</a></strong> — Detailed embedding instructions</li>
+<li><strong><a href="quarto-integration.html">Quarto Integration</a></strong> — Quarto-specific guide</li>
+<li><strong><a href="url-parameters.html">URL Parameters</a></strong> — Complete parameter reference</li>
+<li><strong><a href="examples.html">Examples</a></strong> — Working examples for all use cases</li>
 </ul>
 </section>
 <section id="faq" class="level2">
@@ -643,13 +649,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-        const codeEl = trigger.previousElementSibling.cloneNode(true);
-        for (const childEl of codeEl.children) {
-          if (isCodeAnnotation(childEl)) {
-            childEl.remove();
-          }
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
         }
-        return codeEl.innerText;
+      }
+      return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy
@@ -1058,14 +1065,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       </a>
   </div>
 </nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
-<div class="sourceCode" id="cb17" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Embedding Guide"</span></span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="an">subtitle:</span><span class="co"> "Embed ozen-web in websites and documents"</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="an">subtitle:</span><span class="co"> "Embed Ozen-web in websites and documents"</span></span>
 <span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
 <span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a><span class="fu">## Introduction</span></span>
 <span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>ozen-web's mobile viewer can be embedded in websites, Quarto documents, R Markdown, Jupyter notebooks, and any web page via iframes. This allows creating interactive acoustic visualizations in:</span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>Ozen-web's mobile viewer can be embedded in websites, Quarto documents, R Markdown, Jupyter notebooks, and any web page via iframes. This allows creating interactive acoustic visualizations in:</span>
 <span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Research papers and presentations</span>
 <span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Course materials and textbooks</span>
@@ -1093,7 +1100,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb17-33"><a href="#cb17-33" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`?overlays=`</span> parameter configures which features to display</span>
 <span id="cb17-34"><a href="#cb17-34" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Viewer works from any subdirectory</span>
 <span id="cb17-35"><a href="#cb17-35" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-36"><a href="#cb17-36" aria-hidden="true" tabindex="-1"></a>**See:** <span class="co">[</span><span class="ot">URL Parameters Reference</span><span class="co">](url-parameters.qmd)</span> for all available options</span>
+<span id="cb17-36"><a href="#cb17-36" aria-hidden="true" tabindex="-1"></a>**See:** <span class="co">[</span><span class="ot">URL Parameters Reference</span><span class="co">](url-parameters.html)</span> for all available options</span>
 <span id="cb17-37"><a href="#cb17-37" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb17-38"><a href="#cb17-38" aria-hidden="true" tabindex="-1"></a><span class="fu">## Directory Structure</span></span>
 <span id="cb17-39"><a href="#cb17-39" aria-hidden="true" tabindex="-1"></a></span>
@@ -1101,7 +1108,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb17-41"><a href="#cb17-41" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb17-42"><a href="#cb17-42" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb17-43"><a href="#cb17-43" aria-hidden="true" tabindex="-1"></a><span class="in">my-project/</span></span>
-<span id="cb17-44"><a href="#cb17-44" aria-hidden="true" tabindex="-1"></a><span class="in">├── document.qmd                # Your Quarto document</span></span>
+<span id="cb17-44"><a href="#cb17-44" aria-hidden="true" tabindex="-1"></a><span class="in">├── document.html                # Your Quarto document</span></span>
 <span id="cb17-45"><a href="#cb17-45" aria-hidden="true" tabindex="-1"></a><span class="in">├── document.html               # Rendered output</span></span>
 <span id="cb17-46"><a href="#cb17-46" aria-hidden="true" tabindex="-1"></a><span class="in">├── audio/                      # Your audio files</span></span>
 <span id="cb17-47"><a href="#cb17-47" aria-hidden="true" tabindex="-1"></a><span class="in">│   ├── sample1.wav</span></span>
@@ -1166,7 +1173,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb17-106"><a href="#cb17-106" aria-hidden="true" tabindex="-1"></a>htmltools<span class="sc">::</span><span class="fu">HTML</span>(html)</span>
 <span id="cb17-107"><a href="#cb17-107" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb17-108"><a href="#cb17-108" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-109"><a href="#cb17-109" aria-hidden="true" tabindex="-1"></a>**See:** <span class="co">[</span><span class="ot">Helper Scripts Documentation</span><span class="co">](basic-usage.qmd#helper-scripts)</span></span>
+<span id="cb17-109"><a href="#cb17-109" aria-hidden="true" tabindex="-1"></a>**See:** <span class="co">[</span><span class="ot">Helper Scripts Documentation</span><span class="co">](basic-usage.html#helper-scripts)</span></span>
 <span id="cb17-110"><a href="#cb17-110" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb17-111"><a href="#cb17-111" aria-hidden="true" tabindex="-1"></a><span class="fu">## Use Cases</span></span>
 <span id="cb17-112"><a href="#cb17-112" aria-hidden="true" tabindex="-1"></a></span>
@@ -1247,13 +1254,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb17-189"><a href="#cb17-189" aria-hidden="true" tabindex="-1"></a>       height<span class="op">=</span><span class="dv">600</span>)</span>
 <span id="cb17-190"><a href="#cb17-190" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb17-191"><a href="#cb17-191" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-192"><a href="#cb17-192" aria-hidden="true" tabindex="-1"></a>**See:** <span class="co">[</span><span class="ot">Examples Page</span><span class="co">](examples.qmd)</span> for more use cases</span>
+<span id="cb17-192"><a href="#cb17-192" aria-hidden="true" tabindex="-1"></a>**See:** <span class="co">[</span><span class="ot">Examples Page</span><span class="co">](examples.html)</span> for more use cases</span>
 <span id="cb17-193"><a href="#cb17-193" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb17-194"><a href="#cb17-194" aria-hidden="true" tabindex="-1"></a><span class="fu">## Deployment</span></span>
 <span id="cb17-195"><a href="#cb17-195" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb17-196"><a href="#cb17-196" aria-hidden="true" tabindex="-1"></a><span class="fu">### GitHub Pages</span></span>
 <span id="cb17-197"><a href="#cb17-197" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-198"><a href="#cb17-198" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Build ozen-web: <span class="in">`npm run build`</span></span>
+<span id="cb17-198"><a href="#cb17-198" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Build Ozen-web: <span class="in">`npm run build`</span></span>
 <span id="cb17-199"><a href="#cb17-199" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>Copy <span class="in">`build/`</span> to your project as <span class="in">`ozen-web/`</span></span>
 <span id="cb17-200"><a href="#cb17-200" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>Push to GitHub</span>
 <span id="cb17-201"><a href="#cb17-201" aria-hidden="true" tabindex="-1"></a><span class="ss">4. </span>Enable GitHub Pages in repository settings</span>
@@ -1265,7 +1272,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb17-207"><a href="#cb17-207" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb17-208"><a href="#cb17-208" aria-hidden="true" tabindex="-1"></a><span class="fu">### Static Site Generators</span></span>
 <span id="cb17-209"><a href="#cb17-209" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-210"><a href="#cb17-210" aria-hidden="true" tabindex="-1"></a>ozen-web works with all static site generators:</span>
+<span id="cb17-210"><a href="#cb17-210" aria-hidden="true" tabindex="-1"></a>Ozen-web works with all static site generators:</span>
 <span id="cb17-211"><a href="#cb17-211" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb17-212"><a href="#cb17-212" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Hugo</span>
 <span id="cb17-213"><a href="#cb17-213" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Jekyll</span>
@@ -1275,7 +1282,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb17-217"><a href="#cb17-217" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb17-218"><a href="#cb17-218" aria-hidden="true" tabindex="-1"></a>Just include the <span class="in">`ozen-web/`</span> directory in your static files.</span>
 <span id="cb17-219"><a href="#cb17-219" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-220"><a href="#cb17-220" aria-hidden="true" tabindex="-1"></a>**See:** <span class="co">[</span><span class="ot">Getting Started: Deployment</span><span class="co">](../getting-started.qmd#option-3-deploy-your-own-instance)</span></span>
+<span id="cb17-220"><a href="#cb17-220" aria-hidden="true" tabindex="-1"></a>**See:** <span class="co">[</span><span class="ot">Getting Started: Deployment</span><span class="co">](../getting-started.html#option-3-deploy-your-own-instance)</span></span>
 <span id="cb17-221"><a href="#cb17-221" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb17-222"><a href="#cb17-222" aria-hidden="true" tabindex="-1"></a><span class="fu">## Important Considerations</span></span>
 <span id="cb17-223"><a href="#cb17-223" aria-hidden="true" tabindex="-1"></a></span>
@@ -1322,7 +1329,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb17-264"><a href="#cb17-264" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb17-265"><a href="#cb17-265" aria-hidden="true" tabindex="-1"></a>**Or deploy to a web server** where HTTP is automatic.</span>
 <span id="cb17-266"><a href="#cb17-266" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-267"><a href="#cb17-267" aria-hidden="true" tabindex="-1"></a>**See:** <span class="co">[</span><span class="ot">Basic Usage: Serving Documents</span><span class="co">](basic-usage.qmd#serving-documents)</span></span>
+<span id="cb17-267"><a href="#cb17-267" aria-hidden="true" tabindex="-1"></a>**See:** <span class="co">[</span><span class="ot">Basic Usage: Serving Documents</span><span class="co">](basic-usage.html#serving-documents)</span></span>
 <span id="cb17-268"><a href="#cb17-268" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb17-269"><a href="#cb17-269" aria-hidden="true" tabindex="-1"></a><span class="fu">### CORS for Remote Audio</span></span>
 <span id="cb17-270"><a href="#cb17-270" aria-hidden="true" tabindex="-1"></a></span>
@@ -1344,14 +1351,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb17-286"><a href="#cb17-286" aria-hidden="true" tabindex="-1"></a><span class="in">}</span></span>
 <span id="cb17-287"><a href="#cb17-287" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb17-288"><a href="#cb17-288" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-289"><a href="#cb17-289" aria-hidden="true" tabindex="-1"></a>**See:** <span class="co">[</span><span class="ot">URL Parameters: CORS</span><span class="co">](url-parameters.qmd#cors-requirements)</span></span>
+<span id="cb17-289"><a href="#cb17-289" aria-hidden="true" tabindex="-1"></a>**See:** <span class="co">[</span><span class="ot">URL Parameters: CORS</span><span class="co">](url-parameters.html#cors-requirements)</span></span>
 <span id="cb17-290"><a href="#cb17-290" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb17-291"><a href="#cb17-291" aria-hidden="true" tabindex="-1"></a><span class="fu">## Next Steps</span></span>
 <span id="cb17-292"><a href="#cb17-292" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-293"><a href="#cb17-293" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**[Basic Usage](basic-usage.qmd)** — Detailed embedding instructions</span>
-<span id="cb17-294"><a href="#cb17-294" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**[Quarto Integration](quarto-integration.qmd)** — Quarto-specific guide</span>
-<span id="cb17-295"><a href="#cb17-295" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**[URL Parameters](url-parameters.qmd)** — Complete parameter reference</span>
-<span id="cb17-296"><a href="#cb17-296" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**[Examples](examples.qmd)** — Working examples for all use cases</span>
+<span id="cb17-293"><a href="#cb17-293" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**[Basic Usage](basic-usage.html)** — Detailed embedding instructions</span>
+<span id="cb17-294"><a href="#cb17-294" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**[Quarto Integration](quarto-integration.html)** — Quarto-specific guide</span>
+<span id="cb17-295"><a href="#cb17-295" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**[URL Parameters](url-parameters.html)** — Complete parameter reference</span>
+<span id="cb17-296"><a href="#cb17-296" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**[Examples](examples.html)** — Working examples for all use cases</span>
 <span id="cb17-297"><a href="#cb17-297" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb17-298"><a href="#cb17-298" aria-hidden="true" tabindex="-1"></a><span class="fu">## FAQ</span></span>
 <span id="cb17-299"><a href="#cb17-299" aria-hidden="true" tabindex="-1"></a></span>
@@ -1365,7 +1372,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb17-307"><a href="#cb17-307" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb17-308"><a href="#cb17-308" aria-hidden="true" tabindex="-1"></a>**Q: Can I customize the appearance?**</span>
 <span id="cb17-309"><a href="#cb17-309" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-310"><a href="#cb17-310" aria-hidden="true" tabindex="-1"></a>A: Yes, via <span class="in">`config.yaml`</span> file in the <span class="in">`ozen-web/`</span> directory. See <span class="co">[</span><span class="ot">Configuration Reference</span><span class="co">](../reference/configuration.qmd)</span>.</span>
+<span id="cb17-310"><a href="#cb17-310" aria-hidden="true" tabindex="-1"></a>A: Yes, via <span class="in">`config.yaml`</span> file in the <span class="in">`ozen-web/`</span> directory. See <span class="co">[</span><span class="ot">Configuration Reference</span><span class="co">](../reference/configuration.html)</span>.</span>
 <span id="cb17-311"><a href="#cb17-311" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb17-312"><a href="#cb17-312" aria-hidden="true" tabindex="-1"></a>**Q: How large can embedded audio files be?**</span>
 <span id="cb17-313"><a href="#cb17-313" aria-hidden="true" tabindex="-1"></a></span>
@@ -1374,7 +1381,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb17-316"><a href="#cb17-316" aria-hidden="true" tabindex="-1"></a>**Q: Can I embed on Medium, WordPress, etc.?**</span>
 <span id="cb17-317"><a href="#cb17-317" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb17-318"><a href="#cb17-318" aria-hidden="true" tabindex="-1"></a>A: Yes, if the platform allows custom HTML/iframes. Some platforms block iframes for security.</span>
-</code><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></pre></div>
+</code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 <footer class="footer">

@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.29">
+<meta name="generator" content="quarto-1.8.25">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>6. Exporting – ozen-web</title>
+<title>6. Exporting – Ozen-web</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -68,14 +68,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../tutorial/05-data-collection.html" rel="prev">
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-0815c480559380816a4d1ea211a47e91.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-da67e8c4bf892742008e2f79db78be0d.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-959c4db58b3c37e28c4d50a75de65b15.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -116,10 +117,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
     <a href="../index.html" class="navbar-brand navbar-brand-logo">
-    <img src="../assets/logo.png" alt="" class="navbar-logo">
+    <img src="../assets/logo.png" alt="" class="navbar-logo light-content">
+    <img src="../assets/logo.png" alt="" class="navbar-logo dark-content">
     </a>
     <a class="navbar-brand" href="../index.html">
-    <span class="navbar-title">ozen-web</span>
+    <span class="navbar-title">Ozen-web</span>
     </a>
   </div>
             <div id="quarto-search" class="" title="Search"></div>
@@ -129,7 +131,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../index.html"> 
+    <a class="nav-link active" href="../index.html" aria-current="page"> 
 <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
@@ -137,7 +139,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span class="menu-text">Getting Started</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link active" href="../tutorial/index.html" aria-current="page"> 
+    <a class="nav-link" href="../tutorial/index.html"> 
 <span class="menu-text">Tutorial</span></a>
   </li>  
   <li class="nav-item dropdown ">
@@ -238,6 +240,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
+      <a href="../index.html" class="sidebar-logo-link">
+      </a>
+      </div>
     <div class="sidebar-menu-container"> 
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item sidebar-item-section">
@@ -361,7 +367,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><strong>Further analysis</strong> (statistical analysis in R, Python, Praat)</li>
 <li><strong>Sharing</strong> (collaborate with colleagues)</li>
 </ul>
-<p>ozen-web supports three export formats:</p>
+<p>Ozen-web supports three export formats:</p>
 <ol type="1">
 <li><strong>TextGrid</strong> (Praat format) — For annotations</li>
 <li><strong>TSV</strong> (Tab-Separated Values) — For data points + measurements</li>
@@ -452,13 +458,13 @@ Tip
 </section>
 <section id="importing-textgrids" class="level2">
 <h2 class="anchored" data-anchor-id="importing-textgrids">Importing TextGrids</h2>
-<p>You can also import existing TextGrid files into ozen-web:</p>
+<p>You can also import existing TextGrid files into Ozen-web:</p>
 <div class="tutorial-steps">
 <ol type="1">
 <li><p><strong>Load an audio file</strong> first (section 1)</p></li>
 <li><p><strong>Click “Import TextGrid”</strong> button</p></li>
 <li><p><strong>Select a TextGrid file</strong></p></li>
-<li><p>The tiers and annotations appear in ozen-web</p></li>
+<li><p>The tiers and annotations appear in Ozen-web</p></li>
 </ol>
 </div>
 <div class="callout callout-style-default callout-note callout-titled">
@@ -518,7 +524,7 @@ Note
 <section id="analyzing-tsv-data" class="level3">
 <h3 class="anchored" data-anchor-id="analyzing-tsv-data">Analyzing TSV Data</h3>
 <p><strong>In R:</strong></p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Read data</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Read data</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">read.delim</span>(<span class="st">"vowel-data.tsv"</span>)</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot F1 vs F2</span></span>
@@ -527,9 +533,9 @@ Note
 <span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>() <span class="sc">+</span></span>
 <span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_reverse</span>() <span class="sc">+</span></span>
 <span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_reverse</span>() <span class="sc">+</span></span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Vowel Space"</span>, <span class="at">x =</span> <span class="st">"F2 (Hz)"</span>, <span class="at">y =</span> <span class="st">"F1 (Hz)"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Vowel Space"</span>, <span class="at">x =</span> <span class="st">"F2 (Hz)"</span>, <span class="at">y =</span> <span class="st">"F1 (Hz)"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><strong>In Python:</strong></p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Read data</span></span>
@@ -544,7 +550,7 @@ Note
 <span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'F2 (Hz)'</span>)</span>
 <span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'F1 (Hz)'</span>)</span>
 <span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Vowel Space'</span>)</span>
-<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><strong>In Excel:</strong></p>
 <ol type="1">
 <li>Open Excel</li>
@@ -611,7 +617,7 @@ Note
 </section>
 <section id="file-system-access-api-vs.-downloads" class="level2">
 <h2 class="anchored" data-anchor-id="file-system-access-api-vs.-downloads">File System Access API vs.&nbsp;Downloads</h2>
-<p>ozen-web uses two methods for saving files, depending on browser support:</p>
+<p>Ozen-web uses two methods for saving files, depending on browser support:</p>
 <p><strong>File System Access API</strong> (Chrome, Edge):</p>
 <ul>
 <li>Shows native “Save” dialog</li>
@@ -704,14 +710,14 @@ Tip
 <li><p>Combine all TSV files in R or Python:</p></li>
 </ol>
 <p><strong>R:</strong></p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>files <span class="ot">&lt;-</span> <span class="fu">list.files</span>(<span class="at">pattern =</span> <span class="st">"*.tsv"</span>)</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">do.call</span>(rbind, <span class="fu">lapply</span>(files, read.delim))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>files <span class="ot">&lt;-</span> <span class="fu">list.files</span>(<span class="at">pattern =</span> <span class="st">"*.tsv"</span>)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">do.call</span>(rbind, <span class="fu">lapply</span>(files, read.delim))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><strong>Python:</strong></p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> glob</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>files <span class="op">=</span> glob.glob(<span class="st">"*.tsv"</span>)</span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> pd.concat([pd.read_csv(f, sep<span class="op">=</span><span class="st">'</span><span class="ch">\t</span><span class="st">'</span>) <span class="cf">for</span> f <span class="kw">in</span> files])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> pd.concat([pd.read_csv(f, sep<span class="op">=</span><span class="st">'</span><span class="ch">\t</span><span class="st">'</span>) <span class="cf">for</span> f <span class="kw">in</span> files])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -723,7 +729,7 @@ Note
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>ozen-web doesn’t have built-in batch processing. For large corpora, consider using the desktop version <a href="https://github.com/ucpresearch/ozen">ozen</a> or scripting with Praat.</p>
+<p>Ozen-web doesn’t have built-in batch processing. For large corpora, consider using the desktop version <a href="https://github.com/ucpresearch/ozen">ozen</a> or scripting with Praat.</p>
 </div>
 </div>
 </section>
@@ -781,7 +787,7 @@ Note
 <ul>
 <li>Ensure the file extension is <code>.TextGrid</code> (not <code>.txt</code>)</li>
 <li>Check that the file isn’t empty (open in text editor)</li>
-<li>Try re-exporting from ozen-web</li>
+<li>Try re-exporting from Ozen-web</li>
 </ul>
 <p><strong>TSV columns are misaligned in Excel:</strong></p>
 <ul>
@@ -803,7 +809,7 @@ Note
 </section>
 <section id="whats-next" class="level2">
 <h2 class="anchored" data-anchor-id="whats-next">What’s Next?</h2>
-<p><strong>Congratulations!</strong> 🎉 You’ve completed the ozen-web tutorial. You now know how to:</p>
+<p><strong>Congratulations!</strong> 🎉 You’ve completed the Ozen-web tutorial. You now know how to:</p>
 <ul>
 <li>✅ Load audio files</li>
 <li>✅ Navigate and explore audio</li>
@@ -818,7 +824,7 @@ Note
 <li><strong><a href="../features/overview.html">Features Documentation</a></strong> — Deep dive into all features</li>
 <li><strong><a href="../reference/keyboard-shortcuts.html">Keyboard Shortcuts Reference</a></strong> — Speed up your workflow</li>
 <li><strong><a href="../reference/configuration.html">Configuration Guide</a></strong> — Customize default settings</li>
-<li><strong><a href="../embedding/overview.html">Embedding Guide</a></strong> — Embed ozen-web in websites or documents</li>
+<li><strong><a href="../embedding/overview.html">Embedding Guide</a></strong> — Embed Ozen-web in websites or documents</li>
 </ul>
 </section>
 <section id="get-involved" class="level3">
@@ -829,7 +835,7 @@ Note
 <li><strong>Contribute</strong>: <a href="../development/setup.html">Development Guide</a></li>
 </ul>
 <hr>
-<p><strong>Navigation:</strong> <a href="../tutorial/05-data-collection.html">← Previous: Data Collection</a> | <a href="../tutorial/index.html">Tutorial Overview</a> | <a href="../features/overview.html">Features Documentation →</a></p>
+<p><strong>Navigation:</strong> <a href="05-data-collection.html">← Previous: Data Collection</a> | <a href="index.html">Tutorial Overview</a> | <a href="../features/overview.html">Features Documentation →</a></p>
 
 
 <!-- -->
@@ -889,13 +895,14 @@ Note
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-        const codeEl = trigger.previousElementSibling.cloneNode(true);
-        for (const childEl of codeEl.children) {
-          if (isCodeAnnotation(childEl)) {
-            childEl.remove();
-          }
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
         }
-        return codeEl.innerText;
+      }
+      return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy
@@ -1304,7 +1311,7 @@ Note
   <div class="nav-page nav-page-next">
   </div>
 </nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
-<div class="sourceCode" id="cb8" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "6. Exporting"</span></span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="an">subtitle:</span><span class="co"> "Save your annotations and data for analysis"</span></span>
 <span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
@@ -1317,7 +1324,7 @@ Note
 <span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Further analysis** (statistical analysis in R, Python, Praat)</span>
 <span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Sharing** (collaborate with colleagues)</span>
 <span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>ozen-web supports three export formats:</span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>Ozen-web supports three export formats:</span>
 <span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**TextGrid** (Praat format) — For annotations</span>
 <span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>**TSV** (Tab-Separated Values) — For data points + measurements</span>
@@ -1404,7 +1411,7 @@ Note
 <span id="cb8-98"><a href="#cb8-98" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-99"><a href="#cb8-99" aria-hidden="true" tabindex="-1"></a><span class="fu">## Importing TextGrids</span></span>
 <span id="cb8-100"><a href="#cb8-100" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-101"><a href="#cb8-101" aria-hidden="true" tabindex="-1"></a>You can also import existing TextGrid files into ozen-web:</span>
+<span id="cb8-101"><a href="#cb8-101" aria-hidden="true" tabindex="-1"></a>You can also import existing TextGrid files into Ozen-web:</span>
 <span id="cb8-102"><a href="#cb8-102" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-103"><a href="#cb8-103" aria-hidden="true" tabindex="-1"></a>::: {.tutorial-steps}</span>
 <span id="cb8-104"><a href="#cb8-104" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**Load an audio file** first (section 1)</span>
@@ -1413,7 +1420,7 @@ Note
 <span id="cb8-107"><a href="#cb8-107" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-108"><a href="#cb8-108" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>**Select a TextGrid file**</span>
 <span id="cb8-109"><a href="#cb8-109" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-110"><a href="#cb8-110" aria-hidden="true" tabindex="-1"></a><span class="ss">4. </span>The tiers and annotations appear in ozen-web</span>
+<span id="cb8-110"><a href="#cb8-110" aria-hidden="true" tabindex="-1"></a><span class="ss">4. </span>The tiers and annotations appear in Ozen-web</span>
 <span id="cb8-111"><a href="#cb8-111" aria-hidden="true" tabindex="-1"></a>:::</span>
 <span id="cb8-112"><a href="#cb8-112" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-113"><a href="#cb8-113" aria-hidden="true" tabindex="-1"></a>::: {.callout-note}</span>
@@ -1553,7 +1560,7 @@ Note
 <span id="cb8-247"><a href="#cb8-247" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-248"><a href="#cb8-248" aria-hidden="true" tabindex="-1"></a><span class="fu">## File System Access API vs. Downloads</span></span>
 <span id="cb8-249"><a href="#cb8-249" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-250"><a href="#cb8-250" aria-hidden="true" tabindex="-1"></a>ozen-web uses two methods for saving files, depending on browser support:</span>
+<span id="cb8-250"><a href="#cb8-250" aria-hidden="true" tabindex="-1"></a>Ozen-web uses two methods for saving files, depending on browser support:</span>
 <span id="cb8-251"><a href="#cb8-251" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-252"><a href="#cb8-252" aria-hidden="true" tabindex="-1"></a>**File System Access API** (Chrome, Edge):</span>
 <span id="cb8-253"><a href="#cb8-253" aria-hidden="true" tabindex="-1"></a></span>
@@ -1645,7 +1652,7 @@ Note
 <span id="cb8-339"><a href="#cb8-339" aria-hidden="true" tabindex="-1"></a>:::</span>
 <span id="cb8-340"><a href="#cb8-340" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-341"><a href="#cb8-341" aria-hidden="true" tabindex="-1"></a>::: {.callout-note}</span>
-<span id="cb8-342"><a href="#cb8-342" aria-hidden="true" tabindex="-1"></a>ozen-web doesn't have built-in batch processing. For large corpora, consider using the desktop version <span class="co">[</span><span class="ot">ozen</span><span class="co">](https://github.com/ucpresearch/ozen)</span> or scripting with Praat.</span>
+<span id="cb8-342"><a href="#cb8-342" aria-hidden="true" tabindex="-1"></a>Ozen-web doesn't have built-in batch processing. For large corpora, consider using the desktop version <span class="co">[</span><span class="ot">ozen</span><span class="co">](https://github.com/ucpresearch/ozen)</span> or scripting with Praat.</span>
 <span id="cb8-343"><a href="#cb8-343" aria-hidden="true" tabindex="-1"></a>:::</span>
 <span id="cb8-344"><a href="#cb8-344" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-345"><a href="#cb8-345" aria-hidden="true" tabindex="-1"></a><span class="fu">## Practice Exercises</span></span>
@@ -1696,7 +1703,7 @@ Note
 <span id="cb8-390"><a href="#cb8-390" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-391"><a href="#cb8-391" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Ensure the file extension is <span class="in">`.TextGrid`</span> (not <span class="in">`.txt`</span>)</span>
 <span id="cb8-392"><a href="#cb8-392" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Check that the file isn't empty (open in text editor)</span>
-<span id="cb8-393"><a href="#cb8-393" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Try re-exporting from ozen-web</span>
+<span id="cb8-393"><a href="#cb8-393" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Try re-exporting from Ozen-web</span>
 <span id="cb8-394"><a href="#cb8-394" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-395"><a href="#cb8-395" aria-hidden="true" tabindex="-1"></a>**TSV columns are misaligned in Excel:**</span>
 <span id="cb8-396"><a href="#cb8-396" aria-hidden="true" tabindex="-1"></a></span>
@@ -1717,7 +1724,7 @@ Note
 <span id="cb8-411"><a href="#cb8-411" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-412"><a href="#cb8-412" aria-hidden="true" tabindex="-1"></a><span class="fu">## What's Next?</span></span>
 <span id="cb8-413"><a href="#cb8-413" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-414"><a href="#cb8-414" aria-hidden="true" tabindex="-1"></a>**Congratulations!** 🎉 You've completed the ozen-web tutorial. You now know how to:</span>
+<span id="cb8-414"><a href="#cb8-414" aria-hidden="true" tabindex="-1"></a>**Congratulations!** 🎉 You've completed the Ozen-web tutorial. You now know how to:</span>
 <span id="cb8-415"><a href="#cb8-415" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-416"><a href="#cb8-416" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>✅ Load audio files</span>
 <span id="cb8-417"><a href="#cb8-417" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>✅ Navigate and explore audio</span>
@@ -1728,21 +1735,21 @@ Note
 <span id="cb8-422"><a href="#cb8-422" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-423"><a href="#cb8-423" aria-hidden="true" tabindex="-1"></a><span class="fu">### Continue Learning</span></span>
 <span id="cb8-424"><a href="#cb8-424" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-425"><a href="#cb8-425" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**[Features Documentation](../features/overview.qmd)** — Deep dive into all features</span>
-<span id="cb8-426"><a href="#cb8-426" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**[Keyboard Shortcuts Reference](../reference/keyboard-shortcuts.qmd)** — Speed up your workflow</span>
-<span id="cb8-427"><a href="#cb8-427" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**[Configuration Guide](../reference/configuration.qmd)** — Customize default settings</span>
-<span id="cb8-428"><a href="#cb8-428" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**[Embedding Guide](../embedding/overview.qmd)** — Embed ozen-web in websites or documents</span>
+<span id="cb8-425"><a href="#cb8-425" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**[Features Documentation](../features/overview.html)** — Deep dive into all features</span>
+<span id="cb8-426"><a href="#cb8-426" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**[Keyboard Shortcuts Reference](../reference/keyboard-shortcuts.html)** — Speed up your workflow</span>
+<span id="cb8-427"><a href="#cb8-427" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**[Configuration Guide](../reference/configuration.html)** — Customize default settings</span>
+<span id="cb8-428"><a href="#cb8-428" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**[Embedding Guide](../embedding/overview.html)** — Embed Ozen-web in websites or documents</span>
 <span id="cb8-429"><a href="#cb8-429" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-430"><a href="#cb8-430" aria-hidden="true" tabindex="-1"></a><span class="fu">### Get Involved</span></span>
 <span id="cb8-431"><a href="#cb8-431" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-432"><a href="#cb8-432" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Report bugs**: <span class="co">[</span><span class="ot">GitHub Issues</span><span class="co">](https://github.com/ucpresearch/ozen-web/issues)</span></span>
 <span id="cb8-433"><a href="#cb8-433" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Request features**: <span class="co">[</span><span class="ot">GitHub Discussions</span><span class="co">](https://github.com/ucpresearch/ozen-web/discussions)</span></span>
-<span id="cb8-434"><a href="#cb8-434" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Contribute**: <span class="co">[</span><span class="ot">Development Guide</span><span class="co">](../development/setup.qmd)</span></span>
+<span id="cb8-434"><a href="#cb8-434" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Contribute**: <span class="co">[</span><span class="ot">Development Guide</span><span class="co">](../development/setup.html)</span></span>
 <span id="cb8-435"><a href="#cb8-435" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-436"><a href="#cb8-436" aria-hidden="true" tabindex="-1"></a>---</span>
 <span id="cb8-437"><a href="#cb8-437" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-438"><a href="#cb8-438" aria-hidden="true" tabindex="-1"></a>**Navigation:**</span>
-<span id="cb8-439"><a href="#cb8-439" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="ot">← Previous: Data Collection</span><span class="co">](05-data-collection.qmd)</span> | <span class="co">[</span><span class="ot">Tutorial Overview</span><span class="co">](index.qmd)</span> | <span class="co">[</span><span class="ot">Features Documentation →</span><span class="co">](../features/overview.qmd)</span></span></code><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></pre></div>
+<span id="cb8-439"><a href="#cb8-439" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="ot">← Previous: Data Collection</span><span class="co">](05-data-collection.html)</span> | <span class="co">[</span><span class="ot">Tutorial Overview</span><span class="co">](index.html)</span> | <span class="co">[</span><span class="ot">Features Documentation →</span><span class="co">](../features/overview.html)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 <footer class="footer">
