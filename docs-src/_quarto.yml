@@ -1,6 +1,7 @@
 project:
   type: website
-  output-dir: ../docs
+  output-dir: _site
+  post-render: scripts/post-render.sh
 
 website:
   title: "Ozen-web"

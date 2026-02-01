@@ -1270,7 +1270,7 @@
     "href": "tutorial/03-acoustic-analysis.html#practice-exercises",
     "title": "3. Acoustic Analysis",
     "section": "Practice Exercises",
-    "text": "Practice Exercises\n\nEnable Pitch only\n\nFind a vowel\nPlace cursor in the middle\nNote the pitch value\n\nEnable Formants\n\nIdentify F1 and F2 for the same vowel\nTry to guess the vowel based on formants (use the table above)\n\nEnable Intensity\n\nFind the loudest part of your audio\nCompare intensity values across different sounds\n\nEnable all overlays\n\nObserve how different overlays align\nNotice which features co-vary (e.g., intensity and voicing)\n\n\n\nChallenge: Record three vowels: [i], [a], [u]. Enable formants and verify that F1 and F2 values match the expected patterns from the table.",
+    "text": "Practice Exercises\n\nEnable Pitch only\n\nFind a vowel\nPlace cursor in the middle\nNote the pitch value\n\nEnable Formants\n\nIdentify F1 and F2 for the same vowel\nTry to guess the vowel based on formants (use the table above)\n\nEnable Intensity\n\nFind the loudest part of your audio\nCompare intensity values across different sounds\n\nEnable all overlays\n\nObserve how different overlays align\nNotice which features co-vary (e.g., intensity and voicing)",
     "crumbs": [
       "Tutorial",
       "Complete Workflow",
@@ -1486,7 +1486,7 @@
     "href": "tutorial/01-loading-audio.html#before-you-start",
     "title": "1. Loading Audio",
     "section": "Before You Start",
-    "text": "Before You Start\nMake sure Ozen-web is running in your browser:\n\nHosted version: https://ucpresearch.github.io/ozen-web/\nLocal server: http://localhost:5173\n\nYou should see an empty interface with a prominent file drop zone.\n\n\n\nEmpty interface with drop zone",
+    "text": "Before You Start\nMake sure Ozen-web is running in your browser:\n\nHosted version\nLocal server: http://localhost:5173 (change the port to number to match your server)\n\nYou should see an empty interface with a prominent file drop zone.\n\n\n\nEmpty interface with drop zone",
     "crumbs": [
       "Tutorial",
       "Complete Workflow",

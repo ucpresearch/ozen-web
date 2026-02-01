@@ -15,8 +15,8 @@ In this section, you'll learn how to load audio files into Ozen-web using three 
 
 Make sure Ozen-web is running in your browser:
 
-- **Hosted version**: [https://ucpresearch.github.io/ozen-web/](https://ucpresearch.github.io/ozen-web/)
-- **Local server**: [http://localhost:5173](http://localhost:5173)
+- [**Hosted version**](live/index.html)
+- **Local server**: [http://localhost:5173](http://localhost:5173) (change the port to number to match your server)
 
 You should see an empty interface with a prominent file drop zone.
 

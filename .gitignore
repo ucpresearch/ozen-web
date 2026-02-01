@@ -35,6 +35,7 @@ SCREENSHOTS_EXPLAINED.md
 # Quarto
 /.quarto/
 docs-src/.quarto/
+docs-src/_site/
 docs-src/*_cache/
 docs-src/*_files/
 docs-src/*.knit.md
