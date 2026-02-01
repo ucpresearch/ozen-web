@@ -191,12 +191,12 @@
 			case 'ArrowUp':
 				console.log('ArrowUp: zooming in');
 				e.preventDefault();
-				zoomView(0.91); // Zoom in (same as scroll up)
+				zoomView(0.91, true); // Zoom in centered on visible window
 				break;
 			case 'ArrowDown':
 				console.log('ArrowDown: zooming out');
 				e.preventDefault();
-				zoomView(1.1); // Zoom out (same as scroll down)
+				zoomView(1.1, true); // Zoom out centered on visible window
 				break;
 			// Number keys 1-5 to switch tiers
 			case 'Digit1':
@@ -246,11 +246,12 @@
 	}
 
 	/**
-	 * Zoom in or out, centered on the current cursor position.
+	 * Zoom in or out, centered on the current cursor position or visible window center.
 	 * @param factor - Zoom factor (< 1 = zoom in, > 1 = zoom out)
+	 * @param centerOnWindow - If true, center on middle of visible window; if false, center on cursor
 	 */
-	function zoomView(factor: number) {
-		console.log('zoomView called with factor:', factor);
+	function zoomView(factor: number, centerOnWindow: boolean = false) {
+		console.log('zoomView called with factor:', factor, 'centerOnWindow:', centerOnWindow);
 		if (!$audioBuffer) {
 			console.log('zoomView: no audio buffer');
 			return;
@@ -259,7 +260,9 @@
 		const duration = $audioBuffer.length / $sampleRate;
 		const { start, end } = $timeRange;
 		const currentDuration = end - start;
-		const centerTime = $cursorPosition;
+
+		// Center on visible window middle (for arrow keys) or cursor position (for mouse wheel)
+		const centerTime = centerOnWindow ? (start + end) / 2 : $cursorPosition;
 
 		// Calculate new duration
 		const newDuration = Math.max(0.01, Math.min(duration, currentDuration * factor));
