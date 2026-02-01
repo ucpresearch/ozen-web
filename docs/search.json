@@ -516,7 +516,7 @@
     "href": "reference/keyboard-shortcuts.html#navigation",
     "title": "Keyboard Shortcuts",
     "section": "Navigation",
-    "text": "Navigation\n\n\n\n\n\n\n\n\nKey\nAction\nNotes\n\n\n\n\n← →\nMove cursor\nLeft/Right arrows move cursor by ~10ms increments\n\n\nShift+← →\nExtend/shrink selection\nAdjust selection boundaries\n\n\nMouse Wheel\nZoom in/out\nCentered on mouse cursor position\n\n\n+ / -\nZoom in/out\nCentered on time cursor position\n\n\nHorizontal Scroll\nPan view\nTwo-finger swipe on trackpads\n\n\nCtrl+Drag\nPan view\nAlternative to scrollbar",
+    "text": "Navigation\n\n\n\n\n\n\n\n\nKey\nAction\nNotes\n\n\n\n\nMouse Wheel\nZoom in/out\nCentered on mouse cursor position\n\n\nHorizontal Scroll\nPan view\nTwo-finger swipe on trackpads, or Shift+scroll on some systems\n\n\nShift+Scroll\nPan view (maybe)\nBrowser/OS dependent — may produce horizontal scroll",
     "crumbs": [
       "Keyboard Shortcuts"
     ]
@@ -606,7 +606,17 @@
     "href": "reference/keyboard-shortcuts.html#quick-reference-card",
     "title": "Keyboard Shortcuts",
     "section": "Quick Reference Card",
-    "text": "Quick Reference Card\nPrint-friendly quick reference:\n\n\n\n\nCategory\nKey\nAction\n\n\n\n\nPlayback\nSpace\nPlay selection\n\n\n\nTab\nPlay window\n\n\n\nEsc\nStop\n\n\nNavigate\n←→\nMove cursor\n\n\n\nWheel\nZoom\n\n\n\n+/-\nZoom\n\n\nEdit\nCtrl+Z\nUndo\n\n\n\nCtrl+Y\nRedo\n\n\n\nEnter\nSave label\n\n\nTiers\n1-5\nSelect tier\n\n\n\nDbl-click tier\nAdd boundary\n\n\n\nDbl-click interval\nEdit label\n\n\nData\nDbl-click spectrogram\nAdd point\n\n\n\nRight-click\nRemove",
+    "text": "Quick Reference Card\nPrint-friendly quick reference:\n\n\n\n\nCategory\nKey\nAction\n\n\n\n\nPlayback\nSpace\nPlay selection\n\n\n\nTab\nPlay window\n\n\n\nEsc\nStop\n\n\nNavigate\nWheel\nZoom (vertical scroll)\n\n\n\nHorizontal scroll\nPan (trackpad or Shift+scroll)\n\n\nEdit\nCtrl+Z\nUndo\n\n\n\nCtrl+Y\nRedo\n\n\n\nCtrl+C\nCopy data points\n\n\n\nEnter\nSave label\n\n\nTiers\n1-5\nSelect tier\n\n\n\nDbl-click tier\nAdd boundary\n\n\n\nDbl-click interval\nEdit label\n\n\nData\nDbl-click spectrogram\nAdd point\n\n\n\nRight-click\nRemove",
+    "crumbs": [
+      "Keyboard Shortcuts"
+    ]
+  },
+  {
+    "objectID": "reference/keyboard-shortcuts.html#mouse-only-users",
+    "href": "reference/keyboard-shortcuts.html#mouse-only-users",
+    "title": "Keyboard Shortcuts",
+    "section": "Mouse-Only Users",
+    "text": "Mouse-Only Users\n\n\n\n\n\n\nWarningPanning Limitation\n\n\n\nOzen-web currently lacks click-and-drag panning for mouse users. Horizontal panning requires:\n\nTrackpad: Two-finger horizontal swipe\nMouse: Shift+Scroll (works on some browsers/OS combinations)\n\nIf Shift+Scroll doesn’t work, use this workaround: 1. Click on the waveform/spectrogram where you want to focus 2. Zoom in (scroll up) to center on that location 3. Zoom out (scroll down) to see more context 4. Repeat to navigate different regions",
     "crumbs": [
       "Keyboard Shortcuts"
     ]
@@ -1510,7 +1520,7 @@
     "href": "tutorial/01-loading-audio.html#method-2-file-picker",
     "title": "1. Loading Audio",
     "section": "Method 2: File Picker",
-    "text": "Method 2: File Picker\nIf you prefer a traditional file dialog:\n\n\nClick the “Load Audio” button in the interface (usually top-left or center)\nSelect your audio file in the file dialog\nClick “Open”\nAudio loads just like drag-and-drop\n\n\n\n\n\n\n\n\nNote\n\n\n\nThe file picker shows only supported formats (WAV, MP3, OGG, M4A, FLAC). If your file doesn’t appear, check the format or try “All Files” filter.",
+    "text": "Method 2: File Picker\nIf you prefer a traditional file dialog:\n\n\nClick the “Load Audio” button in the interface (usually top-left or center)\nSelect your audio file in the file dialog\nClick “Open”\nAudio loads just like drag-and-drop\n\n\n\n\n\n\n\n\nNote\n\n\n\nThe file picker shows only supported formats (WAV, FLAC, MP3, OGG). If your file doesn’t appear, check the format or try “All Files” filter.",
     "crumbs": [
       "Tutorial",
       "Complete Workflow",
@@ -1522,7 +1532,7 @@
     "href": "tutorial/01-loading-audio.html#method-3-microphone-recording",
     "title": "1. Loading Audio",
     "section": "Method 3: Microphone Recording",
-    "text": "Method 3: Microphone Recording\nCreate new audio directly in the browser:\n\n\nClick the microphone icon 🎤 (usually in the toolbar)\nAllow microphone access when prompted by the browser\n\n\n\nBrowser microphone permission dialog\n\n\nClick the red record button\nSpeak into your microphone\n\nA timer shows recording duration\nMaximum recording time: 60 seconds (configurable)\n\nClick the stop button when finished\nThe recorded audio loads automatically\n\n\n\nTry recording yourself saying a few vowels (“ah”, “ee”, “oo”) to see clear formant patterns in the spectrogram.\n\n\n\n\n\n\n\nWarning\n\n\n\nMicrophone recording uses your browser’s MediaRecorder API. Quality depends on your microphone and browser settings. For research-grade recordings, use external recording software.",
+    "text": "Method 3: Microphone Recording\nCreate new audio directly in the browser:\n\n\nClick the microphone icon 🎤 (usually in the toolbar)\nAllow microphone access when prompted by the browser\n\n\n\nBrowser microphone permission dialog\n\n\nClick the red record button\nSpeak into your microphone\n\nA timer shows recording duration\nMaximum recording time: 60 seconds (configurable)\n\nClick the stop button when finished\nThe recorded audio loads automatically\n\n\n\nTry recording yourself saying a few words that differ only by their vowels (bead, bid, bed, bad) to see clear formant patterns in the spectrogram.\n\n\n\n\n\n\n\nWarning\n\n\n\nMicrophone recording uses your browser’s MediaRecorder API. Quality depends on your microphone and browser settings. For research-grade recordings, use external recording software.",
     "crumbs": [
       "Tutorial",
       "Complete Workflow",
@@ -3055,7 +3065,7 @@
     "href": "tutorial/02-exploring-audio.html#panning",
     "title": "2. Exploring Audio",
     "section": "Panning",
-    "text": "Panning\nPan the view to explore different parts of the audio horizontally.\n\n\nUse horizontal scrollbar at the bottom of the view\nOR\nClick and drag horizontally while holding Ctrl/Cmd key\nThe visible time window shifts left or right\n\n\n\n\n\n\n\n\nTip\n\n\n\nOn trackpads, use two-finger horizontal swipe to pan smoothly.",
+    "text": "Panning\nPan the view to explore different parts of the audio horizontally.\n\nTrackpad Users\nTwo-finger horizontal swipe pans smoothly left/right.\n\n\nMouse Users\nMouse panning options vary by browser/OS:\n\n\nTry Shift+Scroll — Some systems translate this to horizontal scroll\nIf that doesn’t work, use the zoom-to-navigate approach:\n\nClick where you want to center the view\nZoom in (scroll up) to focus on that location\nZoom out (scroll down) to see more context\nRepeat to navigate\n\n\n\n\n\n\n\n\n\nNote\n\n\n\nNo native mouse drag panning: The app reserves click-and-drag for selecting audio regions. Horizontal scrolling (via trackpad or Shift+scroll) is currently the only direct panning method.",
     "crumbs": [
       "Tutorial",
       "Complete Workflow",
