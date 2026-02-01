@@ -79,6 +79,17 @@
 		computeSpectrogram();
 	}
 
+	// Debug: log state changes
+	$: {
+		const shouldShowMessage = isComputingSpectrogram || (!spectrogramData && !showZoomMessage);
+		console.log('State update:', {
+			isComputingSpectrogram,
+			hasSpectrogramData: !!spectrogramData,
+			showZoomMessage,
+			shouldShowMessage
+		});
+	}
+
 	// Reactive draw trigger - all dependencies must be in the expression
 	// We create a dependency array that Svelte will track
 	$: drawDeps = [
@@ -259,6 +270,7 @@
 	async function computeSpectrogram() {
 		if (!$audioBuffer || !$wasmReady) return;
 
+		console.log('computeSpectrogram: START, setting isComputingSpectrogram = true');
 		isComputingSpectrogram = true;
 		// Allow Svelte to render the "Computing..." message before blocking with computation
 		await tick();
@@ -268,8 +280,10 @@
 
 		try {
 			// Use abstraction layer for backend compatibility
+			console.log('computeSpectrogram: calling computeSpec...');
 			const spec = computeSpec(sound, 0.005, maxFreq, 0.002, 20.0);
 			const info = getSpectrogramInfo(spec);
+			console.log('computeSpectrogram: spec computed, creating image...');
 
 			spectrogramData = {
 				values: info.values,
@@ -315,6 +329,8 @@
 		} finally {
 			sound.free();
 			// Mark computation as complete (whether success or error)
+			console.log('computeSpectrogram: FINALLY block, setting isComputingSpectrogram = false');
+			console.log('computeSpectrogram: spectrogramData is', spectrogramData ? 'SET' : 'NULL');
 			isComputingSpectrogram = false;
 		}
 	}
