@@ -40,6 +40,7 @@
 	let spectrogramData: SpectrogramData | null = null;
 	let spectrogramImageData: ImageData | null = null;
 	let spectrogramCanvas: HTMLCanvasElement | null = null;
+	let isComputingSpectrogram = false;
 
 	// Zoomed spectrogram cache (high resolution for visible region)
 	let zoomedSpectrogramCanvas: HTMLCanvasElement | null = null;
@@ -258,6 +259,7 @@
 	async function computeSpectrogram() {
 		if (!$audioBuffer || !$wasmReady) return;
 
+		isComputingSpectrogram = true;
 		const wasm = getWasm();
 		const sound = new wasm.Sound($audioBuffer, $sampleRate);
 
@@ -309,6 +311,8 @@
 			requestAnimationFrame(tryDraw);
 		} finally {
 			sound.free();
+			// Mark computation as complete (whether success or error)
+			isComputingSpectrogram = false;
 		}
 	}
 
@@ -1181,7 +1185,7 @@
 	role="application"
 	aria-label="Spectrogram - click and drag to select, scroll to zoom, double-click to add data point"
 >
-	{#if !spectrogramData}
+	{#if isComputingSpectrogram}
 		<div class="computing">Computing spectrogram...</div>
 	{/if}
 	<canvas bind:this={canvas}></canvas>
