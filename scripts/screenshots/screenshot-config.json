@@ -216,6 +216,158 @@
       ],
       "clip": null,
       "description": "All acoustic overlays enabled with annotations"
+    },
+    {
+      "name": "tutorial-02-values-panel",
+      "route": "/",
+      "viewport": {"width": 1280, "height": 720},
+      "actions": [
+        {"type": "loadAudio", "file": "test-audio/sample.wav"},
+        {"type": "wait", "ms": 3000},
+        {"type": "toggleOverlay", "overlay": "pitch"},
+        {"type": "wait", "ms": 500},
+        {"type": "toggleOverlay", "overlay": "formants"},
+        {"type": "wait", "ms": 500},
+        {"type": "click", "position": {"x": 640, "y": 300}},
+        {"type": "wait", "ms": 500}
+      ],
+      "clip": {"x": 900, "y": 0, "width": 380, "height": 720},
+      "description": "Values panel showing acoustic measurements at cursor position"
+    },
+    {
+      "name": "tutorial-03-overlay-checkboxes",
+      "route": "/",
+      "viewport": {"width": 1280, "height": 720},
+      "actions": [
+        {"type": "loadAudio", "file": "test-audio/sample.wav"},
+        {"type": "wait", "ms": 2000}
+      ],
+      "clip": {"x": 900, "y": 80, "width": 380, "height": 300},
+      "description": "Overlay toggle checkboxes for pitch, formants, intensity, etc."
+    },
+    {
+      "name": "intensity-overlay",
+      "route": "/",
+      "viewport": {"width": 1280, "height": 720},
+      "actions": [
+        {"type": "loadAudio", "file": "test-audio/sample.wav"},
+        {"type": "wait", "ms": 2000},
+        {"type": "toggleOverlay", "overlay": "intensity"},
+        {"type": "wait", "ms": 1000}
+      ],
+      "clip": null,
+      "description": "Spectrogram with intensity overlay enabled"
+    },
+    {
+      "name": "tutorial-04-add-tier",
+      "route": "/",
+      "viewport": {"width": 1280, "height": 720},
+      "actions": [
+        {"type": "loadAudio", "file": "test-audio/sample.wav"},
+        {"type": "wait", "ms": 2000}
+      ],
+      "clip": {"x": 0, "y": 550, "width": 300, "height": 170},
+      "description": "Add tier button in annotation controls"
+    },
+    {
+      "name": "tutorial-04-add-boundary",
+      "route": "/",
+      "viewport": {"width": 1280, "height": 720},
+      "actions": [
+        {"type": "loadAudio", "file": "test-audio/sample.wav"},
+        {"type": "wait", "ms": 2000},
+        {"type": "addTier", "name": "words"},
+        {"type": "wait", "ms": 500}
+      ],
+      "clip": {"x": 0, "y": 450, "width": 1280, "height": 270},
+      "description": "Empty annotation tier ready for boundary addition (manual: capture after double-clicking tier)"
+    },
+    {
+      "name": "tutorial-04-boundary-menu",
+      "route": "/",
+      "viewport": {"width": 1280, "height": 720},
+      "actions": [
+        {"type": "loadAudio", "file": "test-audio/sample.wav"},
+        {"type": "wait", "ms": 2000},
+        {"type": "addTier", "name": "words"},
+        {"type": "wait", "ms": 500}
+      ],
+      "clip": null,
+      "description": "MANUAL SCREENSHOT REQUIRED: Right-click context menu on boundary (cannot automate right-click menu)"
+    },
+    {
+      "name": "tutorial-04-edit-label",
+      "route": "/",
+      "viewport": {"width": 1280, "height": 720},
+      "actions": [
+        {"type": "loadAudio", "file": "test-audio/sample.wav"},
+        {"type": "wait", "ms": 2000},
+        {"type": "addTier", "name": "words"},
+        {"type": "wait", "ms": 500}
+      ],
+      "clip": null,
+      "description": "MANUAL SCREENSHOT REQUIRED: Text input visible for editing interval label (requires double-click on interval)"
+    },
+    {
+      "name": "tutorial-05-add-datapoint",
+      "route": "/",
+      "viewport": {"width": 1280, "height": 720},
+      "actions": [
+        {"type": "loadAudio", "file": "test-audio/sample.wav"},
+        {"type": "wait", "ms": 3000},
+        {"type": "toggleOverlay", "overlay": "formants"},
+        {"type": "wait", "ms": 1000},
+        {"type": "click", "position": {"x": 640, "y": 300}},
+        {"type": "wait", "ms": 300}
+      ],
+      "clip": null,
+      "description": "Cursor positioned where data point will be added (shows before double-click)"
+    },
+    {
+      "name": "tutorial-05-multiple-datapoints",
+      "route": "/",
+      "viewport": {"width": 1280, "height": 720},
+      "actions": [
+        {"type": "loadAudio", "file": "test-audio/sample.wav"},
+        {"type": "wait", "ms": 3000},
+        {"type": "toggleOverlay", "overlay": "pitch"},
+        {"type": "toggleOverlay", "overlay": "formants"},
+        {"type": "wait", "ms": 1000},
+        {"type": "addDataPoint", "position": {"x": 350, "y": 280}},
+        {"type": "wait", "ms": 300},
+        {"type": "addDataPoint", "position": {"x": 520, "y": 320}},
+        {"type": "wait", "ms": 300},
+        {"type": "addDataPoint", "position": {"x": 700, "y": 290}},
+        {"type": "wait", "ms": 500}
+      ],
+      "clip": null,
+      "description": "Multiple data points collected on spectrogram"
+    },
+    {
+      "name": "tutorial-06-export-tsv",
+      "route": "/",
+      "viewport": {"width": 1280, "height": 720},
+      "actions": [
+        {"type": "loadAudio", "file": "test-audio/sample.wav"},
+        {"type": "wait", "ms": 3000},
+        {"type": "toggleOverlay", "overlay": "pitch"},
+        {"type": "toggleOverlay", "overlay": "formants"},
+        {"type": "wait", "ms": 1000},
+        {"type": "addDataPoint", "position": {"x": 640, "y": 300}},
+        {"type": "wait", "ms": 500}
+      ],
+      "clip": null,
+      "description": "Interface with data point ready for TSV export (native save dialog not capturable)"
+    },
+    {
+      "name": "microphone-permission",
+      "route": "/",
+      "viewport": {"width": 1280, "height": 720},
+      "actions": [
+        {"type": "wait", "ms": 500}
+      ],
+      "clip": null,
+      "description": "MANUAL SCREENSHOT REQUIRED: Browser microphone permission dialog (cannot automate browser security dialogs)"
     }
   ]
 }

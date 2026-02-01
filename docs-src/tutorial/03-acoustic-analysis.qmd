@@ -139,7 +139,9 @@ Measures spectral balance:
 - **High CoG** (>5000 Hz) = sibilants (s, sh), fricatives
 - **Low CoG** (<3000 Hz) = vowels, sonorants
 
-Useful for distinguishing fricatives.
+Useful for distinguishing fricatives. To really see how fricatives are
+different, increase "Max Freq." to 10,000, and record the word
+_chefs_.
 
 ### Spectral Tilt
 
@@ -246,9 +248,6 @@ For most speech analysis, **5 kHz** is sufficient. Use 7.5-10 kHz if studying si
    - Observe how different overlays align
    - Notice which features co-vary (e.g., intensity and voicing)
 
-::: {.callout-try}
-**Challenge:** Record three vowels: [i], [a], [u]. Enable formants and verify that F1 and F2 values match the expected patterns from the table.
-:::
 
 ## Troubleshooting
 
