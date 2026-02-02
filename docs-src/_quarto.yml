@@ -4,6 +4,7 @@ project:
   post-render: scripts/post-render.sh
   resources:
     - live/
+    - .nojekyll
 
 website:
   title: "Ozen-web"
