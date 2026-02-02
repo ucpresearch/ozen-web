@@ -2,6 +2,8 @@ project:
   type: website
   output-dir: _site
   post-render: scripts/post-render.sh
+  resources:
+    - live/
 
 website:
   title: "Ozen-web"

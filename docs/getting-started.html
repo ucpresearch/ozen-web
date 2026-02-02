@@ -268,7 +268,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
 <div class="quarto-title-block"><div><h1 class="title">Getting Started</h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
-<p class="subtitle lead">Install and run Ozen-web in 5 minutes</p>
+<p class="subtitle lead">Install and run Ozen-web</p>
 </div>
 
 
@@ -298,7 +298,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 class="anchored" data-anchor-id="option-1-use-hosted-version">Option 1: Use Hosted Version</h2>
 <p>The fastest way to get started is using the hosted version:</p>
 <p><strong>🌐 <a href="https://ucpresearch.github.io/ozen-web/live/index.html">https://ucpresearch.github.io/ozen-web/live/</a></strong></p>
-<p>Simply visit the URL and drag an audio file (WAV, MP3, OGG) to begin analyzing.</p>
+<p>Simply visit the URL and drag an audio file (WAV, FLAC, MP3, OGG) to begin analyzing.</p>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -316,10 +316,10 @@ Tip
 <h3 class="anchored" data-anchor-id="loading-your-first-audio-file">Loading Your First Audio File</h3>
 <div class="tutorial-steps">
 <ol type="1">
-<li><p><strong>Drag and drop</strong> a WAV, MP3, or OGG file onto the interface</p>
+<li><p><strong>Drag and drop</strong> a WAV, FLAC, MP3, or OGG file onto the interface</p>
 <p>OR</p>
 <p><strong>Click “Load Audio”</strong> button and select a file</p></li>
-<li><p>Wait for the waveform to appear (1-2 seconds for typical files)</p></li>
+<li><p>Wait for the waveform to appear</p></li>
 <li><p>The spectrogram will load automatically (or zoom in for long files)</p></li>
 <li><p>Enable acoustic overlays using checkboxes: Pitch, Formants, Intensity</p></li>
 </ol>
@@ -375,19 +375,11 @@ notice that this method doesn’t use https, and your browser may complain about
 <h3 class="anchored" data-anchor-id="backend-selection">Backend Selection</h3>
 <p>Ozen-web supports multiple WASM backends:</p>
 <table class="caption-top table">
-<colgroup>
-<col style="width: 21%">
-<col style="width: 19%">
-<col style="width: 21%">
-<col style="width: 16%">
-<col style="width: 21%">
-</colgroup>
 <thead>
 <tr class="header">
 <th>Backend</th>
 <th>Source</th>
 <th>License</th>
-<th>Speed</th>
 <th>Offline</th>
 </tr>
 </thead>
@@ -396,21 +388,18 @@ notice that this method doesn’t use https, and your browser may complain about
 <td><code>praatfan-local</code></td>
 <td><code>static/wasm/</code></td>
 <td>MIT/Apache-2.0</td>
-<td>Fastest</td>
 <td>✅ Yes</td>
 </tr>
 <tr class="even">
 <td><code>praatfan</code></td>
 <td>GitHub Pages CDN</td>
 <td>MIT/Apache-2.0</td>
-<td>Fast</td>
 <td>❌ No</td>
 </tr>
 <tr class="odd">
 <td><code>praatfan-gpl</code></td>
 <td>GitHub Pages CDN</td>
 <td>GPL</td>
-<td>Fast</td>
 <td>❌ No</td>
 </tr>
 </tbody>
@@ -443,9 +432,8 @@ notice that this method doesn’t use https, and your browser may complain about
 <section id="audio-file-wont-load" class="level3">
 <h3 class="anchored" data-anchor-id="audio-file-wont-load">Audio File Won’t Load</h3>
 <ul>
-<li><strong>Supported formats</strong>: WAV, MP3, OGG (16-bit or 24-bit PCM for WAV)</li>
+<li><strong>Supported formats</strong>: WAV, FLAC, MP3, OGG (16-bit or 24-bit PCM for WAV)</li>
 <li><strong>File size</strong>: Files &gt;100MB may be slow; try shorter clips</li>
-<li><strong>Browser support</strong>: Some browsers have codec limitations (try Chrome/Edge)</li>
 </ul>
 </section>
 <section id="long-audio-files-show-zoom-in-for-spectrogram" class="level3">
@@ -939,7 +927,7 @@ notice that this method doesn’t use https, and your browser may complain about
   </script><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Getting Started"</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="an">subtitle:</span><span class="co"> "Install and run Ozen-web in 5 minutes"</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="an">subtitle:</span><span class="co"> "Install and run Ozen-web"</span></span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
 <span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="fu">## Overview</span></span>
@@ -956,7 +944,7 @@ notice that this method doesn’t use https, and your browser may complain about
 <span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>**🌐 [https://ucpresearch.github.io/ozen-web/live/](https://ucpresearch.github.io/ozen-web/live/index.html)**</span>
 <span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>Simply visit the URL and drag an audio file (WAV, MP3, OGG) to begin analyzing.</span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>Simply visit the URL and drag an audio file (WAV, FLAC, MP3, OGG) to begin analyzing.</span>
 <span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip}</span>
 <span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>Bookmark the URL for quick access. All processing happens locally in your browser — no data is uploaded to servers.</span>
@@ -965,13 +953,13 @@ notice that this method doesn’t use https, and your browser may complain about
 <span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a><span class="fu">### Loading Your First Audio File</span></span>
 <span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>::: {.tutorial-steps}</span>
-<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**Drag and drop** a WAV, MP3, or OGG file onto the interface</span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**Drag and drop** a WAV, FLAC, MP3, or OGG file onto the interface</span>
 <span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a>   OR</span>
 <span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a>   **Click "Load Audio"** button and select a file</span>
 <span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>Wait for the waveform to appear (1-2 seconds for typical files)</span>
+<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>Wait for the waveform to appear</span>
 <span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>The spectrogram will load automatically (or zoom in for long files)</span>
 <span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a></span>
@@ -1030,11 +1018,11 @@ notice that this method doesn’t use https, and your browser may complain about
 <span id="cb2-91"><a href="#cb2-91" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-92"><a href="#cb2-92" aria-hidden="true" tabindex="-1"></a>Ozen-web supports multiple WASM backends:</span>
 <span id="cb2-93"><a href="#cb2-93" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-94"><a href="#cb2-94" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Backend <span class="pp">|</span> Source <span class="pp">|</span> License <span class="pp">|</span> Speed <span class="pp">|</span> Offline <span class="pp">|</span></span>
-<span id="cb2-95"><a href="#cb2-95" aria-hidden="true" tabindex="-1"></a><span class="pp">|---------|--------|---------|-------|---------|</span></span>
-<span id="cb2-96"><a href="#cb2-96" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`praatfan-local`</span> <span class="pp">|</span> <span class="in">`static/wasm/`</span> <span class="pp">|</span> MIT/Apache-2.0 <span class="pp">|</span> Fastest <span class="pp">|</span> ✅ Yes <span class="pp">|</span></span>
-<span id="cb2-97"><a href="#cb2-97" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`praatfan`</span> <span class="pp">|</span> GitHub Pages CDN <span class="pp">|</span> MIT/Apache-2.0 <span class="pp">|</span> Fast <span class="pp">|</span> ❌ No <span class="pp">|</span></span>
-<span id="cb2-98"><a href="#cb2-98" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`praatfan-gpl`</span> <span class="pp">|</span> GitHub Pages CDN <span class="pp">|</span> GPL <span class="pp">|</span> Fast <span class="pp">|</span> ❌ No <span class="pp">|</span></span>
+<span id="cb2-94"><a href="#cb2-94" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Backend <span class="pp">|</span> Source <span class="pp">|</span> License <span class="pp">|</span> Offline <span class="pp">|</span></span>
+<span id="cb2-95"><a href="#cb2-95" aria-hidden="true" tabindex="-1"></a><span class="pp">|---------|--------|---------|---------|</span></span>
+<span id="cb2-96"><a href="#cb2-96" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`praatfan-local`</span> <span class="pp">|</span> <span class="in">`static/wasm/`</span> <span class="pp">|</span> MIT/Apache-2.0 <span class="pp">|</span> ✅ Yes <span class="pp">|</span></span>
+<span id="cb2-97"><a href="#cb2-97" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`praatfan`</span> <span class="pp">|</span> GitHub Pages CDN <span class="pp">|</span> MIT/Apache-2.0 <span class="pp">|</span> ❌ No <span class="pp">|</span></span>
+<span id="cb2-98"><a href="#cb2-98" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`praatfan-gpl`</span> <span class="pp">|</span> GitHub Pages CDN <span class="pp">|</span> GPL <span class="pp">|</span> ❌ No <span class="pp">|</span></span>
 <span id="cb2-99"><a href="#cb2-99" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-100"><a href="#cb2-100" aria-hidden="true" tabindex="-1"></a>Select the backend using the dropdown in the app interface.</span>
 <span id="cb2-101"><a href="#cb2-101" aria-hidden="true" tabindex="-1"></a></span>
@@ -1065,33 +1053,32 @@ notice that this method doesn’t use https, and your browser may complain about
 <span id="cb2-126"><a href="#cb2-126" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-127"><a href="#cb2-127" aria-hidden="true" tabindex="-1"></a><span class="fu">### Audio File Won't Load</span></span>
 <span id="cb2-128"><a href="#cb2-128" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-129"><a href="#cb2-129" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Supported formats**: WAV, MP3, OGG (16-bit or 24-bit PCM for WAV)</span>
+<span id="cb2-129"><a href="#cb2-129" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Supported formats**: WAV, FLAC, MP3, OGG (16-bit or 24-bit PCM for WAV)</span>
 <span id="cb2-130"><a href="#cb2-130" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**File size**: Files &gt;100MB may be slow; try shorter clips</span>
-<span id="cb2-131"><a href="#cb2-131" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Browser support**: Some browsers have codec limitations (try Chrome/Edge)</span>
-<span id="cb2-132"><a href="#cb2-132" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-133"><a href="#cb2-133" aria-hidden="true" tabindex="-1"></a><span class="fu">### Long Audio Files Show "Zoom in for spectrogram"</span></span>
-<span id="cb2-134"><a href="#cb2-134" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-135"><a href="#cb2-135" aria-hidden="true" tabindex="-1"></a>This is expected behavior for files &gt;60 seconds. Zoom in to a window ≤60s to trigger analysis.</span>
-<span id="cb2-136"><a href="#cb2-136" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-137"><a href="#cb2-137" aria-hidden="true" tabindex="-1"></a>See <span class="co">[</span><span class="ot">Features: Long Audio Handling</span><span class="co">](features/overview.html#long-audio-handling)</span> for details.</span>
-<span id="cb2-138"><a href="#cb2-138" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-139"><a href="#cb2-139" aria-hidden="true" tabindex="-1"></a><span class="fu">## Getting Help</span></span>
-<span id="cb2-140"><a href="#cb2-140" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-141"><a href="#cb2-141" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Documentation**: Browse <span class="co">[</span><span class="ot">Features</span><span class="co">](features/overview.html)</span> and <span class="co">[</span><span class="ot">Reference</span><span class="co">](reference/keyboard-shortcuts.html)</span> sections</span>
-<span id="cb2-142"><a href="#cb2-142" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Tutorial**: Follow the <span class="co">[</span><span class="ot">step-by-step guide</span><span class="co">](tutorial/index.html)</span></span>
-<span id="cb2-143"><a href="#cb2-143" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Issues**: Report bugs at <span class="co">[</span><span class="ot">GitHub Issues</span><span class="co">](https://github.com/ucpresearch/ozen-web/issues)</span></span>
-<span id="cb2-144"><a href="#cb2-144" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-145"><a href="#cb2-145" aria-hidden="true" tabindex="-1"></a><span class="fu">## What's Next?</span></span>
-<span id="cb2-146"><a href="#cb2-146" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-147"><a href="#cb2-147" aria-hidden="true" tabindex="-1"></a>Ready to dive deeper? Try the:</span>
-<span id="cb2-148"><a href="#cb2-148" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-149"><a href="#cb2-149" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**[Complete Tutorial](tutorial/index.html)** — Guided walkthrough from loading audio to exporting data</span>
-<span id="cb2-150"><a href="#cb2-150" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**[Features Overview](features/overview.html)** — Detailed documentation of all features</span>
-<span id="cb2-151"><a href="#cb2-151" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**[Embedding Guide](embedding/overview.html)** — Embed Ozen-web in your websites or documents</span>
-<span id="cb2-152"><a href="#cb2-152" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-153"><a href="#cb2-153" aria-hidden="true" tabindex="-1"></a>---</span>
-<span id="cb2-154"><a href="#cb2-154" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-155"><a href="#cb2-155" aria-hidden="true" tabindex="-1"></a>**All set?** Head to the <span class="co">[</span><span class="ot">Tutorial</span><span class="co">](tutorial/index.html)</span> to learn the complete workflow. →</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
+<span id="cb2-131"><a href="#cb2-131" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-132"><a href="#cb2-132" aria-hidden="true" tabindex="-1"></a><span class="fu">### Long Audio Files Show "Zoom in for spectrogram"</span></span>
+<span id="cb2-133"><a href="#cb2-133" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-134"><a href="#cb2-134" aria-hidden="true" tabindex="-1"></a>This is expected behavior for files &gt;60 seconds. Zoom in to a window ≤60s to trigger analysis.</span>
+<span id="cb2-135"><a href="#cb2-135" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-136"><a href="#cb2-136" aria-hidden="true" tabindex="-1"></a>See <span class="co">[</span><span class="ot">Features: Long Audio Handling</span><span class="co">](features/overview.html#long-audio-handling)</span> for details.</span>
+<span id="cb2-137"><a href="#cb2-137" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-138"><a href="#cb2-138" aria-hidden="true" tabindex="-1"></a><span class="fu">## Getting Help</span></span>
+<span id="cb2-139"><a href="#cb2-139" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-140"><a href="#cb2-140" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Documentation**: Browse <span class="co">[</span><span class="ot">Features</span><span class="co">](features/overview.html)</span> and <span class="co">[</span><span class="ot">Reference</span><span class="co">](reference/keyboard-shortcuts.html)</span> sections</span>
+<span id="cb2-141"><a href="#cb2-141" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Tutorial**: Follow the <span class="co">[</span><span class="ot">step-by-step guide</span><span class="co">](tutorial/index.html)</span></span>
+<span id="cb2-142"><a href="#cb2-142" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Issues**: Report bugs at <span class="co">[</span><span class="ot">GitHub Issues</span><span class="co">](https://github.com/ucpresearch/ozen-web/issues)</span></span>
+<span id="cb2-143"><a href="#cb2-143" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-144"><a href="#cb2-144" aria-hidden="true" tabindex="-1"></a><span class="fu">## What's Next?</span></span>
+<span id="cb2-145"><a href="#cb2-145" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-146"><a href="#cb2-146" aria-hidden="true" tabindex="-1"></a>Ready to dive deeper? Try the:</span>
+<span id="cb2-147"><a href="#cb2-147" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-148"><a href="#cb2-148" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**[Complete Tutorial](tutorial/index.html)** — Guided walkthrough from loading audio to exporting data</span>
+<span id="cb2-149"><a href="#cb2-149" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**[Features Overview](features/overview.html)** — Detailed documentation of all features</span>
+<span id="cb2-150"><a href="#cb2-150" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**[Embedding Guide](embedding/overview.html)** — Embed Ozen-web in your websites or documents</span>
+<span id="cb2-151"><a href="#cb2-151" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-152"><a href="#cb2-152" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb2-153"><a href="#cb2-153" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-154"><a href="#cb2-154" aria-hidden="true" tabindex="-1"></a>**All set?** Head to the <span class="co">[</span><span class="ot">Tutorial</span><span class="co">](tutorial/index.html)</span> to learn the complete workflow. →</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 <footer class="footer">

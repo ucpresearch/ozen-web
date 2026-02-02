@@ -10,7 +10,7 @@ toc: false
 
 **Browser-based acoustic analysis and annotation**
 
-A powerful, browser-based tool for phonetic research, built with
+A browser-based tool for phonetic research, built with
 Svelte and WebAssembly. Analyze pitch, formants, intensity, and more,
 with various supporting backends.
 
@@ -83,7 +83,7 @@ uploaded.
 ::: {.feature-card}
 ###  Data Collection
 
-Double-click to add points of intest for data collection with acoustic
+Double-click to add points of interest for data collection with acoustic
 measurements. Export to TSV with all values and annotation labels for
 statistical analysis, or ctrl-C / command-C to copy to clipboard.
 

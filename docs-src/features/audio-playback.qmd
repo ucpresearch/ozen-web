@@ -5,7 +5,7 @@ subtitle: "Web Audio API-based playback system"
 
 ## Overview
 
-Ozen-web provides high-quality audio playback using the Web Audio API, with support for selection playback, real-time cursor tracking, and keyboard controls.
+Ozen-web provides audio playback using the Web Audio API, with support for selection playback, real-time cursor tracking, and keyboard controls.
 
 ## Key Features
 
@@ -97,9 +97,8 @@ source.connect(audioContext.destination);
 source.start(0, startTime, duration);
 ```
 
-**Advantages:**
+**Features:**
 - Sample-accurate timing
-- Low latency
 - Cross-platform consistency
 - No plugin required
 
@@ -146,14 +145,7 @@ No compression or downsampling is applied during playback.
 
 ## Browser Compatibility
 
-Web Audio API is supported in all modern browsers:
-
-| Browser | Support | Notes |
-|---------|---------|-------|
-| Chrome 90+ | ✅ Full | Best performance |
-| Firefox 88+ | ✅ Full | |
-| Safari 14+ | ✅ Full | May require user gesture |
-| Edge 90+ | ✅ Full | Chromium-based |
+Web Audio API is supported in all modern browsers.
 
 ## Future Features
 

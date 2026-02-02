@@ -1,3 +1,25 @@
+<!--
+	Waveform Component
+
+	Displays the audio waveform as amplitude over time, synchronized with the spectrogram.
+	Uses efficient downsampling to render even long audio files without performance issues.
+
+	Features:
+	- Min/max downsampling: samples are rendered as vertical lines showing amplitude range
+	- Selection visualization: highlighted regions for playback
+	- Cursor line: red vertical line showing current time position
+	- Hover position: follows mouse for precise positioning
+	- Click-drag selection: same interaction model as spectrogram
+
+	Rendering strategy:
+	- Each pixel column represents a time bin
+	- For each bin, finds min/max sample values
+	- Draws a vertical line from min to max
+	- This efficiently renders millions of samples at any zoom level
+
+	The waveform always displays, regardless of audio length, unlike the spectrogram
+	which may defer rendering for long files until zoomed.
+-->
 <script lang="ts">
 	import { onMount, onDestroy } from 'svelte';
 	import { audioBuffer, sampleRate } from '$lib/stores/audio';

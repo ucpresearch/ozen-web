@@ -171,23 +171,6 @@ Print-friendly quick reference:
 The **arrow keys** (←→ for panning, ↑↓ for zooming) work consistently across all browsers and operating systems, making them the most reliable navigation method.
 :::
 
-## Browser-Specific Notes
-
-### Chrome/Edge
-
-- All shortcuts work as expected
-- Best overall experience
-
-### Firefox
-
-- All shortcuts work
-- Slightly different scroll behavior on some platforms
-
-### Safari
-
-- All shortcuts work
-- <kbd>Cmd</kbd> key on macOS instead of <kbd>Ctrl</kbd>
-
 ## Mobile/Touch
 
 The mobile viewer (`/viewer` route) uses touch gestures instead of keyboard shortcuts:

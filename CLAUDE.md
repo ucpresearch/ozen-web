@@ -664,7 +664,7 @@ git push origin master  # Triggers workflow
 
 **Live site:** Once deployed, documentation is available at:
 ```
-https://USERNAME.github.io/ozen-web/
+https://ucpresearch.github.io/ozen-web/
 ```
 
 ### Documentation Features

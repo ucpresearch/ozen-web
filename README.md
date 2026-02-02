@@ -1,6 +1,6 @@
 # ozen-web
 
-A web-based acoustic analysis and annotation tool for speech research. This is the browser version of [Ozen](https://github.com/your-repo/ozen), providing Praat-compatible analysis entirely in the browser.
+A web-based acoustic analysis and annotation tool for speech research, providing Praat-compatible analysis entirely in the browser.
 
 ## Documentation
 
@@ -364,8 +364,8 @@ This allows working with arbitrarily long recordings while maintaining responsiv
 
 ## Related Projects
 
-- [Ozen](https://github.com/your-repo/ozen) - Desktop version (Python/PyQt6)
 - [praatfan-core-rs](https://github.com/UCPresearch/praatfan-core-rs) - Rust acoustic analysis library (GPL)
+- [praatfan-core-clean](https://github.com/UCPresearch/praatfan-core-clean) - Clean-room Rust implementation (MIT/Apache-2.0)
 - [Praat](https://www.praat.org/) - The original speech analysis software
 
 ## License

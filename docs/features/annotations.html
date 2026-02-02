@@ -333,13 +333,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#importing-textgrid" id="toc-importing-textgrid" class="nav-link" data-scroll-target="#importing-textgrid">Importing TextGrid</a></li>
   <li><a href="#exporting-textgrid" id="toc-exporting-textgrid" class="nav-link" data-scroll-target="#exporting-textgrid">Exporting TextGrid</a></li>
   </ul></li>
-  <li><a href="#use-cases" id="toc-use-cases" class="nav-link" data-scroll-target="#use-cases">Use Cases</a>
-  <ul class="collapse">
-  <li><a href="#phonetic-transcription" id="toc-phonetic-transcription" class="nav-link" data-scroll-target="#phonetic-transcription">Phonetic Transcription</a></li>
-  <li><a href="#prosodic-labeling" id="toc-prosodic-labeling" class="nav-link" data-scroll-target="#prosodic-labeling">Prosodic Labeling</a></li>
-  <li><a href="#conversation-analysis" id="toc-conversation-analysis" class="nav-link" data-scroll-target="#conversation-analysis">Conversation Analysis</a></li>
-  <li><a href="#event-annotation" id="toc-event-annotation" class="nav-link" data-scroll-target="#event-annotation">Event Annotation</a></li>
-  </ul></li>
   <li><a href="#integration-with-data-points" id="toc-integration-with-data-points" class="nav-link" data-scroll-target="#integration-with-data-points">Integration with Data Points</a></li>
   <li><a href="#best-practices" id="toc-best-practices" class="nav-link" data-scroll-target="#best-practices">Best Practices</a>
   <ul class="collapse">
@@ -468,11 +461,7 @@ Warning
 </section>
 <section id="boundary-snapping" class="level3">
 <h3 class="anchored" data-anchor-id="boundary-snapping">Boundary Snapping</h3>
-<p>When adding boundaries on lower tiers, they can snap to boundaries in upper tiers:</p>
-<p><strong>Example:</strong></p>
-<pre><code>words:  |  hello  |  world  |
-phones: | h | e | l | o | w | o | r | l | d |</code></pre>
-<p>Double-clicking near an existing boundary on a different tier will snap to that time, maintaining alignment.</p>
+<p>When adding boundaries on lower tiers, they can snap to boundaries in upper tiers. Double-clicking near an existing boundary on a different tier will snap to that time, maintaining alignment. A boundary can then be dragged to a different location, if so desired.</p>
 </section>
 <section id="removing-boundaries" class="level3">
 <h3 class="anchored" data-anchor-id="removing-boundaries">Removing Boundaries</h3>
@@ -561,7 +550,7 @@ phones: | h | e | l | o | w | o | r | l | d |</code></pre>
 <section id="undo-system" class="level2">
 <h2 class="anchored" data-anchor-id="undo-system">Undo System</h2>
 <p>Ozen-web features a unified undo/redo system for annotation operations:</p>
-<p><strong>Undoable operations:</strong> - Adding boundaries - Removing boundaries - Moving boundaries - Editing interval text</p>
+<p><strong>Undoable operations:</strong> - Adding boundaries - Removing boundaries - Moving boundaries - Editing interval text - Adding / removing data points</p>
 <p><strong>Non-undoable operations:</strong> - Adding/removing tiers (permanent) - Loading files</p>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -582,22 +571,9 @@ phones: | h | e | l | o | w | o | r | l | d |</code></pre>
 <h2 class="anchored" data-anchor-id="textgrid-importexport">TextGrid Import/Export</h2>
 <section id="importing-textgrid" class="level3">
 <h3 class="anchored" data-anchor-id="importing-textgrid">Importing TextGrid</h3>
-<p><strong>Drag and drop:</strong> 1. Drag <code>.TextGrid</code> file onto interface 2. Annotations load automatically 3. Audio must be loaded separately</p>
+<p><strong>Requirements:</strong> - Audio must be loaded first (the TextGrid import button is only available after loading audio)</p>
 <p><strong>File picker:</strong> 1. Click “Load TextGrid” button 2. Select <code>.TextGrid</code> file 3. Annotations appear on tiers</p>
 <p><strong>Supported formats:</strong> - Short TextGrid format (quoted strings) - Long TextGrid format (ooTextFile)</p>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Note</span>TextGrid Without Audio
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>You can load a TextGrid without audio to view annotation structure. Load the corresponding audio file afterward to see waveform/spectrogram.</p>
-</div>
-</div>
 </section>
 <section id="exporting-textgrid" class="level3">
 <h3 class="anchored" data-anchor-id="exporting-textgrid">Exporting TextGrid</h3>
@@ -610,37 +586,6 @@ phones: | h | e | l | o | w | o | r | l | d |</code></pre>
 <figcaption>Export TextGrid interface</figcaption>
 </figure>
 </div>
-</section>
-</section>
-<section id="use-cases" class="level2">
-<h2 class="anchored" data-anchor-id="use-cases">Use Cases</h2>
-<section id="phonetic-transcription" class="level3">
-<h3 class="anchored" data-anchor-id="phonetic-transcription">Phonetic Transcription</h3>
-<p>Create detailed phonetic annotations:</p>
-<pre><code>words:     | the   | cat   | sat   | on    | the   | mat   |
-phones:    | ð | ə | k | æ | t | s | æ | t | ɑ | n | ð | ə | m | æ | t |
-syllables: | ðə    | kæt   | sæt   | ɑn    | ðə    | mæt   |</code></pre>
-</section>
-<section id="prosodic-labeling" class="level3">
-<h3 class="anchored" data-anchor-id="prosodic-labeling">Prosodic Labeling</h3>
-<p>Annotate intonation and prosody:</p>
-<pre><code>words:    | Hello  | how    | are    | you    |
-tones:    | H*     | L+H*   | H-     | L%     |
-stress:   | 1      | 0      | 1      | 0      |</code></pre>
-</section>
-<section id="conversation-analysis" class="level3">
-<h3 class="anchored" data-anchor-id="conversation-analysis">Conversation Analysis</h3>
-<p>Segment multi-speaker recordings:</p>
-<pre><code>speaker_a: | Hello           |        | How are you?    |
-speaker_b: |        | Hi there!       |        | Fine, thanks. |
-overlap:   |                 | ✓      |                 |</code></pre>
-</section>
-<section id="event-annotation" class="level3">
-<h3 class="anchored" data-anchor-id="event-annotation">Event Annotation</h3>
-<p>Mark discrete events:</p>
-<pre><code>audio:     |---------------------------------------------------|
-events:    | cough  |           | door slam |        | phone ring |
-quality:   |        | good      |           | noisy  |            |</code></pre>
 </section>
 </section>
 <section id="integration-with-data-points" class="level2">
@@ -1176,365 +1121,314 @@ quality:   |        | good      |           | noisy  |            |</code></pre>
       </a>
   </div>
 </nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Annotations"</span></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="an">subtitle:</span><span class="co"> "Multi-tier TextGrid annotation system"</span></span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="fu">## Overview</span></span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>Ozen-web provides a complete TextGrid-compatible annotation system for transcription, labeling, and segmentation. Create multi-tiered annotations with interval and point tiers, compatible with Praat.</span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="al">![Multi-tier annotation example](../screenshots/tutorial-04-multitiered.png)</span></span>
-<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a><span class="fu">## Key Features</span></span>
-<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Praat-compatible TextGrid** - Import/export in TextGrid format (short and long)</span>
-<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Multi-tier support** - Unlimited annotation tiers</span>
-<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Interval tiers** - Segment audio into labeled intervals</span>
-<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Boundary editing** - Add, remove, move boundaries</span>
-<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Text editing** - Label intervals with text</span>
-<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Unified undo/redo** - Full undo history (Ctrl+Z / Ctrl+Y)</span>
-<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Keyboard workflow** - Efficient shortcuts for rapid annotation</span>
-<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a><span class="fu">## Tier Management</span></span>
-<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a><span class="fu">### Adding Tiers</span></span>
-<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a>**Via UI:**</span>
-<span id="cb8-27"><a href="#cb8-27" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Click "+ Add Tier" button</span>
-<span id="cb8-28"><a href="#cb8-28" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>Enter tier name (e.g., "words", "phones", "syllables")</span>
-<span id="cb8-29"><a href="#cb8-29" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>Press Enter to create</span>
-<span id="cb8-30"><a href="#cb8-30" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-31"><a href="#cb8-31" aria-hidden="true" tabindex="-1"></a>**Tier Naming:**</span>
-<span id="cb8-32"><a href="#cb8-32" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Use descriptive names: "words", "phones", "tones", "events"</span>
-<span id="cb8-33"><a href="#cb8-33" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Multiple tiers allow parallel annotations at different granularities</span>
-<span id="cb8-34"><a href="#cb8-34" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-35"><a href="#cb8-35" aria-hidden="true" tabindex="-1"></a><span class="fu">### Tier Types</span></span>
-<span id="cb8-36"><a href="#cb8-36" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-37"><a href="#cb8-37" aria-hidden="true" tabindex="-1"></a>Currently supported:</span>
-<span id="cb8-38"><a href="#cb8-38" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Interval tiers** - Continuous segmentation with boundaries</span>
-<span id="cb8-39"><a href="#cb8-39" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-40"><a href="#cb8-40" aria-hidden="true" tabindex="-1"></a>Planned:</span>
-<span id="cb8-41"><a href="#cb8-41" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Point tiers** - Single time points with labels (future feature)</span>
-<span id="cb8-42"><a href="#cb8-42" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-43"><a href="#cb8-43" aria-hidden="true" tabindex="-1"></a><span class="fu">### Deleting Tiers</span></span>
-<span id="cb8-44"><a href="#cb8-44" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-45"><a href="#cb8-45" aria-hidden="true" tabindex="-1"></a>::: {.callout-warning}</span>
-<span id="cb8-46"><a href="#cb8-46" aria-hidden="true" tabindex="-1"></a>Tier deletion is permanent and cannot be undone. Export your TextGrid before deleting tiers.</span>
-<span id="cb8-47"><a href="#cb8-47" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb8-48"><a href="#cb8-48" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-49"><a href="#cb8-49" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Click tier menu (⋮)</span>
-<span id="cb8-50"><a href="#cb8-50" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>Select "Delete tier"</span>
-<span id="cb8-51"><a href="#cb8-51" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>Confirm deletion</span>
-<span id="cb8-52"><a href="#cb8-52" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-53"><a href="#cb8-53" aria-hidden="true" tabindex="-1"></a><span class="fu">## Boundary Management</span></span>
-<span id="cb8-54"><a href="#cb8-54" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-55"><a href="#cb8-55" aria-hidden="true" tabindex="-1"></a><span class="fu">### Adding Boundaries</span></span>
-<span id="cb8-56"><a href="#cb8-56" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-57"><a href="#cb8-57" aria-hidden="true" tabindex="-1"></a>**Double-click method:**</span>
-<span id="cb8-58"><a href="#cb8-58" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Double-click on tier at desired time position</span>
-<span id="cb8-59"><a href="#cb8-59" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>Boundary appears, splitting the interval</span>
-<span id="cb8-60"><a href="#cb8-60" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-61"><a href="#cb8-61" aria-hidden="true" tabindex="-1"></a>**Cursor method:**</span>
-<span id="cb8-62"><a href="#cb8-62" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Click on spectrogram to place cursor</span>
-<span id="cb8-63"><a href="#cb8-63" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>Double-click on tier at cursor position</span>
-<span id="cb8-64"><a href="#cb8-64" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-65"><a href="#cb8-65" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip}</span>
-<span id="cb8-66"><a href="#cb8-66" aria-hidden="true" tabindex="-1"></a><span class="fu">## Quick Annotation Workflow</span></span>
-<span id="cb8-67"><a href="#cb8-67" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-68"><a href="#cb8-68" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Press Space to play audio</span>
-<span id="cb8-69"><a href="#cb8-69" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>Press Escape when you hear a boundary</span>
-<span id="cb8-70"><a href="#cb8-70" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>Double-click tier to add boundary at cursor</span>
-<span id="cb8-71"><a href="#cb8-71" aria-hidden="true" tabindex="-1"></a><span class="ss">4. </span>Repeat for all boundaries</span>
-<span id="cb8-72"><a href="#cb8-72" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb8-73"><a href="#cb8-73" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-74"><a href="#cb8-74" aria-hidden="true" tabindex="-1"></a><span class="fu">### Moving Boundaries</span></span>
-<span id="cb8-75"><a href="#cb8-75" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-76"><a href="#cb8-76" aria-hidden="true" tabindex="-1"></a>**Drag and drop:**</span>
-<span id="cb8-77"><a href="#cb8-77" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Click and hold boundary marker</span>
-<span id="cb8-78"><a href="#cb8-78" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>Drag left or right to new position</span>
-<span id="cb8-79"><a href="#cb8-79" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>Release to place</span>
-<span id="cb8-80"><a href="#cb8-80" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-81"><a href="#cb8-81" aria-hidden="true" tabindex="-1"></a>**Precision:**</span>
-<span id="cb8-82"><a href="#cb8-82" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Zoom in (scroll wheel) for fine-grained adjustment</span>
-<span id="cb8-83"><a href="#cb8-83" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Cursor position indicator shows exact time</span>
-<span id="cb8-84"><a href="#cb8-84" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-85"><a href="#cb8-85" aria-hidden="true" tabindex="-1"></a><span class="fu">### Boundary Snapping</span></span>
-<span id="cb8-86"><a href="#cb8-86" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-87"><a href="#cb8-87" aria-hidden="true" tabindex="-1"></a>When adding boundaries on lower tiers, they can snap to boundaries in upper tiers:</span>
-<span id="cb8-88"><a href="#cb8-88" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-89"><a href="#cb8-89" aria-hidden="true" tabindex="-1"></a>**Example:**</span>
-<span id="cb8-90"><a href="#cb8-90" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb8-91"><a href="#cb8-91" aria-hidden="true" tabindex="-1"></a><span class="in">words:  |  hello  |  world  |</span></span>
-<span id="cb8-92"><a href="#cb8-92" aria-hidden="true" tabindex="-1"></a><span class="in">phones: | h | e | l | o | w | o | r | l | d |</span></span>
-<span id="cb8-93"><a href="#cb8-93" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb8-94"><a href="#cb8-94" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-95"><a href="#cb8-95" aria-hidden="true" tabindex="-1"></a>Double-clicking near an existing boundary on a different tier will snap to that time, maintaining alignment.</span>
-<span id="cb8-96"><a href="#cb8-96" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-97"><a href="#cb8-97" aria-hidden="true" tabindex="-1"></a><span class="fu">### Removing Boundaries</span></span>
-<span id="cb8-98"><a href="#cb8-98" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-99"><a href="#cb8-99" aria-hidden="true" tabindex="-1"></a>**Right-click menu:**</span>
-<span id="cb8-100"><a href="#cb8-100" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Right-click on boundary marker</span>
-<span id="cb8-101"><a href="#cb8-101" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>Select "Remove boundary"</span>
-<span id="cb8-102"><a href="#cb8-102" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>Adjacent intervals merge</span>
-<span id="cb8-103"><a href="#cb8-103" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-104"><a href="#cb8-104" aria-hidden="true" tabindex="-1"></a>**Keyboard shortcut:**</span>
-<span id="cb8-105"><a href="#cb8-105" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Select boundary (click)</span>
-<span id="cb8-106"><a href="#cb8-106" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Press Delete or Backspace</span>
-<span id="cb8-107"><a href="#cb8-107" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-108"><a href="#cb8-108" aria-hidden="true" tabindex="-1"></a>::: {.callout-note}</span>
-<span id="cb8-109"><a href="#cb8-109" aria-hidden="true" tabindex="-1"></a><span class="fu">## Undo Support</span></span>
-<span id="cb8-110"><a href="#cb8-110" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-111"><a href="#cb8-111" aria-hidden="true" tabindex="-1"></a>All boundary operations (add, move, remove) can be undone with Ctrl+Z (Cmd+Z on Mac).</span>
-<span id="cb8-112"><a href="#cb8-112" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb8-113"><a href="#cb8-113" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-114"><a href="#cb8-114" aria-hidden="true" tabindex="-1"></a><span class="fu">## Text Editing</span></span>
-<span id="cb8-115"><a href="#cb8-115" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-116"><a href="#cb8-116" aria-hidden="true" tabindex="-1"></a><span class="fu">### Labeling Intervals</span></span>
-<span id="cb8-117"><a href="#cb8-117" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-118"><a href="#cb8-118" aria-hidden="true" tabindex="-1"></a>**Double-click to edit:**</span>
-<span id="cb8-119"><a href="#cb8-119" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Double-click on interval to activate text editor</span>
-<span id="cb8-120"><a href="#cb8-120" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>Type label (IPA, orthography, tags, etc.)</span>
-<span id="cb8-121"><a href="#cb8-121" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>Press Enter to save</span>
-<span id="cb8-122"><a href="#cb8-122" aria-hidden="true" tabindex="-1"></a><span class="ss">4. </span>Press Escape to cancel</span>
-<span id="cb8-123"><a href="#cb8-123" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-124"><a href="#cb8-124" aria-hidden="true" tabindex="-1"></a>**Click to select:**</span>
-<span id="cb8-125"><a href="#cb8-125" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Single-click interval to select without editing</span>
-<span id="cb8-126"><a href="#cb8-126" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Selected interval highlights</span>
-<span id="cb8-127"><a href="#cb8-127" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-128"><a href="#cb8-128" aria-hidden="true" tabindex="-1"></a><span class="fu">### Unicode and IPA Support</span></span>
-<span id="cb8-129"><a href="#cb8-129" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-130"><a href="#cb8-130" aria-hidden="true" tabindex="-1"></a>Full Unicode support for linguistic transcription:</span>
-<span id="cb8-131"><a href="#cb8-131" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-132"><a href="#cb8-132" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb8-133"><a href="#cb8-133" aria-hidden="true" tabindex="-1"></a><span class="in">[ˈhɛloʊ] - IPA transcription</span></span>
-<span id="cb8-134"><a href="#cb8-134" aria-hidden="true" tabindex="-1"></a><span class="in">你好 - Chinese characters</span></span>
-<span id="cb8-135"><a href="#cb8-135" aria-hidden="true" tabindex="-1"></a><span class="in">🔊 - Emoji labels (for prosody annotation)</span></span>
-<span id="cb8-136"><a href="#cb8-136" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb8-137"><a href="#cb8-137" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-138"><a href="#cb8-138" aria-hidden="true" tabindex="-1"></a><span class="fu">### Multi-line Labels</span></span>
-<span id="cb8-139"><a href="#cb8-139" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-140"><a href="#cb8-140" aria-hidden="true" tabindex="-1"></a>Press Shift+Enter for multi-line labels (if needed for glosses or notes).</span>
-<span id="cb8-141"><a href="#cb8-141" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-142"><a href="#cb8-142" aria-hidden="true" tabindex="-1"></a><span class="fu">## Keyboard Shortcuts</span></span>
-<span id="cb8-143"><a href="#cb8-143" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-144"><a href="#cb8-144" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Shortcut <span class="pp">|</span> Action <span class="pp">|</span></span>
-<span id="cb8-145"><a href="#cb8-145" aria-hidden="true" tabindex="-1"></a><span class="pp">|----------|--------|</span></span>
-<span id="cb8-146"><a href="#cb8-146" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Double-click tier <span class="pp">|</span> Add boundary at position <span class="pp">|</span></span>
-<span id="cb8-147"><a href="#cb8-147" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Double-click interval <span class="pp">|</span> Edit text label <span class="pp">|</span></span>
-<span id="cb8-148"><a href="#cb8-148" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Enter <span class="pp">|</span> Save text edit <span class="pp">|</span></span>
-<span id="cb8-149"><a href="#cb8-149" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Escape <span class="pp">|</span> Cancel text edit / deselect <span class="pp">|</span></span>
-<span id="cb8-150"><a href="#cb8-150" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Ctrl+Z / Cmd+Z <span class="pp">|</span> Undo <span class="pp">|</span></span>
-<span id="cb8-151"><a href="#cb8-151" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Ctrl+Y / Ctrl+Shift+Z <span class="pp">|</span> Redo <span class="pp">|</span></span>
-<span id="cb8-152"><a href="#cb8-152" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Delete / Backspace <span class="pp">|</span> Remove selected boundary <span class="pp">|</span></span>
-<span id="cb8-153"><a href="#cb8-153" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 1-5 <span class="pp">|</span> Switch to tier 1-5 <span class="pp">|</span></span>
-<span id="cb8-154"><a href="#cb8-154" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-155"><a href="#cb8-155" aria-hidden="true" tabindex="-1"></a>See <span class="co">[</span><span class="ot">Keyboard Shortcuts Reference</span><span class="co">](../reference/keyboard-shortcuts.html)</span> for complete list.</span>
-<span id="cb8-156"><a href="#cb8-156" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-157"><a href="#cb8-157" aria-hidden="true" tabindex="-1"></a><span class="fu">## Undo System</span></span>
-<span id="cb8-158"><a href="#cb8-158" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-159"><a href="#cb8-159" aria-hidden="true" tabindex="-1"></a>Ozen-web features a unified undo/redo system for annotation operations:</span>
-<span id="cb8-160"><a href="#cb8-160" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-161"><a href="#cb8-161" aria-hidden="true" tabindex="-1"></a>**Undoable operations:**</span>
-<span id="cb8-162"><a href="#cb8-162" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Adding boundaries</span>
-<span id="cb8-163"><a href="#cb8-163" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Removing boundaries</span>
-<span id="cb8-164"><a href="#cb8-164" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Moving boundaries</span>
-<span id="cb8-165"><a href="#cb8-165" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Editing interval text</span>
-<span id="cb8-166"><a href="#cb8-166" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-167"><a href="#cb8-167" aria-hidden="true" tabindex="-1"></a>**Non-undoable operations:**</span>
-<span id="cb8-168"><a href="#cb8-168" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Adding/removing tiers (permanent)</span>
-<span id="cb8-169"><a href="#cb8-169" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Loading files</span>
-<span id="cb8-170"><a href="#cb8-170" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-171"><a href="#cb8-171" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip}</span>
-<span id="cb8-172"><a href="#cb8-172" aria-hidden="true" tabindex="-1"></a><span class="fu">## Undo History</span></span>
-<span id="cb8-173"><a href="#cb8-173" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-174"><a href="#cb8-174" aria-hidden="true" tabindex="-1"></a>The undo stack stores the entire annotation state before each operation. You can undo multiple operations sequentially to return to any previous state.</span>
-<span id="cb8-175"><a href="#cb8-175" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb8-176"><a href="#cb8-176" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-177"><a href="#cb8-177" aria-hidden="true" tabindex="-1"></a>**Keyboard:**</span>
-<span id="cb8-178"><a href="#cb8-178" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Undo**: Ctrl+Z (Windows/Linux), Cmd+Z (Mac)</span>
-<span id="cb8-179"><a href="#cb8-179" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Redo**: Ctrl+Y (Windows/Linux), Ctrl+Shift+Z (Mac)</span>
-<span id="cb8-180"><a href="#cb8-180" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-181"><a href="#cb8-181" aria-hidden="true" tabindex="-1"></a><span class="fu">## TextGrid Import/Export</span></span>
-<span id="cb8-182"><a href="#cb8-182" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-183"><a href="#cb8-183" aria-hidden="true" tabindex="-1"></a><span class="fu">### Importing TextGrid</span></span>
-<span id="cb8-184"><a href="#cb8-184" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-185"><a href="#cb8-185" aria-hidden="true" tabindex="-1"></a>**Drag and drop:**</span>
-<span id="cb8-186"><a href="#cb8-186" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Drag <span class="in">`.TextGrid`</span> file onto interface</span>
-<span id="cb8-187"><a href="#cb8-187" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>Annotations load automatically</span>
-<span id="cb8-188"><a href="#cb8-188" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>Audio must be loaded separately</span>
-<span id="cb8-189"><a href="#cb8-189" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-190"><a href="#cb8-190" aria-hidden="true" tabindex="-1"></a>**File picker:**</span>
-<span id="cb8-191"><a href="#cb8-191" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Click "Load TextGrid" button</span>
-<span id="cb8-192"><a href="#cb8-192" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>Select <span class="in">`.TextGrid`</span> file</span>
-<span id="cb8-193"><a href="#cb8-193" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>Annotations appear on tiers</span>
-<span id="cb8-194"><a href="#cb8-194" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-195"><a href="#cb8-195" aria-hidden="true" tabindex="-1"></a>**Supported formats:**</span>
-<span id="cb8-196"><a href="#cb8-196" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Short TextGrid format (quoted strings)</span>
-<span id="cb8-197"><a href="#cb8-197" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Long TextGrid format (ooTextFile)</span>
-<span id="cb8-198"><a href="#cb8-198" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-199"><a href="#cb8-199" aria-hidden="true" tabindex="-1"></a>::: {.callout-note}</span>
-<span id="cb8-200"><a href="#cb8-200" aria-hidden="true" tabindex="-1"></a><span class="fu">## TextGrid Without Audio</span></span>
-<span id="cb8-201"><a href="#cb8-201" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-202"><a href="#cb8-202" aria-hidden="true" tabindex="-1"></a>You can load a TextGrid without audio to view annotation structure. Load the corresponding audio file afterward to see waveform/spectrogram.</span>
-<span id="cb8-203"><a href="#cb8-203" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb8-204"><a href="#cb8-204" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-205"><a href="#cb8-205" aria-hidden="true" tabindex="-1"></a><span class="fu">### Exporting TextGrid</span></span>
-<span id="cb8-206"><a href="#cb8-206" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-207"><a href="#cb8-207" aria-hidden="true" tabindex="-1"></a>**Via UI button:**</span>
-<span id="cb8-208"><a href="#cb8-208" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Click "Export TextGrid" button</span>
-<span id="cb8-209"><a href="#cb8-209" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>Choose save location (File System Access API)</span>
-<span id="cb8-210"><a href="#cb8-210" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>TextGrid saves in short format</span>
-<span id="cb8-211"><a href="#cb8-211" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-212"><a href="#cb8-212" aria-hidden="true" tabindex="-1"></a>**Export format:**</span>
-<span id="cb8-213"><a href="#cb8-213" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Short TextGrid format (Praat-compatible)</span>
-<span id="cb8-214"><a href="#cb8-214" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>UTF-8 encoding</span>
-<span id="cb8-215"><a href="#cb8-215" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Interval tiers only (current version)</span>
-<span id="cb8-216"><a href="#cb8-216" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-217"><a href="#cb8-217" aria-hidden="true" tabindex="-1"></a>**Filename:**</span>
-<span id="cb8-218"><a href="#cb8-218" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Default: <span class="in">`annotations.TextGrid`</span></span>
-<span id="cb8-219"><a href="#cb8-219" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Recommended: Match audio filename (e.g., <span class="in">`recording.wav`</span> → <span class="in">`recording.TextGrid`</span>)</span>
-<span id="cb8-220"><a href="#cb8-220" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-221"><a href="#cb8-221" aria-hidden="true" tabindex="-1"></a><span class="al">![Export TextGrid interface](../screenshots/tutorial-06-export-textgrid.png)</span></span>
-<span id="cb8-222"><a href="#cb8-222" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-223"><a href="#cb8-223" aria-hidden="true" tabindex="-1"></a><span class="fu">## Use Cases</span></span>
-<span id="cb8-224"><a href="#cb8-224" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-225"><a href="#cb8-225" aria-hidden="true" tabindex="-1"></a><span class="fu">### Phonetic Transcription</span></span>
-<span id="cb8-226"><a href="#cb8-226" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-227"><a href="#cb8-227" aria-hidden="true" tabindex="-1"></a>Create detailed phonetic annotations:</span>
-<span id="cb8-228"><a href="#cb8-228" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-229"><a href="#cb8-229" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb8-230"><a href="#cb8-230" aria-hidden="true" tabindex="-1"></a><span class="in">words:     | the   | cat   | sat   | on    | the   | mat   |</span></span>
-<span id="cb8-231"><a href="#cb8-231" aria-hidden="true" tabindex="-1"></a><span class="in">phones:    | ð | ə | k | æ | t | s | æ | t | ɑ | n | ð | ə | m | æ | t |</span></span>
-<span id="cb8-232"><a href="#cb8-232" aria-hidden="true" tabindex="-1"></a><span class="in">syllables: | ðə    | kæt   | sæt   | ɑn    | ðə    | mæt   |</span></span>
-<span id="cb8-233"><a href="#cb8-233" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb8-234"><a href="#cb8-234" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-235"><a href="#cb8-235" aria-hidden="true" tabindex="-1"></a><span class="fu">### Prosodic Labeling</span></span>
-<span id="cb8-236"><a href="#cb8-236" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-237"><a href="#cb8-237" aria-hidden="true" tabindex="-1"></a>Annotate intonation and prosody:</span>
-<span id="cb8-238"><a href="#cb8-238" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-239"><a href="#cb8-239" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb8-240"><a href="#cb8-240" aria-hidden="true" tabindex="-1"></a><span class="in">words:    | Hello  | how    | are    | you    |</span></span>
-<span id="cb8-241"><a href="#cb8-241" aria-hidden="true" tabindex="-1"></a><span class="in">tones:    | H*     | L+H*   | H-     | L%     |</span></span>
-<span id="cb8-242"><a href="#cb8-242" aria-hidden="true" tabindex="-1"></a><span class="in">stress:   | 1      | 0      | 1      | 0      |</span></span>
-<span id="cb8-243"><a href="#cb8-243" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb8-244"><a href="#cb8-244" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-245"><a href="#cb8-245" aria-hidden="true" tabindex="-1"></a><span class="fu">### Conversation Analysis</span></span>
-<span id="cb8-246"><a href="#cb8-246" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-247"><a href="#cb8-247" aria-hidden="true" tabindex="-1"></a>Segment multi-speaker recordings:</span>
-<span id="cb8-248"><a href="#cb8-248" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-249"><a href="#cb8-249" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb8-250"><a href="#cb8-250" aria-hidden="true" tabindex="-1"></a><span class="in">speaker_a: | Hello           |        | How are you?    |</span></span>
-<span id="cb8-251"><a href="#cb8-251" aria-hidden="true" tabindex="-1"></a><span class="in">speaker_b: |        | Hi there!       |        | Fine, thanks. |</span></span>
-<span id="cb8-252"><a href="#cb8-252" aria-hidden="true" tabindex="-1"></a><span class="in">overlap:   |                 | ✓      |                 |</span></span>
-<span id="cb8-253"><a href="#cb8-253" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb8-254"><a href="#cb8-254" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-255"><a href="#cb8-255" aria-hidden="true" tabindex="-1"></a><span class="fu">### Event Annotation</span></span>
-<span id="cb8-256"><a href="#cb8-256" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-257"><a href="#cb8-257" aria-hidden="true" tabindex="-1"></a>Mark discrete events:</span>
-<span id="cb8-258"><a href="#cb8-258" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-259"><a href="#cb8-259" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb8-260"><a href="#cb8-260" aria-hidden="true" tabindex="-1"></a><span class="in">audio:     |---------------------------------------------------|</span></span>
-<span id="cb8-261"><a href="#cb8-261" aria-hidden="true" tabindex="-1"></a><span class="in">events:    | cough  |           | door slam |        | phone ring |</span></span>
-<span id="cb8-262"><a href="#cb8-262" aria-hidden="true" tabindex="-1"></a><span class="in">quality:   |        | good      |           | noisy  |            |</span></span>
-<span id="cb8-263"><a href="#cb8-263" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb8-264"><a href="#cb8-264" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-265"><a href="#cb8-265" aria-hidden="true" tabindex="-1"></a><span class="fu">## Integration with Data Points</span></span>
-<span id="cb8-266"><a href="#cb8-266" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-267"><a href="#cb8-267" aria-hidden="true" tabindex="-1"></a>Data points automatically capture annotation labels at their time position:</span>
-<span id="cb8-268"><a href="#cb8-268" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-269"><a href="#cb8-269" aria-hidden="true" tabindex="-1"></a>**Example TSV export:**</span>
-<span id="cb8-270"><a href="#cb8-270" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb8-271"><a href="#cb8-271" aria-hidden="true" tabindex="-1"></a><span class="in">time    freq    pitch  F1    label_words  label_phones</span></span>
-<span id="cb8-272"><a href="#cb8-272" aria-hidden="true" tabindex="-1"></a><span class="in">1.234   720     245    720   "cat"        "æ"</span></span>
-<span id="cb8-273"><a href="#cb8-273" aria-hidden="true" tabindex="-1"></a><span class="in">1.567   1240    250    850   "sat"        "æ"</span></span>
-<span id="cb8-274"><a href="#cb8-274" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb8-275"><a href="#cb8-275" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-276"><a href="#cb8-276" aria-hidden="true" tabindex="-1"></a>This enables correlation analysis between acoustic measurements and annotation categories.</span>
-<span id="cb8-277"><a href="#cb8-277" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-278"><a href="#cb8-278" aria-hidden="true" tabindex="-1"></a>See <span class="co">[</span><span class="ot">Data Points</span><span class="co">](data-points.html)</span> for details.</span>
-<span id="cb8-279"><a href="#cb8-279" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-280"><a href="#cb8-280" aria-hidden="true" tabindex="-1"></a><span class="fu">## Best Practices</span></span>
-<span id="cb8-281"><a href="#cb8-281" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-282"><a href="#cb8-282" aria-hidden="true" tabindex="-1"></a><span class="fu">### Tier Organization</span></span>
-<span id="cb8-283"><a href="#cb8-283" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-284"><a href="#cb8-284" aria-hidden="true" tabindex="-1"></a>**Hierarchical structure:**</span>
-<span id="cb8-285"><a href="#cb8-285" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**Top tier**: Largest units (utterances, phrases)</span>
-<span id="cb8-286"><a href="#cb8-286" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>**Middle tiers**: Intermediate units (words, syllables)</span>
-<span id="cb8-287"><a href="#cb8-287" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>**Bottom tiers**: Smallest units (phones, events)</span>
-<span id="cb8-288"><a href="#cb8-288" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-289"><a href="#cb8-289" aria-hidden="true" tabindex="-1"></a>**Alignment:**</span>
-<span id="cb8-290"><a href="#cb8-290" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Keep boundaries aligned across tiers when appropriate</span>
-<span id="cb8-291"><a href="#cb8-291" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Use boundary snapping for consistent segmentation</span>
-<span id="cb8-292"><a href="#cb8-292" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-293"><a href="#cb8-293" aria-hidden="true" tabindex="-1"></a><span class="fu">### Labeling Conventions</span></span>
-<span id="cb8-294"><a href="#cb8-294" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-295"><a href="#cb8-295" aria-hidden="true" tabindex="-1"></a>**Be consistent:**</span>
-<span id="cb8-296"><a href="#cb8-296" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Decide on transcription convention (IPA, ARPABET, orthography)</span>
-<span id="cb8-297"><a href="#cb8-297" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Use same labels for same sounds</span>
-<span id="cb8-298"><a href="#cb8-298" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Document conventions in separate file</span>
-<span id="cb8-299"><a href="#cb8-299" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-300"><a href="#cb8-300" aria-hidden="true" tabindex="-1"></a>**Common systems:**</span>
-<span id="cb8-301"><a href="#cb8-301" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**IPA**: Universal phonetic transcription</span>
-<span id="cb8-302"><a href="#cb8-302" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**ARPABET**: ASCII-friendly phoneme set</span>
-<span id="cb8-303"><a href="#cb8-303" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**X-SAMPA**: ASCII IPA alternative</span>
-<span id="cb8-304"><a href="#cb8-304" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Orthography**: Plain text spelling</span>
-<span id="cb8-305"><a href="#cb8-305" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-306"><a href="#cb8-306" aria-hidden="true" tabindex="-1"></a><span class="fu">### File Management</span></span>
-<span id="cb8-307"><a href="#cb8-307" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-308"><a href="#cb8-308" aria-hidden="true" tabindex="-1"></a>**Naming:**</span>
-<span id="cb8-309"><a href="#cb8-309" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Match TextGrid filename to audio: <span class="in">`speaker01.wav`</span> + <span class="in">`speaker01.TextGrid`</span></span>
-<span id="cb8-310"><a href="#cb8-310" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Use consistent naming across corpus</span>
-<span id="cb8-311"><a href="#cb8-311" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-312"><a href="#cb8-312" aria-hidden="true" tabindex="-1"></a>**Backup:**</span>
-<span id="cb8-313"><a href="#cb8-313" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Export TextGrid frequently during annotation</span>
-<span id="cb8-314"><a href="#cb8-314" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Version control for large projects (Git)</span>
-<span id="cb8-315"><a href="#cb8-315" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Keep original audio files separate from annotations</span>
-<span id="cb8-316"><a href="#cb8-316" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-317"><a href="#cb8-317" aria-hidden="true" tabindex="-1"></a><span class="fu">## Troubleshooting</span></span>
-<span id="cb8-318"><a href="#cb8-318" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-319"><a href="#cb8-319" aria-hidden="true" tabindex="-1"></a><span class="fu">### TextGrid Won't Load</span></span>
-<span id="cb8-320"><a href="#cb8-320" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-321"><a href="#cb8-321" aria-hidden="true" tabindex="-1"></a>**Problem**: Error loading <span class="in">`.TextGrid`</span> file</span>
-<span id="cb8-322"><a href="#cb8-322" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-323"><a href="#cb8-323" aria-hidden="true" tabindex="-1"></a>**Possible causes:**</span>
-<span id="cb8-324"><a href="#cb8-324" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>File encoding (not UTF-8)</span>
-<span id="cb8-325"><a href="#cb8-325" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Malformed TextGrid format</span>
-<span id="cb8-326"><a href="#cb8-326" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Point tiers (not yet supported)</span>
-<span id="cb8-327"><a href="#cb8-327" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-328"><a href="#cb8-328" aria-hidden="true" tabindex="-1"></a>**Solution:**</span>
-<span id="cb8-329"><a href="#cb8-329" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Re-export from Praat</span>
-<span id="cb8-330"><a href="#cb8-330" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Check file encoding (should be UTF-8)</span>
-<span id="cb8-331"><a href="#cb8-331" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Convert point tiers to interval tiers in Praat</span>
-<span id="cb8-332"><a href="#cb8-332" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-333"><a href="#cb8-333" aria-hidden="true" tabindex="-1"></a><span class="fu">### Boundaries Not Snapping</span></span>
-<span id="cb8-334"><a href="#cb8-334" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-335"><a href="#cb8-335" aria-hidden="true" tabindex="-1"></a>**Problem**: Boundaries won't align to other tiers</span>
-<span id="cb8-336"><a href="#cb8-336" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-337"><a href="#cb8-337" aria-hidden="true" tabindex="-1"></a>**Solution:**</span>
-<span id="cb8-338"><a href="#cb8-338" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Zoom in closer to boundary</span>
-<span id="cb8-339"><a href="#cb8-339" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Click precisely on boundary location</span>
-<span id="cb8-340"><a href="#cb8-340" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Manually align by dragging</span>
-<span id="cb8-341"><a href="#cb8-341" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-342"><a href="#cb8-342" aria-hidden="true" tabindex="-1"></a><span class="fu">### Undo Not Working</span></span>
-<span id="cb8-343"><a href="#cb8-343" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-344"><a href="#cb8-344" aria-hidden="true" tabindex="-1"></a>**Problem**: Ctrl+Z doesn't undo operation</span>
-<span id="cb8-345"><a href="#cb8-345" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-346"><a href="#cb8-346" aria-hidden="true" tabindex="-1"></a>**Non-undoable operations:**</span>
-<span id="cb8-347"><a href="#cb8-347" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Adding/removing tiers</span>
-<span id="cb8-348"><a href="#cb8-348" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Loading files</span>
-<span id="cb8-349"><a href="#cb8-349" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-350"><a href="#cb8-350" aria-hidden="true" tabindex="-1"></a>**Solution:**</span>
-<span id="cb8-351"><a href="#cb8-351" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Only annotation edits are undoable</span>
-<span id="cb8-352"><a href="#cb8-352" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Export TextGrid before tier operations</span>
-<span id="cb8-353"><a href="#cb8-353" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-354"><a href="#cb8-354" aria-hidden="true" tabindex="-1"></a><span class="fu">## See Also</span></span>
-<span id="cb8-355"><a href="#cb8-355" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-356"><a href="#cb8-356" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Tutorial: Annotations</span><span class="co">](../tutorial/04-annotations.html)</span> - Step-by-step guide</span>
-<span id="cb8-357"><a href="#cb8-357" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Keyboard Shortcuts</span><span class="co">](../reference/keyboard-shortcuts.html)</span> - Full shortcut reference</span>
-<span id="cb8-358"><a href="#cb8-358" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">File Formats</span><span class="co">](../reference/file-formats.html)</span> - TextGrid format details</span>
-<span id="cb8-359"><a href="#cb8-359" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Data Points</span><span class="co">](data-points.html)</span> - Collecting measurements at annotations</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Annotations"</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="an">subtitle:</span><span class="co"> "Multi-tier TextGrid annotation system"</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="fu">## Overview</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>Ozen-web provides a complete TextGrid-compatible annotation system for transcription, labeling, and segmentation. Create multi-tiered annotations with interval and point tiers, compatible with Praat.</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="al">![Multi-tier annotation example](../screenshots/tutorial-04-multitiered.png)</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="fu">## Key Features</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Praat-compatible TextGrid** - Import/export in TextGrid format (short and long)</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Multi-tier support** - Unlimited annotation tiers</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Interval tiers** - Segment audio into labeled intervals</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Boundary editing** - Add, remove, move boundaries</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Text editing** - Label intervals with text</span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Unified undo/redo** - Full undo history (Ctrl+Z / Ctrl+Y)</span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Keyboard workflow** - Efficient shortcuts for rapid annotation</span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a><span class="fu">## Tier Management</span></span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a><span class="fu">### Adding Tiers</span></span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>**Via UI:**</span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Click "+ Add Tier" button</span>
+<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>Enter tier name (e.g., "words", "phones", "syllables")</span>
+<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>Press Enter to create</span>
+<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a>**Tier Naming:**</span>
+<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Use descriptive names: "words", "phones", "tones", "events"</span>
+<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Multiple tiers allow parallel annotations at different granularities</span>
+<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a><span class="fu">### Tier Types</span></span>
+<span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a>Currently supported:</span>
+<span id="cb3-38"><a href="#cb3-38" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Interval tiers** - Continuous segmentation with boundaries</span>
+<span id="cb3-39"><a href="#cb3-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-40"><a href="#cb3-40" aria-hidden="true" tabindex="-1"></a>Planned:</span>
+<span id="cb3-41"><a href="#cb3-41" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Point tiers** - Single time points with labels (future feature)</span>
+<span id="cb3-42"><a href="#cb3-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-43"><a href="#cb3-43" aria-hidden="true" tabindex="-1"></a><span class="fu">### Deleting Tiers</span></span>
+<span id="cb3-44"><a href="#cb3-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-45"><a href="#cb3-45" aria-hidden="true" tabindex="-1"></a>::: {.callout-warning}</span>
+<span id="cb3-46"><a href="#cb3-46" aria-hidden="true" tabindex="-1"></a>Tier deletion is permanent and cannot be undone. Export your TextGrid before deleting tiers.</span>
+<span id="cb3-47"><a href="#cb3-47" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb3-48"><a href="#cb3-48" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-49"><a href="#cb3-49" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Click tier menu (⋮)</span>
+<span id="cb3-50"><a href="#cb3-50" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>Select "Delete tier"</span>
+<span id="cb3-51"><a href="#cb3-51" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>Confirm deletion</span>
+<span id="cb3-52"><a href="#cb3-52" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-53"><a href="#cb3-53" aria-hidden="true" tabindex="-1"></a><span class="fu">## Boundary Management</span></span>
+<span id="cb3-54"><a href="#cb3-54" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-55"><a href="#cb3-55" aria-hidden="true" tabindex="-1"></a><span class="fu">### Adding Boundaries</span></span>
+<span id="cb3-56"><a href="#cb3-56" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-57"><a href="#cb3-57" aria-hidden="true" tabindex="-1"></a>**Double-click method:**</span>
+<span id="cb3-58"><a href="#cb3-58" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Double-click on tier at desired time position</span>
+<span id="cb3-59"><a href="#cb3-59" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>Boundary appears, splitting the interval</span>
+<span id="cb3-60"><a href="#cb3-60" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-61"><a href="#cb3-61" aria-hidden="true" tabindex="-1"></a>**Cursor method:**</span>
+<span id="cb3-62"><a href="#cb3-62" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Click on spectrogram to place cursor</span>
+<span id="cb3-63"><a href="#cb3-63" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>Double-click on tier at cursor position</span>
+<span id="cb3-64"><a href="#cb3-64" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-65"><a href="#cb3-65" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip}</span>
+<span id="cb3-66"><a href="#cb3-66" aria-hidden="true" tabindex="-1"></a><span class="fu">## Quick Annotation Workflow</span></span>
+<span id="cb3-67"><a href="#cb3-67" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-68"><a href="#cb3-68" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Press Space to play audio</span>
+<span id="cb3-69"><a href="#cb3-69" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>Press Escape when you hear a boundary</span>
+<span id="cb3-70"><a href="#cb3-70" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>Double-click tier to add boundary at cursor</span>
+<span id="cb3-71"><a href="#cb3-71" aria-hidden="true" tabindex="-1"></a><span class="ss">4. </span>Repeat for all boundaries</span>
+<span id="cb3-72"><a href="#cb3-72" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb3-73"><a href="#cb3-73" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-74"><a href="#cb3-74" aria-hidden="true" tabindex="-1"></a><span class="fu">### Moving Boundaries</span></span>
+<span id="cb3-75"><a href="#cb3-75" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-76"><a href="#cb3-76" aria-hidden="true" tabindex="-1"></a>**Drag and drop:**</span>
+<span id="cb3-77"><a href="#cb3-77" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Click and hold boundary marker</span>
+<span id="cb3-78"><a href="#cb3-78" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>Drag left or right to new position</span>
+<span id="cb3-79"><a href="#cb3-79" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>Release to place</span>
+<span id="cb3-80"><a href="#cb3-80" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-81"><a href="#cb3-81" aria-hidden="true" tabindex="-1"></a>**Precision:**</span>
+<span id="cb3-82"><a href="#cb3-82" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Zoom in (scroll wheel) for fine-grained adjustment</span>
+<span id="cb3-83"><a href="#cb3-83" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Cursor position indicator shows exact time</span>
+<span id="cb3-84"><a href="#cb3-84" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-85"><a href="#cb3-85" aria-hidden="true" tabindex="-1"></a><span class="fu">### Boundary Snapping</span></span>
+<span id="cb3-86"><a href="#cb3-86" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-87"><a href="#cb3-87" aria-hidden="true" tabindex="-1"></a>When adding boundaries on lower tiers, they can snap to boundaries in</span>
+<span id="cb3-88"><a href="#cb3-88" aria-hidden="true" tabindex="-1"></a>upper tiers. Double-clicking near an existing boundary on a different</span>
+<span id="cb3-89"><a href="#cb3-89" aria-hidden="true" tabindex="-1"></a>tier will snap to that time, maintaining alignment. A boundary can</span>
+<span id="cb3-90"><a href="#cb3-90" aria-hidden="true" tabindex="-1"></a>then be dragged to a different location, if so desired.</span>
+<span id="cb3-91"><a href="#cb3-91" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-92"><a href="#cb3-92" aria-hidden="true" tabindex="-1"></a><span class="fu">### Removing Boundaries</span></span>
+<span id="cb3-93"><a href="#cb3-93" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-94"><a href="#cb3-94" aria-hidden="true" tabindex="-1"></a>**Right-click menu:**</span>
+<span id="cb3-95"><a href="#cb3-95" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Right-click on boundary marker</span>
+<span id="cb3-96"><a href="#cb3-96" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>Select "Remove boundary"</span>
+<span id="cb3-97"><a href="#cb3-97" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>Adjacent intervals merge</span>
+<span id="cb3-98"><a href="#cb3-98" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-99"><a href="#cb3-99" aria-hidden="true" tabindex="-1"></a>**Keyboard shortcut:**</span>
+<span id="cb3-100"><a href="#cb3-100" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Select boundary (click)</span>
+<span id="cb3-101"><a href="#cb3-101" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Press Delete or Backspace</span>
+<span id="cb3-102"><a href="#cb3-102" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-103"><a href="#cb3-103" aria-hidden="true" tabindex="-1"></a>::: {.callout-note}</span>
+<span id="cb3-104"><a href="#cb3-104" aria-hidden="true" tabindex="-1"></a><span class="fu">## Undo Support</span></span>
+<span id="cb3-105"><a href="#cb3-105" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-106"><a href="#cb3-106" aria-hidden="true" tabindex="-1"></a>All boundary operations (add, move, remove) can be undone with Ctrl+Z (Cmd+Z on Mac).</span>
+<span id="cb3-107"><a href="#cb3-107" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb3-108"><a href="#cb3-108" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-109"><a href="#cb3-109" aria-hidden="true" tabindex="-1"></a><span class="fu">## Text Editing</span></span>
+<span id="cb3-110"><a href="#cb3-110" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-111"><a href="#cb3-111" aria-hidden="true" tabindex="-1"></a><span class="fu">### Labeling Intervals</span></span>
+<span id="cb3-112"><a href="#cb3-112" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-113"><a href="#cb3-113" aria-hidden="true" tabindex="-1"></a>**Double-click to edit:**</span>
+<span id="cb3-114"><a href="#cb3-114" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Double-click on interval to activate text editor</span>
+<span id="cb3-115"><a href="#cb3-115" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>Type label (IPA, orthography, tags, etc.)</span>
+<span id="cb3-116"><a href="#cb3-116" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>Press Enter to save</span>
+<span id="cb3-117"><a href="#cb3-117" aria-hidden="true" tabindex="-1"></a><span class="ss">4. </span>Press Escape to cancel</span>
+<span id="cb3-118"><a href="#cb3-118" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-119"><a href="#cb3-119" aria-hidden="true" tabindex="-1"></a>**Click to select:**</span>
+<span id="cb3-120"><a href="#cb3-120" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Single-click interval to select without editing</span>
+<span id="cb3-121"><a href="#cb3-121" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Selected interval highlights</span>
+<span id="cb3-122"><a href="#cb3-122" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-123"><a href="#cb3-123" aria-hidden="true" tabindex="-1"></a><span class="fu">### Unicode and IPA Support</span></span>
+<span id="cb3-124"><a href="#cb3-124" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-125"><a href="#cb3-125" aria-hidden="true" tabindex="-1"></a>Full Unicode support for linguistic transcription:</span>
+<span id="cb3-126"><a href="#cb3-126" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-127"><a href="#cb3-127" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb3-128"><a href="#cb3-128" aria-hidden="true" tabindex="-1"></a><span class="in">[ˈhɛloʊ] - IPA transcription</span></span>
+<span id="cb3-129"><a href="#cb3-129" aria-hidden="true" tabindex="-1"></a><span class="in">你好 - Chinese characters</span></span>
+<span id="cb3-130"><a href="#cb3-130" aria-hidden="true" tabindex="-1"></a><span class="in">🔊 - Emoji labels (for prosody annotation)</span></span>
+<span id="cb3-131"><a href="#cb3-131" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb3-132"><a href="#cb3-132" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-133"><a href="#cb3-133" aria-hidden="true" tabindex="-1"></a><span class="fu">### Multi-line Labels</span></span>
+<span id="cb3-134"><a href="#cb3-134" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-135"><a href="#cb3-135" aria-hidden="true" tabindex="-1"></a>Press Shift+Enter for multi-line labels (if needed for glosses or notes).</span>
+<span id="cb3-136"><a href="#cb3-136" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-137"><a href="#cb3-137" aria-hidden="true" tabindex="-1"></a><span class="fu">## Keyboard Shortcuts</span></span>
+<span id="cb3-138"><a href="#cb3-138" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-139"><a href="#cb3-139" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Shortcut <span class="pp">|</span> Action <span class="pp">|</span></span>
+<span id="cb3-140"><a href="#cb3-140" aria-hidden="true" tabindex="-1"></a><span class="pp">|----------|--------|</span></span>
+<span id="cb3-141"><a href="#cb3-141" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Double-click tier <span class="pp">|</span> Add boundary at position <span class="pp">|</span></span>
+<span id="cb3-142"><a href="#cb3-142" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Double-click interval <span class="pp">|</span> Edit text label <span class="pp">|</span></span>
+<span id="cb3-143"><a href="#cb3-143" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Enter <span class="pp">|</span> Save text edit <span class="pp">|</span></span>
+<span id="cb3-144"><a href="#cb3-144" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Escape <span class="pp">|</span> Cancel text edit / deselect <span class="pp">|</span></span>
+<span id="cb3-145"><a href="#cb3-145" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Ctrl+Z / Cmd+Z <span class="pp">|</span> Undo <span class="pp">|</span></span>
+<span id="cb3-146"><a href="#cb3-146" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Ctrl+Y / Ctrl+Shift+Z <span class="pp">|</span> Redo <span class="pp">|</span></span>
+<span id="cb3-147"><a href="#cb3-147" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Delete / Backspace <span class="pp">|</span> Remove selected boundary <span class="pp">|</span></span>
+<span id="cb3-148"><a href="#cb3-148" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 1-5 <span class="pp">|</span> Switch to tier 1-5 <span class="pp">|</span></span>
+<span id="cb3-149"><a href="#cb3-149" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-150"><a href="#cb3-150" aria-hidden="true" tabindex="-1"></a>See <span class="co">[</span><span class="ot">Keyboard Shortcuts Reference</span><span class="co">](../reference/keyboard-shortcuts.html)</span> for complete list.</span>
+<span id="cb3-151"><a href="#cb3-151" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-152"><a href="#cb3-152" aria-hidden="true" tabindex="-1"></a><span class="fu">## Undo System</span></span>
+<span id="cb3-153"><a href="#cb3-153" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-154"><a href="#cb3-154" aria-hidden="true" tabindex="-1"></a>Ozen-web features a unified undo/redo system for annotation operations:</span>
+<span id="cb3-155"><a href="#cb3-155" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-156"><a href="#cb3-156" aria-hidden="true" tabindex="-1"></a>**Undoable operations:**</span>
+<span id="cb3-157"><a href="#cb3-157" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Adding boundaries</span>
+<span id="cb3-158"><a href="#cb3-158" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Removing boundaries</span>
+<span id="cb3-159"><a href="#cb3-159" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Moving boundaries</span>
+<span id="cb3-160"><a href="#cb3-160" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Editing interval text</span>
+<span id="cb3-161"><a href="#cb3-161" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Adding / removing data points</span>
+<span id="cb3-162"><a href="#cb3-162" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-163"><a href="#cb3-163" aria-hidden="true" tabindex="-1"></a>**Non-undoable operations:**</span>
+<span id="cb3-164"><a href="#cb3-164" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Adding/removing tiers (permanent)</span>
+<span id="cb3-165"><a href="#cb3-165" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Loading files</span>
+<span id="cb3-166"><a href="#cb3-166" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-167"><a href="#cb3-167" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip}</span>
+<span id="cb3-168"><a href="#cb3-168" aria-hidden="true" tabindex="-1"></a><span class="fu">## Undo History</span></span>
+<span id="cb3-169"><a href="#cb3-169" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-170"><a href="#cb3-170" aria-hidden="true" tabindex="-1"></a>The undo stack stores the entire annotation state before each operation. You can undo multiple operations sequentially to return to any previous state.</span>
+<span id="cb3-171"><a href="#cb3-171" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb3-172"><a href="#cb3-172" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-173"><a href="#cb3-173" aria-hidden="true" tabindex="-1"></a>**Keyboard:**</span>
+<span id="cb3-174"><a href="#cb3-174" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Undo**: Ctrl+Z (Windows/Linux), Cmd+Z (Mac)</span>
+<span id="cb3-175"><a href="#cb3-175" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Redo**: Ctrl+Y (Windows/Linux), Ctrl+Shift+Z (Mac)</span>
+<span id="cb3-176"><a href="#cb3-176" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-177"><a href="#cb3-177" aria-hidden="true" tabindex="-1"></a><span class="fu">## TextGrid Import/Export</span></span>
+<span id="cb3-178"><a href="#cb3-178" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-179"><a href="#cb3-179" aria-hidden="true" tabindex="-1"></a><span class="fu">### Importing TextGrid</span></span>
+<span id="cb3-180"><a href="#cb3-180" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-181"><a href="#cb3-181" aria-hidden="true" tabindex="-1"></a>**Requirements:**</span>
+<span id="cb3-182"><a href="#cb3-182" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Audio must be loaded first (the TextGrid import button is only available after loading audio)</span>
+<span id="cb3-183"><a href="#cb3-183" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-184"><a href="#cb3-184" aria-hidden="true" tabindex="-1"></a>**File picker:**</span>
+<span id="cb3-185"><a href="#cb3-185" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Click "Load TextGrid" button</span>
+<span id="cb3-186"><a href="#cb3-186" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>Select <span class="in">`.TextGrid`</span> file</span>
+<span id="cb3-187"><a href="#cb3-187" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>Annotations appear on tiers</span>
+<span id="cb3-188"><a href="#cb3-188" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-189"><a href="#cb3-189" aria-hidden="true" tabindex="-1"></a>**Supported formats:**</span>
+<span id="cb3-190"><a href="#cb3-190" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Short TextGrid format (quoted strings)</span>
+<span id="cb3-191"><a href="#cb3-191" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Long TextGrid format (ooTextFile)</span>
+<span id="cb3-192"><a href="#cb3-192" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-193"><a href="#cb3-193" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-194"><a href="#cb3-194" aria-hidden="true" tabindex="-1"></a><span class="fu">### Exporting TextGrid</span></span>
+<span id="cb3-195"><a href="#cb3-195" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-196"><a href="#cb3-196" aria-hidden="true" tabindex="-1"></a>**Via UI button:**</span>
+<span id="cb3-197"><a href="#cb3-197" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Click "Export TextGrid" button</span>
+<span id="cb3-198"><a href="#cb3-198" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>Choose save location (File System Access API)</span>
+<span id="cb3-199"><a href="#cb3-199" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>TextGrid saves in short format</span>
+<span id="cb3-200"><a href="#cb3-200" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-201"><a href="#cb3-201" aria-hidden="true" tabindex="-1"></a>**Export format:**</span>
+<span id="cb3-202"><a href="#cb3-202" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Short TextGrid format (Praat-compatible)</span>
+<span id="cb3-203"><a href="#cb3-203" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>UTF-8 encoding</span>
+<span id="cb3-204"><a href="#cb3-204" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Interval tiers only (current version)</span>
+<span id="cb3-205"><a href="#cb3-205" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-206"><a href="#cb3-206" aria-hidden="true" tabindex="-1"></a>**Filename:**</span>
+<span id="cb3-207"><a href="#cb3-207" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Default: <span class="in">`annotations.TextGrid`</span></span>
+<span id="cb3-208"><a href="#cb3-208" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Recommended: Match audio filename (e.g., <span class="in">`recording.wav`</span> → <span class="in">`recording.TextGrid`</span>)</span>
+<span id="cb3-209"><a href="#cb3-209" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-210"><a href="#cb3-210" aria-hidden="true" tabindex="-1"></a><span class="al">![Export TextGrid interface](../screenshots/tutorial-06-export-textgrid.png)</span></span>
+<span id="cb3-211"><a href="#cb3-211" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-212"><a href="#cb3-212" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-213"><a href="#cb3-213" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-214"><a href="#cb3-214" aria-hidden="true" tabindex="-1"></a><span class="fu">## Integration with Data Points</span></span>
+<span id="cb3-215"><a href="#cb3-215" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-216"><a href="#cb3-216" aria-hidden="true" tabindex="-1"></a>Data points automatically capture annotation labels at their time position:</span>
+<span id="cb3-217"><a href="#cb3-217" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-218"><a href="#cb3-218" aria-hidden="true" tabindex="-1"></a>**Example TSV export:**</span>
+<span id="cb3-219"><a href="#cb3-219" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb3-220"><a href="#cb3-220" aria-hidden="true" tabindex="-1"></a><span class="in">time    freq    pitch  F1    label_words  label_phones</span></span>
+<span id="cb3-221"><a href="#cb3-221" aria-hidden="true" tabindex="-1"></a><span class="in">1.234   720     245    720   "cat"        "æ"</span></span>
+<span id="cb3-222"><a href="#cb3-222" aria-hidden="true" tabindex="-1"></a><span class="in">1.567   1240    250    850   "sat"        "æ"</span></span>
+<span id="cb3-223"><a href="#cb3-223" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb3-224"><a href="#cb3-224" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-225"><a href="#cb3-225" aria-hidden="true" tabindex="-1"></a>This enables correlation analysis between acoustic measurements and annotation categories.</span>
+<span id="cb3-226"><a href="#cb3-226" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-227"><a href="#cb3-227" aria-hidden="true" tabindex="-1"></a>See <span class="co">[</span><span class="ot">Data Points</span><span class="co">](data-points.html)</span> for details.</span>
+<span id="cb3-228"><a href="#cb3-228" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-229"><a href="#cb3-229" aria-hidden="true" tabindex="-1"></a><span class="fu">## Best Practices</span></span>
+<span id="cb3-230"><a href="#cb3-230" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-231"><a href="#cb3-231" aria-hidden="true" tabindex="-1"></a><span class="fu">### Tier Organization</span></span>
+<span id="cb3-232"><a href="#cb3-232" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-233"><a href="#cb3-233" aria-hidden="true" tabindex="-1"></a>**Hierarchical structure:**</span>
+<span id="cb3-234"><a href="#cb3-234" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**Top tier**: Largest units (utterances, phrases)</span>
+<span id="cb3-235"><a href="#cb3-235" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>**Middle tiers**: Intermediate units (words, syllables)</span>
+<span id="cb3-236"><a href="#cb3-236" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>**Bottom tiers**: Smallest units (phones, events)</span>
+<span id="cb3-237"><a href="#cb3-237" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-238"><a href="#cb3-238" aria-hidden="true" tabindex="-1"></a>**Alignment:**</span>
+<span id="cb3-239"><a href="#cb3-239" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Keep boundaries aligned across tiers when appropriate</span>
+<span id="cb3-240"><a href="#cb3-240" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Use boundary snapping for consistent segmentation</span>
+<span id="cb3-241"><a href="#cb3-241" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-242"><a href="#cb3-242" aria-hidden="true" tabindex="-1"></a><span class="fu">### Labeling Conventions</span></span>
+<span id="cb3-243"><a href="#cb3-243" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-244"><a href="#cb3-244" aria-hidden="true" tabindex="-1"></a>**Be consistent:**</span>
+<span id="cb3-245"><a href="#cb3-245" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Decide on transcription convention (IPA, ARPABET, orthography)</span>
+<span id="cb3-246"><a href="#cb3-246" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Use same labels for same sounds</span>
+<span id="cb3-247"><a href="#cb3-247" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Document conventions in separate file</span>
+<span id="cb3-248"><a href="#cb3-248" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-249"><a href="#cb3-249" aria-hidden="true" tabindex="-1"></a>**Common systems:**</span>
+<span id="cb3-250"><a href="#cb3-250" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**IPA**: Universal phonetic transcription</span>
+<span id="cb3-251"><a href="#cb3-251" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**ARPABET**: ASCII-friendly phoneme set</span>
+<span id="cb3-252"><a href="#cb3-252" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**X-SAMPA**: ASCII IPA alternative</span>
+<span id="cb3-253"><a href="#cb3-253" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Orthography**: Plain text spelling</span>
+<span id="cb3-254"><a href="#cb3-254" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-255"><a href="#cb3-255" aria-hidden="true" tabindex="-1"></a><span class="fu">### File Management</span></span>
+<span id="cb3-256"><a href="#cb3-256" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-257"><a href="#cb3-257" aria-hidden="true" tabindex="-1"></a>**Naming:**</span>
+<span id="cb3-258"><a href="#cb3-258" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Match TextGrid filename to audio: <span class="in">`speaker01.wav`</span> + <span class="in">`speaker01.TextGrid`</span></span>
+<span id="cb3-259"><a href="#cb3-259" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Use consistent naming across corpus</span>
+<span id="cb3-260"><a href="#cb3-260" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-261"><a href="#cb3-261" aria-hidden="true" tabindex="-1"></a>**Backup:**</span>
+<span id="cb3-262"><a href="#cb3-262" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Export TextGrid frequently during annotation</span>
+<span id="cb3-263"><a href="#cb3-263" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Version control for large projects (Git)</span>
+<span id="cb3-264"><a href="#cb3-264" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Keep original audio files separate from annotations</span>
+<span id="cb3-265"><a href="#cb3-265" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-266"><a href="#cb3-266" aria-hidden="true" tabindex="-1"></a><span class="fu">## Troubleshooting</span></span>
+<span id="cb3-267"><a href="#cb3-267" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-268"><a href="#cb3-268" aria-hidden="true" tabindex="-1"></a><span class="fu">### TextGrid Won't Load</span></span>
+<span id="cb3-269"><a href="#cb3-269" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-270"><a href="#cb3-270" aria-hidden="true" tabindex="-1"></a>**Problem**: Error loading <span class="in">`.TextGrid`</span> file</span>
+<span id="cb3-271"><a href="#cb3-271" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-272"><a href="#cb3-272" aria-hidden="true" tabindex="-1"></a>**Possible causes:**</span>
+<span id="cb3-273"><a href="#cb3-273" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>File encoding (not UTF-8)</span>
+<span id="cb3-274"><a href="#cb3-274" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Malformed TextGrid format</span>
+<span id="cb3-275"><a href="#cb3-275" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Point tiers (not yet supported)</span>
+<span id="cb3-276"><a href="#cb3-276" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-277"><a href="#cb3-277" aria-hidden="true" tabindex="-1"></a>**Solution:**</span>
+<span id="cb3-278"><a href="#cb3-278" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Re-export from Praat</span>
+<span id="cb3-279"><a href="#cb3-279" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Check file encoding (should be UTF-8)</span>
+<span id="cb3-280"><a href="#cb3-280" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Convert point tiers to interval tiers in Praat</span>
+<span id="cb3-281"><a href="#cb3-281" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-282"><a href="#cb3-282" aria-hidden="true" tabindex="-1"></a><span class="fu">### Boundaries Not Snapping</span></span>
+<span id="cb3-283"><a href="#cb3-283" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-284"><a href="#cb3-284" aria-hidden="true" tabindex="-1"></a>**Problem**: Boundaries won't align to other tiers</span>
+<span id="cb3-285"><a href="#cb3-285" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-286"><a href="#cb3-286" aria-hidden="true" tabindex="-1"></a>**Solution:**</span>
+<span id="cb3-287"><a href="#cb3-287" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Zoom in closer to boundary</span>
+<span id="cb3-288"><a href="#cb3-288" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Click precisely on boundary location</span>
+<span id="cb3-289"><a href="#cb3-289" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Manually align by dragging</span>
+<span id="cb3-290"><a href="#cb3-290" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-291"><a href="#cb3-291" aria-hidden="true" tabindex="-1"></a><span class="fu">### Undo Not Working</span></span>
+<span id="cb3-292"><a href="#cb3-292" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-293"><a href="#cb3-293" aria-hidden="true" tabindex="-1"></a>**Problem**: Ctrl+Z doesn't undo operation</span>
+<span id="cb3-294"><a href="#cb3-294" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-295"><a href="#cb3-295" aria-hidden="true" tabindex="-1"></a>**Non-undoable operations:**</span>
+<span id="cb3-296"><a href="#cb3-296" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Adding/removing tiers</span>
+<span id="cb3-297"><a href="#cb3-297" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Loading files</span>
+<span id="cb3-298"><a href="#cb3-298" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-299"><a href="#cb3-299" aria-hidden="true" tabindex="-1"></a>**Solution:**</span>
+<span id="cb3-300"><a href="#cb3-300" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Only annotation edits are undoable</span>
+<span id="cb3-301"><a href="#cb3-301" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Export TextGrid before tier operations</span>
+<span id="cb3-302"><a href="#cb3-302" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-303"><a href="#cb3-303" aria-hidden="true" tabindex="-1"></a><span class="fu">## See Also</span></span>
+<span id="cb3-304"><a href="#cb3-304" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-305"><a href="#cb3-305" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Tutorial: Annotations</span><span class="co">](../tutorial/04-annotations.html)</span> - Step-by-step guide</span>
+<span id="cb3-306"><a href="#cb3-306" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Keyboard Shortcuts</span><span class="co">](../reference/keyboard-shortcuts.html)</span> - Full shortcut reference</span>
+<span id="cb3-307"><a href="#cb3-307" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">File Formats</span><span class="co">](../reference/file-formats.html)</span> - TextGrid format details</span>
+<span id="cb3-308"><a href="#cb3-308" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Data Points</span><span class="co">](data-points.html)</span> - Collecting measurements at annotations</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 <footer class="footer">

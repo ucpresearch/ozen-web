@@ -356,28 +356,12 @@ iconv -f ISO-8859-1 -t UTF-8 input.TextGrid > output.TextGrid
 
 ## Browser Compatibility
 
-### Supported Audio Formats by Browser
-
-| Format | Chrome | Firefox | Safari | Edge |
-|--------|--------|---------|--------|------|
-| WAV | ✅ | ✅ | ✅ | ✅ |
-| MP3 | ✅ | ✅ | ✅ | ✅ |
-| OGG | ✅ | ✅ | ❌ | ✅ |
-
-**Note:** Safari does not support OGG Vorbis. Use WAV or MP3 for maximum compatibility.
-
-### File API Support
-
 All modern browsers support:
 - File picker (input type="file")
 - Drag and drop
 - File System Access API (save files)
-
-Minimum versions:
-- Chrome 90+
-- Firefox 88+
-- Safari 14+
-- Edge 90+
+- WAV, FLAC, MP3 audio formats
+- OGG support varies by browser
 
 ## Conversion Tools
 

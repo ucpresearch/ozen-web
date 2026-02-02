@@ -319,7 +319,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#toggling-overlays" id="toc-toggling-overlays" class="nav-link" data-scroll-target="#toggling-overlays">Toggling Overlays</a>
   <ul class="collapse">
   <li><a href="#via-ui-checkboxes" id="toc-via-ui-checkboxes" class="nav-link" data-scroll-target="#via-ui-checkboxes">Via UI Checkboxes</a></li>
-  <li><a href="#via-keyboard" id="toc-via-keyboard" class="nav-link" data-scroll-target="#via-keyboard">Via Keyboard</a></li>
   <li><a href="#via-url-parameters" id="toc-via-url-parameters" class="nav-link" data-scroll-target="#via-url-parameters">Via URL Parameters</a></li>
   </ul></li>
   <li><a href="#values-panel" id="toc-values-panel" class="nav-link" data-scroll-target="#values-panel">Values Panel</a></li>
@@ -367,7 +366,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <section id="overview" class="level2">
 <h2 class="anchored" data-anchor-id="overview">Overview</h2>
-<p>Acoustic overlays display computed measurements directly on the spectrogram, enabling visual analysis of prosody, voice quality, and spectral properties. All computations use Praat-accurate algorithms via WebAssembly.</p>
+<p>Acoustic overlays display computed measurements directly on the spectrogram, enabling visual analysis of prosody, voice quality, and spectral properties. Acoustic measurements are computed via WebAssembly.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="../screenshots/acoustic-overlays-all.png" class="img-fluid figure-img"></p>
@@ -512,42 +511,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </ul>
 <p>Multiple overlays can be enabled simultaneously.</p>
 </section>
-<section id="via-keyboard" class="level3">
-<h3 class="anchored" data-anchor-id="via-keyboard">Via Keyboard</h3>
-<p>Use number keys to quickly toggle overlays:</p>
-<table class="caption-top table">
-<thead>
-<tr class="header">
-<th>Key</th>
-<th>Overlay</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>P</td>
-<td>Pitch</td>
-</tr>
-<tr class="even">
-<td>F</td>
-<td>Formants</td>
-</tr>
-<tr class="odd">
-<td>I</td>
-<td>Intensity</td>
-</tr>
-<tr class="even">
-<td>H</td>
-<td>HNR</td>
-</tr>
-</tbody>
-</table>
-</section>
 <section id="via-url-parameters" class="level3">
 <h3 class="anchored" data-anchor-id="via-url-parameters">Via URL Parameters</h3>
-<p>Pre-configure overlays when embedding:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode html code-with-copy"><code class="sourceCode html"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">iframe</span><span class="ot"> src</span><span class="op">=</span><span class="st">"https://ucpresearch.github.io/ozen-web/?overlays=pitch,formants,intensity"</span><span class="dt">&gt;</span></span>
+<p>Pre-configure overlays when embedding the mobile viewer:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode html code-with-copy"><code class="sourceCode html"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">iframe</span><span class="ot"> src</span><span class="op">=</span><span class="st">"https://ucpresearch.github.io/ozen-web/viewer?overlays=pitch,formants,intensity"</span><span class="dt">&gt;</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">iframe</span><span class="dt">&gt;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>See <a href="../embedding/url-parameters.html">URL Parameters</a> for details.</p>
+<p>See <a href="mobile-viewer.html#embedding-in-web-pages">Mobile Viewer Embedding</a> and <a href="../embedding/url-parameters.html">URL Parameters</a> for details.</p>
 </section>
 </section>
 <section id="values-panel" class="level2">
@@ -568,45 +537,6 @@ CoG: 5420 Hz</code></pre>
 </section>
 <section id="performance" class="level2">
 <h2 class="anchored" data-anchor-id="performance">Performance</h2>
-<table class="caption-top table">
-<thead>
-<tr class="header">
-<th>Overlay</th>
-<th>Computation Time (30s audio)</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>Pitch</td>
-<td>~100-150 ms</td>
-</tr>
-<tr class="even">
-<td>Formants</td>
-<td>~200-300 ms</td>
-</tr>
-<tr class="odd">
-<td>Intensity</td>
-<td>~80-120 ms</td>
-</tr>
-<tr class="even">
-<td>HNR</td>
-<td>~100-150 ms</td>
-</tr>
-<tr class="odd">
-<td>CoG</td>
-<td>~150-200 ms</td>
-</tr>
-<tr class="even">
-<td>Spectral Tilt</td>
-<td>~150-200 ms</td>
-</tr>
-<tr class="odd">
-<td>A1-P0</td>
-<td>~100-150 ms</td>
-</tr>
-</tbody>
-</table>
-<p><strong>Total (all overlays)</strong>: ~1-1.5 seconds for 30s audio</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -617,7 +547,7 @@ Note
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Overlays are computed on-demand when toggled. Once computed, values are cached and redrawn instantly.</p>
+<p>Overlays are computed on-demand when toggled. Once computed, values are cached for redrawing.</p>
 </div>
 </div>
 </section>
@@ -1177,7 +1107,7 @@ Note
 <span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="fu">## Overview</span></span>
 <span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>Acoustic overlays display computed measurements directly on the spectrogram, enabling visual analysis of prosody, voice quality, and spectral properties. All computations use Praat-accurate algorithms via WebAssembly.</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>Acoustic overlays display computed measurements directly on the spectrogram, enabling visual analysis of prosody, voice quality, and spectral properties. Acoustic measurements are computed via WebAssembly.</span>
 <span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="al">![All acoustic overlays enabled](../screenshots/acoustic-overlays-all.png)</span></span>
 <span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a></span>
@@ -1337,180 +1267,157 @@ Note
 <span id="cb4-165"><a href="#cb4-165" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-166"><a href="#cb4-166" aria-hidden="true" tabindex="-1"></a>Multiple overlays can be enabled simultaneously.</span>
 <span id="cb4-167"><a href="#cb4-167" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-168"><a href="#cb4-168" aria-hidden="true" tabindex="-1"></a><span class="fu">### Via Keyboard</span></span>
+<span id="cb4-168"><a href="#cb4-168" aria-hidden="true" tabindex="-1"></a><span class="fu">### Via URL Parameters</span></span>
 <span id="cb4-169"><a href="#cb4-169" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-170"><a href="#cb4-170" aria-hidden="true" tabindex="-1"></a>Use number keys to quickly toggle overlays:</span>
+<span id="cb4-170"><a href="#cb4-170" aria-hidden="true" tabindex="-1"></a>Pre-configure overlays when embedding the mobile viewer:</span>
 <span id="cb4-171"><a href="#cb4-171" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-172"><a href="#cb4-172" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Key <span class="pp">|</span> Overlay <span class="pp">|</span></span>
-<span id="cb4-173"><a href="#cb4-173" aria-hidden="true" tabindex="-1"></a><span class="pp">|-----|---------|</span></span>
-<span id="cb4-174"><a href="#cb4-174" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> P <span class="pp">|</span> Pitch <span class="pp">|</span></span>
-<span id="cb4-175"><a href="#cb4-175" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> F <span class="pp">|</span> Formants <span class="pp">|</span></span>
-<span id="cb4-176"><a href="#cb4-176" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> I <span class="pp">|</span> Intensity <span class="pp">|</span></span>
-<span id="cb4-177"><a href="#cb4-177" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> H <span class="pp">|</span> HNR <span class="pp">|</span></span>
+<span id="cb4-172"><a href="#cb4-172" aria-hidden="true" tabindex="-1"></a><span class="in">```html</span></span>
+<span id="cb4-173"><a href="#cb4-173" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span>iframe src<span class="op">=</span><span class="st">"https://ucpresearch.github.io/ozen-web/viewer?overlays=pitch,formants,intensity"</span><span class="op">&gt;</span></span>
+<span id="cb4-174"><a href="#cb4-174" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;/</span>iframe<span class="op">&gt;</span></span>
+<span id="cb4-175"><a href="#cb4-175" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb4-176"><a href="#cb4-176" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-177"><a href="#cb4-177" aria-hidden="true" tabindex="-1"></a>See <span class="co">[</span><span class="ot">Mobile Viewer Embedding</span><span class="co">](mobile-viewer.html#embedding-in-web-pages)</span> and <span class="co">[</span><span class="ot">URL Parameters</span><span class="co">](../embedding/url-parameters.html)</span> for details.</span>
 <span id="cb4-178"><a href="#cb4-178" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-179"><a href="#cb4-179" aria-hidden="true" tabindex="-1"></a><span class="fu">### Via URL Parameters</span></span>
+<span id="cb4-179"><a href="#cb4-179" aria-hidden="true" tabindex="-1"></a><span class="fu">## Values Panel</span></span>
 <span id="cb4-180"><a href="#cb4-180" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-181"><a href="#cb4-181" aria-hidden="true" tabindex="-1"></a>Pre-configure overlays when embedding:</span>
+<span id="cb4-181"><a href="#cb4-181" aria-hidden="true" tabindex="-1"></a>Hover over the spectrogram to see overlay values at the cursor position:</span>
 <span id="cb4-182"><a href="#cb4-182" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-183"><a href="#cb4-183" aria-hidden="true" tabindex="-1"></a><span class="in">```html</span></span>
-<span id="cb4-184"><a href="#cb4-184" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span>iframe src<span class="op">=</span><span class="st">"https://ucpresearch.github.io/ozen-web/?overlays=pitch,formants,intensity"</span><span class="op">&gt;</span></span>
-<span id="cb4-185"><a href="#cb4-185" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;/</span>iframe<span class="op">&gt;</span></span>
-<span id="cb4-186"><a href="#cb4-186" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb4-187"><a href="#cb4-187" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-188"><a href="#cb4-188" aria-hidden="true" tabindex="-1"></a>See <span class="co">[</span><span class="ot">URL Parameters</span><span class="co">](../embedding/url-parameters.html)</span> for details.</span>
-<span id="cb4-189"><a href="#cb4-189" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-190"><a href="#cb4-190" aria-hidden="true" tabindex="-1"></a><span class="fu">## Values Panel</span></span>
-<span id="cb4-191"><a href="#cb4-191" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-192"><a href="#cb4-192" aria-hidden="true" tabindex="-1"></a>Hover over the spectrogram to see overlay values at the cursor position:</span>
-<span id="cb4-193"><a href="#cb4-193" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-194"><a href="#cb4-194" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb4-195"><a href="#cb4-195" aria-hidden="true" tabindex="-1"></a><span class="in">Time: 1.234 s</span></span>
-<span id="cb4-196"><a href="#cb4-196" aria-hidden="true" tabindex="-1"></a><span class="in">Freq: 523 Hz</span></span>
-<span id="cb4-197"><a href="#cb4-197" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-198"><a href="#cb4-198" aria-hidden="true" tabindex="-1"></a><span class="in">Pitch: 245 Hz</span></span>
-<span id="cb4-199"><a href="#cb4-199" aria-hidden="true" tabindex="-1"></a><span class="in">Intensity: 68 dB</span></span>
-<span id="cb4-200"><a href="#cb4-200" aria-hidden="true" tabindex="-1"></a><span class="in">F1: 720 Hz  B1: 80 Hz</span></span>
-<span id="cb4-201"><a href="#cb4-201" aria-hidden="true" tabindex="-1"></a><span class="in">F2: 1240 Hz B2: 110 Hz</span></span>
-<span id="cb4-202"><a href="#cb4-202" aria-hidden="true" tabindex="-1"></a><span class="in">F3: 2650 Hz B3: 150 Hz</span></span>
-<span id="cb4-203"><a href="#cb4-203" aria-hidden="true" tabindex="-1"></a><span class="in">F4: 3500 Hz B4: 200 Hz</span></span>
-<span id="cb4-204"><a href="#cb4-204" aria-hidden="true" tabindex="-1"></a><span class="in">HNR: 15.3 dB</span></span>
-<span id="cb4-205"><a href="#cb4-205" aria-hidden="true" tabindex="-1"></a><span class="in">CoG: 5420 Hz</span></span>
-<span id="cb4-206"><a href="#cb4-206" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb4-207"><a href="#cb4-207" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-208"><a href="#cb4-208" aria-hidden="true" tabindex="-1"></a>See <span class="co">[</span><span class="ot">Values Panel</span><span class="co">](../tutorial/05-data-collection.html)</span> for details.</span>
-<span id="cb4-209"><a href="#cb4-209" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-210"><a href="#cb4-210" aria-hidden="true" tabindex="-1"></a><span class="fu">## Performance</span></span>
-<span id="cb4-211"><a href="#cb4-211" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-212"><a href="#cb4-212" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Overlay <span class="pp">|</span> Computation Time (30s audio) <span class="pp">|</span></span>
-<span id="cb4-213"><a href="#cb4-213" aria-hidden="true" tabindex="-1"></a><span class="pp">|---------|------------------------------|</span></span>
-<span id="cb4-214"><a href="#cb4-214" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Pitch <span class="pp">|</span> ~100-150 ms <span class="pp">|</span></span>
-<span id="cb4-215"><a href="#cb4-215" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Formants <span class="pp">|</span> ~200-300 ms <span class="pp">|</span></span>
-<span id="cb4-216"><a href="#cb4-216" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Intensity <span class="pp">|</span> ~80-120 ms <span class="pp">|</span></span>
-<span id="cb4-217"><a href="#cb4-217" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> HNR <span class="pp">|</span> ~100-150 ms <span class="pp">|</span></span>
-<span id="cb4-218"><a href="#cb4-218" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> CoG <span class="pp">|</span> ~150-200 ms <span class="pp">|</span></span>
-<span id="cb4-219"><a href="#cb4-219" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Spectral Tilt <span class="pp">|</span> ~150-200 ms <span class="pp">|</span></span>
-<span id="cb4-220"><a href="#cb4-220" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> A1-P0 <span class="pp">|</span> ~100-150 ms <span class="pp">|</span></span>
-<span id="cb4-221"><a href="#cb4-221" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-222"><a href="#cb4-222" aria-hidden="true" tabindex="-1"></a>**Total (all overlays)**: ~1-1.5 seconds for 30s audio</span>
-<span id="cb4-223"><a href="#cb4-223" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-224"><a href="#cb4-224" aria-hidden="true" tabindex="-1"></a>::: {.callout-note}</span>
-<span id="cb4-225"><a href="#cb4-225" aria-hidden="true" tabindex="-1"></a>Overlays are computed on-demand when toggled. Once computed, values are cached and redrawn instantly.</span>
-<span id="cb4-226"><a href="#cb4-226" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb4-227"><a href="#cb4-227" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-228"><a href="#cb4-228" aria-hidden="true" tabindex="-1"></a><span class="fu">## Configuration</span></span>
-<span id="cb4-229"><a href="#cb4-229" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-230"><a href="#cb4-230" aria-hidden="true" tabindex="-1"></a>Customize overlay parameters via <span class="in">`config.yaml`</span>:</span>
-<span id="cb4-231"><a href="#cb4-231" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-232"><a href="#cb4-232" aria-hidden="true" tabindex="-1"></a><span class="in">```yaml</span></span>
-<span id="cb4-233"><a href="#cb4-233" aria-hidden="true" tabindex="-1"></a><span class="fu">pitch</span><span class="kw">:</span></span>
-<span id="cb4-234"><a href="#cb4-234" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">floor</span><span class="kw">:</span><span class="at"> </span><span class="dv">75</span><span class="co">        # Minimum pitch (Hz)</span></span>
-<span id="cb4-235"><a href="#cb4-235" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">ceiling</span><span class="kw">:</span><span class="at"> </span><span class="dv">600</span><span class="co">     # Maximum pitch (Hz)</span></span>
-<span id="cb4-236"><a href="#cb4-236" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">timeStep</span><span class="kw">:</span><span class="at"> </span><span class="fl">0.01</span><span class="co">   # Analysis step (seconds)</span></span>
-<span id="cb4-237"><a href="#cb4-237" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-238"><a href="#cb4-238" aria-hidden="true" tabindex="-1"></a><span class="fu">formantPresets</span><span class="kw">:</span></span>
-<span id="cb4-239"><a href="#cb4-239" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">male</span><span class="kw">:</span></span>
-<span id="cb4-240"><a href="#cb4-240" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">maxFormant</span><span class="kw">:</span><span class="at"> </span><span class="dv">5000</span></span>
-<span id="cb4-241"><a href="#cb4-241" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">numFormants</span><span class="kw">:</span><span class="at"> </span><span class="dv">5</span></span>
-<span id="cb4-242"><a href="#cb4-242" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">female</span><span class="kw">:</span></span>
-<span id="cb4-243"><a href="#cb4-243" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">maxFormant</span><span class="kw">:</span><span class="at"> </span><span class="dv">5500</span></span>
-<span id="cb4-244"><a href="#cb4-244" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">numFormants</span><span class="kw">:</span><span class="at"> </span><span class="dv">5</span></span>
-<span id="cb4-245"><a href="#cb4-245" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">child</span><span class="kw">:</span></span>
-<span id="cb4-246"><a href="#cb4-246" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">maxFormant</span><span class="kw">:</span><span class="at"> </span><span class="dv">6500</span></span>
-<span id="cb4-247"><a href="#cb4-247" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">numFormants</span><span class="kw">:</span><span class="at"> </span><span class="dv">5</span></span>
+<span id="cb4-183"><a href="#cb4-183" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb4-184"><a href="#cb4-184" aria-hidden="true" tabindex="-1"></a><span class="in">Time: 1.234 s</span></span>
+<span id="cb4-185"><a href="#cb4-185" aria-hidden="true" tabindex="-1"></a><span class="in">Freq: 523 Hz</span></span>
+<span id="cb4-186"><a href="#cb4-186" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-187"><a href="#cb4-187" aria-hidden="true" tabindex="-1"></a><span class="in">Pitch: 245 Hz</span></span>
+<span id="cb4-188"><a href="#cb4-188" aria-hidden="true" tabindex="-1"></a><span class="in">Intensity: 68 dB</span></span>
+<span id="cb4-189"><a href="#cb4-189" aria-hidden="true" tabindex="-1"></a><span class="in">F1: 720 Hz  B1: 80 Hz</span></span>
+<span id="cb4-190"><a href="#cb4-190" aria-hidden="true" tabindex="-1"></a><span class="in">F2: 1240 Hz B2: 110 Hz</span></span>
+<span id="cb4-191"><a href="#cb4-191" aria-hidden="true" tabindex="-1"></a><span class="in">F3: 2650 Hz B3: 150 Hz</span></span>
+<span id="cb4-192"><a href="#cb4-192" aria-hidden="true" tabindex="-1"></a><span class="in">F4: 3500 Hz B4: 200 Hz</span></span>
+<span id="cb4-193"><a href="#cb4-193" aria-hidden="true" tabindex="-1"></a><span class="in">HNR: 15.3 dB</span></span>
+<span id="cb4-194"><a href="#cb4-194" aria-hidden="true" tabindex="-1"></a><span class="in">CoG: 5420 Hz</span></span>
+<span id="cb4-195"><a href="#cb4-195" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb4-196"><a href="#cb4-196" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-197"><a href="#cb4-197" aria-hidden="true" tabindex="-1"></a>See <span class="co">[</span><span class="ot">Values Panel</span><span class="co">](../tutorial/05-data-collection.html)</span> for details.</span>
+<span id="cb4-198"><a href="#cb4-198" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-199"><a href="#cb4-199" aria-hidden="true" tabindex="-1"></a><span class="fu">## Performance</span></span>
+<span id="cb4-200"><a href="#cb4-200" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-201"><a href="#cb4-201" aria-hidden="true" tabindex="-1"></a>::: {.callout-note}</span>
+<span id="cb4-202"><a href="#cb4-202" aria-hidden="true" tabindex="-1"></a>Overlays are computed on-demand when toggled. Once computed, values are cached for redrawing.</span>
+<span id="cb4-203"><a href="#cb4-203" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb4-204"><a href="#cb4-204" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-205"><a href="#cb4-205" aria-hidden="true" tabindex="-1"></a><span class="fu">## Configuration</span></span>
+<span id="cb4-206"><a href="#cb4-206" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-207"><a href="#cb4-207" aria-hidden="true" tabindex="-1"></a>Customize overlay parameters via <span class="in">`config.yaml`</span>:</span>
+<span id="cb4-208"><a href="#cb4-208" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-209"><a href="#cb4-209" aria-hidden="true" tabindex="-1"></a><span class="in">```yaml</span></span>
+<span id="cb4-210"><a href="#cb4-210" aria-hidden="true" tabindex="-1"></a><span class="fu">pitch</span><span class="kw">:</span></span>
+<span id="cb4-211"><a href="#cb4-211" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">floor</span><span class="kw">:</span><span class="at"> </span><span class="dv">75</span><span class="co">        # Minimum pitch (Hz)</span></span>
+<span id="cb4-212"><a href="#cb4-212" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">ceiling</span><span class="kw">:</span><span class="at"> </span><span class="dv">600</span><span class="co">     # Maximum pitch (Hz)</span></span>
+<span id="cb4-213"><a href="#cb4-213" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">timeStep</span><span class="kw">:</span><span class="at"> </span><span class="fl">0.01</span><span class="co">   # Analysis step (seconds)</span></span>
+<span id="cb4-214"><a href="#cb4-214" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-215"><a href="#cb4-215" aria-hidden="true" tabindex="-1"></a><span class="fu">formantPresets</span><span class="kw">:</span></span>
+<span id="cb4-216"><a href="#cb4-216" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">male</span><span class="kw">:</span></span>
+<span id="cb4-217"><a href="#cb4-217" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">maxFormant</span><span class="kw">:</span><span class="at"> </span><span class="dv">5000</span></span>
+<span id="cb4-218"><a href="#cb4-218" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">numFormants</span><span class="kw">:</span><span class="at"> </span><span class="dv">5</span></span>
+<span id="cb4-219"><a href="#cb4-219" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">female</span><span class="kw">:</span></span>
+<span id="cb4-220"><a href="#cb4-220" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">maxFormant</span><span class="kw">:</span><span class="at"> </span><span class="dv">5500</span></span>
+<span id="cb4-221"><a href="#cb4-221" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">numFormants</span><span class="kw">:</span><span class="at"> </span><span class="dv">5</span></span>
+<span id="cb4-222"><a href="#cb4-222" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">child</span><span class="kw">:</span></span>
+<span id="cb4-223"><a href="#cb4-223" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">maxFormant</span><span class="kw">:</span><span class="at"> </span><span class="dv">6500</span></span>
+<span id="cb4-224"><a href="#cb4-224" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">numFormants</span><span class="kw">:</span><span class="at"> </span><span class="dv">5</span></span>
+<span id="cb4-225"><a href="#cb4-225" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-226"><a href="#cb4-226" aria-hidden="true" tabindex="-1"></a><span class="fu">intensity</span><span class="kw">:</span></span>
+<span id="cb4-227"><a href="#cb4-227" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">minimumPitch</span><span class="kw">:</span><span class="at"> </span><span class="dv">75</span></span>
+<span id="cb4-228"><a href="#cb4-228" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">timeStep</span><span class="kw">:</span><span class="at"> </span><span class="fl">0.01</span></span>
+<span id="cb4-229"><a href="#cb4-229" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb4-230"><a href="#cb4-230" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-231"><a href="#cb4-231" aria-hidden="true" tabindex="-1"></a>See <span class="co">[</span><span class="ot">Configuration Reference</span><span class="co">](../reference/configuration.html)</span> for all options.</span>
+<span id="cb4-232"><a href="#cb4-232" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-233"><a href="#cb4-233" aria-hidden="true" tabindex="-1"></a><span class="fu">## Troubleshooting</span></span>
+<span id="cb4-234"><a href="#cb4-234" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-235"><a href="#cb4-235" aria-hidden="true" tabindex="-1"></a><span class="fu">### Pitch Track Missing</span></span>
+<span id="cb4-236"><a href="#cb4-236" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-237"><a href="#cb4-237" aria-hidden="true" tabindex="-1"></a>**Problem**: No blue dots visible</span>
+<span id="cb4-238"><a href="#cb4-238" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-239"><a href="#cb4-239" aria-hidden="true" tabindex="-1"></a>**Possible causes**:</span>
+<span id="cb4-240"><a href="#cb4-240" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Audio is unvoiced (normal for fricatives, stops)</span>
+<span id="cb4-241"><a href="#cb4-241" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Pitch range set incorrectly for speaker</span>
+<span id="cb4-242"><a href="#cb4-242" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Very noisy recording</span>
+<span id="cb4-243"><a href="#cb4-243" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-244"><a href="#cb4-244" aria-hidden="true" tabindex="-1"></a>**Solution**:</span>
+<span id="cb4-245"><a href="#cb4-245" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Adjust pitch floor/ceiling for speaker</span>
+<span id="cb4-246"><a href="#cb4-246" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Check if audio is actually voiced</span>
+<span id="cb4-247"><a href="#cb4-247" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Try different time region</span>
 <span id="cb4-248"><a href="#cb4-248" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-249"><a href="#cb4-249" aria-hidden="true" tabindex="-1"></a><span class="fu">intensity</span><span class="kw">:</span></span>
-<span id="cb4-250"><a href="#cb4-250" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">minimumPitch</span><span class="kw">:</span><span class="at"> </span><span class="dv">75</span></span>
-<span id="cb4-251"><a href="#cb4-251" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">timeStep</span><span class="kw">:</span><span class="at"> </span><span class="fl">0.01</span></span>
-<span id="cb4-252"><a href="#cb4-252" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb4-253"><a href="#cb4-253" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-254"><a href="#cb4-254" aria-hidden="true" tabindex="-1"></a>See <span class="co">[</span><span class="ot">Configuration Reference</span><span class="co">](../reference/configuration.html)</span> for all options.</span>
-<span id="cb4-255"><a href="#cb4-255" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-256"><a href="#cb4-256" aria-hidden="true" tabindex="-1"></a><span class="fu">## Troubleshooting</span></span>
-<span id="cb4-257"><a href="#cb4-257" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-258"><a href="#cb4-258" aria-hidden="true" tabindex="-1"></a><span class="fu">### Pitch Track Missing</span></span>
-<span id="cb4-259"><a href="#cb4-259" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-260"><a href="#cb4-260" aria-hidden="true" tabindex="-1"></a>**Problem**: No blue dots visible</span>
-<span id="cb4-261"><a href="#cb4-261" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-262"><a href="#cb4-262" aria-hidden="true" tabindex="-1"></a>**Possible causes**:</span>
-<span id="cb4-263"><a href="#cb4-263" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Audio is unvoiced (normal for fricatives, stops)</span>
-<span id="cb4-264"><a href="#cb4-264" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Pitch range set incorrectly for speaker</span>
-<span id="cb4-265"><a href="#cb4-265" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Very noisy recording</span>
+<span id="cb4-249"><a href="#cb4-249" aria-hidden="true" tabindex="-1"></a><span class="fu">### Formants Look Wrong</span></span>
+<span id="cb4-250"><a href="#cb4-250" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-251"><a href="#cb4-251" aria-hidden="true" tabindex="-1"></a>**Problem**: Red dots appear in unexpected locations</span>
+<span id="cb4-252"><a href="#cb4-252" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-253"><a href="#cb4-253" aria-hidden="true" tabindex="-1"></a>**Possible causes**:</span>
+<span id="cb4-254"><a href="#cb4-254" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Wrong formant preset (male/female/child)</span>
+<span id="cb4-255"><a href="#cb4-255" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Nasalized vowels</span>
+<span id="cb4-256"><a href="#cb4-256" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Non-modal phonation</span>
+<span id="cb4-257"><a href="#cb4-257" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Noise or artifacts</span>
+<span id="cb4-258"><a href="#cb4-258" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-259"><a href="#cb4-259" aria-hidden="true" tabindex="-1"></a>**Solution**:</span>
+<span id="cb4-260"><a href="#cb4-260" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Switch formant preset (Settings → Formant Preset)</span>
+<span id="cb4-261"><a href="#cb4-261" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Check audio quality</span>
+<span id="cb4-262"><a href="#cb4-262" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Verify with auditory analysis</span>
+<span id="cb4-263"><a href="#cb4-263" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Manually verify data point values</span>
+<span id="cb4-264"><a href="#cb4-264" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-265"><a href="#cb4-265" aria-hidden="true" tabindex="-1"></a><span class="fu">### Overlays Not Computing</span></span>
 <span id="cb4-266"><a href="#cb4-266" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-267"><a href="#cb4-267" aria-hidden="true" tabindex="-1"></a>**Solution**:</span>
-<span id="cb4-268"><a href="#cb4-268" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Adjust pitch floor/ceiling for speaker</span>
-<span id="cb4-269"><a href="#cb4-269" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Check if audio is actually voiced</span>
-<span id="cb4-270"><a href="#cb4-270" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Try different time region</span>
-<span id="cb4-271"><a href="#cb4-271" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-272"><a href="#cb4-272" aria-hidden="true" tabindex="-1"></a><span class="fu">### Formants Look Wrong</span></span>
+<span id="cb4-267"><a href="#cb4-267" aria-hidden="true" tabindex="-1"></a>**Problem**: Overlay checkbox enabled but no visualization</span>
+<span id="cb4-268"><a href="#cb4-268" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-269"><a href="#cb4-269" aria-hidden="true" tabindex="-1"></a>**Possible causes**:</span>
+<span id="cb4-270"><a href="#cb4-270" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>WASM not initialized</span>
+<span id="cb4-271"><a href="#cb4-271" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>No audio loaded</span>
+<span id="cb4-272"><a href="#cb4-272" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Audio too long (&gt;60s) and zoomed out</span>
 <span id="cb4-273"><a href="#cb4-273" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-274"><a href="#cb4-274" aria-hidden="true" tabindex="-1"></a>**Problem**: Red dots appear in unexpected locations</span>
-<span id="cb4-275"><a href="#cb4-275" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-276"><a href="#cb4-276" aria-hidden="true" tabindex="-1"></a>**Possible causes**:</span>
-<span id="cb4-277"><a href="#cb4-277" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Wrong formant preset (male/female/child)</span>
-<span id="cb4-278"><a href="#cb4-278" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Nasalized vowels</span>
-<span id="cb4-279"><a href="#cb4-279" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Non-modal phonation</span>
-<span id="cb4-280"><a href="#cb4-280" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Noise or artifacts</span>
-<span id="cb4-281"><a href="#cb4-281" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-282"><a href="#cb4-282" aria-hidden="true" tabindex="-1"></a>**Solution**:</span>
-<span id="cb4-283"><a href="#cb4-283" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Switch formant preset (Settings → Formant Preset)</span>
-<span id="cb4-284"><a href="#cb4-284" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Check audio quality</span>
-<span id="cb4-285"><a href="#cb4-285" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Verify with auditory analysis</span>
-<span id="cb4-286"><a href="#cb4-286" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Manually verify data point values</span>
-<span id="cb4-287"><a href="#cb4-287" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-288"><a href="#cb4-288" aria-hidden="true" tabindex="-1"></a><span class="fu">### Overlays Not Computing</span></span>
-<span id="cb4-289"><a href="#cb4-289" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-290"><a href="#cb4-290" aria-hidden="true" tabindex="-1"></a>**Problem**: Overlay checkbox enabled but no visualization</span>
-<span id="cb4-291"><a href="#cb4-291" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-292"><a href="#cb4-292" aria-hidden="true" tabindex="-1"></a>**Possible causes**:</span>
-<span id="cb4-293"><a href="#cb4-293" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>WASM not initialized</span>
-<span id="cb4-294"><a href="#cb4-294" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>No audio loaded</span>
-<span id="cb4-295"><a href="#cb4-295" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Audio too long (&gt;60s) and zoomed out</span>
+<span id="cb4-274"><a href="#cb4-274" aria-hidden="true" tabindex="-1"></a>**Solution**:</span>
+<span id="cb4-275"><a href="#cb4-275" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Wait for WASM to load (status indicator)</span>
+<span id="cb4-276"><a href="#cb4-276" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Load audio file</span>
+<span id="cb4-277"><a href="#cb4-277" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Zoom in if file is long</span>
+<span id="cb4-278"><a href="#cb4-278" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-279"><a href="#cb4-279" aria-hidden="true" tabindex="-1"></a><span class="fu">## Research Applications</span></span>
+<span id="cb4-280"><a href="#cb4-280" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-281"><a href="#cb4-281" aria-hidden="true" tabindex="-1"></a><span class="fu">### Prosody Analysis</span></span>
+<span id="cb4-282"><a href="#cb4-282" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-283"><a href="#cb4-283" aria-hidden="true" tabindex="-1"></a>Use pitch and intensity overlays to study:</span>
+<span id="cb4-284"><a href="#cb4-284" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Intonation patterns</span>
+<span id="cb4-285"><a href="#cb4-285" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Lexical tone</span>
+<span id="cb4-286"><a href="#cb4-286" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Stress and emphasis</span>
+<span id="cb4-287"><a href="#cb4-287" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Question vs. statement contours</span>
+<span id="cb4-288"><a href="#cb4-288" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-289"><a href="#cb4-289" aria-hidden="true" tabindex="-1"></a><span class="fu">### Vowel Formants</span></span>
+<span id="cb4-290"><a href="#cb4-290" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-291"><a href="#cb4-291" aria-hidden="true" tabindex="-1"></a>Use formant overlay to:</span>
+<span id="cb4-292"><a href="#cb4-292" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Create vowel plots (F1 vs. F2)</span>
+<span id="cb4-293"><a href="#cb4-293" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Track vowel formant trajectories</span>
+<span id="cb4-294"><a href="#cb4-294" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Identify vowel targets</span>
+<span id="cb4-295"><a href="#cb4-295" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Detect vowel coarticulation</span>
 <span id="cb4-296"><a href="#cb4-296" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-297"><a href="#cb4-297" aria-hidden="true" tabindex="-1"></a>**Solution**:</span>
-<span id="cb4-298"><a href="#cb4-298" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Wait for WASM to load (status indicator)</span>
-<span id="cb4-299"><a href="#cb4-299" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Load audio file</span>
-<span id="cb4-300"><a href="#cb4-300" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Zoom in if file is long</span>
-<span id="cb4-301"><a href="#cb4-301" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-302"><a href="#cb4-302" aria-hidden="true" tabindex="-1"></a><span class="fu">## Research Applications</span></span>
-<span id="cb4-303"><a href="#cb4-303" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-304"><a href="#cb4-304" aria-hidden="true" tabindex="-1"></a><span class="fu">### Prosody Analysis</span></span>
-<span id="cb4-305"><a href="#cb4-305" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-306"><a href="#cb4-306" aria-hidden="true" tabindex="-1"></a>Use pitch and intensity overlays to study:</span>
-<span id="cb4-307"><a href="#cb4-307" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Intonation patterns</span>
-<span id="cb4-308"><a href="#cb4-308" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Lexical tone</span>
-<span id="cb4-309"><a href="#cb4-309" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Stress and emphasis</span>
-<span id="cb4-310"><a href="#cb4-310" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Question vs. statement contours</span>
-<span id="cb4-311"><a href="#cb4-311" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-312"><a href="#cb4-312" aria-hidden="true" tabindex="-1"></a><span class="fu">### Vowel Formants</span></span>
-<span id="cb4-313"><a href="#cb4-313" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-314"><a href="#cb4-314" aria-hidden="true" tabindex="-1"></a>Use formant overlay to:</span>
-<span id="cb4-315"><a href="#cb4-315" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Create vowel plots (F1 vs. F2)</span>
-<span id="cb4-316"><a href="#cb4-316" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Track vowel formant trajectories</span>
-<span id="cb4-317"><a href="#cb4-317" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Identify vowel targets</span>
-<span id="cb4-318"><a href="#cb4-318" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Detect vowel coarticulation</span>
-<span id="cb4-319"><a href="#cb4-319" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-320"><a href="#cb4-320" aria-hidden="true" tabindex="-1"></a><span class="fu">### Voice Quality</span></span>
-<span id="cb4-321"><a href="#cb4-321" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-322"><a href="#cb4-322" aria-hidden="true" tabindex="-1"></a>Use HNR, spectral tilt, and A1-P0 to:</span>
-<span id="cb4-323"><a href="#cb4-323" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Compare modal, breathy, and creaky voice</span>
-<span id="cb4-324"><a href="#cb4-324" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Detect pathological voice</span>
-<span id="cb4-325"><a href="#cb4-325" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Analyze phonation types across languages</span>
-<span id="cb4-326"><a href="#cb4-326" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Study laryngealization</span>
-<span id="cb4-327"><a href="#cb4-327" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-328"><a href="#cb4-328" aria-hidden="true" tabindex="-1"></a><span class="fu">### Fricative Analysis</span></span>
-<span id="cb4-329"><a href="#cb4-329" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-330"><a href="#cb4-330" aria-hidden="true" tabindex="-1"></a>Use CoG and spectral tilt to:</span>
-<span id="cb4-331"><a href="#cb4-331" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Distinguish /s/ vs. /ʃ/</span>
-<span id="cb4-332"><a href="#cb4-332" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Measure acoustic contrast</span>
-<span id="cb4-333"><a href="#cb4-333" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Study lenition processes</span>
-<span id="cb4-334"><a href="#cb4-334" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Compare speaker-specific productions</span>
-<span id="cb4-335"><a href="#cb4-335" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-336"><a href="#cb4-336" aria-hidden="true" tabindex="-1"></a><span class="fu">## See Also</span></span>
-<span id="cb4-337"><a href="#cb4-337" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-338"><a href="#cb4-338" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Spectrogram</span><span class="co">](spectrogram.html)</span> - Base visualization</span>
-<span id="cb4-339"><a href="#cb4-339" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Data Points</span><span class="co">](data-points.html)</span> - Collecting measurements</span>
-<span id="cb4-340"><a href="#cb4-340" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Tutorial: Acoustic Analysis</span><span class="co">](../tutorial/03-acoustic-analysis.html)</span> - Step-by-step guide</span>
-<span id="cb4-341"><a href="#cb4-341" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Configuration</span><span class="co">](../reference/configuration.html)</span> - Customizing parameters</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
+<span id="cb4-297"><a href="#cb4-297" aria-hidden="true" tabindex="-1"></a><span class="fu">### Voice Quality</span></span>
+<span id="cb4-298"><a href="#cb4-298" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-299"><a href="#cb4-299" aria-hidden="true" tabindex="-1"></a>Use HNR, spectral tilt, and A1-P0 to:</span>
+<span id="cb4-300"><a href="#cb4-300" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Compare modal, breathy, and creaky voice</span>
+<span id="cb4-301"><a href="#cb4-301" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Detect pathological voice</span>
+<span id="cb4-302"><a href="#cb4-302" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Analyze phonation types across languages</span>
+<span id="cb4-303"><a href="#cb4-303" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Study laryngealization</span>
+<span id="cb4-304"><a href="#cb4-304" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-305"><a href="#cb4-305" aria-hidden="true" tabindex="-1"></a><span class="fu">### Fricative Analysis</span></span>
+<span id="cb4-306"><a href="#cb4-306" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-307"><a href="#cb4-307" aria-hidden="true" tabindex="-1"></a>Use CoG and spectral tilt to:</span>
+<span id="cb4-308"><a href="#cb4-308" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Distinguish /s/ vs. /ʃ/</span>
+<span id="cb4-309"><a href="#cb4-309" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Measure acoustic contrast</span>
+<span id="cb4-310"><a href="#cb4-310" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Study lenition processes</span>
+<span id="cb4-311"><a href="#cb4-311" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Compare speaker-specific productions</span>
+<span id="cb4-312"><a href="#cb4-312" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-313"><a href="#cb4-313" aria-hidden="true" tabindex="-1"></a><span class="fu">## See Also</span></span>
+<span id="cb4-314"><a href="#cb4-314" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-315"><a href="#cb4-315" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Spectrogram</span><span class="co">](spectrogram.html)</span> - Base visualization</span>
+<span id="cb4-316"><a href="#cb4-316" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Data Points</span><span class="co">](data-points.html)</span> - Collecting measurements</span>
+<span id="cb4-317"><a href="#cb4-317" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Tutorial: Acoustic Analysis</span><span class="co">](../tutorial/03-acoustic-analysis.html)</span> - Step-by-step guide</span>
+<span id="cb4-318"><a href="#cb4-318" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Configuration</span><span class="co">](../reference/configuration.html)</span> - Customizing parameters</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 <footer class="footer">

@@ -268,7 +268,7 @@ npm run check
 
 Currently no automated tests. Manual testing workflow:
 
-1. Load various audio formats (WAV, MP3, OGG)
+1. Load various audio formats (WAV, FLAC, MP3, OGG)
 2. Test all overlay toggles
 3. Create annotations, test undo/redo
 4. Add data points, export TSV

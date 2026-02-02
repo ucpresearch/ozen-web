@@ -391,7 +391,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>Draw vertical line from min to max</li>
 <li>Fill area creates solid waveform appearance</li>
 </ol>
-<p>This approach: - Preserves all peaks and zero-crossings - Renders instantly even for hour-long files - Shows full detail when zoomed in - Prevents aliasing artifacts</p>
+<p>This approach: - Preserves all peaks and zero-crossings - Renders for files of any length - Shows full detail when zoomed in - Prevents aliasing artifacts</p>
 </section>
 <section id="interaction" class="level2">
 <h2 class="anchored" data-anchor-id="interaction">Interaction</h2>
@@ -479,33 +479,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="performance" class="level2">
 <h2 class="anchored" data-anchor-id="performance">Performance</h2>
-<table class="caption-top table">
-<thead>
-<tr class="header">
-<th>File Duration</th>
-<th>Render Time</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>5 seconds</td>
-<td>&lt; 10 ms</td>
-</tr>
-<tr class="even">
-<td>1 minute</td>
-<td>&lt; 20 ms</td>
-</tr>
-<tr class="odd">
-<td>1 hour</td>
-<td>&lt; 50 ms</td>
-</tr>
-<tr class="even">
-<td>24 hours</td>
-<td>&lt; 100 ms</td>
-</tr>
-</tbody>
-</table>
-<p>Waveform rendering is near-instantaneous for all file lengths due to efficient downsampling.</p>
+<p>Waveform rendering uses efficient downsampling for files of any length.</p>
 </section>
 <section id="limitations" class="level2">
 <h2 class="anchored" data-anchor-id="limitations">Limitations</h2>
@@ -1039,7 +1013,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-41"><a href="#cb2-41" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-42"><a href="#cb2-42" aria-hidden="true" tabindex="-1"></a>This approach:</span>
 <span id="cb2-43"><a href="#cb2-43" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Preserves all peaks and zero-crossings</span>
-<span id="cb2-44"><a href="#cb2-44" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Renders instantly even for hour-long files</span>
+<span id="cb2-44"><a href="#cb2-44" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Renders for files of any length</span>
 <span id="cb2-45"><a href="#cb2-45" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Shows full detail when zoomed in</span>
 <span id="cb2-46"><a href="#cb2-46" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Prevents aliasing artifacts</span>
 <span id="cb2-47"><a href="#cb2-47" aria-hidden="true" tabindex="-1"></a></span>
@@ -1119,32 +1093,25 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-121"><a href="#cb2-121" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-122"><a href="#cb2-122" aria-hidden="true" tabindex="-1"></a><span class="fu">## Performance</span></span>
 <span id="cb2-123"><a href="#cb2-123" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-124"><a href="#cb2-124" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> File Duration <span class="pp">|</span> Render Time <span class="pp">|</span></span>
-<span id="cb2-125"><a href="#cb2-125" aria-hidden="true" tabindex="-1"></a><span class="pp">|---------------|-------------|</span></span>
-<span id="cb2-126"><a href="#cb2-126" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 5 seconds <span class="pp">|</span> &lt; 10 ms <span class="pp">|</span></span>
-<span id="cb2-127"><a href="#cb2-127" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 1 minute <span class="pp">|</span> &lt; 20 ms <span class="pp">|</span></span>
-<span id="cb2-128"><a href="#cb2-128" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 1 hour <span class="pp">|</span> &lt; 50 ms <span class="pp">|</span></span>
-<span id="cb2-129"><a href="#cb2-129" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 24 hours <span class="pp">|</span> &lt; 100 ms <span class="pp">|</span></span>
-<span id="cb2-130"><a href="#cb2-130" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-131"><a href="#cb2-131" aria-hidden="true" tabindex="-1"></a>Waveform rendering is near-instantaneous for all file lengths due to efficient downsampling.</span>
+<span id="cb2-124"><a href="#cb2-124" aria-hidden="true" tabindex="-1"></a>Waveform rendering uses efficient downsampling for files of any length.</span>
+<span id="cb2-125"><a href="#cb2-125" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-126"><a href="#cb2-126" aria-hidden="true" tabindex="-1"></a><span class="fu">## Limitations</span></span>
+<span id="cb2-127"><a href="#cb2-127" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-128"><a href="#cb2-128" aria-hidden="true" tabindex="-1"></a>**Current version:**</span>
+<span id="cb2-129"><a href="#cb2-129" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Read-only (no waveform editing)</span>
+<span id="cb2-130"><a href="#cb2-130" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Single channel (stereo files mix to mono)</span>
+<span id="cb2-131"><a href="#cb2-131" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>No waveform envelope extraction</span>
 <span id="cb2-132"><a href="#cb2-132" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-133"><a href="#cb2-133" aria-hidden="true" tabindex="-1"></a><span class="fu">## Limitations</span></span>
-<span id="cb2-134"><a href="#cb2-134" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-135"><a href="#cb2-135" aria-hidden="true" tabindex="-1"></a>**Current version:**</span>
-<span id="cb2-136"><a href="#cb2-136" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Read-only (no waveform editing)</span>
-<span id="cb2-137"><a href="#cb2-137" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Single channel (stereo files mix to mono)</span>
-<span id="cb2-138"><a href="#cb2-138" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>No waveform envelope extraction</span>
+<span id="cb2-133"><a href="#cb2-133" aria-hidden="true" tabindex="-1"></a>**Future enhancements:**</span>
+<span id="cb2-134"><a href="#cb2-134" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Stereo waveform (dual channel display)</span>
+<span id="cb2-135"><a href="#cb2-135" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Amplitude envelope overlay</span>
+<span id="cb2-136"><a href="#cb2-136" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Waveform colorization by intensity</span>
+<span id="cb2-137"><a href="#cb2-137" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-138"><a href="#cb2-138" aria-hidden="true" tabindex="-1"></a><span class="fu">## See Also</span></span>
 <span id="cb2-139"><a href="#cb2-139" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-140"><a href="#cb2-140" aria-hidden="true" tabindex="-1"></a>**Future enhancements:**</span>
-<span id="cb2-141"><a href="#cb2-141" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Stereo waveform (dual channel display)</span>
-<span id="cb2-142"><a href="#cb2-142" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Amplitude envelope overlay</span>
-<span id="cb2-143"><a href="#cb2-143" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Waveform colorization by intensity</span>
-<span id="cb2-144"><a href="#cb2-144" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-145"><a href="#cb2-145" aria-hidden="true" tabindex="-1"></a><span class="fu">## See Also</span></span>
-<span id="cb2-146"><a href="#cb2-146" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-147"><a href="#cb2-147" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Spectrogram</span><span class="co">](spectrogram.html)</span> - Frequency-domain visualization</span>
-<span id="cb2-148"><a href="#cb2-148" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Audio Playback</span><span class="co">](audio-playback.html)</span> - Playing audio</span>
-<span id="cb2-149"><a href="#cb2-149" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Tutorial: Exploring Audio</span><span class="co">](../tutorial/02-exploring-audio.html)</span> - Navigation guide</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
+<span id="cb2-140"><a href="#cb2-140" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Spectrogram</span><span class="co">](spectrogram.html)</span> - Frequency-domain visualization</span>
+<span id="cb2-141"><a href="#cb2-141" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Audio Playback</span><span class="co">](audio-playback.html)</span> - Playing audio</span>
+<span id="cb2-142"><a href="#cb2-142" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Tutorial: Exploring Audio</span><span class="co">](../tutorial/02-exploring-audio.html)</span> - Navigation guide</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 <footer class="footer">

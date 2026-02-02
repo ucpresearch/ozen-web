@@ -12,13 +12,19 @@ echo "Syncing Quarto output to GitHub Pages directory..."
 echo "  Source: $SITE_DIR"
 echo "  Target: $DOCS_DIR"
 
-# Remove old docs/ content (except .git if it exists)
+# Remove old docs/ content (except .git and live/ if they exist)
 if [ -d "$DOCS_DIR" ]; then
-  find "$DOCS_DIR" -mindepth 1 -maxdepth 1 ! -name '.git' -exec rm -rf {} +
+  find "$DOCS_DIR" -mindepth 1 -maxdepth 1 ! -name '.git' ! -name 'live' -exec rm -rf {} +
 fi
 
 # Copy _site/ contents to docs/
 mkdir -p "$DOCS_DIR"
 cp -r "$SITE_DIR"/* "$DOCS_DIR/"
+
+# If live/ exists in docs-src, ensure it's in docs/ (in case it was deleted)
+if [ -d "$DOCS_SRC_DIR/live" ] && [ ! -d "$DOCS_DIR/live" ]; then
+  echo "Copying live/ directory..."
+  cp -r "$DOCS_SRC_DIR/live" "$DOCS_DIR/"
+fi
 
 echo "✓ Sync complete"

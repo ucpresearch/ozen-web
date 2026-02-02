@@ -360,7 +360,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <section id="overview" class="level2">
 <h2 class="anchored" data-anchor-id="overview">Overview</h2>
-<p>Ozen-web provides high-quality audio playback using the Web Audio API, with support for selection playback, real-time cursor tracking, and keyboard controls.</p>
+<p>Ozen-web provides audio playback using the Web Audio API, with support for selection playback, real-time cursor tracking, and keyboard controls.</p>
 </section>
 <section id="key-features" class="level2">
 <h2 class="anchored" data-anchor-id="key-features">Key Features</h2>
@@ -477,7 +477,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>source<span class="op">.</span><span class="at">buffer</span> <span class="op">=</span> audioBuffer<span class="op">;</span></span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>source<span class="op">.</span><span class="fu">connect</span>(audioContext<span class="op">.</span><span class="at">destination</span>)<span class="op">;</span></span>
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>source<span class="op">.</span><span class="fu">start</span>(<span class="dv">0</span><span class="op">,</span> startTime<span class="op">,</span> duration)<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p><strong>Advantages:</strong> - Sample-accurate timing - Low latency - Cross-platform consistency - No plugin required</p>
+<p><strong>Features:</strong> - Sample-accurate timing - Cross-platform consistency - No plugin required</p>
 <p><strong>Limitations:</strong> - Requires user gesture to start (browser security) - May require AudioContext resume() on first play</p>
 </section>
 <section id="playback-state" class="level2">
@@ -515,38 +515,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="browser-compatibility" class="level2">
 <h2 class="anchored" data-anchor-id="browser-compatibility">Browser Compatibility</h2>
-<p>Web Audio API is supported in all modern browsers:</p>
-<table class="caption-top table">
-<thead>
-<tr class="header">
-<th>Browser</th>
-<th>Support</th>
-<th>Notes</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>Chrome 90+</td>
-<td>✅ Full</td>
-<td>Best performance</td>
-</tr>
-<tr class="even">
-<td>Firefox 88+</td>
-<td>✅ Full</td>
-<td></td>
-</tr>
-<tr class="odd">
-<td>Safari 14+</td>
-<td>✅ Full</td>
-<td>May require user gesture</td>
-</tr>
-<tr class="even">
-<td>Edge 90+</td>
-<td>✅ Full</td>
-<td>Chromium-based</td>
-</tr>
-</tbody>
-</table>
+<p>Web Audio API is supported in all modern browsers.</p>
 </section>
 <section id="future-features" class="level2">
 <h2 class="anchored" data-anchor-id="future-features">Future Features</h2>
@@ -1071,7 +1040,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="fu">## Overview</span></span>
 <span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>Ozen-web provides high-quality audio playback using the Web Audio API, with support for selection playback, real-time cursor tracking, and keyboard controls.</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>Ozen-web provides audio playback using the Web Audio API, with support for selection playback, real-time cursor tracking, and keyboard controls.</span>
 <span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="fu">## Key Features</span></span>
 <span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a></span>
@@ -1163,123 +1132,115 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-97"><a href="#cb2-97" aria-hidden="true" tabindex="-1"></a>source<span class="op">.</span><span class="fu">start</span><span class="op">(</span><span class="dv">0</span><span class="op">,</span> startTime<span class="op">,</span> duration<span class="op">);</span></span>
 <span id="cb2-98"><a href="#cb2-98" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb2-99"><a href="#cb2-99" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-100"><a href="#cb2-100" aria-hidden="true" tabindex="-1"></a>**Advantages:**</span>
+<span id="cb2-100"><a href="#cb2-100" aria-hidden="true" tabindex="-1"></a>**Features:**</span>
 <span id="cb2-101"><a href="#cb2-101" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Sample-accurate timing</span>
-<span id="cb2-102"><a href="#cb2-102" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Low latency</span>
-<span id="cb2-103"><a href="#cb2-103" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Cross-platform consistency</span>
-<span id="cb2-104"><a href="#cb2-104" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>No plugin required</span>
-<span id="cb2-105"><a href="#cb2-105" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-106"><a href="#cb2-106" aria-hidden="true" tabindex="-1"></a>**Limitations:**</span>
-<span id="cb2-107"><a href="#cb2-107" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Requires user gesture to start (browser security)</span>
-<span id="cb2-108"><a href="#cb2-108" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>May require AudioContext resume() on first play</span>
-<span id="cb2-109"><a href="#cb2-109" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-110"><a href="#cb2-110" aria-hidden="true" tabindex="-1"></a><span class="fu">## Playback State</span></span>
-<span id="cb2-111"><a href="#cb2-111" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-112"><a href="#cb2-112" aria-hidden="true" tabindex="-1"></a>The app tracks playback state:</span>
-<span id="cb2-113"><a href="#cb2-113" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-114"><a href="#cb2-114" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Stopped** - No playback active (initial state)</span>
-<span id="cb2-115"><a href="#cb2-115" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Playing** - Audio currently playing</span>
-<span id="cb2-116"><a href="#cb2-116" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Paused** - Playback paused (can resume)</span>
-<span id="cb2-117"><a href="#cb2-117" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-118"><a href="#cb2-118" aria-hidden="true" tabindex="-1"></a>**State transitions:**</span>
-<span id="cb2-119"><a href="#cb2-119" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Space (no selection) → Playing from cursor</span>
-<span id="cb2-120"><a href="#cb2-120" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Space (selection) → Playing selection</span>
-<span id="cb2-121"><a href="#cb2-121" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Space (during playback) → Paused</span>
-<span id="cb2-122"><a href="#cb2-122" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Space (paused) → Resume from pause position</span>
-<span id="cb2-123"><a href="#cb2-123" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Escape → Stopped (return to start)</span>
-<span id="cb2-124"><a href="#cb2-124" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-125"><a href="#cb2-125" aria-hidden="true" tabindex="-1"></a><span class="fu">## Selection Workflow</span></span>
-<span id="cb2-126"><a href="#cb2-126" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-127"><a href="#cb2-127" aria-hidden="true" tabindex="-1"></a>**Efficient annotation workflow:**</span>
-<span id="cb2-128"><a href="#cb2-128" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-129"><a href="#cb2-129" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Play full window (Tab) to hear context</span>
-<span id="cb2-130"><a href="#cb2-130" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>Pause (Space) when you hear boundary</span>
-<span id="cb2-131"><a href="#cb2-131" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>Zoom in on boundary region</span>
-<span id="cb2-132"><a href="#cb2-132" aria-hidden="true" tabindex="-1"></a><span class="ss">4. </span>Select boundary region (click + drag)</span>
-<span id="cb2-133"><a href="#cb2-133" aria-hidden="true" tabindex="-1"></a><span class="ss">5. </span>Play selection (Space) to verify</span>
-<span id="cb2-134"><a href="#cb2-134" aria-hidden="true" tabindex="-1"></a><span class="ss">6. </span>Add annotation boundary</span>
-<span id="cb2-135"><a href="#cb2-135" aria-hidden="true" tabindex="-1"></a><span class="ss">7. </span>Repeat</span>
-<span id="cb2-136"><a href="#cb2-136" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-137"><a href="#cb2-137" aria-hidden="true" tabindex="-1"></a><span class="fu">## Audio Quality</span></span>
-<span id="cb2-138"><a href="#cb2-138" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-139"><a href="#cb2-139" aria-hidden="true" tabindex="-1"></a>All playback preserves original audio quality:</span>
-<span id="cb2-140"><a href="#cb2-140" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-141"><a href="#cb2-141" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Sample rate** - Matches source file (16 kHz, 44.1 kHz, 48 kHz, etc.)</span>
-<span id="cb2-142"><a href="#cb2-142" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Bit depth** - Converted to Float32 for processing (no quality loss)</span>
-<span id="cb2-143"><a href="#cb2-143" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Resampling** - Web Audio API handles resampling if needed</span>
-<span id="cb2-144"><a href="#cb2-144" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-145"><a href="#cb2-145" aria-hidden="true" tabindex="-1"></a>No compression or downsampling is applied during playback.</span>
-<span id="cb2-146"><a href="#cb2-146" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-147"><a href="#cb2-147" aria-hidden="true" tabindex="-1"></a><span class="fu">## Browser Compatibility</span></span>
-<span id="cb2-148"><a href="#cb2-148" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-149"><a href="#cb2-149" aria-hidden="true" tabindex="-1"></a>Web Audio API is supported in all modern browsers:</span>
-<span id="cb2-150"><a href="#cb2-150" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-151"><a href="#cb2-151" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Browser <span class="pp">|</span> Support <span class="pp">|</span> Notes <span class="pp">|</span></span>
-<span id="cb2-152"><a href="#cb2-152" aria-hidden="true" tabindex="-1"></a><span class="pp">|---------|---------|-------|</span></span>
-<span id="cb2-153"><a href="#cb2-153" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Chrome 90+ <span class="pp">|</span> ✅ Full <span class="pp">|</span> Best performance <span class="pp">|</span></span>
-<span id="cb2-154"><a href="#cb2-154" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Firefox 88+ <span class="pp">|</span> ✅ Full <span class="pp">|</span> <span class="pp">|</span></span>
-<span id="cb2-155"><a href="#cb2-155" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Safari 14+ <span class="pp">|</span> ✅ Full <span class="pp">|</span> May require user gesture <span class="pp">|</span></span>
-<span id="cb2-156"><a href="#cb2-156" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Edge 90+ <span class="pp">|</span> ✅ Full <span class="pp">|</span> Chromium-based <span class="pp">|</span></span>
-<span id="cb2-157"><a href="#cb2-157" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-158"><a href="#cb2-158" aria-hidden="true" tabindex="-1"></a><span class="fu">## Future Features</span></span>
+<span id="cb2-102"><a href="#cb2-102" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Cross-platform consistency</span>
+<span id="cb2-103"><a href="#cb2-103" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>No plugin required</span>
+<span id="cb2-104"><a href="#cb2-104" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-105"><a href="#cb2-105" aria-hidden="true" tabindex="-1"></a>**Limitations:**</span>
+<span id="cb2-106"><a href="#cb2-106" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Requires user gesture to start (browser security)</span>
+<span id="cb2-107"><a href="#cb2-107" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>May require AudioContext resume() on first play</span>
+<span id="cb2-108"><a href="#cb2-108" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-109"><a href="#cb2-109" aria-hidden="true" tabindex="-1"></a><span class="fu">## Playback State</span></span>
+<span id="cb2-110"><a href="#cb2-110" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-111"><a href="#cb2-111" aria-hidden="true" tabindex="-1"></a>The app tracks playback state:</span>
+<span id="cb2-112"><a href="#cb2-112" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-113"><a href="#cb2-113" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Stopped** - No playback active (initial state)</span>
+<span id="cb2-114"><a href="#cb2-114" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Playing** - Audio currently playing</span>
+<span id="cb2-115"><a href="#cb2-115" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Paused** - Playback paused (can resume)</span>
+<span id="cb2-116"><a href="#cb2-116" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-117"><a href="#cb2-117" aria-hidden="true" tabindex="-1"></a>**State transitions:**</span>
+<span id="cb2-118"><a href="#cb2-118" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Space (no selection) → Playing from cursor</span>
+<span id="cb2-119"><a href="#cb2-119" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Space (selection) → Playing selection</span>
+<span id="cb2-120"><a href="#cb2-120" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Space (during playback) → Paused</span>
+<span id="cb2-121"><a href="#cb2-121" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Space (paused) → Resume from pause position</span>
+<span id="cb2-122"><a href="#cb2-122" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Escape → Stopped (return to start)</span>
+<span id="cb2-123"><a href="#cb2-123" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-124"><a href="#cb2-124" aria-hidden="true" tabindex="-1"></a><span class="fu">## Selection Workflow</span></span>
+<span id="cb2-125"><a href="#cb2-125" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-126"><a href="#cb2-126" aria-hidden="true" tabindex="-1"></a>**Efficient annotation workflow:**</span>
+<span id="cb2-127"><a href="#cb2-127" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-128"><a href="#cb2-128" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Play full window (Tab) to hear context</span>
+<span id="cb2-129"><a href="#cb2-129" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>Pause (Space) when you hear boundary</span>
+<span id="cb2-130"><a href="#cb2-130" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>Zoom in on boundary region</span>
+<span id="cb2-131"><a href="#cb2-131" aria-hidden="true" tabindex="-1"></a><span class="ss">4. </span>Select boundary region (click + drag)</span>
+<span id="cb2-132"><a href="#cb2-132" aria-hidden="true" tabindex="-1"></a><span class="ss">5. </span>Play selection (Space) to verify</span>
+<span id="cb2-133"><a href="#cb2-133" aria-hidden="true" tabindex="-1"></a><span class="ss">6. </span>Add annotation boundary</span>
+<span id="cb2-134"><a href="#cb2-134" aria-hidden="true" tabindex="-1"></a><span class="ss">7. </span>Repeat</span>
+<span id="cb2-135"><a href="#cb2-135" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-136"><a href="#cb2-136" aria-hidden="true" tabindex="-1"></a><span class="fu">## Audio Quality</span></span>
+<span id="cb2-137"><a href="#cb2-137" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-138"><a href="#cb2-138" aria-hidden="true" tabindex="-1"></a>All playback preserves original audio quality:</span>
+<span id="cb2-139"><a href="#cb2-139" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-140"><a href="#cb2-140" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Sample rate** - Matches source file (16 kHz, 44.1 kHz, 48 kHz, etc.)</span>
+<span id="cb2-141"><a href="#cb2-141" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Bit depth** - Converted to Float32 for processing (no quality loss)</span>
+<span id="cb2-142"><a href="#cb2-142" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Resampling** - Web Audio API handles resampling if needed</span>
+<span id="cb2-143"><a href="#cb2-143" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-144"><a href="#cb2-144" aria-hidden="true" tabindex="-1"></a>No compression or downsampling is applied during playback.</span>
+<span id="cb2-145"><a href="#cb2-145" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-146"><a href="#cb2-146" aria-hidden="true" tabindex="-1"></a><span class="fu">## Browser Compatibility</span></span>
+<span id="cb2-147"><a href="#cb2-147" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-148"><a href="#cb2-148" aria-hidden="true" tabindex="-1"></a>Web Audio API is supported in all modern browsers.</span>
+<span id="cb2-149"><a href="#cb2-149" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-150"><a href="#cb2-150" aria-hidden="true" tabindex="-1"></a><span class="fu">## Future Features</span></span>
+<span id="cb2-151"><a href="#cb2-151" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-152"><a href="#cb2-152" aria-hidden="true" tabindex="-1"></a>Planned playback enhancements:</span>
+<span id="cb2-153"><a href="#cb2-153" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-154"><a href="#cb2-154" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Loop playback** - Continuously repeat selection</span>
+<span id="cb2-155"><a href="#cb2-155" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Playback rate control** - 0.5x, 0.75x, 1.5x, 2x speed</span>
+<span id="cb2-156"><a href="#cb2-156" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Pitch-preserving slow-motion** - Slow down without changing pitch</span>
+<span id="cb2-157"><a href="#cb2-157" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Fade in/out** - Smooth start/stop transitions</span>
+<span id="cb2-158"><a href="#cb2-158" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Volume control** - Master volume slider</span>
 <span id="cb2-159"><a href="#cb2-159" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-160"><a href="#cb2-160" aria-hidden="true" tabindex="-1"></a>Planned playback enhancements:</span>
+<span id="cb2-160"><a href="#cb2-160" aria-hidden="true" tabindex="-1"></a><span class="fu">## Troubleshooting</span></span>
 <span id="cb2-161"><a href="#cb2-161" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-162"><a href="#cb2-162" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Loop playback** - Continuously repeat selection</span>
-<span id="cb2-163"><a href="#cb2-163" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Playback rate control** - 0.5x, 0.75x, 1.5x, 2x speed</span>
-<span id="cb2-164"><a href="#cb2-164" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Pitch-preserving slow-motion** - Slow down without changing pitch</span>
-<span id="cb2-165"><a href="#cb2-165" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Fade in/out** - Smooth start/stop transitions</span>
-<span id="cb2-166"><a href="#cb2-166" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Volume control** - Master volume slider</span>
-<span id="cb2-167"><a href="#cb2-167" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-168"><a href="#cb2-168" aria-hidden="true" tabindex="-1"></a><span class="fu">## Troubleshooting</span></span>
-<span id="cb2-169"><a href="#cb2-169" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-170"><a href="#cb2-170" aria-hidden="true" tabindex="-1"></a><span class="fu">### No Sound</span></span>
-<span id="cb2-171"><a href="#cb2-171" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-172"><a href="#cb2-172" aria-hidden="true" tabindex="-1"></a>**Problem**: Playback starts but no audio heard</span>
-<span id="cb2-173"><a href="#cb2-173" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-174"><a href="#cb2-174" aria-hidden="true" tabindex="-1"></a>**Possible causes:**</span>
-<span id="cb2-175"><a href="#cb2-175" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>System volume muted</span>
-<span id="cb2-176"><a href="#cb2-176" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Browser audio blocked (autoplay policy)</span>
-<span id="cb2-177"><a href="#cb2-177" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>AudioContext not resumed</span>
-<span id="cb2-178"><a href="#cb2-178" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-179"><a href="#cb2-179" aria-hidden="true" tabindex="-1"></a>**Solution:**</span>
-<span id="cb2-180"><a href="#cb2-180" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Check system volume</span>
-<span id="cb2-181"><a href="#cb2-181" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Click on page first (browser security requirement)</span>
-<span id="cb2-182"><a href="#cb2-182" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Try pressing Space again to resume AudioContext</span>
-<span id="cb2-183"><a href="#cb2-183" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-184"><a href="#cb2-184" aria-hidden="true" tabindex="-1"></a><span class="fu">### Playback Stutters</span></span>
-<span id="cb2-185"><a href="#cb2-185" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-186"><a href="#cb2-186" aria-hidden="true" tabindex="-1"></a>**Problem**: Audio playback is choppy or glitchy</span>
-<span id="cb2-187"><a href="#cb2-187" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-188"><a href="#cb2-188" aria-hidden="true" tabindex="-1"></a>**Possible causes:**</span>
-<span id="cb2-189"><a href="#cb2-189" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>High CPU usage (many browser tabs)</span>
-<span id="cb2-190"><a href="#cb2-190" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Underpowered device</span>
-<span id="cb2-191"><a href="#cb2-191" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Large buffer size</span>
-<span id="cb2-192"><a href="#cb2-192" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-193"><a href="#cb2-193" aria-hidden="true" tabindex="-1"></a>**Solution:**</span>
-<span id="cb2-194"><a href="#cb2-194" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Close other tabs</span>
-<span id="cb2-195"><a href="#cb2-195" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Try in Chrome (best performance)</span>
-<span id="cb2-196"><a href="#cb2-196" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Reload page to reset AudioContext</span>
-<span id="cb2-197"><a href="#cb2-197" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-198"><a href="#cb2-198" aria-hidden="true" tabindex="-1"></a><span class="fu">### Selection Won't Play</span></span>
-<span id="cb2-199"><a href="#cb2-199" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-200"><a href="#cb2-200" aria-hidden="true" tabindex="-1"></a>**Problem**: Pressing Space doesn't play selected region</span>
-<span id="cb2-201"><a href="#cb2-201" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-202"><a href="#cb2-202" aria-hidden="true" tabindex="-1"></a>**Possible causes:**</span>
-<span id="cb2-203"><a href="#cb2-203" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Selection too short (&lt;10ms)</span>
-<span id="cb2-204"><a href="#cb2-204" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>No audio loaded</span>
-<span id="cb2-205"><a href="#cb2-205" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Playback already active</span>
-<span id="cb2-206"><a href="#cb2-206" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-207"><a href="#cb2-207" aria-hidden="true" tabindex="-1"></a>**Solution:**</span>
-<span id="cb2-208"><a href="#cb2-208" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Ensure selection is &gt;10ms</span>
-<span id="cb2-209"><a href="#cb2-209" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Load audio file first</span>
-<span id="cb2-210"><a href="#cb2-210" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Press Escape to stop current playback</span>
-<span id="cb2-211"><a href="#cb2-211" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-212"><a href="#cb2-212" aria-hidden="true" tabindex="-1"></a><span class="fu">## See Also</span></span>
-<span id="cb2-213"><a href="#cb2-213" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-214"><a href="#cb2-214" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Keyboard Shortcuts</span><span class="co">](../reference/keyboard-shortcuts.html)</span> - Full shortcut reference</span>
-<span id="cb2-215"><a href="#cb2-215" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Tutorial: Exploring Audio</span><span class="co">](../tutorial/02-exploring-audio.html)</span> - Playback workflow</span>
-<span id="cb2-216"><a href="#cb2-216" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Waveform</span><span class="co">](waveform.html)</span> - Visual amplitude display</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
+<span id="cb2-162"><a href="#cb2-162" aria-hidden="true" tabindex="-1"></a><span class="fu">### No Sound</span></span>
+<span id="cb2-163"><a href="#cb2-163" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-164"><a href="#cb2-164" aria-hidden="true" tabindex="-1"></a>**Problem**: Playback starts but no audio heard</span>
+<span id="cb2-165"><a href="#cb2-165" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-166"><a href="#cb2-166" aria-hidden="true" tabindex="-1"></a>**Possible causes:**</span>
+<span id="cb2-167"><a href="#cb2-167" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>System volume muted</span>
+<span id="cb2-168"><a href="#cb2-168" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Browser audio blocked (autoplay policy)</span>
+<span id="cb2-169"><a href="#cb2-169" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>AudioContext not resumed</span>
+<span id="cb2-170"><a href="#cb2-170" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-171"><a href="#cb2-171" aria-hidden="true" tabindex="-1"></a>**Solution:**</span>
+<span id="cb2-172"><a href="#cb2-172" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Check system volume</span>
+<span id="cb2-173"><a href="#cb2-173" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Click on page first (browser security requirement)</span>
+<span id="cb2-174"><a href="#cb2-174" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Try pressing Space again to resume AudioContext</span>
+<span id="cb2-175"><a href="#cb2-175" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-176"><a href="#cb2-176" aria-hidden="true" tabindex="-1"></a><span class="fu">### Playback Stutters</span></span>
+<span id="cb2-177"><a href="#cb2-177" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-178"><a href="#cb2-178" aria-hidden="true" tabindex="-1"></a>**Problem**: Audio playback is choppy or glitchy</span>
+<span id="cb2-179"><a href="#cb2-179" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-180"><a href="#cb2-180" aria-hidden="true" tabindex="-1"></a>**Possible causes:**</span>
+<span id="cb2-181"><a href="#cb2-181" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>High CPU usage (many browser tabs)</span>
+<span id="cb2-182"><a href="#cb2-182" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Underpowered device</span>
+<span id="cb2-183"><a href="#cb2-183" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Large buffer size</span>
+<span id="cb2-184"><a href="#cb2-184" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-185"><a href="#cb2-185" aria-hidden="true" tabindex="-1"></a>**Solution:**</span>
+<span id="cb2-186"><a href="#cb2-186" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Close other tabs</span>
+<span id="cb2-187"><a href="#cb2-187" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Try in Chrome (best performance)</span>
+<span id="cb2-188"><a href="#cb2-188" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Reload page to reset AudioContext</span>
+<span id="cb2-189"><a href="#cb2-189" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-190"><a href="#cb2-190" aria-hidden="true" tabindex="-1"></a><span class="fu">### Selection Won't Play</span></span>
+<span id="cb2-191"><a href="#cb2-191" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-192"><a href="#cb2-192" aria-hidden="true" tabindex="-1"></a>**Problem**: Pressing Space doesn't play selected region</span>
+<span id="cb2-193"><a href="#cb2-193" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-194"><a href="#cb2-194" aria-hidden="true" tabindex="-1"></a>**Possible causes:**</span>
+<span id="cb2-195"><a href="#cb2-195" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Selection too short (&lt;10ms)</span>
+<span id="cb2-196"><a href="#cb2-196" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>No audio loaded</span>
+<span id="cb2-197"><a href="#cb2-197" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Playback already active</span>
+<span id="cb2-198"><a href="#cb2-198" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-199"><a href="#cb2-199" aria-hidden="true" tabindex="-1"></a>**Solution:**</span>
+<span id="cb2-200"><a href="#cb2-200" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Ensure selection is &gt;10ms</span>
+<span id="cb2-201"><a href="#cb2-201" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Load audio file first</span>
+<span id="cb2-202"><a href="#cb2-202" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Press Escape to stop current playback</span>
+<span id="cb2-203"><a href="#cb2-203" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-204"><a href="#cb2-204" aria-hidden="true" tabindex="-1"></a><span class="fu">## See Also</span></span>
+<span id="cb2-205"><a href="#cb2-205" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-206"><a href="#cb2-206" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Keyboard Shortcuts</span><span class="co">](../reference/keyboard-shortcuts.html)</span> - Full shortcut reference</span>
+<span id="cb2-207"><a href="#cb2-207" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Tutorial: Exploring Audio</span><span class="co">](../tutorial/02-exploring-audio.html)</span> - Playback workflow</span>
+<span id="cb2-208"><a href="#cb2-208" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Waveform</span><span class="co">](waveform.html)</span> - Visual amplitude display</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 <footer class="footer">

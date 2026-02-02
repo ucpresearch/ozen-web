@@ -310,11 +310,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul class="collapse">
   <li><a href="#text-files" id="toc-text-files" class="nav-link" data-scroll-target="#text-files">Text Files</a></li>
   </ul></li>
-  <li><a href="#browser-compatibility" id="toc-browser-compatibility" class="nav-link" data-scroll-target="#browser-compatibility">Browser Compatibility</a>
-  <ul class="collapse">
-  <li><a href="#supported-audio-formats-by-browser" id="toc-supported-audio-formats-by-browser" class="nav-link" data-scroll-target="#supported-audio-formats-by-browser">Supported Audio Formats by Browser</a></li>
-  <li><a href="#file-api-support" id="toc-file-api-support" class="nav-link" data-scroll-target="#file-api-support">File API Support</a></li>
-  </ul></li>
+  <li><a href="#browser-compatibility" id="toc-browser-compatibility" class="nav-link" data-scroll-target="#browser-compatibility">Browser Compatibility</a></li>
   <li><a href="#conversion-tools" id="toc-conversion-tools" class="nav-link" data-scroll-target="#conversion-tools">Conversion Tools</a>
   <ul class="collapse">
   <li><a href="#ffmpeg-command-line" id="toc-ffmpeg-command-line" class="nav-link" data-scroll-target="#ffmpeg-command-line">ffmpeg (Command Line)</a></li>
@@ -761,49 +757,7 @@ Create TextGrid... 0 2.5 "words" ""
 </section>
 <section id="browser-compatibility" class="level2">
 <h2 class="anchored" data-anchor-id="browser-compatibility">Browser Compatibility</h2>
-<section id="supported-audio-formats-by-browser" class="level3">
-<h3 class="anchored" data-anchor-id="supported-audio-formats-by-browser">Supported Audio Formats by Browser</h3>
-<table class="caption-top table">
-<thead>
-<tr class="header">
-<th>Format</th>
-<th>Chrome</th>
-<th>Firefox</th>
-<th>Safari</th>
-<th>Edge</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>WAV</td>
-<td>✅</td>
-<td>✅</td>
-<td>✅</td>
-<td>✅</td>
-</tr>
-<tr class="even">
-<td>MP3</td>
-<td>✅</td>
-<td>✅</td>
-<td>✅</td>
-<td>✅</td>
-</tr>
-<tr class="odd">
-<td>OGG</td>
-<td>✅</td>
-<td>✅</td>
-<td>❌</td>
-<td>✅</td>
-</tr>
-</tbody>
-</table>
-<p><strong>Note:</strong> Safari does not support OGG Vorbis. Use WAV or MP3 for maximum compatibility.</p>
-</section>
-<section id="file-api-support" class="level3">
-<h3 class="anchored" data-anchor-id="file-api-support">File API Support</h3>
-<p>All modern browsers support: - File picker (input type=“file”) - Drag and drop - File System Access API (save files)</p>
-<p>Minimum versions: - Chrome 90+ - Firefox 88+ - Safari 14+ - Edge 90+</p>
-</section>
+<p>All modern browsers support: - File picker (input type=“file”) - Drag and drop - File System Access API (save files) - WAV, FLAC, MP3 audio formats - OGG support varies by browser</p>
 </section>
 <section id="conversion-tools" class="level2">
 <h2 class="anchored" data-anchor-id="conversion-tools">Conversion Tools</h2>
@@ -1703,98 +1657,82 @@ Save as WAV file: "output.wav"</code></pre>
 <span id="cb16-356"><a href="#cb16-356" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb16-357"><a href="#cb16-357" aria-hidden="true" tabindex="-1"></a><span class="fu">## Browser Compatibility</span></span>
 <span id="cb16-358"><a href="#cb16-358" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-359"><a href="#cb16-359" aria-hidden="true" tabindex="-1"></a><span class="fu">### Supported Audio Formats by Browser</span></span>
-<span id="cb16-360"><a href="#cb16-360" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-361"><a href="#cb16-361" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Format <span class="pp">|</span> Chrome <span class="pp">|</span> Firefox <span class="pp">|</span> Safari <span class="pp">|</span> Edge <span class="pp">|</span></span>
-<span id="cb16-362"><a href="#cb16-362" aria-hidden="true" tabindex="-1"></a><span class="pp">|--------|--------|---------|--------|------|</span></span>
-<span id="cb16-363"><a href="#cb16-363" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> WAV <span class="pp">|</span> ✅ <span class="pp">|</span> ✅ <span class="pp">|</span> ✅ <span class="pp">|</span> ✅ <span class="pp">|</span></span>
-<span id="cb16-364"><a href="#cb16-364" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> MP3 <span class="pp">|</span> ✅ <span class="pp">|</span> ✅ <span class="pp">|</span> ✅ <span class="pp">|</span> ✅ <span class="pp">|</span></span>
-<span id="cb16-365"><a href="#cb16-365" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> OGG <span class="pp">|</span> ✅ <span class="pp">|</span> ✅ <span class="pp">|</span> ❌ <span class="pp">|</span> ✅ <span class="pp">|</span></span>
-<span id="cb16-366"><a href="#cb16-366" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-367"><a href="#cb16-367" aria-hidden="true" tabindex="-1"></a>**Note:** Safari does not support OGG Vorbis. Use WAV or MP3 for maximum compatibility.</span>
-<span id="cb16-368"><a href="#cb16-368" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-369"><a href="#cb16-369" aria-hidden="true" tabindex="-1"></a><span class="fu">### File API Support</span></span>
-<span id="cb16-370"><a href="#cb16-370" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-371"><a href="#cb16-371" aria-hidden="true" tabindex="-1"></a>All modern browsers support:</span>
-<span id="cb16-372"><a href="#cb16-372" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>File picker (input type="file")</span>
-<span id="cb16-373"><a href="#cb16-373" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Drag and drop</span>
-<span id="cb16-374"><a href="#cb16-374" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>File System Access API (save files)</span>
-<span id="cb16-375"><a href="#cb16-375" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-376"><a href="#cb16-376" aria-hidden="true" tabindex="-1"></a>Minimum versions:</span>
-<span id="cb16-377"><a href="#cb16-377" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Chrome 90+</span>
-<span id="cb16-378"><a href="#cb16-378" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Firefox 88+</span>
-<span id="cb16-379"><a href="#cb16-379" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Safari 14+</span>
-<span id="cb16-380"><a href="#cb16-380" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Edge 90+</span>
+<span id="cb16-359"><a href="#cb16-359" aria-hidden="true" tabindex="-1"></a>All modern browsers support:</span>
+<span id="cb16-360"><a href="#cb16-360" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>File picker (input type="file")</span>
+<span id="cb16-361"><a href="#cb16-361" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Drag and drop</span>
+<span id="cb16-362"><a href="#cb16-362" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>File System Access API (save files)</span>
+<span id="cb16-363"><a href="#cb16-363" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>WAV, FLAC, MP3 audio formats</span>
+<span id="cb16-364"><a href="#cb16-364" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>OGG support varies by browser</span>
+<span id="cb16-365"><a href="#cb16-365" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-366"><a href="#cb16-366" aria-hidden="true" tabindex="-1"></a><span class="fu">## Conversion Tools</span></span>
+<span id="cb16-367"><a href="#cb16-367" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-368"><a href="#cb16-368" aria-hidden="true" tabindex="-1"></a><span class="fu">### ffmpeg (Command Line)</span></span>
+<span id="cb16-369"><a href="#cb16-369" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-370"><a href="#cb16-370" aria-hidden="true" tabindex="-1"></a>**Convert to WAV:**</span>
+<span id="cb16-371"><a href="#cb16-371" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
+<span id="cb16-372"><a href="#cb16-372" aria-hidden="true" tabindex="-1"></a><span class="co"># From MP3</span></span>
+<span id="cb16-373"><a href="#cb16-373" aria-hidden="true" tabindex="-1"></a><span class="ex">ffmpeg</span> <span class="at">-i</span> input.mp3 output.wav</span>
+<span id="cb16-374"><a href="#cb16-374" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-375"><a href="#cb16-375" aria-hidden="true" tabindex="-1"></a><span class="co"># Specify sample rate and channels</span></span>
+<span id="cb16-376"><a href="#cb16-376" aria-hidden="true" tabindex="-1"></a><span class="ex">ffmpeg</span> <span class="at">-i</span> input.mp3 <span class="at">-ar</span> 16000 <span class="at">-ac</span> 1 output.wav</span>
+<span id="cb16-377"><a href="#cb16-377" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-378"><a href="#cb16-378" aria-hidden="true" tabindex="-1"></a><span class="co"># From video (extract audio)</span></span>
+<span id="cb16-379"><a href="#cb16-379" aria-hidden="true" tabindex="-1"></a><span class="ex">ffmpeg</span> <span class="at">-i</span> video.mp4 <span class="at">-vn</span> <span class="at">-acodec</span> pcm_s16le output.wav</span>
+<span id="cb16-380"><a href="#cb16-380" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb16-381"><a href="#cb16-381" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-382"><a href="#cb16-382" aria-hidden="true" tabindex="-1"></a><span class="fu">## Conversion Tools</span></span>
-<span id="cb16-383"><a href="#cb16-383" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-384"><a href="#cb16-384" aria-hidden="true" tabindex="-1"></a><span class="fu">### ffmpeg (Command Line)</span></span>
-<span id="cb16-385"><a href="#cb16-385" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-386"><a href="#cb16-386" aria-hidden="true" tabindex="-1"></a>**Convert to WAV:**</span>
-<span id="cb16-387"><a href="#cb16-387" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
-<span id="cb16-388"><a href="#cb16-388" aria-hidden="true" tabindex="-1"></a><span class="co"># From MP3</span></span>
-<span id="cb16-389"><a href="#cb16-389" aria-hidden="true" tabindex="-1"></a><span class="ex">ffmpeg</span> <span class="at">-i</span> input.mp3 output.wav</span>
+<span id="cb16-382"><a href="#cb16-382" aria-hidden="true" tabindex="-1"></a>**Convert to MP3:**</span>
+<span id="cb16-383"><a href="#cb16-383" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
+<span id="cb16-384"><a href="#cb16-384" aria-hidden="true" tabindex="-1"></a><span class="co"># High quality</span></span>
+<span id="cb16-385"><a href="#cb16-385" aria-hidden="true" tabindex="-1"></a><span class="ex">ffmpeg</span> <span class="at">-i</span> input.wav <span class="at">-b:a</span> 192k output.mp3</span>
+<span id="cb16-386"><a href="#cb16-386" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-387"><a href="#cb16-387" aria-hidden="true" tabindex="-1"></a><span class="co"># Smaller file</span></span>
+<span id="cb16-388"><a href="#cb16-388" aria-hidden="true" tabindex="-1"></a><span class="ex">ffmpeg</span> <span class="at">-i</span> input.wav <span class="at">-b:a</span> 128k output.mp3</span>
+<span id="cb16-389"><a href="#cb16-389" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb16-390"><a href="#cb16-390" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-391"><a href="#cb16-391" aria-hidden="true" tabindex="-1"></a><span class="co"># Specify sample rate and channels</span></span>
-<span id="cb16-392"><a href="#cb16-392" aria-hidden="true" tabindex="-1"></a><span class="ex">ffmpeg</span> <span class="at">-i</span> input.mp3 <span class="at">-ar</span> 16000 <span class="at">-ac</span> 1 output.wav</span>
-<span id="cb16-393"><a href="#cb16-393" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-394"><a href="#cb16-394" aria-hidden="true" tabindex="-1"></a><span class="co"># From video (extract audio)</span></span>
-<span id="cb16-395"><a href="#cb16-395" aria-hidden="true" tabindex="-1"></a><span class="ex">ffmpeg</span> <span class="at">-i</span> video.mp4 <span class="at">-vn</span> <span class="at">-acodec</span> pcm_s16le output.wav</span>
-<span id="cb16-396"><a href="#cb16-396" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb16-397"><a href="#cb16-397" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-398"><a href="#cb16-398" aria-hidden="true" tabindex="-1"></a>**Convert to MP3:**</span>
-<span id="cb16-399"><a href="#cb16-399" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
-<span id="cb16-400"><a href="#cb16-400" aria-hidden="true" tabindex="-1"></a><span class="co"># High quality</span></span>
-<span id="cb16-401"><a href="#cb16-401" aria-hidden="true" tabindex="-1"></a><span class="ex">ffmpeg</span> <span class="at">-i</span> input.wav <span class="at">-b:a</span> 192k output.mp3</span>
-<span id="cb16-402"><a href="#cb16-402" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-403"><a href="#cb16-403" aria-hidden="true" tabindex="-1"></a><span class="co"># Smaller file</span></span>
-<span id="cb16-404"><a href="#cb16-404" aria-hidden="true" tabindex="-1"></a><span class="ex">ffmpeg</span> <span class="at">-i</span> input.wav <span class="at">-b:a</span> 128k output.mp3</span>
-<span id="cb16-405"><a href="#cb16-405" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb16-406"><a href="#cb16-406" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-407"><a href="#cb16-407" aria-hidden="true" tabindex="-1"></a><span class="fu">### SoX (Sound eXchange)</span></span>
-<span id="cb16-408"><a href="#cb16-408" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-409"><a href="#cb16-409" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
-<span id="cb16-410"><a href="#cb16-410" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert format</span></span>
-<span id="cb16-411"><a href="#cb16-411" aria-hidden="true" tabindex="-1"></a><span class="fu">sox</span> input.mp3 output.wav</span>
-<span id="cb16-412"><a href="#cb16-412" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-413"><a href="#cb16-413" aria-hidden="true" tabindex="-1"></a><span class="co"># Resample</span></span>
-<span id="cb16-414"><a href="#cb16-414" aria-hidden="true" tabindex="-1"></a><span class="fu">sox</span> input.wav <span class="at">-r</span> 16000 output.wav</span>
+<span id="cb16-391"><a href="#cb16-391" aria-hidden="true" tabindex="-1"></a><span class="fu">### SoX (Sound eXchange)</span></span>
+<span id="cb16-392"><a href="#cb16-392" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-393"><a href="#cb16-393" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
+<span id="cb16-394"><a href="#cb16-394" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert format</span></span>
+<span id="cb16-395"><a href="#cb16-395" aria-hidden="true" tabindex="-1"></a><span class="fu">sox</span> input.mp3 output.wav</span>
+<span id="cb16-396"><a href="#cb16-396" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-397"><a href="#cb16-397" aria-hidden="true" tabindex="-1"></a><span class="co"># Resample</span></span>
+<span id="cb16-398"><a href="#cb16-398" aria-hidden="true" tabindex="-1"></a><span class="fu">sox</span> input.wav <span class="at">-r</span> 16000 output.wav</span>
+<span id="cb16-399"><a href="#cb16-399" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-400"><a href="#cb16-400" aria-hidden="true" tabindex="-1"></a><span class="co"># Mono conversion</span></span>
+<span id="cb16-401"><a href="#cb16-401" aria-hidden="true" tabindex="-1"></a><span class="fu">sox</span> input.wav <span class="at">-c</span> 1 output.wav</span>
+<span id="cb16-402"><a href="#cb16-402" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb16-403"><a href="#cb16-403" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-404"><a href="#cb16-404" aria-hidden="true" tabindex="-1"></a><span class="fu">### Praat</span></span>
+<span id="cb16-405"><a href="#cb16-405" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-406"><a href="#cb16-406" aria-hidden="true" tabindex="-1"></a><span class="in">```praat</span></span>
+<span id="cb16-407"><a href="#cb16-407" aria-hidden="true" tabindex="-1"></a><span class="in"># Read audio</span></span>
+<span id="cb16-408"><a href="#cb16-408" aria-hidden="true" tabindex="-1"></a><span class="in">sound = Read from file: "input.mp3"</span></span>
+<span id="cb16-409"><a href="#cb16-409" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-410"><a href="#cb16-410" aria-hidden="true" tabindex="-1"></a><span class="in"># Save as WAV</span></span>
+<span id="cb16-411"><a href="#cb16-411" aria-hidden="true" tabindex="-1"></a><span class="in">Save as WAV file: "output.wav"</span></span>
+<span id="cb16-412"><a href="#cb16-412" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb16-413"><a href="#cb16-413" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-414"><a href="#cb16-414" aria-hidden="true" tabindex="-1"></a><span class="fu">### Online Tools</span></span>
 <span id="cb16-415"><a href="#cb16-415" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-416"><a href="#cb16-416" aria-hidden="true" tabindex="-1"></a><span class="co"># Mono conversion</span></span>
-<span id="cb16-417"><a href="#cb16-417" aria-hidden="true" tabindex="-1"></a><span class="fu">sox</span> input.wav <span class="at">-c</span> 1 output.wav</span>
-<span id="cb16-418"><a href="#cb16-418" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb16-419"><a href="#cb16-419" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-420"><a href="#cb16-420" aria-hidden="true" tabindex="-1"></a><span class="fu">### Praat</span></span>
-<span id="cb16-421"><a href="#cb16-421" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-422"><a href="#cb16-422" aria-hidden="true" tabindex="-1"></a><span class="in">```praat</span></span>
-<span id="cb16-423"><a href="#cb16-423" aria-hidden="true" tabindex="-1"></a><span class="in"># Read audio</span></span>
-<span id="cb16-424"><a href="#cb16-424" aria-hidden="true" tabindex="-1"></a><span class="in">sound = Read from file: "input.mp3"</span></span>
-<span id="cb16-425"><a href="#cb16-425" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-426"><a href="#cb16-426" aria-hidden="true" tabindex="-1"></a><span class="in"># Save as WAV</span></span>
-<span id="cb16-427"><a href="#cb16-427" aria-hidden="true" tabindex="-1"></a><span class="in">Save as WAV file: "output.wav"</span></span>
-<span id="cb16-428"><a href="#cb16-428" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb16-429"><a href="#cb16-429" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-430"><a href="#cb16-430" aria-hidden="true" tabindex="-1"></a><span class="fu">### Online Tools</span></span>
-<span id="cb16-431"><a href="#cb16-431" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-432"><a href="#cb16-432" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">CloudConvert</span><span class="co">](https://cloudconvert.com/wav-converter)</span></span>
-<span id="cb16-433"><a href="#cb16-433" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Online Audio Converter</span><span class="co">](https://online-audio-converter.com/)</span></span>
-<span id="cb16-434"><a href="#cb16-434" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-435"><a href="#cb16-435" aria-hidden="true" tabindex="-1"></a><span class="fu">## Future Format Support</span></span>
-<span id="cb16-436"><a href="#cb16-436" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-437"><a href="#cb16-437" aria-hidden="true" tabindex="-1"></a>Planned additions:</span>
-<span id="cb16-438"><a href="#cb16-438" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-439"><a href="#cb16-439" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**FLAC** - Lossless compression audio</span>
-<span id="cb16-440"><a href="#cb16-440" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**WebM** - Web-native audio/video</span>
-<span id="cb16-441"><a href="#cb16-441" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**ELAN (.eaf)** - Alternative annotation format</span>
-<span id="cb16-442"><a href="#cb16-442" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**JSON** - Machine-readable annotation export</span>
-<span id="cb16-443"><a href="#cb16-443" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**CSV** - Alternative to TSV</span>
-<span id="cb16-444"><a href="#cb16-444" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-445"><a href="#cb16-445" aria-hidden="true" tabindex="-1"></a><span class="fu">## See Also</span></span>
-<span id="cb16-446"><a href="#cb16-446" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-447"><a href="#cb16-447" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Tutorial: Loading Audio</span><span class="co">](../tutorial/01-loading-audio.html)</span> - Supported loading methods</span>
-<span id="cb16-448"><a href="#cb16-448" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Tutorial: Exporting</span><span class="co">](../tutorial/06-exporting.html)</span> - Export workflows</span>
-<span id="cb16-449"><a href="#cb16-449" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Annotations</span><span class="co">](../features/annotations.html)</span> - TextGrid features</span>
-<span id="cb16-450"><a href="#cb16-450" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Data Points</span><span class="co">](../features/data-points.html)</span> - TSV export details</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
+<span id="cb16-416"><a href="#cb16-416" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">CloudConvert</span><span class="co">](https://cloudconvert.com/wav-converter)</span></span>
+<span id="cb16-417"><a href="#cb16-417" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Online Audio Converter</span><span class="co">](https://online-audio-converter.com/)</span></span>
+<span id="cb16-418"><a href="#cb16-418" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-419"><a href="#cb16-419" aria-hidden="true" tabindex="-1"></a><span class="fu">## Future Format Support</span></span>
+<span id="cb16-420"><a href="#cb16-420" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-421"><a href="#cb16-421" aria-hidden="true" tabindex="-1"></a>Planned additions:</span>
+<span id="cb16-422"><a href="#cb16-422" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-423"><a href="#cb16-423" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**FLAC** - Lossless compression audio</span>
+<span id="cb16-424"><a href="#cb16-424" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**WebM** - Web-native audio/video</span>
+<span id="cb16-425"><a href="#cb16-425" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**ELAN (.eaf)** - Alternative annotation format</span>
+<span id="cb16-426"><a href="#cb16-426" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**JSON** - Machine-readable annotation export</span>
+<span id="cb16-427"><a href="#cb16-427" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**CSV** - Alternative to TSV</span>
+<span id="cb16-428"><a href="#cb16-428" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-429"><a href="#cb16-429" aria-hidden="true" tabindex="-1"></a><span class="fu">## See Also</span></span>
+<span id="cb16-430"><a href="#cb16-430" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-431"><a href="#cb16-431" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Tutorial: Loading Audio</span><span class="co">](../tutorial/01-loading-audio.html)</span> - Supported loading methods</span>
+<span id="cb16-432"><a href="#cb16-432" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Tutorial: Exporting</span><span class="co">](../tutorial/06-exporting.html)</span> - Export workflows</span>
+<span id="cb16-433"><a href="#cb16-433" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Annotations</span><span class="co">](../features/annotations.html)</span> - TextGrid features</span>
+<span id="cb16-434"><a href="#cb16-434" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Data Points</span><span class="co">](../features/data-points.html)</span> - TSV export details</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 <footer class="footer">

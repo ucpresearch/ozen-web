@@ -121,7 +121,7 @@ graph TD
 
 | Component | File | Responsibility |
 |-----------|------|----------------|
-| `FileDropZone` | `FileDropZone.svelte` | Drag-drop and file picker for audio/TextGrid |
+| `FileDropZone` | `FileDropZone.svelte` | Drag-drop and file picker for audio files |
 | `Modal` | `Modal.svelte` | Reusable modal dialog container |
 
 ## State Management

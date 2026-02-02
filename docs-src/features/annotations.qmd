@@ -84,15 +84,10 @@ Tier deletion is permanent and cannot be undone. Export your TextGrid before del
 
 ### Boundary Snapping
 
-When adding boundaries on lower tiers, they can snap to boundaries in upper tiers:
-
-**Example:**
-```
-words:  |  hello  |  world  |
-phones: | h | e | l | o | w | o | r | l | d |
-```
-
-Double-clicking near an existing boundary on a different tier will snap to that time, maintaining alignment.
+When adding boundaries on lower tiers, they can snap to boundaries in
+upper tiers. Double-clicking near an existing boundary on a different
+tier will snap to that time, maintaining alignment. A boundary can
+then be dragged to a different location, if so desired.
 
 ### Removing Boundaries
 
@@ -163,6 +158,7 @@ Ozen-web features a unified undo/redo system for annotation operations:
 - Removing boundaries
 - Moving boundaries
 - Editing interval text
+- Adding / removing data points
 
 **Non-undoable operations:**
 - Adding/removing tiers (permanent)
@@ -182,10 +178,8 @@ The undo stack stores the entire annotation state before each operation. You can
 
 ### Importing TextGrid
 
-**Drag and drop:**
-1. Drag `.TextGrid` file onto interface
-2. Annotations load automatically
-3. Audio must be loaded separately
+**Requirements:**
+- Audio must be loaded first (the TextGrid import button is only available after loading audio)
 
 **File picker:**
 1. Click "Load TextGrid" button
@@ -196,11 +190,6 @@ The undo stack stores the entire annotation state before each operation. You can
 - Short TextGrid format (quoted strings)
 - Long TextGrid format (ooTextFile)
 
-::: {.callout-note}
-## TextGrid Without Audio
-
-You can load a TextGrid without audio to view annotation structure. Load the corresponding audio file afterward to see waveform/spectrogram.
-:::
 
 ### Exporting TextGrid
 
@@ -220,47 +209,7 @@ You can load a TextGrid without audio to view annotation structure. Load the cor
 
 ![Export TextGrid interface](../screenshots/tutorial-06-export-textgrid.png)
 
-## Use Cases
 
-### Phonetic Transcription
-
-Create detailed phonetic annotations:
-
-```
-words:     | the   | cat   | sat   | on    | the   | mat   |
-phones:    | ð | ə | k | æ | t | s | æ | t | ɑ | n | ð | ə | m | æ | t |
-syllables: | ðə    | kæt   | sæt   | ɑn    | ðə    | mæt   |
-```
-
-### Prosodic Labeling
-
-Annotate intonation and prosody:
-
-```
-words:    | Hello  | how    | are    | you    |
-tones:    | H*     | L+H*   | H-     | L%     |
-stress:   | 1      | 0      | 1      | 0      |
-```
-
-### Conversation Analysis
-
-Segment multi-speaker recordings:
-
-```
-speaker_a: | Hello           |        | How are you?    |
-speaker_b: |        | Hi there!       |        | Fine, thanks. |
-overlap:   |                 | ✓      |                 |
-```
-
-### Event Annotation
-
-Mark discrete events:
-
-```
-audio:     |---------------------------------------------------|
-events:    | cough  |           | door slam |        | phone ring |
-quality:   |        | good      |           | noisy  |            |
-```
 
 ## Integration with Data Points
 

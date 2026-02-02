@@ -1,3 +1,42 @@
+<!--
+	Main Application Page (/)
+
+	Full-featured desktop interface for acoustic analysis and annotation.
+	This is the primary interface with all editing and export capabilities.
+
+	Features:
+	- Audio loading: drag & drop, file picker, or microphone recording
+	- Waveform and spectrogram visualization
+	- Acoustic overlays: pitch, formants, intensity, HNR, CoG, spectral tilt, A1-P0
+	- Multi-tier annotation editing with TextGrid import/export
+	- Data point collection with TSV export
+	- Unified undo/redo system
+	- Backend selector: choose between local or remote WASM analysis
+	- Formant preset selector: optimize formant tracking for voice type
+	- Configuration: load custom colors/settings from YAML
+	- Dark/light theme toggle
+
+	Keyboard shortcuts:
+	- Space: play/pause selection
+	- Tab: play visible window
+	- Escape: stop playback, clear selection
+	- Arrow keys: pan left/right, zoom in/out
+	- 1-5: select annotation tier
+	- Ctrl+Z/Cmd+Z: undo
+	- Ctrl+Y/Cmd+Shift+Z: redo
+	- Ctrl+C/Cmd+C: copy data points to clipboard
+
+	State management:
+	- Loads backend preference from localStorage on mount
+	- Initializes WASM with selected backend
+	- Sets up undo manager for annotations and data points
+	- Keyboard event handler for global shortcuts
+
+	Recording:
+	- Uses MediaRecorder API to capture microphone audio
+	- Saves as 16-bit PCM WAV file
+	- Shows recording timer during capture
+-->
 <script lang="ts">
 	import { onMount, onDestroy } from 'svelte';
 	import FileDropZone from '$lib/components/FileDropZone.svelte';

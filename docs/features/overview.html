@@ -333,7 +333,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#import-formats" id="toc-import-formats" class="nav-link" data-scroll-target="#import-formats">Import Formats</a></li>
   <li><a href="#export-formats" id="toc-export-formats" class="nav-link" data-scroll-target="#export-formats">Export Formats</a></li>
   </ul></li>
-  <li><a href="#comparison-with-desktop-tools" id="toc-comparison-with-desktop-tools" class="nav-link" data-scroll-target="#comparison-with-desktop-tools">Comparison with Desktop Tools</a></li>
   <li><a href="#use-cases" id="toc-use-cases" class="nav-link" data-scroll-target="#use-cases">Use Cases</a></li>
   <li><a href="#next-steps" id="toc-next-steps" class="nav-link" data-scroll-target="#next-steps">Next Steps</a></li>
   </ul>
@@ -364,7 +363,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <section id="introduction" class="level2">
 <h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
-<p>Ozen-web is a comprehensive browser-based tool for acoustic analysis and annotation. This page provides an overview of all major features with links to detailed documentation.</p>
+<p>Ozen-web is a browser-based tool for acoustic analysis and annotation. This page provides an overview of all major features with links to detailed documentation.</p>
 </section>
 <section id="core-features" class="level2">
 <h2 class="anchored" data-anchor-id="core-features">Core Features</h2>
@@ -372,7 +371,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h3 class="anchored" data-anchor-id="audio-loading-recording">Audio Loading &amp; Recording</h3>
 <p><strong>Load audio from multiple sources:</strong></p>
 <ul>
-<li>Drag &amp; drop audio files (WAV, MP3, OGG, FLAC)</li>
+<li>Drag &amp; drop audio files (WAV, FLAC, MP3, OGG)</li>
 <li>File picker dialog</li>
 <li>Microphone recording with real-time visualization</li>
 <li>Remote URL loading (CORS-enabled)</li>
@@ -384,10 +383,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h3 class="anchored" data-anchor-id="visualization">Visualization</h3>
 <p><strong>Waveform Display:</strong></p>
 <ul>
-<li>Real-time amplitude visualization</li>
+<li>Amplitude visualization</li>
 <li>Synchronized with spectrogram</li>
 <li>Responsive to zoom and pan</li>
-<li>Efficient downsampling for long files</li>
+<li>Downsampling for long file processing (until zoom)</li>
 </ul>
 <p><strong>Spectrogram Display:</strong></p>
 <ul>
@@ -406,60 +405,47 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="acoustic-analysis" class="level3">
 <h3 class="anchored" data-anchor-id="acoustic-analysis">Acoustic Analysis</h3>
-<p>Ozen-web provides research-grade acoustic measurements using Praat-compatible algorithms:</p>
+<p>Ozen-web provides acoustic measurements using Praat-compatible algorithms:</p>
 <p><strong>Available overlays:</strong></p>
 <table class="caption-top table">
-<colgroup>
-<col style="width: 27%">
-<col style="width: 39%">
-<col style="width: 33%">
-</colgroup>
 <thead>
 <tr class="header">
 <th>Feature</th>
 <th>Description</th>
-<th>Use Cases</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td><strong>Pitch (F0)</strong></td>
 <td>Fundamental frequency tracking</td>
-<td>Intonation, stress, tone analysis</td>
 </tr>
 <tr class="even">
 <td><strong>Formants (F1-F4)</strong></td>
 <td>Resonance frequencies</td>
-<td>Vowel identification, articulation</td>
 </tr>
 <tr class="odd">
 <td><strong>Intensity</strong></td>
 <td>Sound pressure level</td>
-<td>Prominence, stress patterns</td>
 </tr>
 <tr class="even">
 <td><strong>HNR</strong></td>
 <td>Harmonics-to-Noise Ratio</td>
-<td>Voice quality, breathiness, creakiness</td>
 </tr>
 <tr class="odd">
 <td><strong>CoG</strong></td>
 <td>Spectral Center of Gravity</td>
-<td>Fricative classification</td>
 </tr>
 <tr class="even">
 <td><strong>Spectral Tilt</strong></td>
 <td>High/low frequency balance</td>
-<td>Voice quality, consonant manner</td>
 </tr>
 <tr class="odd">
 <td><strong>A1-P0</strong></td>
 <td>Harmonic amplitude measure</td>
-<td>Nasality, open quotient</td>
 </tr>
 </tbody>
 </table>
-<p>All measurements are computed using <strong>praatfan</strong> WebAssembly, providing Praat-accurate results in the browser.</p>
+<p>All measurements are computed using <strong>praatfan</strong> WebAssembly.</p>
 <p><strong>See:</strong> <a href="acoustic-overlays.html">Acoustic Overlays Documentation</a> | <a href="../tutorial/03-acoustic-analysis.html">Tutorial: Acoustic Analysis</a></p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -544,6 +530,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>Drag → Select region</li>
 <li>Two-finger drag → Pan view</li>
 <li>Pinch → Zoom in/out</li>
+<li>Long-press → Copy selected position visible properties</li>
 </ul></li>
 <li><strong>Compact layout</strong> for small screens</li>
 <li><strong>Landscape mode optimization</strong></li>
@@ -595,18 +582,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Choose from multiple acoustic analysis backends:</p>
 <table class="caption-top table">
 <colgroup>
-<col style="width: 19%">
-<col style="width: 17%">
-<col style="width: 19%">
-<col style="width: 23%">
-<col style="width: 19%">
+<col style="width: 25%">
+<col style="width: 22%">
+<col style="width: 25%">
+<col style="width: 25%">
 </colgroup>
 <thead>
 <tr class="header">
 <th>Backend</th>
 <th>Source</th>
 <th>License</th>
-<th>Load Time</th>
 <th>Offline</th>
 </tr>
 </thead>
@@ -615,26 +600,23 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td><code>praatfan-local</code></td>
 <td>Bundled (<code>static/wasm/</code>)</td>
 <td>MIT/Apache-2.0</td>
-<td>Fastest (~100ms)</td>
 <td>✅ Yes</td>
 </tr>
 <tr class="even">
 <td><code>praatfan</code></td>
 <td>GitHub Pages CDN</td>
 <td>MIT/Apache-2.0</td>
-<td>Fast (~500ms)</td>
 <td>❌ No</td>
 </tr>
 <tr class="odd">
 <td><code>praatfan-gpl</code></td>
 <td>GitHub Pages CDN</td>
 <td>GPL</td>
-<td>Fast (~500ms)</td>
 <td>❌ No</td>
 </tr>
 </tbody>
 </table>
-<p>All backends provide identical Praat-compatible results. Select via dropdown in the app interface.</p>
+<p>Praatfan-local and praatfan are identical, and approximate praatfan-gpl, which was built to be very similar to Praat. Select via dropdown in the app interface.</p>
 <p><strong>See:</strong> <a href="../reference/backends.html">WASM Backends Reference</a></p>
 </section>
 <section id="configuration" class="level3">
@@ -696,13 +678,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="browser-compatibility" class="level3">
 <h3 class="anchored" data-anchor-id="browser-compatibility">Browser Compatibility</h3>
-<p><strong>Recommended browsers:</strong></p>
-<ul>
-<li>✅ Chrome/Edge 90+ (best support)</li>
-<li>✅ Firefox 88+</li>
-<li>✅ Safari 15+ (macOS/iOS)</li>
-<li>✅ Mobile browsers (iOS Safari, Chrome Android)</li>
-</ul>
+<p>Should work as well on all modern browsers</p>
 <p><strong>Requirements:</strong></p>
 <ul>
 <li>WebAssembly support</li>
@@ -718,7 +694,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>Audio never leaves your browser</li>
 <li>No analytics or tracking</li>
 <li>No server-side processing</li>
-<li>Suitable for sensitive/confidential data</li>
 </ul>
 </section>
 </section>
@@ -737,8 +712,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tbody>
 <tr class="odd">
 <td>Audio</td>
-<td><code>.wav</code>, <code>.mp3</code>, <code>.ogg</code>, <code>.flac</code>, <code>.m4a</code></td>
-<td>Browser-dependent</td>
+<td><code>.wav</code>, <code>.flac</code>, <code>.mp3</code>, <code>.ogg</code></td>
+<td>Could be browser-dependent</td>
 </tr>
 <tr class="even">
 <td>TextGrid</td>
@@ -789,81 +764,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p><strong>See:</strong> <a href="../reference/file-formats.html">File Formats Reference</a></p>
 </section>
 </section>
-<section id="comparison-with-desktop-tools" class="level2">
-<h2 class="anchored" data-anchor-id="comparison-with-desktop-tools">Comparison with Desktop Tools</h2>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 22%">
-<col style="width: 25%">
-<col style="width: 17%">
-<col style="width: 35%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Feature</th>
-<th>Ozen-web</th>
-<th>Praat</th>
-<th>Desktop Ozen</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><strong>Installation</strong></td>
-<td>None (browser)</td>
-<td>Required</td>
-<td>Required</td>
-</tr>
-<tr class="even">
-<td><strong>Platform</strong></td>
-<td>Any OS with browser</td>
-<td>OS-specific builds</td>
-<td>Windows/Mac/Linux</td>
-</tr>
-<tr class="odd">
-<td><strong>Privacy</strong></td>
-<td>100% local</td>
-<td>100% local</td>
-<td>100% local</td>
-</tr>
-<tr class="even">
-<td><strong>Offline</strong></td>
-<td>✅ Yes (with local backend)</td>
-<td>✅ Yes</td>
-<td>✅ Yes</td>
-</tr>
-<tr class="odd">
-<td><strong>Mobile</strong></td>
-<td>✅ Optimized</td>
-<td>❌ No</td>
-<td>❌ No</td>
-</tr>
-<tr class="even">
-<td><strong>Embedding</strong></td>
-<td>✅ Iframe support</td>
-<td>❌ No</td>
-<td>❌ No</td>
-</tr>
-<tr class="odd">
-<td><strong>Accuracy</strong></td>
-<td>Praat algorithms (WASM)</td>
-<td>Praat native code</td>
-<td>Praat algorithms (Python)</td>
-</tr>
-<tr class="even">
-<td><strong>Scripting</strong></td>
-<td>❌ No</td>
-<td>✅ Yes</td>
-<td>⚠️ Limited</td>
-</tr>
-<tr class="odd">
-<td><strong>Batch Processing</strong></td>
-<td>❌ No</td>
-<td>✅ Yes</td>
-<td>✅ Yes</td>
-</tr>
-</tbody>
-</table>
-</section>
 <section id="use-cases" class="level2">
 <h2 class="anchored" data-anchor-id="use-cases">Use Cases</h2>
 <p><strong>Research:</strong></p>
@@ -879,27 +779,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>Quarto/R Markdown integration</li>
 <li>No software installation required for students</li>
 <li>Interactive demonstrations</li>
-</ul>
-<p><strong>Language Documentation:</strong></p>
-<ul>
-<li>Field recording transcription</li>
-<li>Time-aligned corpus creation</li>
-<li>Offline capability for field sites</li>
-<li>Mobile device support for fieldwork</li>
-</ul>
-<p><strong>Clinical:</strong></p>
-<ul>
-<li>Speech therapy progress tracking</li>
-<li>Voice quality visualization</li>
-<li>Shareable annotated samples</li>
-<li>Patient education</li>
-</ul>
-<p><strong>Podcasting &amp; Audio Production:</strong></p>
-<ul>
-<li>Visualize speech clarity</li>
-<li>Identify problem areas</li>
-<li>Mark edit points with sub-second precision</li>
-<li>Export annotations for editing software</li>
 </ul>
 </section>
 <section id="next-steps" class="level2">
@@ -1408,261 +1287,261 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="fu">## Introduction</span></span>
 <span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>Ozen-web is a comprehensive browser-based tool for acoustic analysis and annotation. This page provides an overview of all major features with links to detailed documentation.</span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="fu">## Core Features</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>Ozen-web is a browser-based tool for acoustic analysis and</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>annotation. This page provides an overview of all major features with</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>links to detailed documentation.</span>
 <span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="fu">### Audio Loading &amp; Recording</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="fu">## Core Features</span></span>
 <span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>**Load audio from multiple sources:**</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="fu">### Audio Loading &amp; Recording</span></span>
 <span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Drag &amp; drop audio files (WAV, MP3, OGG, FLAC)</span>
-<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>File picker dialog</span>
-<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Microphone recording with real-time visualization</span>
-<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Remote URL loading (CORS-enabled)</span>
-<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Data URL embedding for self-contained iframes</span>
-<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>**See:** <span class="co">[</span><span class="ot">Getting Started Guide</span><span class="co">](../getting-started.html#loading-your-first-audio-file)</span></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>**Load audio from multiple sources:**</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Drag &amp; drop audio files (WAV, FLAC, MP3, OGG)</span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>File picker dialog</span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Microphone recording with real-time visualization</span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Remote URL loading (CORS-enabled)</span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Data URL embedding for self-contained iframes</span>
 <span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a><span class="fu">### Visualization</span></span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>**See:** <span class="co">[</span><span class="ot">Getting Started Guide</span><span class="co">](../getting-started.html#loading-your-first-audio-file)</span></span>
 <span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>**Waveform Display:**</span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a><span class="fu">### Visualization</span></span>
 <span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Real-time amplitude visualization</span>
-<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Synchronized with spectrogram</span>
-<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Responsive to zoom and pan</span>
-<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Efficient downsampling for long files</span>
-<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a>**Spectrogram Display:**</span>
+<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a>**Waveform Display:**</span>
+<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Amplitude visualization</span>
+<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Synchronized with spectrogram</span>
+<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Responsive to zoom and pan</span>
+<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Downsampling for long file processing (until zoom)</span>
 <span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Praat-style grayscale spectrogram</span>
-<span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Adjustable frequency range (5/7.5/10 kHz)</span>
-<span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Dynamic resolution enhancement when zoomed</span>
-<span id="cb3-38"><a href="#cb3-38" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Cached rendering for smooth performance</span>
-<span id="cb3-39"><a href="#cb3-39" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-40"><a href="#cb3-40" aria-hidden="true" tabindex="-1"></a>**See:** <span class="co">[</span><span class="ot">Spectrogram Documentation</span><span class="co">](spectrogram.html)</span> | <span class="co">[</span><span class="ot">Waveform Documentation</span><span class="co">](waveform.html)</span></span>
+<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a>**Spectrogram Display:**</span>
+<span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Praat-style grayscale spectrogram</span>
+<span id="cb3-38"><a href="#cb3-38" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Adjustable frequency range (5/7.5/10 kHz)</span>
+<span id="cb3-39"><a href="#cb3-39" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Dynamic resolution enhancement when zoomed</span>
+<span id="cb3-40"><a href="#cb3-40" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Cached rendering for smooth performance</span>
 <span id="cb3-41"><a href="#cb3-41" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-42"><a href="#cb3-42" aria-hidden="true" tabindex="-1"></a><span class="al">![Main interface overview](../screenshots/main-interface-overview.png)</span>{.screenshot}</span>
+<span id="cb3-42"><a href="#cb3-42" aria-hidden="true" tabindex="-1"></a>**See:** <span class="co">[</span><span class="ot">Spectrogram Documentation</span><span class="co">](spectrogram.html)</span> | <span class="co">[</span><span class="ot">Waveform Documentation</span><span class="co">](waveform.html)</span></span>
 <span id="cb3-43"><a href="#cb3-43" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-44"><a href="#cb3-44" aria-hidden="true" tabindex="-1"></a><span class="fu">### Acoustic Analysis</span></span>
+<span id="cb3-44"><a href="#cb3-44" aria-hidden="true" tabindex="-1"></a><span class="al">![Main interface overview](../screenshots/main-interface-overview.png)</span>{.screenshot}</span>
 <span id="cb3-45"><a href="#cb3-45" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-46"><a href="#cb3-46" aria-hidden="true" tabindex="-1"></a>Ozen-web provides research-grade acoustic measurements using Praat-compatible algorithms:</span>
+<span id="cb3-46"><a href="#cb3-46" aria-hidden="true" tabindex="-1"></a><span class="fu">### Acoustic Analysis</span></span>
 <span id="cb3-47"><a href="#cb3-47" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-48"><a href="#cb3-48" aria-hidden="true" tabindex="-1"></a>**Available overlays:**</span>
+<span id="cb3-48"><a href="#cb3-48" aria-hidden="true" tabindex="-1"></a>Ozen-web provides acoustic measurements using Praat-compatible algorithms:</span>
 <span id="cb3-49"><a href="#cb3-49" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-50"><a href="#cb3-50" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Feature <span class="pp">|</span> Description <span class="pp">|</span> Use Cases <span class="pp">|</span></span>
-<span id="cb3-51"><a href="#cb3-51" aria-hidden="true" tabindex="-1"></a><span class="pp">|---------|-------------|-----------|</span></span>
-<span id="cb3-52"><a href="#cb3-52" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **Pitch (F0)** <span class="pp">|</span> Fundamental frequency tracking <span class="pp">|</span> Intonation, stress, tone analysis <span class="pp">|</span></span>
-<span id="cb3-53"><a href="#cb3-53" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **Formants (F1-F4)** <span class="pp">|</span> Resonance frequencies <span class="pp">|</span> Vowel identification, articulation <span class="pp">|</span></span>
-<span id="cb3-54"><a href="#cb3-54" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **Intensity** <span class="pp">|</span> Sound pressure level <span class="pp">|</span> Prominence, stress patterns <span class="pp">|</span></span>
-<span id="cb3-55"><a href="#cb3-55" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **HNR** <span class="pp">|</span> Harmonics-to-Noise Ratio <span class="pp">|</span> Voice quality, breathiness, creakiness <span class="pp">|</span></span>
-<span id="cb3-56"><a href="#cb3-56" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **CoG** <span class="pp">|</span> Spectral Center of Gravity <span class="pp">|</span> Fricative classification <span class="pp">|</span></span>
-<span id="cb3-57"><a href="#cb3-57" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **Spectral Tilt** <span class="pp">|</span> High/low frequency balance <span class="pp">|</span> Voice quality, consonant manner <span class="pp">|</span></span>
-<span id="cb3-58"><a href="#cb3-58" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **A1-P0** <span class="pp">|</span> Harmonic amplitude measure <span class="pp">|</span> Nasality, open quotient <span class="pp">|</span></span>
-<span id="cb3-59"><a href="#cb3-59" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-60"><a href="#cb3-60" aria-hidden="true" tabindex="-1"></a>All measurements are computed using **praatfan** WebAssembly, providing Praat-accurate results in the browser.</span>
+<span id="cb3-50"><a href="#cb3-50" aria-hidden="true" tabindex="-1"></a>**Available overlays:**</span>
+<span id="cb3-51"><a href="#cb3-51" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-52"><a href="#cb3-52" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Feature <span class="pp">|</span> Description <span class="pp">|</span></span>
+<span id="cb3-53"><a href="#cb3-53" aria-hidden="true" tabindex="-1"></a><span class="pp">|---------|-------------|</span></span>
+<span id="cb3-54"><a href="#cb3-54" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **Pitch (F0)** <span class="pp">|</span> Fundamental frequency tracking <span class="pp">|</span></span>
+<span id="cb3-55"><a href="#cb3-55" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **Formants (F1-F4)** <span class="pp">|</span> Resonance frequencies <span class="pp">|</span></span>
+<span id="cb3-56"><a href="#cb3-56" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **Intensity** <span class="pp">|</span> Sound pressure level <span class="pp">|</span></span>
+<span id="cb3-57"><a href="#cb3-57" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **HNR** <span class="pp">|</span> Harmonics-to-Noise Ratio <span class="pp">|</span></span>
+<span id="cb3-58"><a href="#cb3-58" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **CoG** <span class="pp">|</span> Spectral Center of Gravity <span class="pp">|</span></span>
+<span id="cb3-59"><a href="#cb3-59" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **Spectral Tilt** <span class="pp">|</span> High/low frequency balance <span class="pp">|</span></span>
+<span id="cb3-60"><a href="#cb3-60" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **A1-P0** <span class="pp">|</span> Harmonic amplitude measure <span class="pp">|</span></span>
 <span id="cb3-61"><a href="#cb3-61" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-62"><a href="#cb3-62" aria-hidden="true" tabindex="-1"></a>**See:** <span class="co">[</span><span class="ot">Acoustic Overlays Documentation</span><span class="co">](acoustic-overlays.html)</span> | <span class="co">[</span><span class="ot">Tutorial: Acoustic Analysis</span><span class="co">](../tutorial/03-acoustic-analysis.html)</span></span>
+<span id="cb3-62"><a href="#cb3-62" aria-hidden="true" tabindex="-1"></a>All measurements are computed using **praatfan** WebAssembly.</span>
 <span id="cb3-63"><a href="#cb3-63" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-64"><a href="#cb3-64" aria-hidden="true" tabindex="-1"></a><span class="al">![Spectrogram with all acoustic overlays](../screenshots/acoustic-overlays-all.png)</span>{.screenshot}</span>
+<span id="cb3-64"><a href="#cb3-64" aria-hidden="true" tabindex="-1"></a>**See:** <span class="co">[</span><span class="ot">Acoustic Overlays Documentation</span><span class="co">](acoustic-overlays.html)</span> | <span class="co">[</span><span class="ot">Tutorial: Acoustic Analysis</span><span class="co">](../tutorial/03-acoustic-analysis.html)</span></span>
 <span id="cb3-65"><a href="#cb3-65" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-66"><a href="#cb3-66" aria-hidden="true" tabindex="-1"></a><span class="fu">### Annotations</span></span>
+<span id="cb3-66"><a href="#cb3-66" aria-hidden="true" tabindex="-1"></a><span class="al">![Spectrogram with all acoustic overlays](../screenshots/acoustic-overlays-all.png)</span>{.screenshot}</span>
 <span id="cb3-67"><a href="#cb3-67" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-68"><a href="#cb3-68" aria-hidden="true" tabindex="-1"></a>**Multi-tier TextGrid-compatible annotation system:**</span>
+<span id="cb3-68"><a href="#cb3-68" aria-hidden="true" tabindex="-1"></a><span class="fu">### Annotations</span></span>
 <span id="cb3-69"><a href="#cb3-69" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-70"><a href="#cb3-70" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Create unlimited annotation tiers</span>
-<span id="cb3-71"><a href="#cb3-71" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Add, move, and remove boundaries</span>
-<span id="cb3-72"><a href="#cb3-72" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Edit interval labels with keyboard shortcuts</span>
-<span id="cb3-73"><a href="#cb3-73" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Boundary snapping between tiers</span>
-<span id="cb3-74"><a href="#cb3-74" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Full Praat TextGrid import/export (both short and long formats)</span>
-<span id="cb3-75"><a href="#cb3-75" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Interval and point tier support</span>
-<span id="cb3-76"><a href="#cb3-76" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-77"><a href="#cb3-77" aria-hidden="true" tabindex="-1"></a>**Efficient workflow:**</span>
+<span id="cb3-70"><a href="#cb3-70" aria-hidden="true" tabindex="-1"></a>**Multi-tier TextGrid-compatible annotation system:**</span>
+<span id="cb3-71"><a href="#cb3-71" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-72"><a href="#cb3-72" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Create unlimited annotation tiers</span>
+<span id="cb3-73"><a href="#cb3-73" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Add, move, and remove boundaries</span>
+<span id="cb3-74"><a href="#cb3-74" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Edit interval labels with keyboard shortcuts</span>
+<span id="cb3-75"><a href="#cb3-75" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Boundary snapping between tiers</span>
+<span id="cb3-76"><a href="#cb3-76" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Full Praat TextGrid import/export (both short and long formats)</span>
+<span id="cb3-77"><a href="#cb3-77" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Interval and point tier support</span>
 <span id="cb3-78"><a href="#cb3-78" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-79"><a href="#cb3-79" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Double-click to add boundaries</span>
-<span id="cb3-80"><a href="#cb3-80" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Drag to adjust timing</span>
-<span id="cb3-81"><a href="#cb3-81" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Right-click context menus</span>
-<span id="cb3-82"><a href="#cb3-82" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Keyboard shortcuts for tier selection (1-5 keys)</span>
-<span id="cb3-83"><a href="#cb3-83" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Unified undo/redo (Ctrl+Z / Ctrl+Y)</span>
-<span id="cb3-84"><a href="#cb3-84" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-85"><a href="#cb3-85" aria-hidden="true" tabindex="-1"></a>**See:** <span class="co">[</span><span class="ot">Annotations Documentation</span><span class="co">](annotations.html)</span> | <span class="co">[</span><span class="ot">Tutorial: Annotations</span><span class="co">](../tutorial/04-annotations.html)</span></span>
+<span id="cb3-79"><a href="#cb3-79" aria-hidden="true" tabindex="-1"></a>**Efficient workflow:**</span>
+<span id="cb3-80"><a href="#cb3-80" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-81"><a href="#cb3-81" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Double-click to add boundaries</span>
+<span id="cb3-82"><a href="#cb3-82" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Drag to adjust timing</span>
+<span id="cb3-83"><a href="#cb3-83" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Right-click context menus</span>
+<span id="cb3-84"><a href="#cb3-84" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Keyboard shortcuts for tier selection (1-5 keys)</span>
+<span id="cb3-85"><a href="#cb3-85" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Unified undo/redo (Ctrl+Z / Ctrl+Y)</span>
 <span id="cb3-86"><a href="#cb3-86" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-87"><a href="#cb3-87" aria-hidden="true" tabindex="-1"></a><span class="al">![Multi-tier annotation example](../screenshots/annotations-multitiered.png)</span>{.screenshot}</span>
+<span id="cb3-87"><a href="#cb3-87" aria-hidden="true" tabindex="-1"></a>**See:** <span class="co">[</span><span class="ot">Annotations Documentation</span><span class="co">](annotations.html)</span> | <span class="co">[</span><span class="ot">Tutorial: Annotations</span><span class="co">](../tutorial/04-annotations.html)</span></span>
 <span id="cb3-88"><a href="#cb3-88" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-89"><a href="#cb3-89" aria-hidden="true" tabindex="-1"></a><span class="fu">### Data Points</span></span>
+<span id="cb3-89"><a href="#cb3-89" aria-hidden="true" tabindex="-1"></a><span class="al">![Multi-tier annotation example](../screenshots/annotations-multitiered.png)</span>{.screenshot}</span>
 <span id="cb3-90"><a href="#cb3-90" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-91"><a href="#cb3-91" aria-hidden="true" tabindex="-1"></a>**Point-and-click acoustic measurement collection:**</span>
+<span id="cb3-91"><a href="#cb3-91" aria-hidden="true" tabindex="-1"></a><span class="fu">### Data Points</span></span>
 <span id="cb3-92"><a href="#cb3-92" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-93"><a href="#cb3-93" aria-hidden="true" tabindex="-1"></a>Data points allow collecting comprehensive acoustic measurements at specific time/frequency locations:</span>
+<span id="cb3-93"><a href="#cb3-93" aria-hidden="true" tabindex="-1"></a>**Point-and-click acoustic measurement collection:**</span>
 <span id="cb3-94"><a href="#cb3-94" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-95"><a href="#cb3-95" aria-hidden="true" tabindex="-1"></a>**Features:**</span>
+<span id="cb3-95"><a href="#cb3-95" aria-hidden="true" tabindex="-1"></a>Data points allow collecting comprehensive acoustic measurements at specific time/frequency locations:</span>
 <span id="cb3-96"><a href="#cb3-96" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-97"><a href="#cb3-97" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Double-click on spectrogram to add points</span>
-<span id="cb3-98"><a href="#cb3-98" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Automatic capture of all acoustic values (F0, F1-F4, intensity, HNR, etc.)</span>
-<span id="cb3-99"><a href="#cb3-99" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Inherits labels from ALL annotation tiers at that time</span>
-<span id="cb3-100"><a href="#cb3-100" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Drag to adjust position</span>
-<span id="cb3-101"><a href="#cb3-101" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Export to TSV for statistical analysis</span>
-<span id="cb3-102"><a href="#cb3-102" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Import TSV to restore data points</span>
-<span id="cb3-103"><a href="#cb3-103" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-104"><a href="#cb3-104" aria-hidden="true" tabindex="-1"></a>**Export format (TSV):**</span>
+<span id="cb3-97"><a href="#cb3-97" aria-hidden="true" tabindex="-1"></a>**Features:**</span>
+<span id="cb3-98"><a href="#cb3-98" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-99"><a href="#cb3-99" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Double-click on spectrogram to add points</span>
+<span id="cb3-100"><a href="#cb3-100" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Automatic capture of all acoustic values (F0, F1-F4, intensity, HNR, etc.)</span>
+<span id="cb3-101"><a href="#cb3-101" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Inherits labels from ALL annotation tiers at that time</span>
+<span id="cb3-102"><a href="#cb3-102" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Drag to adjust position</span>
+<span id="cb3-103"><a href="#cb3-103" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Export to TSV for statistical analysis</span>
+<span id="cb3-104"><a href="#cb3-104" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Import TSV to restore data points</span>
 <span id="cb3-105"><a href="#cb3-105" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-106"><a href="#cb3-106" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb3-107"><a href="#cb3-107" aria-hidden="true" tabindex="-1"></a><span class="in">time    freq    pitch   f1  f2  f3  f4  intensity   phones  words</span></span>
-<span id="cb3-108"><a href="#cb3-108" aria-hidden="true" tabindex="-1"></a><span class="in">0.234   1500    156 678 1234    2890    3654    72  i   see</span></span>
-<span id="cb3-109"><a href="#cb3-109" aria-hidden="true" tabindex="-1"></a><span class="in">0.567   1200    234 543 987 2567    3234    68  u   two</span></span>
-<span id="cb3-110"><a href="#cb3-110" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb3-111"><a href="#cb3-111" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-112"><a href="#cb3-112" aria-hidden="true" tabindex="-1"></a>Perfect for building datasets for R, Python, SPSS, or Excel analysis.</span>
+<span id="cb3-106"><a href="#cb3-106" aria-hidden="true" tabindex="-1"></a>**Export format (TSV):**</span>
+<span id="cb3-107"><a href="#cb3-107" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-108"><a href="#cb3-108" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb3-109"><a href="#cb3-109" aria-hidden="true" tabindex="-1"></a><span class="in">time    freq    pitch   f1  f2  f3  f4  intensity   phones  words</span></span>
+<span id="cb3-110"><a href="#cb3-110" aria-hidden="true" tabindex="-1"></a><span class="in">0.234   1500    156 678 1234    2890    3654    72  i   see</span></span>
+<span id="cb3-111"><a href="#cb3-111" aria-hidden="true" tabindex="-1"></a><span class="in">0.567   1200    234 543 987 2567    3234    68  u   two</span></span>
+<span id="cb3-112"><a href="#cb3-112" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb3-113"><a href="#cb3-113" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-114"><a href="#cb3-114" aria-hidden="true" tabindex="-1"></a>**See:** <span class="co">[</span><span class="ot">Data Points Documentation</span><span class="co">](data-points.html)</span> | <span class="co">[</span><span class="ot">Tutorial: Data Collection</span><span class="co">](../tutorial/05-data-collection.html)</span></span>
+<span id="cb3-114"><a href="#cb3-114" aria-hidden="true" tabindex="-1"></a>Perfect for building datasets for R, Python, SPSS, or Excel analysis.</span>
 <span id="cb3-115"><a href="#cb3-115" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-116"><a href="#cb3-116" aria-hidden="true" tabindex="-1"></a><span class="al">![Data points on spectrogram](../screenshots/data-points-collection.png)</span>{.screenshot}</span>
+<span id="cb3-116"><a href="#cb3-116" aria-hidden="true" tabindex="-1"></a>**See:** <span class="co">[</span><span class="ot">Data Points Documentation</span><span class="co">](data-points.html)</span> | <span class="co">[</span><span class="ot">Tutorial: Data Collection</span><span class="co">](../tutorial/05-data-collection.html)</span></span>
 <span id="cb3-117"><a href="#cb3-117" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-118"><a href="#cb3-118" aria-hidden="true" tabindex="-1"></a><span class="fu">### Audio Playback</span></span>
+<span id="cb3-118"><a href="#cb3-118" aria-hidden="true" tabindex="-1"></a><span class="al">![Data points on spectrogram](../screenshots/data-points-collection.png)</span>{.screenshot}</span>
 <span id="cb3-119"><a href="#cb3-119" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-120"><a href="#cb3-120" aria-hidden="true" tabindex="-1"></a>**Flexible playback controls:**</span>
+<span id="cb3-120"><a href="#cb3-120" aria-hidden="true" tabindex="-1"></a><span class="fu">### Audio Playback</span></span>
 <span id="cb3-121"><a href="#cb3-121" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-122"><a href="#cb3-122" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Play selected region (Space key)</span>
-<span id="cb3-123"><a href="#cb3-123" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Play visible window (Tab key)</span>
-<span id="cb3-124"><a href="#cb3-124" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Play from cursor to end</span>
-<span id="cb3-125"><a href="#cb3-125" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Real-time cursor tracking during playback</span>
-<span id="cb3-126"><a href="#cb3-126" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Pause and resume</span>
-<span id="cb3-127"><a href="#cb3-127" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Stop and deselect (Escape key)</span>
-<span id="cb3-128"><a href="#cb3-128" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-129"><a href="#cb3-129" aria-hidden="true" tabindex="-1"></a>**See:** <span class="co">[</span><span class="ot">Audio Playback Documentation</span><span class="co">](audio-playback.html)</span></span>
+<span id="cb3-122"><a href="#cb3-122" aria-hidden="true" tabindex="-1"></a>**Flexible playback controls:**</span>
+<span id="cb3-123"><a href="#cb3-123" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-124"><a href="#cb3-124" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Play selected region (Space key)</span>
+<span id="cb3-125"><a href="#cb3-125" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Play visible window (Tab key)</span>
+<span id="cb3-126"><a href="#cb3-126" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Play from cursor to end</span>
+<span id="cb3-127"><a href="#cb3-127" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Real-time cursor tracking during playback</span>
+<span id="cb3-128"><a href="#cb3-128" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Pause and resume</span>
+<span id="cb3-129"><a href="#cb3-129" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Stop and deselect (Escape key)</span>
 <span id="cb3-130"><a href="#cb3-130" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-131"><a href="#cb3-131" aria-hidden="true" tabindex="-1"></a><span class="fu">### Mobile Viewer</span></span>
+<span id="cb3-131"><a href="#cb3-131" aria-hidden="true" tabindex="-1"></a>**See:** <span class="co">[</span><span class="ot">Audio Playback Documentation</span><span class="co">](audio-playback.html)</span></span>
 <span id="cb3-132"><a href="#cb3-132" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-133"><a href="#cb3-133" aria-hidden="true" tabindex="-1"></a>**Touch-optimized interface at `/viewer` route:**</span>
+<span id="cb3-133"><a href="#cb3-133" aria-hidden="true" tabindex="-1"></a><span class="fu">### Mobile Viewer</span></span>
 <span id="cb3-134"><a href="#cb3-134" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-135"><a href="#cb3-135" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Touch gestures:**</span>
-<span id="cb3-136"><a href="#cb3-136" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>Tap → Place cursor</span>
-<span id="cb3-137"><a href="#cb3-137" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>Drag → Select region</span>
-<span id="cb3-138"><a href="#cb3-138" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>Two-finger drag → Pan view</span>
-<span id="cb3-139"><a href="#cb3-139" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>Pinch → Zoom in/out</span>
-<span id="cb3-140"><a href="#cb3-140" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Compact layout** for small screens</span>
-<span id="cb3-141"><a href="#cb3-141" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Landscape mode optimization**</span>
-<span id="cb3-142"><a href="#cb3-142" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Safe area support** for notched phones</span>
-<span id="cb3-143"><a href="#cb3-143" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Settings drawer** for overlay toggles</span>
-<span id="cb3-144"><a href="#cb3-144" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Floating play button**</span>
-<span id="cb3-145"><a href="#cb3-145" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**URL parameters** for pre-configuration</span>
-<span id="cb3-146"><a href="#cb3-146" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-147"><a href="#cb3-147" aria-hidden="true" tabindex="-1"></a>**Embedding support:**</span>
-<span id="cb3-148"><a href="#cb3-148" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-149"><a href="#cb3-149" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Iframe-compatible</span>
-<span id="cb3-150"><a href="#cb3-150" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Pre-load audio via <span class="in">`?audio=`</span> parameter</span>
-<span id="cb3-151"><a href="#cb3-151" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Configure overlays via <span class="in">`?overlays=`</span> parameter</span>
-<span id="cb3-152"><a href="#cb3-152" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>CORS-enabled remote loading</span>
-<span id="cb3-153"><a href="#cb3-153" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Data URL support for self-contained embeds</span>
-<span id="cb3-154"><a href="#cb3-154" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-155"><a href="#cb3-155" aria-hidden="true" tabindex="-1"></a>**See:** <span class="co">[</span><span class="ot">Mobile Viewer Documentation</span><span class="co">](mobile-viewer.html)</span> | <span class="co">[</span><span class="ot">Embedding Guide</span><span class="co">](../embedding/overview.html)</span></span>
-<span id="cb3-156"><a href="#cb3-156" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-157"><a href="#cb3-157" aria-hidden="true" tabindex="-1"></a><span class="al">![Mobile viewer in landscape mode](../screenshots/mobile-viewer-landscape.png)</span>{.screenshot}</span>
-<span id="cb3-158"><a href="#cb3-158" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-159"><a href="#cb3-159" aria-hidden="true" tabindex="-1"></a><span class="fu">## Advanced Features</span></span>
-<span id="cb3-160"><a href="#cb3-160" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-161"><a href="#cb3-161" aria-hidden="true" tabindex="-1"></a><span class="fu">### Long Audio Handling {#long-audio-handling}</span></span>
-<span id="cb3-162"><a href="#cb3-162" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-163"><a href="#cb3-163" aria-hidden="true" tabindex="-1"></a>**For files &gt;60 seconds:**</span>
-<span id="cb3-164"><a href="#cb3-164" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-165"><a href="#cb3-165" aria-hidden="true" tabindex="-1"></a>Ozen-web uses an intelligent on-demand analysis strategy to prevent UI freezing:</span>
-<span id="cb3-166"><a href="#cb3-166" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-167"><a href="#cb3-167" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**On load**: Waveform displays immediately, spectrogram shows "Zoom in for spectrogram"</span>
-<span id="cb3-168"><a href="#cb3-168" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>**When zoomed**: Analysis runs for visible window only (≤60s)</span>
-<span id="cb3-169"><a href="#cb3-169" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>**On-demand**: Results update automatically as you pan/zoom</span>
-<span id="cb3-170"><a href="#cb3-170" aria-hidden="true" tabindex="-1"></a><span class="ss">4. </span>**Debounced**: 300ms delay prevents excessive recomputation</span>
-<span id="cb3-171"><a href="#cb3-171" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-172"><a href="#cb3-172" aria-hidden="true" tabindex="-1"></a>This allows working with arbitrarily long recordings (hours of audio) while maintaining responsive UI.</span>
-<span id="cb3-173"><a href="#cb3-173" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-174"><a href="#cb3-174" aria-hidden="true" tabindex="-1"></a>**Why 60 seconds?**</span>
-<span id="cb3-175"><a href="#cb3-175" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-176"><a href="#cb3-176" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Browser memory constraints</span>
-<span id="cb3-177"><a href="#cb3-177" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Real-time user experience (analysis must complete in &lt;1s)</span>
-<span id="cb3-178"><a href="#cb3-178" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Balance between convenience and performance</span>
-<span id="cb3-179"><a href="#cb3-179" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-180"><a href="#cb3-180" aria-hidden="true" tabindex="-1"></a>**See:** <span class="co">[</span><span class="ot">Getting Started: Troubleshooting</span><span class="co">](../getting-started.html#long-audio-files-show-zoom-in-for-spectrogram)</span></span>
-<span id="cb3-181"><a href="#cb3-181" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-182"><a href="#cb3-182" aria-hidden="true" tabindex="-1"></a><span class="fu">### Multiple WASM Backends</span></span>
-<span id="cb3-183"><a href="#cb3-183" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-184"><a href="#cb3-184" aria-hidden="true" tabindex="-1"></a>Choose from multiple acoustic analysis backends:</span>
-<span id="cb3-185"><a href="#cb3-185" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-186"><a href="#cb3-186" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Backend <span class="pp">|</span> Source <span class="pp">|</span> License <span class="pp">|</span> Load Time <span class="pp">|</span> Offline <span class="pp">|</span></span>
-<span id="cb3-187"><a href="#cb3-187" aria-hidden="true" tabindex="-1"></a><span class="pp">|---------|--------|---------|-----------|---------|</span></span>
-<span id="cb3-188"><a href="#cb3-188" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`praatfan-local`</span> <span class="pp">|</span> Bundled (<span class="in">`static/wasm/`</span>) <span class="pp">|</span> MIT/Apache-2.0 <span class="pp">|</span> Fastest (~100ms) <span class="pp">|</span> ✅ Yes <span class="pp">|</span></span>
-<span id="cb3-189"><a href="#cb3-189" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`praatfan`</span> <span class="pp">|</span> GitHub Pages CDN <span class="pp">|</span> MIT/Apache-2.0 <span class="pp">|</span> Fast (~500ms) <span class="pp">|</span> ❌ No <span class="pp">|</span></span>
-<span id="cb3-190"><a href="#cb3-190" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`praatfan-gpl`</span> <span class="pp">|</span> GitHub Pages CDN <span class="pp">|</span> GPL <span class="pp">|</span> Fast (~500ms) <span class="pp">|</span> ❌ No <span class="pp">|</span></span>
-<span id="cb3-191"><a href="#cb3-191" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-192"><a href="#cb3-192" aria-hidden="true" tabindex="-1"></a>All backends provide identical Praat-compatible results. Select via dropdown in the app interface.</span>
-<span id="cb3-193"><a href="#cb3-193" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-194"><a href="#cb3-194" aria-hidden="true" tabindex="-1"></a>**See:** <span class="co">[</span><span class="ot">WASM Backends Reference</span><span class="co">](../reference/backends.html)</span></span>
-<span id="cb3-195"><a href="#cb3-195" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-196"><a href="#cb3-196" aria-hidden="true" tabindex="-1"></a><span class="fu">### Configuration</span></span>
-<span id="cb3-197"><a href="#cb3-197" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-198"><a href="#cb3-198" aria-hidden="true" tabindex="-1"></a>**Customize via `config.yaml`:**</span>
-<span id="cb3-199"><a href="#cb3-199" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-200"><a href="#cb3-200" aria-hidden="true" tabindex="-1"></a><span class="in">```yaml</span></span>
-<span id="cb3-201"><a href="#cb3-201" aria-hidden="true" tabindex="-1"></a><span class="co"># Example configuration</span></span>
-<span id="cb3-202"><a href="#cb3-202" aria-hidden="true" tabindex="-1"></a><span class="fu">backend</span><span class="kw">:</span><span class="at"> </span><span class="st">"praatfan-local"</span></span>
-<span id="cb3-203"><a href="#cb3-203" aria-hidden="true" tabindex="-1"></a><span class="fu">maxFrequency</span><span class="kw">:</span><span class="at"> </span><span class="dv">5000</span></span>
-<span id="cb3-204"><a href="#cb3-204" aria-hidden="true" tabindex="-1"></a><span class="fu">showPitch</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
-<span id="cb3-205"><a href="#cb3-205" aria-hidden="true" tabindex="-1"></a><span class="fu">showFormants</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
-<span id="cb3-206"><a href="#cb3-206" aria-hidden="true" tabindex="-1"></a><span class="fu">theme</span><span class="kw">:</span><span class="at"> </span><span class="st">"dark"</span></span>
-<span id="cb3-207"><a href="#cb3-207" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-208"><a href="#cb3-208" aria-hidden="true" tabindex="-1"></a><span class="co"># Pitch settings</span></span>
-<span id="cb3-209"><a href="#cb3-209" aria-hidden="true" tabindex="-1"></a><span class="fu">pitchFloor</span><span class="kw">:</span><span class="at"> </span><span class="dv">75</span></span>
-<span id="cb3-210"><a href="#cb3-210" aria-hidden="true" tabindex="-1"></a><span class="fu">pitchCeiling</span><span class="kw">:</span><span class="at"> </span><span class="dv">600</span></span>
-<span id="cb3-211"><a href="#cb3-211" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-212"><a href="#cb3-212" aria-hidden="true" tabindex="-1"></a><span class="co"># Formant settings</span></span>
-<span id="cb3-213"><a href="#cb3-213" aria-hidden="true" tabindex="-1"></a><span class="fu">maxFormants</span><span class="kw">:</span><span class="at"> </span><span class="dv">5</span></span>
-<span id="cb3-214"><a href="#cb3-214" aria-hidden="true" tabindex="-1"></a><span class="fu">maxFormantFrequency</span><span class="kw">:</span><span class="at"> </span><span class="dv">5500</span></span>
-<span id="cb3-215"><a href="#cb3-215" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-216"><a href="#cb3-216" aria-hidden="true" tabindex="-1"></a><span class="co"># Colors</span></span>
-<span id="cb3-217"><a href="#cb3-217" aria-hidden="true" tabindex="-1"></a><span class="fu">pitchColor</span><span class="kw">:</span><span class="at"> </span><span class="st">"#0000FF"</span></span>
-<span id="cb3-218"><a href="#cb3-218" aria-hidden="true" tabindex="-1"></a><span class="fu">formantColor</span><span class="kw">:</span><span class="at"> </span><span class="st">"#FF0000"</span></span>
-<span id="cb3-219"><a href="#cb3-219" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb3-135"><a href="#cb3-135" aria-hidden="true" tabindex="-1"></a>**Touch-optimized interface at `/viewer` route:**</span>
+<span id="cb3-136"><a href="#cb3-136" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-137"><a href="#cb3-137" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Touch gestures:**</span>
+<span id="cb3-138"><a href="#cb3-138" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>Tap → Place cursor</span>
+<span id="cb3-139"><a href="#cb3-139" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>Drag → Select region</span>
+<span id="cb3-140"><a href="#cb3-140" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>Two-finger drag → Pan view</span>
+<span id="cb3-141"><a href="#cb3-141" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>Pinch → Zoom in/out</span>
+<span id="cb3-142"><a href="#cb3-142" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>Long-press → Copy selected position visible properties</span>
+<span id="cb3-143"><a href="#cb3-143" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Compact layout** for small screens</span>
+<span id="cb3-144"><a href="#cb3-144" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Landscape mode optimization**</span>
+<span id="cb3-145"><a href="#cb3-145" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Safe area support** for notched phones</span>
+<span id="cb3-146"><a href="#cb3-146" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Settings drawer** for overlay toggles</span>
+<span id="cb3-147"><a href="#cb3-147" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Floating play button**</span>
+<span id="cb3-148"><a href="#cb3-148" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**URL parameters** for pre-configuration</span>
+<span id="cb3-149"><a href="#cb3-149" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-150"><a href="#cb3-150" aria-hidden="true" tabindex="-1"></a>**Embedding support:**</span>
+<span id="cb3-151"><a href="#cb3-151" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-152"><a href="#cb3-152" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Iframe-compatible</span>
+<span id="cb3-153"><a href="#cb3-153" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Pre-load audio via <span class="in">`?audio=`</span> parameter</span>
+<span id="cb3-154"><a href="#cb3-154" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Configure overlays via <span class="in">`?overlays=`</span> parameter</span>
+<span id="cb3-155"><a href="#cb3-155" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>CORS-enabled remote loading</span>
+<span id="cb3-156"><a href="#cb3-156" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Data URL support for self-contained embeds</span>
+<span id="cb3-157"><a href="#cb3-157" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-158"><a href="#cb3-158" aria-hidden="true" tabindex="-1"></a>**See:** <span class="co">[</span><span class="ot">Mobile Viewer Documentation</span><span class="co">](mobile-viewer.html)</span> | <span class="co">[</span><span class="ot">Embedding Guide</span><span class="co">](../embedding/overview.html)</span></span>
+<span id="cb3-159"><a href="#cb3-159" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-160"><a href="#cb3-160" aria-hidden="true" tabindex="-1"></a><span class="al">![Mobile viewer in landscape mode](../screenshots/mobile-viewer-landscape.png)</span>{.screenshot}</span>
+<span id="cb3-161"><a href="#cb3-161" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-162"><a href="#cb3-162" aria-hidden="true" tabindex="-1"></a><span class="fu">## Advanced Features</span></span>
+<span id="cb3-163"><a href="#cb3-163" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-164"><a href="#cb3-164" aria-hidden="true" tabindex="-1"></a><span class="fu">### Long Audio Handling {#long-audio-handling}</span></span>
+<span id="cb3-165"><a href="#cb3-165" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-166"><a href="#cb3-166" aria-hidden="true" tabindex="-1"></a>**For files &gt;60 seconds:**</span>
+<span id="cb3-167"><a href="#cb3-167" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-168"><a href="#cb3-168" aria-hidden="true" tabindex="-1"></a>Ozen-web uses an intelligent on-demand analysis strategy to prevent UI freezing:</span>
+<span id="cb3-169"><a href="#cb3-169" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-170"><a href="#cb3-170" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**On load**: Waveform displays immediately, spectrogram shows "Zoom in for spectrogram"</span>
+<span id="cb3-171"><a href="#cb3-171" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>**When zoomed**: Analysis runs for visible window only (≤60s)</span>
+<span id="cb3-172"><a href="#cb3-172" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>**On-demand**: Results update automatically as you pan/zoom</span>
+<span id="cb3-173"><a href="#cb3-173" aria-hidden="true" tabindex="-1"></a><span class="ss">4. </span>**Debounced**: 300ms delay prevents excessive recomputation</span>
+<span id="cb3-174"><a href="#cb3-174" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-175"><a href="#cb3-175" aria-hidden="true" tabindex="-1"></a>This allows working with arbitrarily long recordings (hours of audio) while maintaining responsive UI.</span>
+<span id="cb3-176"><a href="#cb3-176" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-177"><a href="#cb3-177" aria-hidden="true" tabindex="-1"></a>**Why 60 seconds?**</span>
+<span id="cb3-178"><a href="#cb3-178" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-179"><a href="#cb3-179" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Browser memory constraints</span>
+<span id="cb3-180"><a href="#cb3-180" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Real-time user experience (analysis must complete in &lt;1s)</span>
+<span id="cb3-181"><a href="#cb3-181" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Balance between convenience and performance</span>
+<span id="cb3-182"><a href="#cb3-182" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-183"><a href="#cb3-183" aria-hidden="true" tabindex="-1"></a>**See:** <span class="co">[</span><span class="ot">Getting Started: Troubleshooting</span><span class="co">](../getting-started.html#long-audio-files-show-zoom-in-for-spectrogram)</span></span>
+<span id="cb3-184"><a href="#cb3-184" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-185"><a href="#cb3-185" aria-hidden="true" tabindex="-1"></a><span class="fu">### Multiple WASM Backends</span></span>
+<span id="cb3-186"><a href="#cb3-186" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-187"><a href="#cb3-187" aria-hidden="true" tabindex="-1"></a>Choose from multiple acoustic analysis backends:</span>
+<span id="cb3-188"><a href="#cb3-188" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-189"><a href="#cb3-189" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Backend <span class="pp">|</span> Source <span class="pp">|</span> License <span class="pp">|</span> Offline <span class="pp">|</span></span>
+<span id="cb3-190"><a href="#cb3-190" aria-hidden="true" tabindex="-1"></a><span class="pp">|---------|--------|---------|---------|</span></span>
+<span id="cb3-191"><a href="#cb3-191" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`praatfan-local`</span> <span class="pp">|</span> Bundled (<span class="in">`static/wasm/`</span>) <span class="pp">|</span> MIT/Apache-2.0 <span class="pp">|</span> ✅ Yes <span class="pp">|</span></span>
+<span id="cb3-192"><a href="#cb3-192" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`praatfan`</span> <span class="pp">|</span> GitHub Pages CDN <span class="pp">|</span> MIT/Apache-2.0 <span class="pp">|</span> ❌ No <span class="pp">|</span></span>
+<span id="cb3-193"><a href="#cb3-193" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`praatfan-gpl`</span> <span class="pp">|</span> GitHub Pages CDN <span class="pp">|</span> GPL <span class="pp">|</span> ❌ No <span class="pp">|</span></span>
+<span id="cb3-194"><a href="#cb3-194" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-195"><a href="#cb3-195" aria-hidden="true" tabindex="-1"></a>Praatfan-local and praatfan are identical, and approximate</span>
+<span id="cb3-196"><a href="#cb3-196" aria-hidden="true" tabindex="-1"></a>praatfan-gpl, which was built to be very similar to Praat. Select via</span>
+<span id="cb3-197"><a href="#cb3-197" aria-hidden="true" tabindex="-1"></a>dropdown in the app interface.</span>
+<span id="cb3-198"><a href="#cb3-198" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-199"><a href="#cb3-199" aria-hidden="true" tabindex="-1"></a>**See:** <span class="co">[</span><span class="ot">WASM Backends Reference</span><span class="co">](../reference/backends.html)</span></span>
+<span id="cb3-200"><a href="#cb3-200" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-201"><a href="#cb3-201" aria-hidden="true" tabindex="-1"></a><span class="fu">### Configuration</span></span>
+<span id="cb3-202"><a href="#cb3-202" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-203"><a href="#cb3-203" aria-hidden="true" tabindex="-1"></a>**Customize via `config.yaml`:**</span>
+<span id="cb3-204"><a href="#cb3-204" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-205"><a href="#cb3-205" aria-hidden="true" tabindex="-1"></a><span class="in">```yaml</span></span>
+<span id="cb3-206"><a href="#cb3-206" aria-hidden="true" tabindex="-1"></a><span class="co"># Example configuration</span></span>
+<span id="cb3-207"><a href="#cb3-207" aria-hidden="true" tabindex="-1"></a><span class="fu">backend</span><span class="kw">:</span><span class="at"> </span><span class="st">"praatfan-local"</span></span>
+<span id="cb3-208"><a href="#cb3-208" aria-hidden="true" tabindex="-1"></a><span class="fu">maxFrequency</span><span class="kw">:</span><span class="at"> </span><span class="dv">5000</span></span>
+<span id="cb3-209"><a href="#cb3-209" aria-hidden="true" tabindex="-1"></a><span class="fu">showPitch</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
+<span id="cb3-210"><a href="#cb3-210" aria-hidden="true" tabindex="-1"></a><span class="fu">showFormants</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
+<span id="cb3-211"><a href="#cb3-211" aria-hidden="true" tabindex="-1"></a><span class="fu">theme</span><span class="kw">:</span><span class="at"> </span><span class="st">"dark"</span></span>
+<span id="cb3-212"><a href="#cb3-212" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-213"><a href="#cb3-213" aria-hidden="true" tabindex="-1"></a><span class="co"># Pitch settings</span></span>
+<span id="cb3-214"><a href="#cb3-214" aria-hidden="true" tabindex="-1"></a><span class="fu">pitchFloor</span><span class="kw">:</span><span class="at"> </span><span class="dv">75</span></span>
+<span id="cb3-215"><a href="#cb3-215" aria-hidden="true" tabindex="-1"></a><span class="fu">pitchCeiling</span><span class="kw">:</span><span class="at"> </span><span class="dv">600</span></span>
+<span id="cb3-216"><a href="#cb3-216" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-217"><a href="#cb3-217" aria-hidden="true" tabindex="-1"></a><span class="co"># Formant settings</span></span>
+<span id="cb3-218"><a href="#cb3-218" aria-hidden="true" tabindex="-1"></a><span class="fu">maxFormants</span><span class="kw">:</span><span class="at"> </span><span class="dv">5</span></span>
+<span id="cb3-219"><a href="#cb3-219" aria-hidden="true" tabindex="-1"></a><span class="fu">maxFormantFrequency</span><span class="kw">:</span><span class="at"> </span><span class="dv">5500</span></span>
 <span id="cb3-220"><a href="#cb3-220" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-221"><a href="#cb3-221" aria-hidden="true" tabindex="-1"></a>**See:** <span class="co">[</span><span class="ot">Configuration Reference</span><span class="co">](../reference/configuration.html)</span></span>
-<span id="cb3-222"><a href="#cb3-222" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-223"><a href="#cb3-223" aria-hidden="true" tabindex="-1"></a><span class="fu">### Unified Undo/Redo</span></span>
-<span id="cb3-224"><a href="#cb3-224" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-225"><a href="#cb3-225" aria-hidden="true" tabindex="-1"></a>**Single undo stack for all editable operations:**</span>
-<span id="cb3-226"><a href="#cb3-226" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-227"><a href="#cb3-227" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Adding/removing/moving boundaries</span>
-<span id="cb3-228"><a href="#cb3-228" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Editing interval labels</span>
-<span id="cb3-229"><a href="#cb3-229" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Adding/removing/moving data points</span>
-<span id="cb3-230"><a href="#cb3-230" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Chronological order across all operation types</span>
+<span id="cb3-221"><a href="#cb3-221" aria-hidden="true" tabindex="-1"></a><span class="co"># Colors</span></span>
+<span id="cb3-222"><a href="#cb3-222" aria-hidden="true" tabindex="-1"></a><span class="fu">pitchColor</span><span class="kw">:</span><span class="at"> </span><span class="st">"#0000FF"</span></span>
+<span id="cb3-223"><a href="#cb3-223" aria-hidden="true" tabindex="-1"></a><span class="fu">formantColor</span><span class="kw">:</span><span class="at"> </span><span class="st">"#FF0000"</span></span>
+<span id="cb3-224"><a href="#cb3-224" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb3-225"><a href="#cb3-225" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-226"><a href="#cb3-226" aria-hidden="true" tabindex="-1"></a>**See:** <span class="co">[</span><span class="ot">Configuration Reference</span><span class="co">](../reference/configuration.html)</span></span>
+<span id="cb3-227"><a href="#cb3-227" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-228"><a href="#cb3-228" aria-hidden="true" tabindex="-1"></a><span class="fu">### Unified Undo/Redo</span></span>
+<span id="cb3-229"><a href="#cb3-229" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-230"><a href="#cb3-230" aria-hidden="true" tabindex="-1"></a>**Single undo stack for all editable operations:**</span>
 <span id="cb3-231"><a href="#cb3-231" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-232"><a href="#cb3-232" aria-hidden="true" tabindex="-1"></a>**Keyboard shortcuts:**</span>
-<span id="cb3-233"><a href="#cb3-233" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-234"><a href="#cb3-234" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="dt">&lt;</span><span class="kw">kbd</span><span class="dt">&gt;</span>Ctrl+Z<span class="dt">&lt;/</span><span class="kw">kbd</span><span class="dt">&gt;</span> (Cmd+Z on Mac) — Undo</span>
-<span id="cb3-235"><a href="#cb3-235" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="dt">&lt;</span><span class="kw">kbd</span><span class="dt">&gt;</span>Ctrl+Y<span class="dt">&lt;/</span><span class="kw">kbd</span><span class="dt">&gt;</span> or <span class="dt">&lt;</span><span class="kw">kbd</span><span class="dt">&gt;</span>Ctrl+Shift+Z<span class="dt">&lt;/</span><span class="kw">kbd</span><span class="dt">&gt;</span> — Redo</span>
+<span id="cb3-232"><a href="#cb3-232" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Adding/removing/moving boundaries</span>
+<span id="cb3-233"><a href="#cb3-233" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Editing interval labels</span>
+<span id="cb3-234"><a href="#cb3-234" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Adding/removing/moving data points</span>
+<span id="cb3-235"><a href="#cb3-235" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Chronological order across all operation types</span>
 <span id="cb3-236"><a href="#cb3-236" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-237"><a href="#cb3-237" aria-hidden="true" tabindex="-1"></a>**Non-undoable operations** (by design):</span>
+<span id="cb3-237"><a href="#cb3-237" aria-hidden="true" tabindex="-1"></a>**Keyboard shortcuts:**</span>
 <span id="cb3-238"><a href="#cb3-238" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-239"><a href="#cb3-239" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Adding/removing tiers</span>
-<span id="cb3-240"><a href="#cb3-240" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Loading audio/TextGrid files</span>
+<span id="cb3-239"><a href="#cb3-239" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="dt">&lt;</span><span class="kw">kbd</span><span class="dt">&gt;</span>Ctrl+Z<span class="dt">&lt;/</span><span class="kw">kbd</span><span class="dt">&gt;</span> (Cmd+Z on Mac) — Undo</span>
+<span id="cb3-240"><a href="#cb3-240" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="dt">&lt;</span><span class="kw">kbd</span><span class="dt">&gt;</span>Ctrl+Y<span class="dt">&lt;/</span><span class="kw">kbd</span><span class="dt">&gt;</span> or <span class="dt">&lt;</span><span class="kw">kbd</span><span class="dt">&gt;</span>Ctrl+Shift+Z<span class="dt">&lt;/</span><span class="kw">kbd</span><span class="dt">&gt;</span> — Redo</span>
 <span id="cb3-241"><a href="#cb3-241" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-242"><a href="#cb3-242" aria-hidden="true" tabindex="-1"></a>**See:** <span class="co">[</span><span class="ot">Tutorial: Annotations</span><span class="co">](../tutorial/04-annotations.html#undo-and-redo)</span></span>
+<span id="cb3-242"><a href="#cb3-242" aria-hidden="true" tabindex="-1"></a>**Non-undoable operations** (by design):</span>
 <span id="cb3-243"><a href="#cb3-243" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-244"><a href="#cb3-244" aria-hidden="true" tabindex="-1"></a><span class="fu">## Platform Features</span></span>
-<span id="cb3-245"><a href="#cb3-245" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-246"><a href="#cb3-246" aria-hidden="true" tabindex="-1"></a><span class="fu">### Offline &amp; PWA Support</span></span>
-<span id="cb3-247"><a href="#cb3-247" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-248"><a href="#cb3-248" aria-hidden="true" tabindex="-1"></a>**Works completely offline:**</span>
-<span id="cb3-249"><a href="#cb3-249" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-250"><a href="#cb3-250" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>All processing happens locally in browser</span>
-<span id="cb3-251"><a href="#cb3-251" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>No data uploaded to servers</span>
-<span id="cb3-252"><a href="#cb3-252" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>After initial load, works without internet (with local backend)</span>
-<span id="cb3-253"><a href="#cb3-253" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>PWA-ready with app icons for home screen installation</span>
+<span id="cb3-244"><a href="#cb3-244" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Adding/removing tiers</span>
+<span id="cb3-245"><a href="#cb3-245" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Loading audio/TextGrid files</span>
+<span id="cb3-246"><a href="#cb3-246" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-247"><a href="#cb3-247" aria-hidden="true" tabindex="-1"></a>**See:** <span class="co">[</span><span class="ot">Tutorial: Annotations</span><span class="co">](../tutorial/04-annotations.html#undo-and-redo)</span></span>
+<span id="cb3-248"><a href="#cb3-248" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-249"><a href="#cb3-249" aria-hidden="true" tabindex="-1"></a><span class="fu">## Platform Features</span></span>
+<span id="cb3-250"><a href="#cb3-250" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-251"><a href="#cb3-251" aria-hidden="true" tabindex="-1"></a><span class="fu">### Offline &amp; PWA Support</span></span>
+<span id="cb3-252"><a href="#cb3-252" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-253"><a href="#cb3-253" aria-hidden="true" tabindex="-1"></a>**Works completely offline:**</span>
 <span id="cb3-254"><a href="#cb3-254" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-255"><a href="#cb3-255" aria-hidden="true" tabindex="-1"></a><span class="fu">### Browser Compatibility</span></span>
-<span id="cb3-256"><a href="#cb3-256" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-257"><a href="#cb3-257" aria-hidden="true" tabindex="-1"></a>**Recommended browsers:**</span>
-<span id="cb3-258"><a href="#cb3-258" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-259"><a href="#cb3-259" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>✅ Chrome/Edge 90+ (best support)</span>
-<span id="cb3-260"><a href="#cb3-260" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>✅ Firefox 88+</span>
-<span id="cb3-261"><a href="#cb3-261" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>✅ Safari 15+ (macOS/iOS)</span>
-<span id="cb3-262"><a href="#cb3-262" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>✅ Mobile browsers (iOS Safari, Chrome Android)</span>
+<span id="cb3-255"><a href="#cb3-255" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>All processing happens locally in browser</span>
+<span id="cb3-256"><a href="#cb3-256" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>No data uploaded to servers</span>
+<span id="cb3-257"><a href="#cb3-257" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>After initial load, works without internet (with local backend)</span>
+<span id="cb3-258"><a href="#cb3-258" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>PWA-ready with app icons for home screen installation</span>
+<span id="cb3-259"><a href="#cb3-259" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-260"><a href="#cb3-260" aria-hidden="true" tabindex="-1"></a><span class="fu">### Browser Compatibility</span></span>
+<span id="cb3-261"><a href="#cb3-261" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-262"><a href="#cb3-262" aria-hidden="true" tabindex="-1"></a>Should work as well on all modern browsers</span>
 <span id="cb3-263"><a href="#cb3-263" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-264"><a href="#cb3-264" aria-hidden="true" tabindex="-1"></a>**Requirements:**</span>
 <span id="cb3-265"><a href="#cb3-265" aria-hidden="true" tabindex="-1"></a></span>
@@ -1678,104 +1557,69 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb3-275"><a href="#cb3-275" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Audio never leaves your browser</span>
 <span id="cb3-276"><a href="#cb3-276" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>No analytics or tracking</span>
 <span id="cb3-277"><a href="#cb3-277" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>No server-side processing</span>
-<span id="cb3-278"><a href="#cb3-278" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Suitable for sensitive/confidential data</span>
-<span id="cb3-279"><a href="#cb3-279" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-280"><a href="#cb3-280" aria-hidden="true" tabindex="-1"></a><span class="fu">## File Format Support</span></span>
-<span id="cb3-281"><a href="#cb3-281" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-282"><a href="#cb3-282" aria-hidden="true" tabindex="-1"></a><span class="fu">### Import Formats</span></span>
-<span id="cb3-283"><a href="#cb3-283" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-284"><a href="#cb3-284" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Format <span class="pp">|</span> Extension <span class="pp">|</span> Notes <span class="pp">|</span></span>
-<span id="cb3-285"><a href="#cb3-285" aria-hidden="true" tabindex="-1"></a><span class="pp">|--------|-----------|-------|</span></span>
-<span id="cb3-286"><a href="#cb3-286" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Audio <span class="pp">|</span> <span class="in">`.wav`</span>, <span class="in">`.mp3`</span>, <span class="in">`.ogg`</span>, <span class="in">`.flac`</span>, <span class="in">`.m4a`</span> <span class="pp">|</span> Browser-dependent <span class="pp">|</span></span>
-<span id="cb3-287"><a href="#cb3-287" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> TextGrid <span class="pp">|</span> <span class="in">`.TextGrid`</span> <span class="pp">|</span> Both short and long formats <span class="pp">|</span></span>
-<span id="cb3-288"><a href="#cb3-288" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Data Points <span class="pp">|</span> <span class="in">`.tsv`</span> <span class="pp">|</span> Tab-separated values <span class="pp">|</span></span>
-<span id="cb3-289"><a href="#cb3-289" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Configuration <span class="pp">|</span> <span class="in">`.yaml`</span> <span class="pp">|</span> Optional app configuration <span class="pp">|</span></span>
-<span id="cb3-290"><a href="#cb3-290" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-291"><a href="#cb3-291" aria-hidden="true" tabindex="-1"></a><span class="fu">### Export Formats</span></span>
-<span id="cb3-292"><a href="#cb3-292" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-293"><a href="#cb3-293" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Format <span class="pp">|</span> Content <span class="pp">|</span> Use Case <span class="pp">|</span></span>
-<span id="cb3-294"><a href="#cb3-294" aria-hidden="true" tabindex="-1"></a><span class="pp">|--------|---------|----------|</span></span>
-<span id="cb3-295"><a href="#cb3-295" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> TextGrid <span class="pp">|</span> Annotations (all tiers) <span class="pp">|</span> Praat, R, Python <span class="pp">|</span></span>
-<span id="cb3-296"><a href="#cb3-296" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> TSV <span class="pp">|</span> Data points + acoustic values <span class="pp">|</span> Statistical analysis <span class="pp">|</span></span>
-<span id="cb3-297"><a href="#cb3-297" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> WAV <span class="pp">|</span> Audio (16-bit PCM) <span class="pp">|</span> Save recordings, share clips <span class="pp">|</span></span>
-<span id="cb3-298"><a href="#cb3-298" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-299"><a href="#cb3-299" aria-hidden="true" tabindex="-1"></a>**See:** <span class="co">[</span><span class="ot">File Formats Reference</span><span class="co">](../reference/file-formats.html)</span></span>
-<span id="cb3-300"><a href="#cb3-300" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-301"><a href="#cb3-301" aria-hidden="true" tabindex="-1"></a><span class="fu">## Comparison with Desktop Tools</span></span>
-<span id="cb3-302"><a href="#cb3-302" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-303"><a href="#cb3-303" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Feature <span class="pp">|</span> Ozen-web <span class="pp">|</span> Praat <span class="pp">|</span> Desktop Ozen <span class="pp">|</span></span>
-<span id="cb3-304"><a href="#cb3-304" aria-hidden="true" tabindex="-1"></a><span class="pp">|---------|----------|-------|--------------|</span></span>
-<span id="cb3-305"><a href="#cb3-305" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **Installation** <span class="pp">|</span> None (browser) <span class="pp">|</span> Required <span class="pp">|</span> Required <span class="pp">|</span></span>
-<span id="cb3-306"><a href="#cb3-306" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **Platform** <span class="pp">|</span> Any OS with browser <span class="pp">|</span> OS-specific builds <span class="pp">|</span> Windows/Mac/Linux <span class="pp">|</span></span>
-<span id="cb3-307"><a href="#cb3-307" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **Privacy** <span class="pp">|</span> 100% local <span class="pp">|</span> 100% local <span class="pp">|</span> 100% local <span class="pp">|</span></span>
-<span id="cb3-308"><a href="#cb3-308" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **Offline** <span class="pp">|</span> ✅ Yes (with local backend) <span class="pp">|</span> ✅ Yes <span class="pp">|</span> ✅ Yes <span class="pp">|</span></span>
-<span id="cb3-309"><a href="#cb3-309" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **Mobile** <span class="pp">|</span> ✅ Optimized <span class="pp">|</span> ❌ No <span class="pp">|</span> ❌ No <span class="pp">|</span></span>
-<span id="cb3-310"><a href="#cb3-310" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **Embedding** <span class="pp">|</span> ✅ Iframe support <span class="pp">|</span> ❌ No <span class="pp">|</span> ❌ No <span class="pp">|</span></span>
-<span id="cb3-311"><a href="#cb3-311" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **Accuracy** <span class="pp">|</span> Praat algorithms (WASM) <span class="pp">|</span> Praat native code <span class="pp">|</span> Praat algorithms (Python) <span class="pp">|</span></span>
-<span id="cb3-312"><a href="#cb3-312" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **Scripting** <span class="pp">|</span> ❌ No <span class="pp">|</span> ✅ Yes <span class="pp">|</span> ⚠️ Limited <span class="pp">|</span></span>
-<span id="cb3-313"><a href="#cb3-313" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **Batch Processing** <span class="pp">|</span> ❌ No <span class="pp">|</span> ✅ Yes <span class="pp">|</span> ✅ Yes <span class="pp">|</span></span>
-<span id="cb3-314"><a href="#cb3-314" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-315"><a href="#cb3-315" aria-hidden="true" tabindex="-1"></a><span class="fu">## Use Cases</span></span>
+<span id="cb3-278"><a href="#cb3-278" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-279"><a href="#cb3-279" aria-hidden="true" tabindex="-1"></a><span class="fu">## File Format Support</span></span>
+<span id="cb3-280"><a href="#cb3-280" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-281"><a href="#cb3-281" aria-hidden="true" tabindex="-1"></a><span class="fu">### Import Formats</span></span>
+<span id="cb3-282"><a href="#cb3-282" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-283"><a href="#cb3-283" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Format <span class="pp">|</span> Extension <span class="pp">|</span> Notes <span class="pp">|</span></span>
+<span id="cb3-284"><a href="#cb3-284" aria-hidden="true" tabindex="-1"></a><span class="pp">|--------|-----------|-------|</span></span>
+<span id="cb3-285"><a href="#cb3-285" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Audio <span class="pp">|</span> <span class="in">`.wav`</span>, <span class="in">`.flac`</span>, <span class="in">`.mp3`</span>, <span class="in">`.ogg`</span> <span class="pp">|</span> Could be browser-dependent <span class="pp">|</span></span>
+<span id="cb3-286"><a href="#cb3-286" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> TextGrid <span class="pp">|</span> <span class="in">`.TextGrid`</span> <span class="pp">|</span> Both short and long formats <span class="pp">|</span></span>
+<span id="cb3-287"><a href="#cb3-287" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Data Points <span class="pp">|</span> <span class="in">`.tsv`</span> <span class="pp">|</span> Tab-separated values <span class="pp">|</span></span>
+<span id="cb3-288"><a href="#cb3-288" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Configuration <span class="pp">|</span> <span class="in">`.yaml`</span> <span class="pp">|</span> Optional app configuration <span class="pp">|</span></span>
+<span id="cb3-289"><a href="#cb3-289" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-290"><a href="#cb3-290" aria-hidden="true" tabindex="-1"></a><span class="fu">### Export Formats</span></span>
+<span id="cb3-291"><a href="#cb3-291" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-292"><a href="#cb3-292" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Format <span class="pp">|</span> Content <span class="pp">|</span> Use Case <span class="pp">|</span></span>
+<span id="cb3-293"><a href="#cb3-293" aria-hidden="true" tabindex="-1"></a><span class="pp">|--------|---------|----------|</span></span>
+<span id="cb3-294"><a href="#cb3-294" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> TextGrid <span class="pp">|</span> Annotations (all tiers) <span class="pp">|</span> Praat, R, Python <span class="pp">|</span></span>
+<span id="cb3-295"><a href="#cb3-295" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> TSV <span class="pp">|</span> Data points + acoustic values <span class="pp">|</span> Statistical analysis <span class="pp">|</span></span>
+<span id="cb3-296"><a href="#cb3-296" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> WAV <span class="pp">|</span> Audio (16-bit PCM) <span class="pp">|</span> Save recordings, share clips <span class="pp">|</span></span>
+<span id="cb3-297"><a href="#cb3-297" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-298"><a href="#cb3-298" aria-hidden="true" tabindex="-1"></a>**See:** <span class="co">[</span><span class="ot">File Formats Reference</span><span class="co">](../reference/file-formats.html)</span></span>
+<span id="cb3-299"><a href="#cb3-299" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-300"><a href="#cb3-300" aria-hidden="true" tabindex="-1"></a><span class="fu">## Use Cases</span></span>
+<span id="cb3-301"><a href="#cb3-301" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-302"><a href="#cb3-302" aria-hidden="true" tabindex="-1"></a>**Research:**</span>
+<span id="cb3-303"><a href="#cb3-303" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-304"><a href="#cb3-304" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Vowel formant analysis (F1/F2 plots)</span>
+<span id="cb3-305"><a href="#cb3-305" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Pitch contour studies (intonation, tone)</span>
+<span id="cb3-306"><a href="#cb3-306" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Voice quality assessment (HNR, spectral tilt)</span>
+<span id="cb3-307"><a href="#cb3-307" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Consonant acoustics (VOT, CoG, duration)</span>
+<span id="cb3-308"><a href="#cb3-308" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-309"><a href="#cb3-309" aria-hidden="true" tabindex="-1"></a>**Teaching:**</span>
+<span id="cb3-310"><a href="#cb3-310" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-311"><a href="#cb3-311" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Embed interactive spectrograms in lecture slides</span>
+<span id="cb3-312"><a href="#cb3-312" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Quarto/R Markdown integration</span>
+<span id="cb3-313"><a href="#cb3-313" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>No software installation required for students</span>
+<span id="cb3-314"><a href="#cb3-314" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Interactive demonstrations</span>
+<span id="cb3-315"><a href="#cb3-315" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-316"><a href="#cb3-316" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-317"><a href="#cb3-317" aria-hidden="true" tabindex="-1"></a>**Research:**</span>
+<span id="cb3-317"><a href="#cb3-317" aria-hidden="true" tabindex="-1"></a><span class="fu">## Next Steps</span></span>
 <span id="cb3-318"><a href="#cb3-318" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-319"><a href="#cb3-319" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Vowel formant analysis (F1/F2 plots)</span>
-<span id="cb3-320"><a href="#cb3-320" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Pitch contour studies (intonation, tone)</span>
-<span id="cb3-321"><a href="#cb3-321" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Voice quality assessment (HNR, spectral tilt)</span>
-<span id="cb3-322"><a href="#cb3-322" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Consonant acoustics (VOT, CoG, duration)</span>
+<span id="cb3-319"><a href="#cb3-319" aria-hidden="true" tabindex="-1"></a>**New users:**</span>
+<span id="cb3-320"><a href="#cb3-320" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-321"><a href="#cb3-321" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Getting Started Guide</span><span class="co">](../getting-started.html)</span> — Installation and first use</span>
+<span id="cb3-322"><a href="#cb3-322" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Complete Tutorial</span><span class="co">](../tutorial/index.html)</span> — 30-minute guided walkthrough</span>
 <span id="cb3-323"><a href="#cb3-323" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-324"><a href="#cb3-324" aria-hidden="true" tabindex="-1"></a>**Teaching:**</span>
+<span id="cb3-324"><a href="#cb3-324" aria-hidden="true" tabindex="-1"></a>**Specific features:**</span>
 <span id="cb3-325"><a href="#cb3-325" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-326"><a href="#cb3-326" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Embed interactive spectrograms in lecture slides</span>
-<span id="cb3-327"><a href="#cb3-327" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Quarto/R Markdown integration</span>
-<span id="cb3-328"><a href="#cb3-328" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>No software installation required for students</span>
-<span id="cb3-329"><a href="#cb3-329" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Interactive demonstrations</span>
+<span id="cb3-326"><a href="#cb3-326" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Spectrogram</span><span class="co">](spectrogram.html)</span> — Visualization details</span>
+<span id="cb3-327"><a href="#cb3-327" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Annotations</span><span class="co">](annotations.html)</span> — TextGrid workflow</span>
+<span id="cb3-328"><a href="#cb3-328" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Data Points</span><span class="co">](data-points.html)</span> — Measurement collection</span>
+<span id="cb3-329"><a href="#cb3-329" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Mobile Viewer</span><span class="co">](mobile-viewer.html)</span> — Touch interface</span>
 <span id="cb3-330"><a href="#cb3-330" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-331"><a href="#cb3-331" aria-hidden="true" tabindex="-1"></a>**Language Documentation:**</span>
+<span id="cb3-331"><a href="#cb3-331" aria-hidden="true" tabindex="-1"></a>**Reference:**</span>
 <span id="cb3-332"><a href="#cb3-332" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-333"><a href="#cb3-333" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Field recording transcription</span>
-<span id="cb3-334"><a href="#cb3-334" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Time-aligned corpus creation</span>
-<span id="cb3-335"><a href="#cb3-335" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Offline capability for field sites</span>
-<span id="cb3-336"><a href="#cb3-336" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Mobile device support for fieldwork</span>
-<span id="cb3-337"><a href="#cb3-337" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-338"><a href="#cb3-338" aria-hidden="true" tabindex="-1"></a>**Clinical:**</span>
-<span id="cb3-339"><a href="#cb3-339" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-340"><a href="#cb3-340" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Speech therapy progress tracking</span>
-<span id="cb3-341"><a href="#cb3-341" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Voice quality visualization</span>
-<span id="cb3-342"><a href="#cb3-342" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Shareable annotated samples</span>
-<span id="cb3-343"><a href="#cb3-343" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Patient education</span>
-<span id="cb3-344"><a href="#cb3-344" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-345"><a href="#cb3-345" aria-hidden="true" tabindex="-1"></a>**Podcasting &amp; Audio Production:**</span>
-<span id="cb3-346"><a href="#cb3-346" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-347"><a href="#cb3-347" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Visualize speech clarity</span>
-<span id="cb3-348"><a href="#cb3-348" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Identify problem areas</span>
-<span id="cb3-349"><a href="#cb3-349" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Mark edit points with sub-second precision</span>
-<span id="cb3-350"><a href="#cb3-350" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Export annotations for editing software</span>
-<span id="cb3-351"><a href="#cb3-351" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-352"><a href="#cb3-352" aria-hidden="true" tabindex="-1"></a><span class="fu">## Next Steps</span></span>
-<span id="cb3-353"><a href="#cb3-353" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-354"><a href="#cb3-354" aria-hidden="true" tabindex="-1"></a>**New users:**</span>
-<span id="cb3-355"><a href="#cb3-355" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-356"><a href="#cb3-356" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Getting Started Guide</span><span class="co">](../getting-started.html)</span> — Installation and first use</span>
-<span id="cb3-357"><a href="#cb3-357" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Complete Tutorial</span><span class="co">](../tutorial/index.html)</span> — 30-minute guided walkthrough</span>
-<span id="cb3-358"><a href="#cb3-358" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-359"><a href="#cb3-359" aria-hidden="true" tabindex="-1"></a>**Specific features:**</span>
-<span id="cb3-360"><a href="#cb3-360" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-361"><a href="#cb3-361" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Spectrogram</span><span class="co">](spectrogram.html)</span> — Visualization details</span>
-<span id="cb3-362"><a href="#cb3-362" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Annotations</span><span class="co">](annotations.html)</span> — TextGrid workflow</span>
-<span id="cb3-363"><a href="#cb3-363" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Data Points</span><span class="co">](data-points.html)</span> — Measurement collection</span>
-<span id="cb3-364"><a href="#cb3-364" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Mobile Viewer</span><span class="co">](mobile-viewer.html)</span> — Touch interface</span>
-<span id="cb3-365"><a href="#cb3-365" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-366"><a href="#cb3-366" aria-hidden="true" tabindex="-1"></a>**Reference:**</span>
-<span id="cb3-367"><a href="#cb3-367" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-368"><a href="#cb3-368" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Keyboard Shortcuts</span><span class="co">](../reference/keyboard-shortcuts.html)</span> — All shortcuts</span>
-<span id="cb3-369"><a href="#cb3-369" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Configuration</span><span class="co">](../reference/configuration.html)</span> — Customization options</span>
-<span id="cb3-370"><a href="#cb3-370" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">WASM Backends</span><span class="co">](../reference/backends.html)</span> — Backend comparison</span>
-<span id="cb3-371"><a href="#cb3-371" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-372"><a href="#cb3-372" aria-hidden="true" tabindex="-1"></a>**Development:**</span>
-<span id="cb3-373"><a href="#cb3-373" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-374"><a href="#cb3-374" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Architecture</span><span class="co">](../development/architecture.html)</span> — Technical design</span>
-<span id="cb3-375"><a href="#cb3-375" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Contributing</span><span class="co">](../development/contributing.html)</span> — How to contribute</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
+<span id="cb3-333"><a href="#cb3-333" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Keyboard Shortcuts</span><span class="co">](../reference/keyboard-shortcuts.html)</span> — All shortcuts</span>
+<span id="cb3-334"><a href="#cb3-334" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Configuration</span><span class="co">](../reference/configuration.html)</span> — Customization options</span>
+<span id="cb3-335"><a href="#cb3-335" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">WASM Backends</span><span class="co">](../reference/backends.html)</span> — Backend comparison</span>
+<span id="cb3-336"><a href="#cb3-336" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-337"><a href="#cb3-337" aria-hidden="true" tabindex="-1"></a>**Development:**</span>
+<span id="cb3-338"><a href="#cb3-338" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-339"><a href="#cb3-339" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Architecture</span><span class="co">](../development/architecture.html)</span> — Technical design</span>
+<span id="cb3-340"><a href="#cb3-340" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Contributing</span><span class="co">](../development/contributing.html)</span> — How to contribute</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 <footer class="footer">

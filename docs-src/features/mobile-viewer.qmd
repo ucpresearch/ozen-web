@@ -79,6 +79,10 @@ See [URL Parameters](../embedding/url-parameters.html) for complete documentatio
 - Doesn't create selection
 - Use when zoomed in
 
+### Long press on spectrogram
+
+Copies the values of the visible overlays at that point.
+
 ::: {.callout-tip}
 ## Touch Workflow
 
@@ -164,7 +168,7 @@ This ensures all controls are accessible on modern smartphones.
 
 The mobile viewer can load audio from URLs, enabling sharing and embedding:
 
-### Direct WAV/MP3 URLs
+### Direct Audio URLs
 
 ```
 /viewer?audio=https://example.com/recording.wav
@@ -192,10 +196,15 @@ See [Embedding Guide](../embedding/basic-usage.html) for details.
 
 ## Embedding in Web Pages
 
-Embed the mobile viewer in responsive web pages:
+Embed the mobile viewer in responsive web pages. Here's a live example:
 
+<iframe src="../live/viewer.html?audio=test-samples/short.wav&overlays=pitch,formants,intensity"
+        style="width: 100%; height: 600px; border: 1px solid #ddd; border-radius: 4px;">
+</iframe>
+
+**Embed code:**
 ```html
-<iframe src="https://ucpresearch.github.io/ozen-web/viewer?audio=...&overlays=pitch,formants"
+<iframe src="https://ucpresearch.github.io/ozen-web/viewer.html?audio=...&overlays=pitch,formants"
         style="width: 100%; height: 600px; border: none;">
 </iframe>
 ```
@@ -222,7 +231,7 @@ For full editing features, use the desktop interface.
 
 ## Performance
 
-The mobile viewer is optimized for mobile devices:
+The mobile viewer works on mobile devices:
 
 | Feature | Mobile Optimization |
 |---------|---------------------|
@@ -238,43 +247,14 @@ The mobile viewer is optimized for mobile devices:
 
 ## Browser Support
 
-Tested on:
-
-| Platform | Browser | Support |
-|----------|---------|---------|
-| iOS 14+ | Safari | ✅ Full |
-| Android 10+ | Chrome | ✅ Full |
-| Android 10+ | Firefox | ✅ Full |
-| iPadOS 14+ | Safari | ✅ Full |
+Works on all modern mobile browsers.
 
 ## Use Cases
 
-### Field Research
+- "On the road" acoustic analysis
+- Teaching
+- Student engagement in class
 
-- Load recordings on smartphone at research site
-- Analyze pitch and formants on device
-- Share findings via URL with colleagues
-
-### Classroom Demonstrations
-
-- Project mobile viewer on screen via HDMI
-- Touch gestures visible to students
-- Interactive phonetics demonstrations
-- No installation required
-
-### Conference Presentations
-
-- Embed viewer in conference poster QR code
-- Attendees scan and explore examples
-- Self-contained analysis in URL
-- Works offline after initial load
-
-### Remote Consultation
-
-- Share analysis URL via email/chat
-- Recipient can explore interactively
-- No file transfers needed
-- CORS-compatible hosting
 
 ## Troubleshooting
 

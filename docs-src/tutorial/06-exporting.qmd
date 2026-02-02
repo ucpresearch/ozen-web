@@ -249,22 +249,17 @@ Exported audio is always in WAV format (16-bit PCM, original sample rate). This 
 
 Ozen-web uses two methods for saving files, depending on browser support:
 
-**File System Access API** (Chrome, Edge):
+**File System Access API**:
 
 - Shows native "Save" dialog
 - You choose exact location and filename
 - Can overwrite existing files
-- Feels like a desktop app
 
-**Download API** (Firefox, Safari, older browsers):
+**Download API**:
 
 - Files save to Downloads folder
 - Browser may add numbers (e.g., `data(1).tsv`, `data(2).tsv`)
 - You need to move files manually
-
-::: {.callout-tip}
-For best experience, use Chrome or Edge, which support the File System Access API.
-:::
 
 ## Recommended Workflow
 
@@ -384,7 +379,7 @@ Ozen-web doesn't have built-in batch processing. For large corpora, consider usi
 **File saves to Downloads instead of chosen location:**
 
 - Your browser doesn't support File System Access API
-- This is normal for Firefox/Safari; manually move files after download
+- Manually move files after download
 
 **TextGrid won't open in Praat:**
 

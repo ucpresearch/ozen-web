@@ -1,3 +1,30 @@
+<!--
+	Annotation Editor Component
+
+	Multi-tier annotation interface for transcription and labeling.
+	Provides TextGrid-compatible annotation editing with Praat interoperability.
+
+	Features:
+	- Multi-tier support: unlimited annotation tiers with custom names
+	- Tier management: add, rename, remove tiers via modal dialogs
+	- TextGrid import: supports both short and long TextGrid formats
+	- TextGrid export: saves annotations in Praat-compatible format
+	- Keyboard tier selection: press 1-5 to quickly switch between tiers
+	- Undo/redo: unified undo system for annotation operations
+
+	Each tier is rendered as a Tier component below the spectrogram, showing:
+	- Intervals with text labels
+	- Boundaries (vertical lines between intervals)
+	- Interactive editing: double-click to add/edit, drag to move boundaries
+
+	The editor only appears when audio is loaded (controlled by parent component).
+	On mount, initializes with a default tier if none exist.
+
+	TextGrid compatibility:
+	- Import: parses both short ("text") and long ("ooTextFile") formats
+	- Export: uses short format with UTF-8 encoding
+	- Interval tiers only (point tiers not yet supported)
+-->
 <script lang="ts">
 	import Tier from './Tier.svelte';
 	import Modal from './Modal.svelte';

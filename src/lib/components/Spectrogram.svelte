@@ -1,3 +1,31 @@
+<!--
+	Spectrogram Component
+
+	Renders a time-frequency spectrogram with overlaid acoustic measurements and data points.
+	This is the main visualization component for acoustic analysis.
+
+	Features:
+	- Grayscale spectrogram with configurable dynamic range
+	- Overlays: pitch (F0), formants (F1-F4), intensity, HNR, CoG, spectral tilt, A1-P0
+	- Data points: double-click to add, drag to move, right-click to remove
+	- Selection: click-drag to select time regions for playback
+	- Long audio support: defers spectrogram until zoomed in (<60s visible)
+	- Zoom-dependent spectrogram: regenerates at higher resolution when zoomed
+
+	The component maintains two spectrogram caches:
+	1. Full-resolution cache: covers entire audio (or current visible range for long files)
+	2. Zoomed cache: high-resolution spectrogram for current zoom level (debounced)
+
+	User interactions:
+	- Click: place cursor, play audio from that point
+	- Click-drag: select time region
+	- Double-click: add data point at cursor position
+	- Right-click on data point: context menu to remove
+	- Drag data point: move to new time/frequency
+	- Hover: shows frequency and acoustic values in values panel
+
+	Memory management: Creates/frees WASM Sound objects for spectrogram computation.
+-->
 <script lang="ts">
 	import { onMount, onDestroy, tick } from 'svelte';
 	import { audioBuffer, sampleRate, duration } from '$lib/stores/audio';

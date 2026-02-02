@@ -331,7 +331,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#colormap" id="toc-colormap" class="nav-link" data-scroll-target="#colormap">Colormap</a></li>
   <li><a href="#canvas-rendering" id="toc-canvas-rendering" class="nav-link" data-scroll-target="#canvas-rendering">Canvas Rendering</a></li>
   </ul></li>
-  <li><a href="#performance" id="toc-performance" class="nav-link" data-scroll-target="#performance">Performance</a></li>
   <li><a href="#troubleshooting" id="toc-troubleshooting" class="nav-link" data-scroll-target="#troubleshooting">Troubleshooting</a>
   <ul class="collapse">
   <li><a href="#spectrogram-not-appearing" id="toc-spectrogram-not-appearing" class="nav-link" data-scroll-target="#spectrogram-not-appearing">Spectrogram Not Appearing</a></li>
@@ -367,7 +366,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <section id="overview" class="level2">
 <h2 class="anchored" data-anchor-id="overview">Overview</h2>
-<p>The spectrogram displays frequency content over time, computed using Praat-accurate algorithms via WebAssembly. Ozen-web uses a grayscale colormap matching Praat’s default appearance, with intelligent resolution scaling for optimal performance.</p>
+<p>The spectrogram displays frequency content over time, computed using Praat-accurate algorithms via WebAssembly. Ozen-web uses a grayscale colormap matching Praat’s default appearance, with resolution scaling.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="../screenshots/tutorial-03-formant-overlay.png" class="img-fluid figure-img"></p>
@@ -378,9 +377,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="key-features" class="level2">
 <h2 class="anchored" data-anchor-id="key-features">Key Features</h2>
 <ul>
-<li><strong>Praat-accurate computation</strong> - Uses praatfan WASM for research-grade spectrograms</li>
+<li><strong>Praat-accurate computation</strong> - Uses praatfan WASM for spectrograms</li>
 <li><strong>Dynamic resolution</strong> - Automatically enhances detail when zoomed in</li>
-<li><strong>Efficient caching</strong> - Stores computed spectrograms for instant redraw</li>
+<li><strong>Efficient caching</strong> - Stores computed spectrograms for redraw</li>
 <li><strong>Configurable frequency range</strong> - Choose 5 kHz, 7.5 kHz, or 10 kHz maximum</li>
 <li><strong>Long audio support</strong> - On-demand computation for files over 60 seconds</li>
 </ul>
@@ -417,7 +416,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </ul>
 </div>
 </div>
-<p>This provides optimal detail when examining specific regions while maintaining performance.</p>
+<p>This provides more detail when examining specific regions while maintaining performance.</p>
 </section>
 <section id="caching-strategy" class="level3">
 <h3 class="anchored" data-anchor-id="caching-strategy">Caching Strategy</h3>
@@ -437,12 +436,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 class="anchored" data-anchor-id="settings">Settings</h2>
 <section id="max-frequency" class="level3">
 <h3 class="anchored" data-anchor-id="max-frequency">Max Frequency</h3>
-<p>Control the frequency range displayed:</p>
-<ul>
-<li><strong>5000 Hz</strong> - Default for adult male speech</li>
-<li><strong>7500 Hz</strong> - Suitable for female/child speech</li>
-<li><strong>10000 Hz</strong> - Maximum detail for high-frequency analysis</li>
-</ul>
+<p>Control the frequency range displayed (5,000 Hz, 7,500 Hz, 10,000 Hz)</p>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -457,8 +451,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <ul>
 <li>Children’s voices</li>
 <li>High-pitched vowels</li>
-<li>Fricative consonants (s, sh, f)</li>
-<li>Bird vocalizations</li>
+<li>Fricative consonants (/s/, /ʃ/, /f/)</li>
 </ul>
 </div>
 </div>
@@ -507,7 +500,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><strong>When zoomed</strong> to ≤60s visible window: Spectrogram computes for that region</li>
 <li><strong>Debounced</strong>: 300ms delay prevents excessive recomputation during zoom/pan</li>
 </ol>
-<p>This allows working with arbitrarily long recordings (hours) without UI freezing.</p>
+<p>This allows working with longer recordings without UI freezing.</p>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -600,53 +593,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>Copy visible region to display canvas on zoom/pan</li>
 </ol>
 </section>
-</section>
-<section id="performance" class="level2">
-<h2 class="anchored" data-anchor-id="performance">Performance</h2>
-<table class="caption-top table">
-<thead>
-<tr class="header">
-<th>Scenario</th>
-<th>Computation Time</th>
-<th>Memory</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>5s audio, 5 kHz</td>
-<td>~100-200 ms</td>
-<td>~2 MB</td>
-</tr>
-<tr class="even">
-<td>30s audio, 5 kHz</td>
-<td>~500-800 ms</td>
-<td>~10 MB</td>
-</tr>
-<tr class="odd">
-<td>60s audio, 10 kHz</td>
-<td>~1-2 seconds</td>
-<td>~40 MB</td>
-</tr>
-<tr class="even">
-<td>3600s audio (on-demand)</td>
-<td>~1 second per 60s window</td>
-<td>~40 MB</td>
-</tr>
-</tbody>
-</table>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Note
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Times measured on modern desktop (2020+). First computation includes WASM initialization (~200ms).</p>
-</div>
-</div>
 </section>
 <section id="troubleshooting" class="level2">
 <h2 class="anchored" data-anchor-id="troubleshooting">Troubleshooting</h2>
@@ -1158,15 +1104,15 @@ Note
 <span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="fu">## Overview</span></span>
 <span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>The spectrogram displays frequency content over time, computed using Praat-accurate algorithms via WebAssembly. Ozen-web uses a grayscale colormap matching Praat's default appearance, with intelligent resolution scaling for optimal performance.</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>The spectrogram displays frequency content over time, computed using Praat-accurate algorithms via WebAssembly. Ozen-web uses a grayscale colormap matching Praat's default appearance, with resolution scaling.</span>
 <span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="al">![Spectrogram with formant overlays](../screenshots/tutorial-03-formant-overlay.png)</span></span>
 <span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="fu">## Key Features</span></span>
 <span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Praat-accurate computation** - Uses praatfan WASM for research-grade spectrograms</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Praat-accurate computation** - Uses praatfan WASM for spectrograms</span>
 <span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Dynamic resolution** - Automatically enhances detail when zoomed in</span>
-<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Efficient caching** - Stores computed spectrograms for instant redraw</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Efficient caching** - Stores computed spectrograms for redraw</span>
 <span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Configurable frequency range** - Choose 5 kHz, 7.5 kHz, or 10 kHz maximum</span>
 <span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Long audio support** - On-demand computation for files over 60 seconds</span>
 <span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a></span>
@@ -1193,7 +1139,7 @@ Note
 <span id="cb3-40"><a href="#cb3-40" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Long files (&gt;60s)**: Only computes spectrogram for visible window</span>
 <span id="cb3-41"><a href="#cb3-41" aria-hidden="true" tabindex="-1"></a>:::</span>
 <span id="cb3-42"><a href="#cb3-42" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-43"><a href="#cb3-43" aria-hidden="true" tabindex="-1"></a>This provides optimal detail when examining specific regions while maintaining performance.</span>
+<span id="cb3-43"><a href="#cb3-43" aria-hidden="true" tabindex="-1"></a>This provides more detail when examining specific regions while maintaining performance.</span>
 <span id="cb3-44"><a href="#cb3-44" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-45"><a href="#cb3-45" aria-hidden="true" tabindex="-1"></a><span class="fu">### Caching Strategy</span></span>
 <span id="cb3-46"><a href="#cb3-46" aria-hidden="true" tabindex="-1"></a></span>
@@ -1214,165 +1160,150 @@ Note
 <span id="cb3-61"><a href="#cb3-61" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-62"><a href="#cb3-62" aria-hidden="true" tabindex="-1"></a><span class="fu">### Max Frequency</span></span>
 <span id="cb3-63"><a href="#cb3-63" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-64"><a href="#cb3-64" aria-hidden="true" tabindex="-1"></a>Control the frequency range displayed:</span>
+<span id="cb3-64"><a href="#cb3-64" aria-hidden="true" tabindex="-1"></a>Control the frequency range displayed (5,000 Hz, 7,500 Hz, 10,000 Hz)</span>
 <span id="cb3-65"><a href="#cb3-65" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-66"><a href="#cb3-66" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**5000 Hz** - Default for adult male speech</span>
-<span id="cb3-67"><a href="#cb3-67" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**7500 Hz** - Suitable for female/child speech</span>
-<span id="cb3-68"><a href="#cb3-68" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**10000 Hz** - Maximum detail for high-frequency analysis</span>
+<span id="cb3-66"><a href="#cb3-66" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-67"><a href="#cb3-67" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip}</span>
+<span id="cb3-68"><a href="#cb3-68" aria-hidden="true" tabindex="-1"></a><span class="fu">## Choosing Max Frequency</span></span>
 <span id="cb3-69"><a href="#cb3-69" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-70"><a href="#cb3-70" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip}</span>
-<span id="cb3-71"><a href="#cb3-71" aria-hidden="true" tabindex="-1"></a><span class="fu">## Choosing Max Frequency</span></span>
-<span id="cb3-72"><a href="#cb3-72" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-73"><a href="#cb3-73" aria-hidden="true" tabindex="-1"></a>For most speech analysis, 5000 Hz captures all relevant information. Use 7500-10000 Hz when analyzing:</span>
-<span id="cb3-74"><a href="#cb3-74" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-75"><a href="#cb3-75" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Children's voices</span>
-<span id="cb3-76"><a href="#cb3-76" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>High-pitched vowels</span>
-<span id="cb3-77"><a href="#cb3-77" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Fricative consonants (s, sh, f)</span>
-<span id="cb3-78"><a href="#cb3-78" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Bird vocalizations</span>
-<span id="cb3-79"><a href="#cb3-79" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb3-80"><a href="#cb3-80" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-81"><a href="#cb3-81" aria-hidden="true" tabindex="-1"></a><span class="fu">### Spectrogram Parameters</span></span>
-<span id="cb3-82"><a href="#cb3-82" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-83"><a href="#cb3-83" aria-hidden="true" tabindex="-1"></a>Default settings (configurable via WASM):</span>
-<span id="cb3-84"><a href="#cb3-84" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-85"><a href="#cb3-85" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Parameter <span class="pp">|</span> Default <span class="pp">|</span> Description <span class="pp">|</span></span>
-<span id="cb3-86"><a href="#cb3-86" aria-hidden="true" tabindex="-1"></a><span class="pp">|-----------|---------|-------------|</span></span>
-<span id="cb3-87"><a href="#cb3-87" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Window length <span class="pp">|</span> 5 ms <span class="pp">|</span> Time window for each FFT <span class="pp">|</span></span>
-<span id="cb3-88"><a href="#cb3-88" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Time step <span class="pp">|</span> 2 ms <span class="pp">|</span> Hop size between windows <span class="pp">|</span></span>
-<span id="cb3-89"><a href="#cb3-89" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Frequency step <span class="pp">|</span> 20 Hz <span class="pp">|</span> Frequency resolution <span class="pp">|</span></span>
-<span id="cb3-90"><a href="#cb3-90" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Window shape <span class="pp">|</span> Gaussian <span class="pp">|</span> Spectral windowing function <span class="pp">|</span></span>
-<span id="cb3-91"><a href="#cb3-91" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-92"><a href="#cb3-92" aria-hidden="true" tabindex="-1"></a><span class="fu">## Long Audio Handling</span></span>
-<span id="cb3-93"><a href="#cb3-93" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-94"><a href="#cb3-94" aria-hidden="true" tabindex="-1"></a>For recordings longer than 60 seconds:</span>
-<span id="cb3-95"><a href="#cb3-95" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-96"><a href="#cb3-96" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**On load**: Waveform displays, spectrogram shows "Zoom in for spectrogram" message</span>
-<span id="cb3-97"><a href="#cb3-97" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>**When zoomed** to ≤60s visible window: Spectrogram computes for that region</span>
-<span id="cb3-98"><a href="#cb3-98" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>**Debounced**: 300ms delay prevents excessive recomputation during zoom/pan</span>
-<span id="cb3-99"><a href="#cb3-99" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-100"><a href="#cb3-100" aria-hidden="true" tabindex="-1"></a>This allows working with arbitrarily long recordings (hours) without UI freezing.</span>
+<span id="cb3-70"><a href="#cb3-70" aria-hidden="true" tabindex="-1"></a>For most speech analysis, 5000 Hz captures all relevant information. Use 7500-10000 Hz when analyzing:</span>
+<span id="cb3-71"><a href="#cb3-71" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-72"><a href="#cb3-72" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Children's voices</span>
+<span id="cb3-73"><a href="#cb3-73" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>High-pitched vowels</span>
+<span id="cb3-74"><a href="#cb3-74" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Fricative consonants (/s/, /ʃ/, /f/)</span>
+<span id="cb3-75"><a href="#cb3-75" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-76"><a href="#cb3-76" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb3-77"><a href="#cb3-77" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-78"><a href="#cb3-78" aria-hidden="true" tabindex="-1"></a><span class="fu">### Spectrogram Parameters</span></span>
+<span id="cb3-79"><a href="#cb3-79" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-80"><a href="#cb3-80" aria-hidden="true" tabindex="-1"></a>Default settings (configurable via WASM):</span>
+<span id="cb3-81"><a href="#cb3-81" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-82"><a href="#cb3-82" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Parameter <span class="pp">|</span> Default <span class="pp">|</span> Description <span class="pp">|</span></span>
+<span id="cb3-83"><a href="#cb3-83" aria-hidden="true" tabindex="-1"></a><span class="pp">|-----------|---------|-------------|</span></span>
+<span id="cb3-84"><a href="#cb3-84" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Window length <span class="pp">|</span> 5 ms <span class="pp">|</span> Time window for each FFT <span class="pp">|</span></span>
+<span id="cb3-85"><a href="#cb3-85" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Time step <span class="pp">|</span> 2 ms <span class="pp">|</span> Hop size between windows <span class="pp">|</span></span>
+<span id="cb3-86"><a href="#cb3-86" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Frequency step <span class="pp">|</span> 20 Hz <span class="pp">|</span> Frequency resolution <span class="pp">|</span></span>
+<span id="cb3-87"><a href="#cb3-87" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Window shape <span class="pp">|</span> Gaussian <span class="pp">|</span> Spectral windowing function <span class="pp">|</span></span>
+<span id="cb3-88"><a href="#cb3-88" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-89"><a href="#cb3-89" aria-hidden="true" tabindex="-1"></a><span class="fu">## Long Audio Handling</span></span>
+<span id="cb3-90"><a href="#cb3-90" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-91"><a href="#cb3-91" aria-hidden="true" tabindex="-1"></a>For recordings longer than 60 seconds:</span>
+<span id="cb3-92"><a href="#cb3-92" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-93"><a href="#cb3-93" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**On load**: Waveform displays, spectrogram shows "Zoom in for spectrogram" message</span>
+<span id="cb3-94"><a href="#cb3-94" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>**When zoomed** to ≤60s visible window: Spectrogram computes for that region</span>
+<span id="cb3-95"><a href="#cb3-95" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>**Debounced**: 300ms delay prevents excessive recomputation during zoom/pan</span>
+<span id="cb3-96"><a href="#cb3-96" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-97"><a href="#cb3-97" aria-hidden="true" tabindex="-1"></a>This allows working with longer recordings without UI freezing.</span>
+<span id="cb3-98"><a href="#cb3-98" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-99"><a href="#cb3-99" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip}</span>
+<span id="cb3-100"><a href="#cb3-100" aria-hidden="true" tabindex="-1"></a><span class="fu">## Working with Long Files</span></span>
 <span id="cb3-101"><a href="#cb3-101" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-102"><a href="#cb3-102" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip}</span>
-<span id="cb3-103"><a href="#cb3-103" aria-hidden="true" tabindex="-1"></a><span class="fu">## Working with Long Files</span></span>
-<span id="cb3-104"><a href="#cb3-104" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-105"><a href="#cb3-105" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Load your multi-hour recording</span>
-<span id="cb3-106"><a href="#cb3-106" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>Use the waveform to navigate to regions of interest</span>
-<span id="cb3-107"><a href="#cb3-107" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>Zoom in to view detailed spectrogram</span>
-<span id="cb3-108"><a href="#cb3-108" aria-hidden="true" tabindex="-1"></a><span class="ss">4. </span>Spectrogram automatically appears when window &lt; 60 seconds</span>
-<span id="cb3-109"><a href="#cb3-109" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb3-110"><a href="#cb3-110" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-111"><a href="#cb3-111" aria-hidden="true" tabindex="-1"></a><span class="fu">## Overlays</span></span>
-<span id="cb3-112"><a href="#cb3-112" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-113"><a href="#cb3-113" aria-hidden="true" tabindex="-1"></a>The spectrogram can display multiple acoustic overlays simultaneously:</span>
-<span id="cb3-114"><a href="#cb3-114" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-115"><a href="#cb3-115" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Pitch track** (blue line with dots)</span>
-<span id="cb3-116"><a href="#cb3-116" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Formants** F1-F4 (red dots)</span>
-<span id="cb3-117"><a href="#cb3-117" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Intensity** (green line)</span>
-<span id="cb3-118"><a href="#cb3-118" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**HNR** (harmonics-to-noise ratio)</span>
-<span id="cb3-119"><a href="#cb3-119" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Center of Gravity** (spectral COG)</span>
-<span id="cb3-120"><a href="#cb3-120" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Data points** (yellow dashed lines)</span>
-<span id="cb3-121"><a href="#cb3-121" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-122"><a href="#cb3-122" aria-hidden="true" tabindex="-1"></a>See <span class="co">[</span><span class="ot">Acoustic Overlays</span><span class="co">](acoustic-overlays.html)</span> for details.</span>
-<span id="cb3-123"><a href="#cb3-123" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-124"><a href="#cb3-124" aria-hidden="true" tabindex="-1"></a><span class="fu">## Interaction</span></span>
-<span id="cb3-125"><a href="#cb3-125" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-126"><a href="#cb3-126" aria-hidden="true" tabindex="-1"></a><span class="fu">### Navigation</span></span>
-<span id="cb3-127"><a href="#cb3-127" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-128"><a href="#cb3-128" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Scroll wheel** - Zoom in/out (centered on cursor)</span>
-<span id="cb3-129"><a href="#cb3-129" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Horizontal scroll** - Pan left/right through time</span>
-<span id="cb3-130"><a href="#cb3-130" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Click** - Place cursor at time position</span>
-<span id="cb3-131"><a href="#cb3-131" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Click + drag** - Select time region</span>
-<span id="cb3-132"><a href="#cb3-132" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Double-click** - Add data point (if in data collection mode)</span>
-<span id="cb3-133"><a href="#cb3-133" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-134"><a href="#cb3-134" aria-hidden="true" tabindex="-1"></a><span class="fu">### Visual Indicators</span></span>
-<span id="cb3-135"><a href="#cb3-135" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-136"><a href="#cb3-136" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Red vertical line** - Current cursor position</span>
-<span id="cb3-137"><a href="#cb3-137" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Blue rectangle** - Selected time region</span>
-<span id="cb3-138"><a href="#cb3-138" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Yellow dashed lines** - Data collection points</span>
-<span id="cb3-139"><a href="#cb3-139" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Colored dots/lines** - Acoustic overlay tracks</span>
-<span id="cb3-140"><a href="#cb3-140" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-141"><a href="#cb3-141" aria-hidden="true" tabindex="-1"></a><span class="fu">## Technical Details</span></span>
-<span id="cb3-142"><a href="#cb3-142" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-143"><a href="#cb3-143" aria-hidden="true" tabindex="-1"></a><span class="fu">### Computation Backend</span></span>
-<span id="cb3-144"><a href="#cb3-144" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-145"><a href="#cb3-145" aria-hidden="true" tabindex="-1"></a>Spectrograms are computed using the selected WASM backend:</span>
+<span id="cb3-102"><a href="#cb3-102" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Load your multi-hour recording</span>
+<span id="cb3-103"><a href="#cb3-103" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>Use the waveform to navigate to regions of interest</span>
+<span id="cb3-104"><a href="#cb3-104" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>Zoom in to view detailed spectrogram</span>
+<span id="cb3-105"><a href="#cb3-105" aria-hidden="true" tabindex="-1"></a><span class="ss">4. </span>Spectrogram automatically appears when window &lt; 60 seconds</span>
+<span id="cb3-106"><a href="#cb3-106" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb3-107"><a href="#cb3-107" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-108"><a href="#cb3-108" aria-hidden="true" tabindex="-1"></a><span class="fu">## Overlays</span></span>
+<span id="cb3-109"><a href="#cb3-109" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-110"><a href="#cb3-110" aria-hidden="true" tabindex="-1"></a>The spectrogram can display multiple acoustic overlays simultaneously:</span>
+<span id="cb3-111"><a href="#cb3-111" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-112"><a href="#cb3-112" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Pitch track** (blue line with dots)</span>
+<span id="cb3-113"><a href="#cb3-113" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Formants** F1-F4 (red dots)</span>
+<span id="cb3-114"><a href="#cb3-114" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Intensity** (green line)</span>
+<span id="cb3-115"><a href="#cb3-115" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**HNR** (harmonics-to-noise ratio)</span>
+<span id="cb3-116"><a href="#cb3-116" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Center of Gravity** (spectral COG)</span>
+<span id="cb3-117"><a href="#cb3-117" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Data points** (yellow dashed lines)</span>
+<span id="cb3-118"><a href="#cb3-118" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-119"><a href="#cb3-119" aria-hidden="true" tabindex="-1"></a>See <span class="co">[</span><span class="ot">Acoustic Overlays</span><span class="co">](acoustic-overlays.html)</span> for details.</span>
+<span id="cb3-120"><a href="#cb3-120" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-121"><a href="#cb3-121" aria-hidden="true" tabindex="-1"></a><span class="fu">## Interaction</span></span>
+<span id="cb3-122"><a href="#cb3-122" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-123"><a href="#cb3-123" aria-hidden="true" tabindex="-1"></a><span class="fu">### Navigation</span></span>
+<span id="cb3-124"><a href="#cb3-124" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-125"><a href="#cb3-125" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Scroll wheel** - Zoom in/out (centered on cursor)</span>
+<span id="cb3-126"><a href="#cb3-126" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Horizontal scroll** - Pan left/right through time</span>
+<span id="cb3-127"><a href="#cb3-127" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Click** - Place cursor at time position</span>
+<span id="cb3-128"><a href="#cb3-128" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Click + drag** - Select time region</span>
+<span id="cb3-129"><a href="#cb3-129" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Double-click** - Add data point (if in data collection mode)</span>
+<span id="cb3-130"><a href="#cb3-130" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-131"><a href="#cb3-131" aria-hidden="true" tabindex="-1"></a><span class="fu">### Visual Indicators</span></span>
+<span id="cb3-132"><a href="#cb3-132" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-133"><a href="#cb3-133" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Red vertical line** - Current cursor position</span>
+<span id="cb3-134"><a href="#cb3-134" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Blue rectangle** - Selected time region</span>
+<span id="cb3-135"><a href="#cb3-135" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Yellow dashed lines** - Data collection points</span>
+<span id="cb3-136"><a href="#cb3-136" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Colored dots/lines** - Acoustic overlay tracks</span>
+<span id="cb3-137"><a href="#cb3-137" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-138"><a href="#cb3-138" aria-hidden="true" tabindex="-1"></a><span class="fu">## Technical Details</span></span>
+<span id="cb3-139"><a href="#cb3-139" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-140"><a href="#cb3-140" aria-hidden="true" tabindex="-1"></a><span class="fu">### Computation Backend</span></span>
+<span id="cb3-141"><a href="#cb3-141" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-142"><a href="#cb3-142" aria-hidden="true" tabindex="-1"></a>Spectrograms are computed using the selected WASM backend:</span>
+<span id="cb3-143"><a href="#cb3-143" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-144"><a href="#cb3-144" aria-hidden="true" tabindex="-1"></a><span class="in">```javascript</span></span>
+<span id="cb3-145"><a href="#cb3-145" aria-hidden="true" tabindex="-1"></a><span class="kw">import</span> <span class="im">{ computeSpectrogram } from '$lib/wasm/acoustic'</span><span class="op">;</span></span>
 <span id="cb3-146"><a href="#cb3-146" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-147"><a href="#cb3-147" aria-hidden="true" tabindex="-1"></a><span class="in">```javascript</span></span>
-<span id="cb3-148"><a href="#cb3-148" aria-hidden="true" tabindex="-1"></a><span class="kw">import</span> <span class="im">{ computeSpectrogram } from '$lib/wasm/acoustic'</span><span class="op">;</span></span>
-<span id="cb3-149"><a href="#cb3-149" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-150"><a href="#cb3-150" aria-hidden="true" tabindex="-1"></a><span class="dt">const</span> spectrogram <span class="op">=</span> <span class="fu">computeSpectrogram</span><span class="op">(</span></span>
-<span id="cb3-151"><a href="#cb3-151" aria-hidden="true" tabindex="-1"></a>  sound<span class="op">,</span>           <span class="co">// WASM Sound object</span></span>
-<span id="cb3-152"><a href="#cb3-152" aria-hidden="true" tabindex="-1"></a>  <span class="fl">0.005</span><span class="op">,</span>          <span class="co">// windowLength (5 ms)</span></span>
-<span id="cb3-153"><a href="#cb3-153" aria-hidden="true" tabindex="-1"></a>  <span class="dv">5000</span><span class="op">,</span>           <span class="co">// maxFrequency (Hz)</span></span>
-<span id="cb3-154"><a href="#cb3-154" aria-hidden="true" tabindex="-1"></a>  <span class="fl">0.002</span><span class="op">,</span>          <span class="co">// timeStep (2 ms)</span></span>
-<span id="cb3-155"><a href="#cb3-155" aria-hidden="true" tabindex="-1"></a>  <span class="dv">20</span>              <span class="co">// frequencyStep (Hz)</span></span>
-<span id="cb3-156"><a href="#cb3-156" aria-hidden="true" tabindex="-1"></a><span class="op">);</span></span>
-<span id="cb3-157"><a href="#cb3-157" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-158"><a href="#cb3-158" aria-hidden="true" tabindex="-1"></a><span class="dt">const</span> info <span class="op">=</span> <span class="fu">getSpectrogramInfo</span><span class="op">(</span>spectrogram<span class="op">);</span></span>
-<span id="cb3-159"><a href="#cb3-159" aria-hidden="true" tabindex="-1"></a><span class="co">// { nTimes, nFreqs, values, timeStep, freqStep, ... }</span></span>
-<span id="cb3-160"><a href="#cb3-160" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb3-161"><a href="#cb3-161" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-162"><a href="#cb3-162" aria-hidden="true" tabindex="-1"></a><span class="fu">### Colormap</span></span>
-<span id="cb3-163"><a href="#cb3-163" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-164"><a href="#cb3-164" aria-hidden="true" tabindex="-1"></a>Grayscale mapping matches Praat conventions:</span>
-<span id="cb3-165"><a href="#cb3-165" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-166"><a href="#cb3-166" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Black** (0): High energy</span>
-<span id="cb3-167"><a href="#cb3-167" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**White** (255): Low energy</span>
-<span id="cb3-168"><a href="#cb3-168" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Linear scaling** between min and max dB values</span>
-<span id="cb3-169"><a href="#cb3-169" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-170"><a href="#cb3-170" aria-hidden="true" tabindex="-1"></a><span class="fu">### Canvas Rendering</span></span>
-<span id="cb3-171"><a href="#cb3-171" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-172"><a href="#cb3-172" aria-hidden="true" tabindex="-1"></a>The spectrogram uses HTML5 Canvas with ImageData:</span>
-<span id="cb3-173"><a href="#cb3-173" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-174"><a href="#cb3-174" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Compute spectrogram values (dB) via WASM</span>
-<span id="cb3-175"><a href="#cb3-175" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>Apply grayscale colormap: <span class="in">`gray = 255 - normalize(dB, min, max)`</span></span>
-<span id="cb3-176"><a href="#cb3-176" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>Create ImageData with RGBA values</span>
-<span id="cb3-177"><a href="#cb3-177" aria-hidden="true" tabindex="-1"></a><span class="ss">4. </span>Draw to off-screen canvas</span>
-<span id="cb3-178"><a href="#cb3-178" aria-hidden="true" tabindex="-1"></a><span class="ss">5. </span>Copy visible region to display canvas on zoom/pan</span>
+<span id="cb3-147"><a href="#cb3-147" aria-hidden="true" tabindex="-1"></a><span class="dt">const</span> spectrogram <span class="op">=</span> <span class="fu">computeSpectrogram</span><span class="op">(</span></span>
+<span id="cb3-148"><a href="#cb3-148" aria-hidden="true" tabindex="-1"></a>  sound<span class="op">,</span>           <span class="co">// WASM Sound object</span></span>
+<span id="cb3-149"><a href="#cb3-149" aria-hidden="true" tabindex="-1"></a>  <span class="fl">0.005</span><span class="op">,</span>          <span class="co">// windowLength (5 ms)</span></span>
+<span id="cb3-150"><a href="#cb3-150" aria-hidden="true" tabindex="-1"></a>  <span class="dv">5000</span><span class="op">,</span>           <span class="co">// maxFrequency (Hz)</span></span>
+<span id="cb3-151"><a href="#cb3-151" aria-hidden="true" tabindex="-1"></a>  <span class="fl">0.002</span><span class="op">,</span>          <span class="co">// timeStep (2 ms)</span></span>
+<span id="cb3-152"><a href="#cb3-152" aria-hidden="true" tabindex="-1"></a>  <span class="dv">20</span>              <span class="co">// frequencyStep (Hz)</span></span>
+<span id="cb3-153"><a href="#cb3-153" aria-hidden="true" tabindex="-1"></a><span class="op">);</span></span>
+<span id="cb3-154"><a href="#cb3-154" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-155"><a href="#cb3-155" aria-hidden="true" tabindex="-1"></a><span class="dt">const</span> info <span class="op">=</span> <span class="fu">getSpectrogramInfo</span><span class="op">(</span>spectrogram<span class="op">);</span></span>
+<span id="cb3-156"><a href="#cb3-156" aria-hidden="true" tabindex="-1"></a><span class="co">// { nTimes, nFreqs, values, timeStep, freqStep, ... }</span></span>
+<span id="cb3-157"><a href="#cb3-157" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb3-158"><a href="#cb3-158" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-159"><a href="#cb3-159" aria-hidden="true" tabindex="-1"></a><span class="fu">### Colormap</span></span>
+<span id="cb3-160"><a href="#cb3-160" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-161"><a href="#cb3-161" aria-hidden="true" tabindex="-1"></a>Grayscale mapping matches Praat conventions:</span>
+<span id="cb3-162"><a href="#cb3-162" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-163"><a href="#cb3-163" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Black** (0): High energy</span>
+<span id="cb3-164"><a href="#cb3-164" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**White** (255): Low energy</span>
+<span id="cb3-165"><a href="#cb3-165" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Linear scaling** between min and max dB values</span>
+<span id="cb3-166"><a href="#cb3-166" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-167"><a href="#cb3-167" aria-hidden="true" tabindex="-1"></a><span class="fu">### Canvas Rendering</span></span>
+<span id="cb3-168"><a href="#cb3-168" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-169"><a href="#cb3-169" aria-hidden="true" tabindex="-1"></a>The spectrogram uses HTML5 Canvas with ImageData:</span>
+<span id="cb3-170"><a href="#cb3-170" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-171"><a href="#cb3-171" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Compute spectrogram values (dB) via WASM</span>
+<span id="cb3-172"><a href="#cb3-172" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>Apply grayscale colormap: <span class="in">`gray = 255 - normalize(dB, min, max)`</span></span>
+<span id="cb3-173"><a href="#cb3-173" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>Create ImageData with RGBA values</span>
+<span id="cb3-174"><a href="#cb3-174" aria-hidden="true" tabindex="-1"></a><span class="ss">4. </span>Draw to off-screen canvas</span>
+<span id="cb3-175"><a href="#cb3-175" aria-hidden="true" tabindex="-1"></a><span class="ss">5. </span>Copy visible region to display canvas on zoom/pan</span>
+<span id="cb3-176"><a href="#cb3-176" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-177"><a href="#cb3-177" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-178"><a href="#cb3-178" aria-hidden="true" tabindex="-1"></a><span class="fu">## Troubleshooting</span></span>
 <span id="cb3-179"><a href="#cb3-179" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-180"><a href="#cb3-180" aria-hidden="true" tabindex="-1"></a><span class="fu">## Performance</span></span>
+<span id="cb3-180"><a href="#cb3-180" aria-hidden="true" tabindex="-1"></a><span class="fu">### Spectrogram Not Appearing</span></span>
 <span id="cb3-181"><a href="#cb3-181" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-182"><a href="#cb3-182" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Scenario <span class="pp">|</span> Computation Time <span class="pp">|</span> Memory <span class="pp">|</span></span>
-<span id="cb3-183"><a href="#cb3-183" aria-hidden="true" tabindex="-1"></a><span class="pp">|----------|-----------------|---------|</span></span>
-<span id="cb3-184"><a href="#cb3-184" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 5s audio, 5 kHz <span class="pp">|</span> ~100-200 ms <span class="pp">|</span> ~2 MB <span class="pp">|</span></span>
-<span id="cb3-185"><a href="#cb3-185" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 30s audio, 5 kHz <span class="pp">|</span> ~500-800 ms <span class="pp">|</span> ~10 MB <span class="pp">|</span></span>
-<span id="cb3-186"><a href="#cb3-186" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 60s audio, 10 kHz <span class="pp">|</span> ~1-2 seconds <span class="pp">|</span> ~40 MB <span class="pp">|</span></span>
-<span id="cb3-187"><a href="#cb3-187" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 3600s audio (on-demand) <span class="pp">|</span> ~1 second per 60s window <span class="pp">|</span> ~40 MB <span class="pp">|</span></span>
-<span id="cb3-188"><a href="#cb3-188" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-189"><a href="#cb3-189" aria-hidden="true" tabindex="-1"></a>::: {.callout-note}</span>
-<span id="cb3-190"><a href="#cb3-190" aria-hidden="true" tabindex="-1"></a>Times measured on modern desktop (2020+). First computation includes WASM initialization (~200ms).</span>
-<span id="cb3-191"><a href="#cb3-191" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb3-192"><a href="#cb3-192" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-193"><a href="#cb3-193" aria-hidden="true" tabindex="-1"></a><span class="fu">## Troubleshooting</span></span>
-<span id="cb3-194"><a href="#cb3-194" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-195"><a href="#cb3-195" aria-hidden="true" tabindex="-1"></a><span class="fu">### Spectrogram Not Appearing</span></span>
-<span id="cb3-196"><a href="#cb3-196" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-197"><a href="#cb3-197" aria-hidden="true" tabindex="-1"></a>**Problem**: "Zoom in for spectrogram" message displays</span>
-<span id="cb3-198"><a href="#cb3-198" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-199"><a href="#cb3-199" aria-hidden="true" tabindex="-1"></a>**Solution**: This is expected for files &gt;60 seconds. Zoom in until visible window is ≤60 seconds.</span>
-<span id="cb3-200"><a href="#cb3-200" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-201"><a href="#cb3-201" aria-hidden="true" tabindex="-1"></a><span class="fu">### Blurry or Low Resolution</span></span>
-<span id="cb3-202"><a href="#cb3-202" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-203"><a href="#cb3-203" aria-hidden="true" tabindex="-1"></a>**Problem**: Spectrogram looks pixelated when zoomed in</span>
-<span id="cb3-204"><a href="#cb3-204" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-205"><a href="#cb3-205" aria-hidden="true" tabindex="-1"></a>**Solution**: Zoom beyond 2x. The system automatically regenerates at higher resolution after 300ms.</span>
-<span id="cb3-206"><a href="#cb3-206" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-207"><a href="#cb3-207" aria-hidden="true" tabindex="-1"></a><span class="fu">### Slow Performance</span></span>
-<span id="cb3-208"><a href="#cb3-208" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-209"><a href="#cb3-209" aria-hidden="true" tabindex="-1"></a>**Problem**: UI freezes when zooming/panning</span>
-<span id="cb3-210"><a href="#cb3-210" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-211"><a href="#cb3-211" aria-hidden="true" tabindex="-1"></a>**Solution**:</span>
-<span id="cb3-212"><a href="#cb3-212" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Close other browser tabs to free memory</span>
-<span id="cb3-213"><a href="#cb3-213" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Reduce max frequency (10 kHz → 5 kHz)</span>
-<span id="cb3-214"><a href="#cb3-214" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Use shorter audio files</span>
-<span id="cb3-215"><a href="#cb3-215" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Wait for debounced regeneration to complete</span>
-<span id="cb3-216"><a href="#cb3-216" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-217"><a href="#cb3-217" aria-hidden="true" tabindex="-1"></a><span class="fu">## See Also</span></span>
-<span id="cb3-218"><a href="#cb3-218" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-219"><a href="#cb3-219" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Acoustic Overlays</span><span class="co">](acoustic-overlays.html)</span> - Pitch, formants, intensity visualization</span>
-<span id="cb3-220"><a href="#cb3-220" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Waveform</span><span class="co">](waveform.html)</span> - Amplitude-domain display</span>
-<span id="cb3-221"><a href="#cb3-221" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Configuration</span><span class="co">](../reference/configuration.html)</span> - Customizing spectrogram settings</span>
-<span id="cb3-222"><a href="#cb3-222" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Backends</span><span class="co">](../reference/backends.html)</span> - WASM backend options</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
+<span id="cb3-182"><a href="#cb3-182" aria-hidden="true" tabindex="-1"></a>**Problem**: "Zoom in for spectrogram" message displays</span>
+<span id="cb3-183"><a href="#cb3-183" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-184"><a href="#cb3-184" aria-hidden="true" tabindex="-1"></a>**Solution**: This is expected for files &gt;60 seconds. Zoom in until visible window is ≤60 seconds.</span>
+<span id="cb3-185"><a href="#cb3-185" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-186"><a href="#cb3-186" aria-hidden="true" tabindex="-1"></a><span class="fu">### Blurry or Low Resolution</span></span>
+<span id="cb3-187"><a href="#cb3-187" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-188"><a href="#cb3-188" aria-hidden="true" tabindex="-1"></a>**Problem**: Spectrogram looks pixelated when zoomed in</span>
+<span id="cb3-189"><a href="#cb3-189" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-190"><a href="#cb3-190" aria-hidden="true" tabindex="-1"></a>**Solution**: Zoom beyond 2x. The system automatically regenerates at higher resolution after 300ms.</span>
+<span id="cb3-191"><a href="#cb3-191" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-192"><a href="#cb3-192" aria-hidden="true" tabindex="-1"></a><span class="fu">### Slow Performance</span></span>
+<span id="cb3-193"><a href="#cb3-193" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-194"><a href="#cb3-194" aria-hidden="true" tabindex="-1"></a>**Problem**: UI freezes when zooming/panning</span>
+<span id="cb3-195"><a href="#cb3-195" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-196"><a href="#cb3-196" aria-hidden="true" tabindex="-1"></a>**Solution**:</span>
+<span id="cb3-197"><a href="#cb3-197" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Close other browser tabs to free memory</span>
+<span id="cb3-198"><a href="#cb3-198" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Reduce max frequency (10 kHz → 5 kHz)</span>
+<span id="cb3-199"><a href="#cb3-199" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Use shorter audio files</span>
+<span id="cb3-200"><a href="#cb3-200" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Wait for debounced regeneration to complete</span>
+<span id="cb3-201"><a href="#cb3-201" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-202"><a href="#cb3-202" aria-hidden="true" tabindex="-1"></a><span class="fu">## See Also</span></span>
+<span id="cb3-203"><a href="#cb3-203" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-204"><a href="#cb3-204" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Acoustic Overlays</span><span class="co">](acoustic-overlays.html)</span> - Pitch, formants, intensity visualization</span>
+<span id="cb3-205"><a href="#cb3-205" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Waveform</span><span class="co">](waveform.html)</span> - Amplitude-domain display</span>
+<span id="cb3-206"><a href="#cb3-206" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Configuration</span><span class="co">](../reference/configuration.html)</span> - Customizing spectrogram settings</span>
+<span id="cb3-207"><a href="#cb3-207" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Backends</span><span class="co">](../reference/backends.html)</span> - WASM backend options</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 <footer class="footer">

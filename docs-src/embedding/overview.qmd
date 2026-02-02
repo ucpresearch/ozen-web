@@ -297,7 +297,7 @@ location ~* \.(wav|mp3|ogg|flac)$ {
 
 **Q: Can I embed the main app (not just viewer)?**
 
-A: The main app works in iframes but is designed for desktop use. The `/viewer` route is optimized for embedding and mobile.
+A: The main app works in iframes but is designed for desktop use. The `/viewer` route is designed for embedding and mobile.
 
 **Q: Does the embedded viewer support annotations?**
 

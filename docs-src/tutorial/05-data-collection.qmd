@@ -69,14 +69,13 @@ Each data point captures all acoustic measurements:
    - **Time:** 0.452 s
    - **Freq:** 1234 Hz (where you clicked)
    - **Pitch:** 234 Hz
-   - **F1:** 523 Hz
+   - **F1:** 923 Hz
    - **F2:** 1987 Hz
    - **F3:** 2743 Hz
-   - **F4:** 3543 Hz
    - **Intensity:** 68 dB
-   - **HNR:** 12.3 dB
-   - **CoG:** 3456 Hz
-   - **Labels:** phones="a", words="cat"
+   - **HNR:** 1.3 dB
+   - **CoG:** 3986 Hz
+   - **Labels:** phones="æ", words="cat"
 
    ![Data point values panel](../screenshots/tutorial-05-datapoint-values.png){.screenshot}
 :::
@@ -136,9 +135,9 @@ Let's collect formant data for all vowels in a sentence:
 7. A data point appears
 
 8. **Repeat** for each vowel:
-   - "ee" in "see" (high F2, low F1)
-   - "oo" in "two" (low F2, low F1)
-   - "a" in "cats" (mid F1, mid F2)
+   - [i] in "see" (high F2, low F1)
+   - [u] in "two" (low F2, low F1)
+   - [æ] in "cats" (mid F1, mid F2)
 
 9. **Export to TSV** (section 6) for analysis
 :::
@@ -153,19 +152,16 @@ Data points automatically capture labels from ALL annotation tiers at that time:
 
 If you have tiers:
 
-- **phones** tier: interval "a" from 0.4-0.6s
+- **phones** tier: interval "æ" from 0.4-0.6s
 - **words** tier: interval "cat" from 0.3-0.7s
-- **stress** tier: interval "1" from 0.3-0.7s
 
 And you add a data point at time 0.5s:
 
 The exported TSV will include:
 ```
-time    freq    pitch   f1      f2      phones  words   stress
-0.500   1500    234     698     1234    a       cat     1
+time    freq    pitch   f1      f2      phones  words
+0.500   1500    234     698     1852    æ       cat
 ```
-
-This is extremely powerful for statistical analysis in R or Python!
 
 ::: {.callout-tip}
 Annotate your audio first (section 4), then add data points. This way, each data point inherits contextual labels automatically.
@@ -184,12 +180,6 @@ Annotate your audio first (section 4), then add data points. This way, each data
 - Add data points at burst and voicing onset for stops
 - Export TSV with times
 - Calculate VOT = voicing_time - burst_time
-
-**Pitch contour studies:**
-
-- Add data points at regular intervals (every 50ms)
-- Export pitch values
-- Analyze intonation patterns
 
 **Consonant acoustics:**
 
@@ -253,6 +243,12 @@ Annotate your audio first (section 4), then add data points. This way, each data
 - Remove unnecessary points (right-click → Remove)
 - Zoom out to see overall distribution
 - Export and start fresh if needed
+
+::: {.callout-tip}
+## Quick Copy to Clipboard
+
+Press <kbd>Ctrl+C</kbd> (Windows/Linux) or <kbd>Cmd+C</kbd> (Mac) to instantly copy all data points as TSV to your clipboard. Then paste directly into Excel, R, or any text editor. No export dialog needed!
+:::
 
 ## What's Next?
 

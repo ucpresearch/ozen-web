@@ -35,11 +35,6 @@ Data points enable systematic collection of acoustic measurements at specific ti
 The vertical position of your double-click doesn't affect measurements — it only sets the time position. All acoustic values (pitch, formants, intensity, etc.) are computed at that time point automatically.
 :::
 
-### Via Keyboard
-
-1. Click to place cursor at desired time
-2. Press **D** key to add data point at cursor
-
 ## Moving Data Points
 
 **Drag horizontally:**
@@ -59,10 +54,6 @@ Adding, moving, and removing data points are fully undoable with Ctrl+Z / Cmd+Z.
 **Right-click menu:**
 1. Right-click on data point marker
 2. Select "Remove data point"
-
-**Keyboard:**
-1. Click data point to select
-2. Press Delete or Backspace
 
 ## Collected Measurements
 
@@ -119,6 +110,11 @@ Export all data points to tab-separated values format for statistical analysis.
 1. Click **"Export Data Points"** button
 2. Choose save location
 3. File saves as `data-points.tsv`
+
+**Quick copy to clipboard:**
+- Press <kbd>Ctrl+C</kbd> (Windows/Linux) or <kbd>Cmd+C</kbd> (Mac) to copy all data points as TSV to clipboard
+- Paste directly into spreadsheet software or text editor
+- No file dialog needed
 
 ### TSV Format
 
@@ -284,16 +280,14 @@ Efficient keyboard-driven data collection:
 | Key | Action |
 |-----|--------|
 | Double-click spectrogram | Add data point |
-| D | Add data point at cursor |
 | Click data point | Select |
-| Delete / Backspace | Remove selected point |
 | Ctrl+Z / Cmd+Z | Undo add/move/remove |
 | Ctrl+Y / Cmd+Shift+Z | Redo |
 
 **Rapid collection:**
 1. Play audio (Space)
 2. Pause at target (Space)
-3. Press D to add point
+3. Double-click spectrogram to add point
 4. Repeat
 
 ## Integration with Annotations
@@ -303,7 +297,7 @@ Data points automatically integrate with annotation tiers:
 **Example scenario:**
 ```
 Annotations:
-  words:  | the   | cat   | sat   |
+  words:  | the   | cat       | sat       |
   phones: | ð | ə | k | æ | t | s | æ | t |
 
 Data Points:
@@ -324,15 +318,7 @@ This enables within-category statistical analysis: "Compare F1 for all /æ/ toke
 
 ## Performance
 
-| Operation | Time |
-|-----------|------|
-| Add point | < 10 ms |
-| Move point | < 10 ms |
-| Remove point | < 10 ms |
-| Export 100 points | < 100 ms |
-| Import 100 points | < 100 ms |
-
-Data point operations are near-instantaneous, enabling rapid collection workflows.
+Data point operations enable rapid collection workflows.
 
 ## Limitations
 

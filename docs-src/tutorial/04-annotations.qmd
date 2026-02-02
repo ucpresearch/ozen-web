@@ -251,13 +251,13 @@ Let's annotate a short phrase: "hello world"
 
 12. Add boundaries and labels for each phone:
     - /h/ [h]
-    - /ɛ/ [ɛ] or [e]
+    - /ɛ/ [ɛ]
     - /l/ [l]
-    - /oʊ/ [oʊ] or [o]
+    - /oʊ/ [oʊ] 
 
 13. Repeat for "world":
     - /w/ [w]
-    - /ɝ/ [ɝ] or [ər]
+    - /ɝ/ [ɝ] 
     - /l/ [l]
     - /d/ [d]
 :::

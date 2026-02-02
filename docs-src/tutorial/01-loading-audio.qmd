@@ -27,7 +27,7 @@ You should see an empty interface with a prominent file drop zone.
 The fastest way to load audio is drag-and-drop:
 
 ::: {.tutorial-steps}
-1. **Find an audio file** on your computer (WAV, MP3, or OGG format)
+1. **Find an audio file** on your computer (WAV, FLAC, MP3, or OGG format)
 
 2. **Drag the file** over the Ozen-web window
 
@@ -161,7 +161,6 @@ Loading a new file clears all unsaved annotations and data points. Export your w
 
 - File may be in an unsupported codec
 - Convert to WAV using Audacity, FFmpeg, or Praat
-- Try a different browser (Chrome/Edge have best codec support)
 
 **Microphone doesn't work:**
 

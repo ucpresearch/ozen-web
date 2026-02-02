@@ -5,7 +5,9 @@ subtitle: "Complete guide to Ozen-web capabilities"
 
 ## Introduction
 
-Ozen-web is a comprehensive browser-based tool for acoustic analysis and annotation. This page provides an overview of all major features with links to detailed documentation.
+Ozen-web is a browser-based tool for acoustic analysis and
+annotation. This page provides an overview of all major features with
+links to detailed documentation.
 
 ## Core Features
 
@@ -13,7 +15,7 @@ Ozen-web is a comprehensive browser-based tool for acoustic analysis and annotat
 
 **Load audio from multiple sources:**
 
-- Drag & drop audio files (WAV, MP3, OGG, FLAC)
+- Drag & drop audio files (WAV, FLAC, MP3, OGG)
 - File picker dialog
 - Microphone recording with real-time visualization
 - Remote URL loading (CORS-enabled)
@@ -25,10 +27,10 @@ Ozen-web is a comprehensive browser-based tool for acoustic analysis and annotat
 
 **Waveform Display:**
 
-- Real-time amplitude visualization
+- Amplitude visualization
 - Synchronized with spectrogram
 - Responsive to zoom and pan
-- Efficient downsampling for long files
+- Downsampling for long file processing (until zoom)
 
 **Spectrogram Display:**
 
@@ -43,21 +45,21 @@ Ozen-web is a comprehensive browser-based tool for acoustic analysis and annotat
 
 ### Acoustic Analysis
 
-Ozen-web provides research-grade acoustic measurements using Praat-compatible algorithms:
+Ozen-web provides acoustic measurements using Praat-compatible algorithms:
 
 **Available overlays:**
 
-| Feature | Description | Use Cases |
-|---------|-------------|-----------|
-| **Pitch (F0)** | Fundamental frequency tracking | Intonation, stress, tone analysis |
-| **Formants (F1-F4)** | Resonance frequencies | Vowel identification, articulation |
-| **Intensity** | Sound pressure level | Prominence, stress patterns |
-| **HNR** | Harmonics-to-Noise Ratio | Voice quality, breathiness, creakiness |
-| **CoG** | Spectral Center of Gravity | Fricative classification |
-| **Spectral Tilt** | High/low frequency balance | Voice quality, consonant manner |
-| **A1-P0** | Harmonic amplitude measure | Nasality, open quotient |
+| Feature | Description |
+|---------|-------------|
+| **Pitch (F0)** | Fundamental frequency tracking |
+| **Formants (F1-F4)** | Resonance frequencies |
+| **Intensity** | Sound pressure level |
+| **HNR** | Harmonics-to-Noise Ratio |
+| **CoG** | Spectral Center of Gravity |
+| **Spectral Tilt** | High/low frequency balance |
+| **A1-P0** | Harmonic amplitude measure |
 
-All measurements are computed using **praatfan** WebAssembly, providing Praat-accurate results in the browser.
+All measurements are computed using **praatfan** WebAssembly.
 
 **See:** [Acoustic Overlays Documentation](acoustic-overlays.html) | [Tutorial: Acoustic Analysis](../tutorial/03-acoustic-analysis.html)
 
@@ -137,6 +139,7 @@ Perfect for building datasets for R, Python, SPSS, or Excel analysis.
   - Drag → Select region
   - Two-finger drag → Pan view
   - Pinch → Zoom in/out
+  - Long-press → Copy selected position visible properties
 - **Compact layout** for small screens
 - **Landscape mode optimization**
 - **Safe area support** for notched phones
@@ -183,13 +186,15 @@ This allows working with arbitrarily long recordings (hours of audio) while main
 
 Choose from multiple acoustic analysis backends:
 
-| Backend | Source | License | Load Time | Offline |
-|---------|--------|---------|-----------|---------|
-| `praatfan-local` | Bundled (`static/wasm/`) | MIT/Apache-2.0 | Fastest (~100ms) | ✅ Yes |
-| `praatfan` | GitHub Pages CDN | MIT/Apache-2.0 | Fast (~500ms) | ❌ No |
-| `praatfan-gpl` | GitHub Pages CDN | GPL | Fast (~500ms) | ❌ No |
+| Backend | Source | License | Offline |
+|---------|--------|---------|---------|
+| `praatfan-local` | Bundled (`static/wasm/`) | MIT/Apache-2.0 | ✅ Yes |
+| `praatfan` | GitHub Pages CDN | MIT/Apache-2.0 | ❌ No |
+| `praatfan-gpl` | GitHub Pages CDN | GPL | ❌ No |
 
-All backends provide identical Praat-compatible results. Select via dropdown in the app interface.
+Praatfan-local and praatfan are identical, and approximate
+praatfan-gpl, which was built to be very similar to Praat. Select via
+dropdown in the app interface.
 
 **See:** [WASM Backends Reference](../reference/backends.html)
 
@@ -254,12 +259,7 @@ formantColor: "#FF0000"
 
 ### Browser Compatibility
 
-**Recommended browsers:**
-
-- ✅ Chrome/Edge 90+ (best support)
-- ✅ Firefox 88+
-- ✅ Safari 15+ (macOS/iOS)
-- ✅ Mobile browsers (iOS Safari, Chrome Android)
+Should work as well on all modern browsers
 
 **Requirements:**
 
@@ -275,7 +275,6 @@ formantColor: "#FF0000"
 - Audio never leaves your browser
 - No analytics or tracking
 - No server-side processing
-- Suitable for sensitive/confidential data
 
 ## File Format Support
 
@@ -283,7 +282,7 @@ formantColor: "#FF0000"
 
 | Format | Extension | Notes |
 |--------|-----------|-------|
-| Audio | `.wav`, `.mp3`, `.ogg`, `.flac`, `.m4a` | Browser-dependent |
+| Audio | `.wav`, `.flac`, `.mp3`, `.ogg` | Could be browser-dependent |
 | TextGrid | `.TextGrid` | Both short and long formats |
 | Data Points | `.tsv` | Tab-separated values |
 | Configuration | `.yaml` | Optional app configuration |
@@ -297,20 +296,6 @@ formantColor: "#FF0000"
 | WAV | Audio (16-bit PCM) | Save recordings, share clips |
 
 **See:** [File Formats Reference](../reference/file-formats.html)
-
-## Comparison with Desktop Tools
-
-| Feature | Ozen-web | Praat | Desktop Ozen |
-|---------|----------|-------|--------------|
-| **Installation** | None (browser) | Required | Required |
-| **Platform** | Any OS with browser | OS-specific builds | Windows/Mac/Linux |
-| **Privacy** | 100% local | 100% local | 100% local |
-| **Offline** | ✅ Yes (with local backend) | ✅ Yes | ✅ Yes |
-| **Mobile** | ✅ Optimized | ❌ No | ❌ No |
-| **Embedding** | ✅ Iframe support | ❌ No | ❌ No |
-| **Accuracy** | Praat algorithms (WASM) | Praat native code | Praat algorithms (Python) |
-| **Scripting** | ❌ No | ✅ Yes | ⚠️ Limited |
-| **Batch Processing** | ❌ No | ✅ Yes | ✅ Yes |
 
 ## Use Cases
 
@@ -328,26 +313,6 @@ formantColor: "#FF0000"
 - No software installation required for students
 - Interactive demonstrations
 
-**Language Documentation:**
-
-- Field recording transcription
-- Time-aligned corpus creation
-- Offline capability for field sites
-- Mobile device support for fieldwork
-
-**Clinical:**
-
-- Speech therapy progress tracking
-- Voice quality visualization
-- Shareable annotated samples
-- Patient education
-
-**Podcasting & Audio Production:**
-
-- Visualize speech clarity
-- Identify problem areas
-- Mark edit points with sub-second precision
-- Export annotations for editing software
 
 ## Next Steps
 

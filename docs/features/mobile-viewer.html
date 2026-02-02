@@ -318,6 +318,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#drag-one-finger" id="toc-drag-one-finger" class="nav-link" data-scroll-target="#drag-one-finger">Drag (One Finger)</a></li>
   <li><a href="#pinch-two-fingers" id="toc-pinch-two-fingers" class="nav-link" data-scroll-target="#pinch-two-fingers">Pinch (Two Fingers)</a></li>
   <li><a href="#two-finger-drag" id="toc-two-finger-drag" class="nav-link" data-scroll-target="#two-finger-drag">Two-Finger Drag</a></li>
+  <li><a href="#long-press-on-spectrogram" id="toc-long-press-on-spectrogram" class="nav-link" data-scroll-target="#long-press-on-spectrogram">Long press on spectrogram</a></li>
   </ul></li>
   <li><a href="#user-interface" id="toc-user-interface" class="nav-link" data-scroll-target="#user-interface">User Interface</a>
   <ul class="collapse">
@@ -333,20 +334,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#safe-area-handling" id="toc-safe-area-handling" class="nav-link" data-scroll-target="#safe-area-handling">Safe Area Handling</a></li>
   <li><a href="#url-audio-loading" id="toc-url-audio-loading" class="nav-link" data-scroll-target="#url-audio-loading">URL Audio Loading</a>
   <ul class="collapse">
-  <li><a href="#direct-wavmp3-urls" id="toc-direct-wavmp3-urls" class="nav-link" data-scroll-target="#direct-wavmp3-urls">Direct WAV/MP3 URLs</a></li>
+  <li><a href="#direct-audio-urls" id="toc-direct-audio-urls" class="nav-link" data-scroll-target="#direct-audio-urls">Direct Audio URLs</a></li>
   <li><a href="#data-urls" id="toc-data-urls" class="nav-link" data-scroll-target="#data-urls">Data URLs</a></li>
   </ul></li>
   <li><a href="#embedding-in-web-pages" id="toc-embedding-in-web-pages" class="nav-link" data-scroll-target="#embedding-in-web-pages">Embedding in Web Pages</a></li>
   <li><a href="#limitations" id="toc-limitations" class="nav-link" data-scroll-target="#limitations">Limitations</a></li>
   <li><a href="#performance" id="toc-performance" class="nav-link" data-scroll-target="#performance">Performance</a></li>
   <li><a href="#browser-support" id="toc-browser-support" class="nav-link" data-scroll-target="#browser-support">Browser Support</a></li>
-  <li><a href="#use-cases" id="toc-use-cases" class="nav-link" data-scroll-target="#use-cases">Use Cases</a>
-  <ul class="collapse">
-  <li><a href="#field-research" id="toc-field-research" class="nav-link" data-scroll-target="#field-research">Field Research</a></li>
-  <li><a href="#classroom-demonstrations" id="toc-classroom-demonstrations" class="nav-link" data-scroll-target="#classroom-demonstrations">Classroom Demonstrations</a></li>
-  <li><a href="#conference-presentations" id="toc-conference-presentations" class="nav-link" data-scroll-target="#conference-presentations">Conference Presentations</a></li>
-  <li><a href="#remote-consultation" id="toc-remote-consultation" class="nav-link" data-scroll-target="#remote-consultation">Remote Consultation</a></li>
-  </ul></li>
+  <li><a href="#use-cases" id="toc-use-cases" class="nav-link" data-scroll-target="#use-cases">Use Cases</a></li>
   <li><a href="#troubleshooting" id="toc-troubleshooting" class="nav-link" data-scroll-target="#troubleshooting">Troubleshooting</a>
   <ul class="collapse">
   <li><a href="#audio-wont-load-from-url" id="toc-audio-wont-load-from-url" class="nav-link" data-scroll-target="#audio-wont-load-from-url">Audio Won’t Load from URL</a></li>
@@ -440,6 +435,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="two-finger-drag" class="level3">
 <h3 class="anchored" data-anchor-id="two-finger-drag">Two-Finger Drag</h3>
 <p><strong>Pan horizontally</strong>: - Scroll left/right through time - Doesn’t create selection - Use when zoomed in</p>
+</section>
+<section id="long-press-on-spectrogram" class="level3">
+<h3 class="anchored" data-anchor-id="long-press-on-spectrogram">Long press on spectrogram</h3>
+<p>Copies the values of the visible overlays at that point.</p>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -549,8 +548,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="url-audio-loading" class="level2">
 <h2 class="anchored" data-anchor-id="url-audio-loading">URL Audio Loading</h2>
 <p>The mobile viewer can load audio from URLs, enabling sharing and embedding:</p>
-<section id="direct-wavmp3-urls" class="level3">
-<h3 class="anchored" data-anchor-id="direct-wavmp3-urls">Direct WAV/MP3 URLs</h3>
+<section id="direct-audio-urls" class="level3">
+<h3 class="anchored" data-anchor-id="direct-audio-urls">Direct Audio URLs</h3>
 <pre><code>/viewer?audio=https://example.com/recording.wav</code></pre>
 <p><strong>CORS requirements:</strong> - Server must allow cross-origin requests - Set <code>Access-Control-Allow-Origin: *</code> header - Works with GitHub Pages, S3, most CDNs</p>
 </section>
@@ -564,8 +563,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="embedding-in-web-pages" class="level2">
 <h2 class="anchored" data-anchor-id="embedding-in-web-pages">Embedding in Web Pages</h2>
-<p>Embed the mobile viewer in responsive web pages:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode html code-with-copy"><code class="sourceCode html"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">iframe</span><span class="ot"> src</span><span class="op">=</span><span class="st">"https://ucpresearch.github.io/ozen-web/viewer?audio=...</span><span class="er">&amp;</span><span class="st">overlays=pitch,formants"</span></span>
+<p>Embed the mobile viewer in responsive web pages. Here’s a live example:</p>
+<iframe src="../live/viewer.html?audio=test-samples/short.wav&amp;overlays=pitch,formants,intensity" style="width: 100%; height: 600px; border: 1px solid #ddd; border-radius: 4px;">
+</iframe>
+<p><strong>Embed code:</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode html code-with-copy"><code class="sourceCode html"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">iframe</span><span class="ot"> src</span><span class="op">=</span><span class="st">"https://ucpresearch.github.io/ozen-web/viewer.html?audio=...</span><span class="er">&amp;</span><span class="st">overlays=pitch,formants"</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="ot">        style</span><span class="op">=</span><span class="st">"width: 100%; height: 600px; border: none;"</span><span class="dt">&gt;</span></span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">iframe</span><span class="dt">&gt;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>The viewer scales appropriately within iframes.</p>
@@ -585,7 +587,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="performance" class="level2">
 <h2 class="anchored" data-anchor-id="performance">Performance</h2>
-<p>The mobile viewer is optimized for mobile devices:</p>
+<p>The mobile viewer works on mobile devices:</p>
 <table class="caption-top table">
 <thead>
 <tr class="header">
@@ -616,76 +618,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="browser-support" class="level2">
 <h2 class="anchored" data-anchor-id="browser-support">Browser Support</h2>
-<p>Tested on:</p>
-<table class="caption-top table">
-<thead>
-<tr class="header">
-<th>Platform</th>
-<th>Browser</th>
-<th>Support</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>iOS 14+</td>
-<td>Safari</td>
-<td>✅ Full</td>
-</tr>
-<tr class="even">
-<td>Android 10+</td>
-<td>Chrome</td>
-<td>✅ Full</td>
-</tr>
-<tr class="odd">
-<td>Android 10+</td>
-<td>Firefox</td>
-<td>✅ Full</td>
-</tr>
-<tr class="even">
-<td>iPadOS 14+</td>
-<td>Safari</td>
-<td>✅ Full</td>
-</tr>
-</tbody>
-</table>
+<p>Works on all modern mobile browsers.</p>
 </section>
 <section id="use-cases" class="level2">
 <h2 class="anchored" data-anchor-id="use-cases">Use Cases</h2>
-<section id="field-research" class="level3">
-<h3 class="anchored" data-anchor-id="field-research">Field Research</h3>
 <ul>
-<li>Load recordings on smartphone at research site</li>
-<li>Analyze pitch and formants on device</li>
-<li>Share findings via URL with colleagues</li>
+<li>“On the road” acoustic analysis</li>
+<li>Teaching</li>
+<li>Student engagement in class</li>
 </ul>
-</section>
-<section id="classroom-demonstrations" class="level3">
-<h3 class="anchored" data-anchor-id="classroom-demonstrations">Classroom Demonstrations</h3>
-<ul>
-<li>Project mobile viewer on screen via HDMI</li>
-<li>Touch gestures visible to students</li>
-<li>Interactive phonetics demonstrations</li>
-<li>No installation required</li>
-</ul>
-</section>
-<section id="conference-presentations" class="level3">
-<h3 class="anchored" data-anchor-id="conference-presentations">Conference Presentations</h3>
-<ul>
-<li>Embed viewer in conference poster QR code</li>
-<li>Attendees scan and explore examples</li>
-<li>Self-contained analysis in URL</li>
-<li>Works offline after initial load</li>
-</ul>
-</section>
-<section id="remote-consultation" class="level3">
-<h3 class="anchored" data-anchor-id="remote-consultation">Remote Consultation</h3>
-<ul>
-<li>Share analysis URL via email/chat</li>
-<li>Recipient can explore interactively</li>
-<li>No file transfers needed</li>
-<li>CORS-compatible hosting</li>
-</ul>
-</section>
 </section>
 <section id="troubleshooting" class="level2">
 <h2 class="anchored" data-anchor-id="troubleshooting">Troubleshooting</h2>
@@ -1270,253 +1211,233 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb7-79"><a href="#cb7-79" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Doesn't create selection</span>
 <span id="cb7-80"><a href="#cb7-80" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Use when zoomed in</span>
 <span id="cb7-81"><a href="#cb7-81" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-82"><a href="#cb7-82" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip}</span>
-<span id="cb7-83"><a href="#cb7-83" aria-hidden="true" tabindex="-1"></a><span class="fu">## Touch Workflow</span></span>
-<span id="cb7-84"><a href="#cb7-84" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-85"><a href="#cb7-85" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**Pinch** to zoom to desired time scale</span>
-<span id="cb7-86"><a href="#cb7-86" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>**Two-finger drag** to navigate to region of interest</span>
-<span id="cb7-87"><a href="#cb7-87" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>**Tap** to place cursor and view measurements</span>
-<span id="cb7-88"><a href="#cb7-88" aria-hidden="true" tabindex="-1"></a><span class="ss">4. </span>**Drag** to select and play specific region</span>
-<span id="cb7-89"><a href="#cb7-89" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb7-90"><a href="#cb7-90" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-91"><a href="#cb7-91" aria-hidden="true" tabindex="-1"></a><span class="fu">## User Interface</span></span>
-<span id="cb7-92"><a href="#cb7-92" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-93"><a href="#cb7-93" aria-hidden="true" tabindex="-1"></a><span class="fu">### Compact Values Bar</span></span>
+<span id="cb7-82"><a href="#cb7-82" aria-hidden="true" tabindex="-1"></a><span class="fu">### Long press on spectrogram</span></span>
+<span id="cb7-83"><a href="#cb7-83" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-84"><a href="#cb7-84" aria-hidden="true" tabindex="-1"></a>Copies the values of the visible overlays at that point.</span>
+<span id="cb7-85"><a href="#cb7-85" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-86"><a href="#cb7-86" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip}</span>
+<span id="cb7-87"><a href="#cb7-87" aria-hidden="true" tabindex="-1"></a><span class="fu">## Touch Workflow</span></span>
+<span id="cb7-88"><a href="#cb7-88" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-89"><a href="#cb7-89" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**Pinch** to zoom to desired time scale</span>
+<span id="cb7-90"><a href="#cb7-90" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>**Two-finger drag** to navigate to region of interest</span>
+<span id="cb7-91"><a href="#cb7-91" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>**Tap** to place cursor and view measurements</span>
+<span id="cb7-92"><a href="#cb7-92" aria-hidden="true" tabindex="-1"></a><span class="ss">4. </span>**Drag** to select and play specific region</span>
+<span id="cb7-93"><a href="#cb7-93" aria-hidden="true" tabindex="-1"></a>:::</span>
 <span id="cb7-94"><a href="#cb7-94" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-95"><a href="#cb7-95" aria-hidden="true" tabindex="-1"></a>Two-row display shows key measurements:</span>
+<span id="cb7-95"><a href="#cb7-95" aria-hidden="true" tabindex="-1"></a><span class="fu">## User Interface</span></span>
 <span id="cb7-96"><a href="#cb7-96" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-97"><a href="#cb7-97" aria-hidden="true" tabindex="-1"></a>**Row 1:**</span>
-<span id="cb7-98"><a href="#cb7-98" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Time (s)</span>
-<span id="cb7-99"><a href="#cb7-99" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Pitch (Hz)</span>
-<span id="cb7-100"><a href="#cb7-100" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Intensity (dB)</span>
-<span id="cb7-101"><a href="#cb7-101" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>HNR (dB)</span>
-<span id="cb7-102"><a href="#cb7-102" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-103"><a href="#cb7-103" aria-hidden="true" tabindex="-1"></a>**Row 2:**</span>
-<span id="cb7-104"><a href="#cb7-104" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>F1, F2, F3, F4 (Hz)</span>
-<span id="cb7-105"><a href="#cb7-105" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>CoG (Hz)</span>
+<span id="cb7-97"><a href="#cb7-97" aria-hidden="true" tabindex="-1"></a><span class="fu">### Compact Values Bar</span></span>
+<span id="cb7-98"><a href="#cb7-98" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-99"><a href="#cb7-99" aria-hidden="true" tabindex="-1"></a>Two-row display shows key measurements:</span>
+<span id="cb7-100"><a href="#cb7-100" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-101"><a href="#cb7-101" aria-hidden="true" tabindex="-1"></a>**Row 1:**</span>
+<span id="cb7-102"><a href="#cb7-102" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Time (s)</span>
+<span id="cb7-103"><a href="#cb7-103" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Pitch (Hz)</span>
+<span id="cb7-104"><a href="#cb7-104" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Intensity (dB)</span>
+<span id="cb7-105"><a href="#cb7-105" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>HNR (dB)</span>
 <span id="cb7-106"><a href="#cb7-106" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-107"><a href="#cb7-107" aria-hidden="true" tabindex="-1"></a>Values update as you tap or drag across the spectrogram.</span>
-<span id="cb7-108"><a href="#cb7-108" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-109"><a href="#cb7-109" aria-hidden="true" tabindex="-1"></a><span class="fu">### Settings Drawer</span></span>
+<span id="cb7-107"><a href="#cb7-107" aria-hidden="true" tabindex="-1"></a>**Row 2:**</span>
+<span id="cb7-108"><a href="#cb7-108" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>F1, F2, F3, F4 (Hz)</span>
+<span id="cb7-109"><a href="#cb7-109" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>CoG (Hz)</span>
 <span id="cb7-110"><a href="#cb7-110" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-111"><a href="#cb7-111" aria-hidden="true" tabindex="-1"></a>Swipe from right edge (or tap settings icon) to open drawer:</span>
+<span id="cb7-111"><a href="#cb7-111" aria-hidden="true" tabindex="-1"></a>Values update as you tap or drag across the spectrogram.</span>
 <span id="cb7-112"><a href="#cb7-112" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-113"><a href="#cb7-113" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Overlay toggles** - Enable/disable acoustic overlays</span>
-<span id="cb7-114"><a href="#cb7-114" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Max frequency** - 5k / 7.5k / 10k Hz</span>
-<span id="cb7-115"><a href="#cb7-115" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Backend selector** - Choose WASM backend</span>
+<span id="cb7-113"><a href="#cb7-113" aria-hidden="true" tabindex="-1"></a><span class="fu">### Settings Drawer</span></span>
+<span id="cb7-114"><a href="#cb7-114" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-115"><a href="#cb7-115" aria-hidden="true" tabindex="-1"></a>Swipe from right edge (or tap settings icon) to open drawer:</span>
 <span id="cb7-116"><a href="#cb7-116" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-117"><a href="#cb7-117" aria-hidden="true" tabindex="-1"></a><span class="fu">### Floating Play Button</span></span>
-<span id="cb7-118"><a href="#cb7-118" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-119"><a href="#cb7-119" aria-hidden="true" tabindex="-1"></a>Large play/pause button appears at bottom:</span>
+<span id="cb7-117"><a href="#cb7-117" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Overlay toggles** - Enable/disable acoustic overlays</span>
+<span id="cb7-118"><a href="#cb7-118" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Max frequency** - 5k / 7.5k / 10k Hz</span>
+<span id="cb7-119"><a href="#cb7-119" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Backend selector** - Choose WASM backend</span>
 <span id="cb7-120"><a href="#cb7-120" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-121"><a href="#cb7-121" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Tap to play selection (if selected)</span>
-<span id="cb7-122"><a href="#cb7-122" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Tap to play visible window (if no selection)</span>
-<span id="cb7-123"><a href="#cb7-123" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Shows playback state (play/pause icon)</span>
+<span id="cb7-121"><a href="#cb7-121" aria-hidden="true" tabindex="-1"></a><span class="fu">### Floating Play Button</span></span>
+<span id="cb7-122"><a href="#cb7-122" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-123"><a href="#cb7-123" aria-hidden="true" tabindex="-1"></a>Large play/pause button appears at bottom:</span>
 <span id="cb7-124"><a href="#cb7-124" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-125"><a href="#cb7-125" aria-hidden="true" tabindex="-1"></a><span class="fu">## Orientation Support</span></span>
-<span id="cb7-126"><a href="#cb7-126" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-127"><a href="#cb7-127" aria-hidden="true" tabindex="-1"></a><span class="fu">### Portrait Mode</span></span>
+<span id="cb7-125"><a href="#cb7-125" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Tap to play selection (if selected)</span>
+<span id="cb7-126"><a href="#cb7-126" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Tap to play visible window (if no selection)</span>
+<span id="cb7-127"><a href="#cb7-127" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Shows playback state (play/pause icon)</span>
 <span id="cb7-128"><a href="#cb7-128" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-129"><a href="#cb7-129" aria-hidden="true" tabindex="-1"></a><span class="al">![Mobile viewer in portrait mode](../screenshots/mobile-viewer-portrait.png)</span></span>
+<span id="cb7-129"><a href="#cb7-129" aria-hidden="true" tabindex="-1"></a><span class="fu">## Orientation Support</span></span>
 <span id="cb7-130"><a href="#cb7-130" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-131"><a href="#cb7-131" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Vertical layout</span>
-<span id="cb7-132"><a href="#cb7-132" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Spectrogram above waveform</span>
-<span id="cb7-133"><a href="#cb7-133" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Values bar at top</span>
-<span id="cb7-134"><a href="#cb7-134" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Settings drawer from right</span>
-<span id="cb7-135"><a href="#cb7-135" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Suitable for phones</span>
-<span id="cb7-136"><a href="#cb7-136" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-137"><a href="#cb7-137" aria-hidden="true" tabindex="-1"></a><span class="fu">### Landscape Mode</span></span>
-<span id="cb7-138"><a href="#cb7-138" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-139"><a href="#cb7-139" aria-hidden="true" tabindex="-1"></a><span class="al">![Mobile viewer in landscape mode](../screenshots/mobile-viewer-landscape.png)</span></span>
+<span id="cb7-131"><a href="#cb7-131" aria-hidden="true" tabindex="-1"></a><span class="fu">### Portrait Mode</span></span>
+<span id="cb7-132"><a href="#cb7-132" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-133"><a href="#cb7-133" aria-hidden="true" tabindex="-1"></a><span class="al">![Mobile viewer in portrait mode](../screenshots/mobile-viewer-portrait.png)</span></span>
+<span id="cb7-134"><a href="#cb7-134" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-135"><a href="#cb7-135" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Vertical layout</span>
+<span id="cb7-136"><a href="#cb7-136" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Spectrogram above waveform</span>
+<span id="cb7-137"><a href="#cb7-137" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Values bar at top</span>
+<span id="cb7-138"><a href="#cb7-138" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Settings drawer from right</span>
+<span id="cb7-139"><a href="#cb7-139" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Suitable for phones</span>
 <span id="cb7-140"><a href="#cb7-140" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-141"><a href="#cb7-141" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Horizontal layout optimized for viewing</span>
-<span id="cb7-142"><a href="#cb7-142" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Wider spectrogram view</span>
-<span id="cb7-143"><a href="#cb7-143" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Settings drawer from right</span>
-<span id="cb7-144"><a href="#cb7-144" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Better for detailed analysis</span>
-<span id="cb7-145"><a href="#cb7-145" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Recommended for tablets</span>
-<span id="cb7-146"><a href="#cb7-146" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-147"><a href="#cb7-147" aria-hidden="true" tabindex="-1"></a>::: {.callout-note}</span>
-<span id="cb7-148"><a href="#cb7-148" aria-hidden="true" tabindex="-1"></a><span class="fu">## Automatic Rotation</span></span>
-<span id="cb7-149"><a href="#cb7-149" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-150"><a href="#cb7-150" aria-hidden="true" tabindex="-1"></a>The viewer automatically adapts layout when device is rotated. No refresh required.</span>
-<span id="cb7-151"><a href="#cb7-151" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb7-152"><a href="#cb7-152" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-153"><a href="#cb7-153" aria-hidden="true" tabindex="-1"></a><span class="fu">## Safe Area Handling</span></span>
-<span id="cb7-154"><a href="#cb7-154" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-155"><a href="#cb7-155" aria-hidden="true" tabindex="-1"></a>The viewer respects device safe areas:</span>
+<span id="cb7-141"><a href="#cb7-141" aria-hidden="true" tabindex="-1"></a><span class="fu">### Landscape Mode</span></span>
+<span id="cb7-142"><a href="#cb7-142" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-143"><a href="#cb7-143" aria-hidden="true" tabindex="-1"></a><span class="al">![Mobile viewer in landscape mode](../screenshots/mobile-viewer-landscape.png)</span></span>
+<span id="cb7-144"><a href="#cb7-144" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-145"><a href="#cb7-145" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Horizontal layout optimized for viewing</span>
+<span id="cb7-146"><a href="#cb7-146" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Wider spectrogram view</span>
+<span id="cb7-147"><a href="#cb7-147" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Settings drawer from right</span>
+<span id="cb7-148"><a href="#cb7-148" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Better for detailed analysis</span>
+<span id="cb7-149"><a href="#cb7-149" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Recommended for tablets</span>
+<span id="cb7-150"><a href="#cb7-150" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-151"><a href="#cb7-151" aria-hidden="true" tabindex="-1"></a>::: {.callout-note}</span>
+<span id="cb7-152"><a href="#cb7-152" aria-hidden="true" tabindex="-1"></a><span class="fu">## Automatic Rotation</span></span>
+<span id="cb7-153"><a href="#cb7-153" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-154"><a href="#cb7-154" aria-hidden="true" tabindex="-1"></a>The viewer automatically adapts layout when device is rotated. No refresh required.</span>
+<span id="cb7-155"><a href="#cb7-155" aria-hidden="true" tabindex="-1"></a>:::</span>
 <span id="cb7-156"><a href="#cb7-156" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-157"><a href="#cb7-157" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**iPhone notches** - Content avoids notch and Dynamic Island</span>
-<span id="cb7-158"><a href="#cb7-158" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Rounded corners** - UI elements stay within safe bounds</span>
-<span id="cb7-159"><a href="#cb7-159" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Home indicator** - Bottom spacing on iOS devices</span>
+<span id="cb7-157"><a href="#cb7-157" aria-hidden="true" tabindex="-1"></a><span class="fu">## Safe Area Handling</span></span>
+<span id="cb7-158"><a href="#cb7-158" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-159"><a href="#cb7-159" aria-hidden="true" tabindex="-1"></a>The viewer respects device safe areas:</span>
 <span id="cb7-160"><a href="#cb7-160" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-161"><a href="#cb7-161" aria-hidden="true" tabindex="-1"></a>This ensures all controls are accessible on modern smartphones.</span>
-<span id="cb7-162"><a href="#cb7-162" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-163"><a href="#cb7-163" aria-hidden="true" tabindex="-1"></a><span class="fu">## URL Audio Loading</span></span>
+<span id="cb7-161"><a href="#cb7-161" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**iPhone notches** - Content avoids notch and Dynamic Island</span>
+<span id="cb7-162"><a href="#cb7-162" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Rounded corners** - UI elements stay within safe bounds</span>
+<span id="cb7-163"><a href="#cb7-163" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Home indicator** - Bottom spacing on iOS devices</span>
 <span id="cb7-164"><a href="#cb7-164" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-165"><a href="#cb7-165" aria-hidden="true" tabindex="-1"></a>The mobile viewer can load audio from URLs, enabling sharing and embedding:</span>
+<span id="cb7-165"><a href="#cb7-165" aria-hidden="true" tabindex="-1"></a>This ensures all controls are accessible on modern smartphones.</span>
 <span id="cb7-166"><a href="#cb7-166" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-167"><a href="#cb7-167" aria-hidden="true" tabindex="-1"></a><span class="fu">### Direct WAV/MP3 URLs</span></span>
+<span id="cb7-167"><a href="#cb7-167" aria-hidden="true" tabindex="-1"></a><span class="fu">## URL Audio Loading</span></span>
 <span id="cb7-168"><a href="#cb7-168" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-169"><a href="#cb7-169" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb7-170"><a href="#cb7-170" aria-hidden="true" tabindex="-1"></a><span class="in">/viewer?audio=https://example.com/recording.wav</span></span>
-<span id="cb7-171"><a href="#cb7-171" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb7-169"><a href="#cb7-169" aria-hidden="true" tabindex="-1"></a>The mobile viewer can load audio from URLs, enabling sharing and embedding:</span>
+<span id="cb7-170"><a href="#cb7-170" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-171"><a href="#cb7-171" aria-hidden="true" tabindex="-1"></a><span class="fu">### Direct Audio URLs</span></span>
 <span id="cb7-172"><a href="#cb7-172" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-173"><a href="#cb7-173" aria-hidden="true" tabindex="-1"></a>**CORS requirements:**</span>
-<span id="cb7-174"><a href="#cb7-174" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Server must allow cross-origin requests</span>
-<span id="cb7-175"><a href="#cb7-175" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Set <span class="in">`Access-Control-Allow-Origin: *`</span> header</span>
-<span id="cb7-176"><a href="#cb7-176" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Works with GitHub Pages, S3, most CDNs</span>
-<span id="cb7-177"><a href="#cb7-177" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-178"><a href="#cb7-178" aria-hidden="true" tabindex="-1"></a><span class="fu">### Data URLs</span></span>
-<span id="cb7-179"><a href="#cb7-179" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-180"><a href="#cb7-180" aria-hidden="true" tabindex="-1"></a>Embed audio directly in URL (self-contained):</span>
+<span id="cb7-173"><a href="#cb7-173" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb7-174"><a href="#cb7-174" aria-hidden="true" tabindex="-1"></a><span class="in">/viewer?audio=https://example.com/recording.wav</span></span>
+<span id="cb7-175"><a href="#cb7-175" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb7-176"><a href="#cb7-176" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-177"><a href="#cb7-177" aria-hidden="true" tabindex="-1"></a>**CORS requirements:**</span>
+<span id="cb7-178"><a href="#cb7-178" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Server must allow cross-origin requests</span>
+<span id="cb7-179"><a href="#cb7-179" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Set <span class="in">`Access-Control-Allow-Origin: *`</span> header</span>
+<span id="cb7-180"><a href="#cb7-180" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Works with GitHub Pages, S3, most CDNs</span>
 <span id="cb7-181"><a href="#cb7-181" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-182"><a href="#cb7-182" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb7-183"><a href="#cb7-183" aria-hidden="true" tabindex="-1"></a><span class="in">/viewer?audio=data:audio/wav;base64,UklGR...</span></span>
-<span id="cb7-184"><a href="#cb7-184" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb7-182"><a href="#cb7-182" aria-hidden="true" tabindex="-1"></a><span class="fu">### Data URLs</span></span>
+<span id="cb7-183"><a href="#cb7-183" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-184"><a href="#cb7-184" aria-hidden="true" tabindex="-1"></a>Embed audio directly in URL (self-contained):</span>
 <span id="cb7-185"><a href="#cb7-185" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-186"><a href="#cb7-186" aria-hidden="true" tabindex="-1"></a>**Use cases:**</span>
-<span id="cb7-187"><a href="#cb7-187" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Share analysis without hosting files</span>
-<span id="cb7-188"><a href="#cb7-188" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Embed in QR codes</span>
-<span id="cb7-189"><a href="#cb7-189" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Create self-contained examples</span>
-<span id="cb7-190"><a href="#cb7-190" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-191"><a href="#cb7-191" aria-hidden="true" tabindex="-1"></a>See <span class="co">[</span><span class="ot">Embedding Guide</span><span class="co">](../embedding/basic-usage.html)</span> for details.</span>
-<span id="cb7-192"><a href="#cb7-192" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-193"><a href="#cb7-193" aria-hidden="true" tabindex="-1"></a><span class="fu">## Embedding in Web Pages</span></span>
+<span id="cb7-186"><a href="#cb7-186" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb7-187"><a href="#cb7-187" aria-hidden="true" tabindex="-1"></a><span class="in">/viewer?audio=data:audio/wav;base64,UklGR...</span></span>
+<span id="cb7-188"><a href="#cb7-188" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb7-189"><a href="#cb7-189" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-190"><a href="#cb7-190" aria-hidden="true" tabindex="-1"></a>**Use cases:**</span>
+<span id="cb7-191"><a href="#cb7-191" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Share analysis without hosting files</span>
+<span id="cb7-192"><a href="#cb7-192" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Embed in QR codes</span>
+<span id="cb7-193"><a href="#cb7-193" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Create self-contained examples</span>
 <span id="cb7-194"><a href="#cb7-194" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-195"><a href="#cb7-195" aria-hidden="true" tabindex="-1"></a>Embed the mobile viewer in responsive web pages:</span>
+<span id="cb7-195"><a href="#cb7-195" aria-hidden="true" tabindex="-1"></a>See <span class="co">[</span><span class="ot">Embedding Guide</span><span class="co">](../embedding/basic-usage.html)</span> for details.</span>
 <span id="cb7-196"><a href="#cb7-196" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-197"><a href="#cb7-197" aria-hidden="true" tabindex="-1"></a><span class="in">```html</span></span>
-<span id="cb7-198"><a href="#cb7-198" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span>iframe src<span class="op">=</span><span class="st">"https://ucpresearch.github.io/ozen-web/viewer?audio=...&amp;overlays=pitch,formants"</span></span>
-<span id="cb7-199"><a href="#cb7-199" aria-hidden="true" tabindex="-1"></a>        style<span class="op">=</span><span class="st">"width: 100%; height: 600px; border: none;"</span><span class="op">&gt;</span></span>
-<span id="cb7-200"><a href="#cb7-200" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;/</span>iframe<span class="op">&gt;</span></span>
-<span id="cb7-201"><a href="#cb7-201" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb7-202"><a href="#cb7-202" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-203"><a href="#cb7-203" aria-hidden="true" tabindex="-1"></a>The viewer scales appropriately within iframes.</span>
+<span id="cb7-197"><a href="#cb7-197" aria-hidden="true" tabindex="-1"></a><span class="fu">## Embedding in Web Pages</span></span>
+<span id="cb7-198"><a href="#cb7-198" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-199"><a href="#cb7-199" aria-hidden="true" tabindex="-1"></a>Embed the mobile viewer in responsive web pages. Here's a live example:</span>
+<span id="cb7-200"><a href="#cb7-200" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-201"><a href="#cb7-201" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">iframe</span><span class="ot"> src</span><span class="op">=</span><span class="st">"../live/viewer.html?audio=test-samples/short.wav</span><span class="er">&amp;</span><span class="st">overlays=pitch,formants,intensity"</span></span>
+<span id="cb7-202"><a href="#cb7-202" aria-hidden="true" tabindex="-1"></a><span class="ot">        style</span><span class="op">=</span><span class="st">"width: 100%; height: 600px; border: 1px solid #ddd; border-radius: 4px;"</span><span class="dt">&gt;</span></span>
+<span id="cb7-203"><a href="#cb7-203" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">iframe</span><span class="dt">&gt;</span></span>
 <span id="cb7-204"><a href="#cb7-204" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-205"><a href="#cb7-205" aria-hidden="true" tabindex="-1"></a><span class="fu">## Limitations</span></span>
-<span id="cb7-206"><a href="#cb7-206" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-207"><a href="#cb7-207" aria-hidden="true" tabindex="-1"></a>**View-only mode** - The mobile viewer does not support:</span>
-<span id="cb7-208"><a href="#cb7-208" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-209"><a href="#cb7-209" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>❌ Adding annotation boundaries</span>
-<span id="cb7-210"><a href="#cb7-210" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>❌ Editing TextGrid labels</span>
-<span id="cb7-211"><a href="#cb7-211" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>❌ Adding data points</span>
-<span id="cb7-212"><a href="#cb7-212" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>❌ Exporting files</span>
-<span id="cb7-213"><a href="#cb7-213" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>❌ Microphone recording</span>
-<span id="cb7-214"><a href="#cb7-214" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-215"><a href="#cb7-215" aria-hidden="true" tabindex="-1"></a>For full editing features, use the desktop interface.</span>
-<span id="cb7-216"><a href="#cb7-216" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-217"><a href="#cb7-217" aria-hidden="true" tabindex="-1"></a>**Why view-only?**</span>
-<span id="cb7-218"><a href="#cb7-218" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Touch gestures conflict with editing operations</span>
-<span id="cb7-219"><a href="#cb7-219" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Prevents accidental edits on mobile</span>
-<span id="cb7-220"><a href="#cb7-220" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Focuses on analysis and presentation</span>
-<span id="cb7-221"><a href="#cb7-221" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Simpler, more stable interface</span>
-<span id="cb7-222"><a href="#cb7-222" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-223"><a href="#cb7-223" aria-hidden="true" tabindex="-1"></a><span class="fu">## Performance</span></span>
-<span id="cb7-224"><a href="#cb7-224" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-225"><a href="#cb7-225" aria-hidden="true" tabindex="-1"></a>The mobile viewer is optimized for mobile devices:</span>
-<span id="cb7-226"><a href="#cb7-226" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-227"><a href="#cb7-227" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Feature <span class="pp">|</span> Mobile Optimization <span class="pp">|</span></span>
-<span id="cb7-228"><a href="#cb7-228" aria-hidden="true" tabindex="-1"></a><span class="pp">|---------|---------------------|</span></span>
-<span id="cb7-229"><a href="#cb7-229" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Spectrogram <span class="pp">|</span> On-demand computation for visible region <span class="pp">|</span></span>
-<span id="cb7-230"><a href="#cb7-230" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Waveform <span class="pp">|</span> Downsampled for fast rendering <span class="pp">|</span></span>
-<span id="cb7-231"><a href="#cb7-231" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Overlays <span class="pp">|</span> Computed only when toggled on <span class="pp">|</span></span>
-<span id="cb7-232"><a href="#cb7-232" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Touch response <span class="pp">|</span> Debounced for smooth interaction <span class="pp">|</span></span>
+<span id="cb7-205"><a href="#cb7-205" aria-hidden="true" tabindex="-1"></a>**Embed code:**</span>
+<span id="cb7-206"><a href="#cb7-206" aria-hidden="true" tabindex="-1"></a><span class="in">```html</span></span>
+<span id="cb7-207"><a href="#cb7-207" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span>iframe src<span class="op">=</span><span class="st">"https://ucpresearch.github.io/ozen-web/viewer.html?audio=...&amp;overlays=pitch,formants"</span></span>
+<span id="cb7-208"><a href="#cb7-208" aria-hidden="true" tabindex="-1"></a>        style<span class="op">=</span><span class="st">"width: 100%; height: 600px; border: none;"</span><span class="op">&gt;</span></span>
+<span id="cb7-209"><a href="#cb7-209" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;/</span>iframe<span class="op">&gt;</span></span>
+<span id="cb7-210"><a href="#cb7-210" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb7-211"><a href="#cb7-211" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-212"><a href="#cb7-212" aria-hidden="true" tabindex="-1"></a>The viewer scales appropriately within iframes.</span>
+<span id="cb7-213"><a href="#cb7-213" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-214"><a href="#cb7-214" aria-hidden="true" tabindex="-1"></a><span class="fu">## Limitations</span></span>
+<span id="cb7-215"><a href="#cb7-215" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-216"><a href="#cb7-216" aria-hidden="true" tabindex="-1"></a>**View-only mode** - The mobile viewer does not support:</span>
+<span id="cb7-217"><a href="#cb7-217" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-218"><a href="#cb7-218" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>❌ Adding annotation boundaries</span>
+<span id="cb7-219"><a href="#cb7-219" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>❌ Editing TextGrid labels</span>
+<span id="cb7-220"><a href="#cb7-220" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>❌ Adding data points</span>
+<span id="cb7-221"><a href="#cb7-221" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>❌ Exporting files</span>
+<span id="cb7-222"><a href="#cb7-222" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>❌ Microphone recording</span>
+<span id="cb7-223"><a href="#cb7-223" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-224"><a href="#cb7-224" aria-hidden="true" tabindex="-1"></a>For full editing features, use the desktop interface.</span>
+<span id="cb7-225"><a href="#cb7-225" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-226"><a href="#cb7-226" aria-hidden="true" tabindex="-1"></a>**Why view-only?**</span>
+<span id="cb7-227"><a href="#cb7-227" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Touch gestures conflict with editing operations</span>
+<span id="cb7-228"><a href="#cb7-228" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Prevents accidental edits on mobile</span>
+<span id="cb7-229"><a href="#cb7-229" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Focuses on analysis and presentation</span>
+<span id="cb7-230"><a href="#cb7-230" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Simpler, more stable interface</span>
+<span id="cb7-231"><a href="#cb7-231" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-232"><a href="#cb7-232" aria-hidden="true" tabindex="-1"></a><span class="fu">## Performance</span></span>
 <span id="cb7-233"><a href="#cb7-233" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-234"><a href="#cb7-234" aria-hidden="true" tabindex="-1"></a>**Battery usage:**</span>
-<span id="cb7-235"><a href="#cb7-235" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Minimal CPU when static</span>
-<span id="cb7-236"><a href="#cb7-236" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>GPU-accelerated canvas rendering where supported</span>
-<span id="cb7-237"><a href="#cb7-237" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Pauses computation when app backgrounded</span>
-<span id="cb7-238"><a href="#cb7-238" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-239"><a href="#cb7-239" aria-hidden="true" tabindex="-1"></a><span class="fu">## Browser Support</span></span>
-<span id="cb7-240"><a href="#cb7-240" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-241"><a href="#cb7-241" aria-hidden="true" tabindex="-1"></a>Tested on:</span>
+<span id="cb7-234"><a href="#cb7-234" aria-hidden="true" tabindex="-1"></a>The mobile viewer works on mobile devices:</span>
+<span id="cb7-235"><a href="#cb7-235" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-236"><a href="#cb7-236" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Feature <span class="pp">|</span> Mobile Optimization <span class="pp">|</span></span>
+<span id="cb7-237"><a href="#cb7-237" aria-hidden="true" tabindex="-1"></a><span class="pp">|---------|---------------------|</span></span>
+<span id="cb7-238"><a href="#cb7-238" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Spectrogram <span class="pp">|</span> On-demand computation for visible region <span class="pp">|</span></span>
+<span id="cb7-239"><a href="#cb7-239" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Waveform <span class="pp">|</span> Downsampled for fast rendering <span class="pp">|</span></span>
+<span id="cb7-240"><a href="#cb7-240" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Overlays <span class="pp">|</span> Computed only when toggled on <span class="pp">|</span></span>
+<span id="cb7-241"><a href="#cb7-241" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Touch response <span class="pp">|</span> Debounced for smooth interaction <span class="pp">|</span></span>
 <span id="cb7-242"><a href="#cb7-242" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-243"><a href="#cb7-243" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Platform <span class="pp">|</span> Browser <span class="pp">|</span> Support <span class="pp">|</span></span>
-<span id="cb7-244"><a href="#cb7-244" aria-hidden="true" tabindex="-1"></a><span class="pp">|----------|---------|---------|</span></span>
-<span id="cb7-245"><a href="#cb7-245" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> iOS 14+ <span class="pp">|</span> Safari <span class="pp">|</span> ✅ Full <span class="pp">|</span></span>
-<span id="cb7-246"><a href="#cb7-246" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Android 10+ <span class="pp">|</span> Chrome <span class="pp">|</span> ✅ Full <span class="pp">|</span></span>
-<span id="cb7-247"><a href="#cb7-247" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Android 10+ <span class="pp">|</span> Firefox <span class="pp">|</span> ✅ Full <span class="pp">|</span></span>
-<span id="cb7-248"><a href="#cb7-248" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> iPadOS 14+ <span class="pp">|</span> Safari <span class="pp">|</span> ✅ Full <span class="pp">|</span></span>
+<span id="cb7-243"><a href="#cb7-243" aria-hidden="true" tabindex="-1"></a>**Battery usage:**</span>
+<span id="cb7-244"><a href="#cb7-244" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Minimal CPU when static</span>
+<span id="cb7-245"><a href="#cb7-245" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>GPU-accelerated canvas rendering where supported</span>
+<span id="cb7-246"><a href="#cb7-246" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Pauses computation when app backgrounded</span>
+<span id="cb7-247"><a href="#cb7-247" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-248"><a href="#cb7-248" aria-hidden="true" tabindex="-1"></a><span class="fu">## Browser Support</span></span>
 <span id="cb7-249"><a href="#cb7-249" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-250"><a href="#cb7-250" aria-hidden="true" tabindex="-1"></a><span class="fu">## Use Cases</span></span>
+<span id="cb7-250"><a href="#cb7-250" aria-hidden="true" tabindex="-1"></a>Works on all modern mobile browsers.</span>
 <span id="cb7-251"><a href="#cb7-251" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-252"><a href="#cb7-252" aria-hidden="true" tabindex="-1"></a><span class="fu">### Field Research</span></span>
+<span id="cb7-252"><a href="#cb7-252" aria-hidden="true" tabindex="-1"></a><span class="fu">## Use Cases</span></span>
 <span id="cb7-253"><a href="#cb7-253" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-254"><a href="#cb7-254" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Load recordings on smartphone at research site</span>
-<span id="cb7-255"><a href="#cb7-255" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Analyze pitch and formants on device</span>
-<span id="cb7-256"><a href="#cb7-256" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Share findings via URL with colleagues</span>
+<span id="cb7-254"><a href="#cb7-254" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>"On the road" acoustic analysis</span>
+<span id="cb7-255"><a href="#cb7-255" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Teaching</span>
+<span id="cb7-256"><a href="#cb7-256" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Student engagement in class</span>
 <span id="cb7-257"><a href="#cb7-257" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-258"><a href="#cb7-258" aria-hidden="true" tabindex="-1"></a><span class="fu">### Classroom Demonstrations</span></span>
-<span id="cb7-259"><a href="#cb7-259" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-260"><a href="#cb7-260" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Project mobile viewer on screen via HDMI</span>
-<span id="cb7-261"><a href="#cb7-261" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Touch gestures visible to students</span>
-<span id="cb7-262"><a href="#cb7-262" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Interactive phonetics demonstrations</span>
-<span id="cb7-263"><a href="#cb7-263" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>No installation required</span>
+<span id="cb7-258"><a href="#cb7-258" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-259"><a href="#cb7-259" aria-hidden="true" tabindex="-1"></a><span class="fu">## Troubleshooting</span></span>
+<span id="cb7-260"><a href="#cb7-260" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-261"><a href="#cb7-261" aria-hidden="true" tabindex="-1"></a><span class="fu">### Audio Won't Load from URL</span></span>
+<span id="cb7-262"><a href="#cb7-262" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-263"><a href="#cb7-263" aria-hidden="true" tabindex="-1"></a>**Problem**: <span class="in">`?audio=`</span> parameter doesn't load audio</span>
 <span id="cb7-264"><a href="#cb7-264" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-265"><a href="#cb7-265" aria-hidden="true" tabindex="-1"></a><span class="fu">### Conference Presentations</span></span>
-<span id="cb7-266"><a href="#cb7-266" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-267"><a href="#cb7-267" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Embed viewer in conference poster QR code</span>
-<span id="cb7-268"><a href="#cb7-268" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Attendees scan and explore examples</span>
-<span id="cb7-269"><a href="#cb7-269" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Self-contained analysis in URL</span>
-<span id="cb7-270"><a href="#cb7-270" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Works offline after initial load</span>
-<span id="cb7-271"><a href="#cb7-271" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-272"><a href="#cb7-272" aria-hidden="true" tabindex="-1"></a><span class="fu">### Remote Consultation</span></span>
-<span id="cb7-273"><a href="#cb7-273" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-274"><a href="#cb7-274" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Share analysis URL via email/chat</span>
-<span id="cb7-275"><a href="#cb7-275" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Recipient can explore interactively</span>
-<span id="cb7-276"><a href="#cb7-276" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>No file transfers needed</span>
-<span id="cb7-277"><a href="#cb7-277" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>CORS-compatible hosting</span>
-<span id="cb7-278"><a href="#cb7-278" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-279"><a href="#cb7-279" aria-hidden="true" tabindex="-1"></a><span class="fu">## Troubleshooting</span></span>
-<span id="cb7-280"><a href="#cb7-280" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-281"><a href="#cb7-281" aria-hidden="true" tabindex="-1"></a><span class="fu">### Audio Won't Load from URL</span></span>
-<span id="cb7-282"><a href="#cb7-282" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-283"><a href="#cb7-283" aria-hidden="true" tabindex="-1"></a>**Problem**: <span class="in">`?audio=`</span> parameter doesn't load audio</span>
+<span id="cb7-265"><a href="#cb7-265" aria-hidden="true" tabindex="-1"></a>**Possible causes:**</span>
+<span id="cb7-266"><a href="#cb7-266" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>CORS not enabled on server</span>
+<span id="cb7-267"><a href="#cb7-267" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Invalid URL</span>
+<span id="cb7-268"><a href="#cb7-268" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Mixed content (HTTP audio on HTTPS page)</span>
+<span id="cb7-269"><a href="#cb7-269" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-270"><a href="#cb7-270" aria-hidden="true" tabindex="-1"></a>**Solution:**</span>
+<span id="cb7-271"><a href="#cb7-271" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Ensure server sends <span class="in">`Access-Control-Allow-Origin`</span> header</span>
+<span id="cb7-272"><a href="#cb7-272" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Use HTTPS for both page and audio URL</span>
+<span id="cb7-273"><a href="#cb7-273" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Test URL in browser first</span>
+<span id="cb7-274"><a href="#cb7-274" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Try data URL instead</span>
+<span id="cb7-275"><a href="#cb7-275" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-276"><a href="#cb7-276" aria-hidden="true" tabindex="-1"></a><span class="fu">### Touch Gestures Not Working</span></span>
+<span id="cb7-277"><a href="#cb7-277" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-278"><a href="#cb7-278" aria-hidden="true" tabindex="-1"></a>**Problem**: Pinch or drag doesn't respond</span>
+<span id="cb7-279"><a href="#cb7-279" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-280"><a href="#cb7-280" aria-hidden="true" tabindex="-1"></a>**Possible causes:**</span>
+<span id="cb7-281"><a href="#cb7-281" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Browser zoom enabled (conflicts with pinch)</span>
+<span id="cb7-282"><a href="#cb7-282" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Touch events blocked by CSS</span>
+<span id="cb7-283"><a href="#cb7-283" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Old browser version</span>
 <span id="cb7-284"><a href="#cb7-284" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-285"><a href="#cb7-285" aria-hidden="true" tabindex="-1"></a>**Possible causes:**</span>
-<span id="cb7-286"><a href="#cb7-286" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>CORS not enabled on server</span>
-<span id="cb7-287"><a href="#cb7-287" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Invalid URL</span>
-<span id="cb7-288"><a href="#cb7-288" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Mixed content (HTTP audio on HTTPS page)</span>
+<span id="cb7-285"><a href="#cb7-285" aria-hidden="true" tabindex="-1"></a>**Solution:**</span>
+<span id="cb7-286"><a href="#cb7-286" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Disable browser zoom (use in-app zoom instead)</span>
+<span id="cb7-287"><a href="#cb7-287" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Update to latest browser version</span>
+<span id="cb7-288"><a href="#cb7-288" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Try different browser (Chrome recommended)</span>
 <span id="cb7-289"><a href="#cb7-289" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-290"><a href="#cb7-290" aria-hidden="true" tabindex="-1"></a>**Solution:**</span>
-<span id="cb7-291"><a href="#cb7-291" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Ensure server sends <span class="in">`Access-Control-Allow-Origin`</span> header</span>
-<span id="cb7-292"><a href="#cb7-292" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Use HTTPS for both page and audio URL</span>
-<span id="cb7-293"><a href="#cb7-293" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Test URL in browser first</span>
-<span id="cb7-294"><a href="#cb7-294" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Try data URL instead</span>
-<span id="cb7-295"><a href="#cb7-295" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-296"><a href="#cb7-296" aria-hidden="true" tabindex="-1"></a><span class="fu">### Touch Gestures Not Working</span></span>
-<span id="cb7-297"><a href="#cb7-297" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-298"><a href="#cb7-298" aria-hidden="true" tabindex="-1"></a>**Problem**: Pinch or drag doesn't respond</span>
-<span id="cb7-299"><a href="#cb7-299" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-300"><a href="#cb7-300" aria-hidden="true" tabindex="-1"></a>**Possible causes:**</span>
-<span id="cb7-301"><a href="#cb7-301" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Browser zoom enabled (conflicts with pinch)</span>
-<span id="cb7-302"><a href="#cb7-302" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Touch events blocked by CSS</span>
-<span id="cb7-303"><a href="#cb7-303" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Old browser version</span>
-<span id="cb7-304"><a href="#cb7-304" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-305"><a href="#cb7-305" aria-hidden="true" tabindex="-1"></a>**Solution:**</span>
-<span id="cb7-306"><a href="#cb7-306" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Disable browser zoom (use in-app zoom instead)</span>
-<span id="cb7-307"><a href="#cb7-307" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Update to latest browser version</span>
-<span id="cb7-308"><a href="#cb7-308" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Try different browser (Chrome recommended)</span>
-<span id="cb7-309"><a href="#cb7-309" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-310"><a href="#cb7-310" aria-hidden="true" tabindex="-1"></a><span class="fu">### Values Bar Shows "---"</span></span>
-<span id="cb7-311"><a href="#cb7-311" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-312"><a href="#cb7-312" aria-hidden="true" tabindex="-1"></a>**Problem**: Measurements show dashes instead of values</span>
-<span id="cb7-313"><a href="#cb7-313" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-314"><a href="#cb7-314" aria-hidden="true" tabindex="-1"></a>**Explanation**:</span>
-<span id="cb7-315"><a href="#cb7-315" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Normal for unvoiced regions (pitch undefined)</span>
-<span id="cb7-316"><a href="#cb7-316" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Overlays may need to be enabled</span>
-<span id="cb7-317"><a href="#cb7-317" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>May be in silent region</span>
-<span id="cb7-318"><a href="#cb7-318" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-319"><a href="#cb7-319" aria-hidden="true" tabindex="-1"></a>**Solution:**</span>
-<span id="cb7-320"><a href="#cb7-320" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Enable desired overlays in settings drawer</span>
-<span id="cb7-321"><a href="#cb7-321" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Tap on region with audio</span>
-<span id="cb7-322"><a href="#cb7-322" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Wait for spectrogram to compute</span>
-<span id="cb7-323"><a href="#cb7-323" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-324"><a href="#cb7-324" aria-hidden="true" tabindex="-1"></a><span class="fu">## See Also</span></span>
-<span id="cb7-325"><a href="#cb7-325" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-326"><a href="#cb7-326" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Embedding: Basic Usage</span><span class="co">](../embedding/basic-usage.html)</span> - How to embed the viewer</span>
-<span id="cb7-327"><a href="#cb7-327" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">URL Parameters</span><span class="co">](../embedding/url-parameters.html)</span> - Complete parameter reference</span>
-<span id="cb7-328"><a href="#cb7-328" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Embedding Examples</span><span class="co">](../embedding/examples.html)</span> - Real-world examples</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
+<span id="cb7-290"><a href="#cb7-290" aria-hidden="true" tabindex="-1"></a><span class="fu">### Values Bar Shows "---"</span></span>
+<span id="cb7-291"><a href="#cb7-291" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-292"><a href="#cb7-292" aria-hidden="true" tabindex="-1"></a>**Problem**: Measurements show dashes instead of values</span>
+<span id="cb7-293"><a href="#cb7-293" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-294"><a href="#cb7-294" aria-hidden="true" tabindex="-1"></a>**Explanation**:</span>
+<span id="cb7-295"><a href="#cb7-295" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Normal for unvoiced regions (pitch undefined)</span>
+<span id="cb7-296"><a href="#cb7-296" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Overlays may need to be enabled</span>
+<span id="cb7-297"><a href="#cb7-297" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>May be in silent region</span>
+<span id="cb7-298"><a href="#cb7-298" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-299"><a href="#cb7-299" aria-hidden="true" tabindex="-1"></a>**Solution:**</span>
+<span id="cb7-300"><a href="#cb7-300" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Enable desired overlays in settings drawer</span>
+<span id="cb7-301"><a href="#cb7-301" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Tap on region with audio</span>
+<span id="cb7-302"><a href="#cb7-302" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Wait for spectrogram to compute</span>
+<span id="cb7-303"><a href="#cb7-303" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-304"><a href="#cb7-304" aria-hidden="true" tabindex="-1"></a><span class="fu">## See Also</span></span>
+<span id="cb7-305"><a href="#cb7-305" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-306"><a href="#cb7-306" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Embedding: Basic Usage</span><span class="co">](../embedding/basic-usage.html)</span> - How to embed the viewer</span>
+<span id="cb7-307"><a href="#cb7-307" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">URL Parameters</span><span class="co">](../embedding/url-parameters.html)</span> - Complete parameter reference</span>
+<span id="cb7-308"><a href="#cb7-308" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Embedding Examples</span><span class="co">](../embedding/examples.html)</span> - Real-world examples</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 <footer class="footer">

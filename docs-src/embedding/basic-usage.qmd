@@ -38,7 +38,7 @@ Load audio automatically via URL parameter:
 **Requirements:**
 - Audio file must be accessible via HTTPS
 - Server must enable CORS (see below)
-- Supported formats: WAV, MP3, OGG
+- Supported formats: WAV, FLAC, MP3, OGG
 
 ### With Overlays Configured
 

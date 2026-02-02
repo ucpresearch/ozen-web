@@ -297,11 +297,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#programmatic-selection" id="toc-programmatic-selection" class="nav-link" data-scroll-target="#programmatic-selection">Programmatic Selection</a></li>
   </ul></li>
   <li><a href="#algorithm-compatibility" id="toc-algorithm-compatibility" class="nav-link" data-scroll-target="#algorithm-compatibility">Algorithm Compatibility</a></li>
-  <li><a href="#performance-characteristics" id="toc-performance-characteristics" class="nav-link" data-scroll-target="#performance-characteristics">Performance Characteristics</a>
-  <ul class="collapse">
-  <li><a href="#initialization-time" id="toc-initialization-time" class="nav-link" data-scroll-target="#initialization-time">Initialization Time</a></li>
-  <li><a href="#analysis-speed" id="toc-analysis-speed" class="nav-link" data-scroll-target="#analysis-speed">Analysis Speed</a></li>
-  </ul></li>
+  <li><a href="#performance-characteristics" id="toc-performance-characteristics" class="nav-link" data-scroll-target="#performance-characteristics">Performance Characteristics</a></li>
   <li><a href="#setup-guide-local-backend" id="toc-setup-guide-local-backend" class="nav-link" data-scroll-target="#setup-guide-local-backend">Setup Guide: Local Backend</a>
   <ul class="collapse">
   <li><a href="#prerequisites" id="toc-prerequisites" class="nav-link" data-scroll-target="#prerequisites">Prerequisites</a></li>
@@ -363,31 +359,31 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 class="anchored" data-anchor-id="available-backends">Available Backends</h2>
 <section id="praatfan-local" class="level3">
 <h3 class="anchored" data-anchor-id="praatfan-local">praatfan-local</h3>
-<p><strong>Source:</strong> Local <code>static/wasm/praatfan/</code> directory <strong>License:</strong> MIT OR Apache-2.0 (dual-licensed) <strong>Size:</strong> ~5 MB <strong>Load time:</strong> Instant (no download)</p>
+<p><strong>Source:</strong> Local <code>static/wasm/praatfan/</code> directory <strong>License:</strong> MIT OR Apache-2.0 (dual-licensed) <strong>Size:</strong> ~5 MB <strong>Load time:</strong> No download required</p>
 <p><strong>Description:</strong></p>
 <p>The local backend uses WASM files bundled with your deployment. This is the fastest option since files are served from the same origin as the app.</p>
 <p><strong>Setup:</strong></p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Copy WASM package to static directory</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> <span class="at">-p</span> static/wasm/praatfan</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">cp</span> <span class="at">-r</span> path/to/praatfan-core-rs/rust/pkg/<span class="pp">*</span> static/wasm/praatfan/</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p><strong>Advantages:</strong> - Fastest load time (no CDN download) - Works offline - No external dependencies - Full control over version</p>
+<p><strong>Advantages:</strong> - No CDN download required - Works offline - No external dependencies - Full control over version</p>
 <p><strong>Disadvantages:</strong> - Requires manual setup - Adds ~5 MB to deployment size - Must update manually for bug fixes</p>
-<p><strong>Use when:</strong> - Deploying your own instance - Offline use required - Optimal performance needed</p>
+<p><strong>Use when:</strong> - Deploying your own instance - Offline use required</p>
 </section>
 <section id="praatfan" class="level3">
 <h3 class="anchored" data-anchor-id="praatfan">praatfan</h3>
-<p><strong>Source:</strong> GitHub Pages CDN (<code>https://ucpresearch.github.io/praatfan/</code>) <strong>License:</strong> MIT OR Apache-2.0 (dual-licensed) <strong>Size:</strong> ~5 MB download <strong>Load time:</strong> 1-3 seconds (depends on connection)</p>
+<p><strong>Source:</strong> GitHub Pages CDN (<code>https://ucpresearch.github.io/praatfan/</code>) <strong>License:</strong> MIT OR Apache-2.0 (dual-licensed) <strong>Size:</strong> ~5 MB download <strong>Load time:</strong> Depends on connection speed</p>
 <p><strong>Description:</strong></p>
 <p>The CDN backend downloads WASM files from GitHub Pages on first load. This is the default for the hosted viewer.</p>
 <p><strong>Setup:</strong></p>
 <p>No setup required — works out of the box.</p>
 <p><strong>Advantages:</strong> - No local setup needed - Automatically gets updates - Smaller deployment (no WASM in bundle) - Same permissive license as local version</p>
-<p><strong>Disadvantages:</strong> - Requires internet connection - Initial load delay (~2 seconds) - External dependency</p>
+<p><strong>Disadvantages:</strong> - Requires internet connection - Initial load delay - External dependency</p>
 <p><strong>Use when:</strong> - Using hosted viewer at ucpresearch.github.io - No local WASM setup available - Deployment size needs to be minimal</p>
 </section>
 <section id="praatfan-gpl" class="level3">
 <h3 class="anchored" data-anchor-id="praatfan-gpl">praatfan-gpl</h3>
-<p><strong>Source:</strong> GitHub Pages CDN <strong>License:</strong> GPL (copyleft) <strong>Size:</strong> ~5 MB download <strong>Load time:</strong> 1-3 seconds</p>
+<p><strong>Source:</strong> GitHub Pages CDN <strong>License:</strong> GPL (copyleft) <strong>Size:</strong> ~5 MB download <strong>Load time:</strong> Depends on connection speed</p>
 <p><strong>Description:</strong></p>
 <p>GPL-licensed version of praatfan with additional features that require GPL dependencies.</p>
 <p><strong>Important licensing note:</strong></p>
@@ -434,30 +430,24 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td>No</td>
 </tr>
 <tr class="odd">
-<td><strong>Load time</strong></td>
-<td>Instant</td>
-<td>1-3s</td>
-<td>1-3s</td>
-</tr>
-<tr class="even">
 <td><strong>Offline use</strong></td>
 <td>✅ Yes</td>
 <td>❌ No</td>
 <td>❌ No</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td><strong>Deployment size</strong></td>
 <td>+5 MB</td>
 <td>Minimal</td>
 <td>Minimal</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td><strong>Updates</strong></td>
 <td>Manual</td>
 <td>Automatic</td>
 <td>Automatic</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td><strong>Commercial use</strong></td>
 <td>✅ Yes</td>
 <td>✅ Yes</td>
@@ -519,72 +509,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="performance-characteristics" class="level2">
 <h2 class="anchored" data-anchor-id="performance-characteristics">Performance Characteristics</h2>
-<section id="initialization-time" class="level3">
-<h3 class="anchored" data-anchor-id="initialization-time">Initialization Time</h3>
-<table class="caption-top table">
-<thead>
-<tr class="header">
-<th>Backend</th>
-<th>First Load</th>
-<th>Subsequent Loads</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>praatfan-local</td>
-<td>~200 ms</td>
-<td>~200 ms</td>
-</tr>
-<tr class="even">
-<td>praatfan (CDN)</td>
-<td>~2000 ms</td>
-<td>~200 ms*</td>
-</tr>
-<tr class="odd">
-<td>praatfan-gpl</td>
-<td>~2000 ms</td>
-<td>~200 ms*</td>
-</tr>
-</tbody>
-</table>
-<p>*If browser-cached</p>
-</section>
-<section id="analysis-speed" class="level3">
-<h3 class="anchored" data-anchor-id="analysis-speed">Analysis Speed</h3>
-<p>All backends have identical analysis performance once loaded:</p>
-<table class="caption-top table">
-<thead>
-<tr class="header">
-<th>Analysis</th>
-<th>30s Audio</th>
-<th>Notes</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>Pitch</td>
-<td>~100 ms</td>
-<td></td>
-</tr>
-<tr class="even">
-<td>Formants</td>
-<td>~200 ms</td>
-<td></td>
-</tr>
-<tr class="odd">
-<td>Intensity</td>
-<td>~80 ms</td>
-<td></td>
-</tr>
-<tr class="even">
-<td>Spectrogram</td>
-<td>~300 ms</td>
-<td>5 kHz max freq</td>
-</tr>
-</tbody>
-</table>
-<p>Performance depends on device CPU, not backend choice.</p>
-</section>
+<p>All backends have identical analysis performance once loaded. Performance depends on device CPU and connection speed, not backend choice.</p>
 </section>
 <section id="setup-guide-local-backend" class="level2">
 <h2 class="anchored" data-anchor-id="setup-guide-local-backend">Setup Guide: Local Backend</h2>
@@ -1212,7 +1137,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>**Source:** Local <span class="in">`static/wasm/praatfan/`</span> directory</span>
 <span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a>**License:** MIT OR Apache-2.0 (dual-licensed)</span>
 <span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a>**Size:** ~5 MB</span>
-<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a>**Load time:** Instant (no download)</span>
+<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a>**Load time:** No download required</span>
 <span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a>**Description:**</span>
 <span id="cb12-20"><a href="#cb12-20" aria-hidden="true" tabindex="-1"></a></span>
@@ -1227,7 +1152,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb12-29"><a href="#cb12-29" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb12-30"><a href="#cb12-30" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb12-31"><a href="#cb12-31" aria-hidden="true" tabindex="-1"></a>**Advantages:**</span>
-<span id="cb12-32"><a href="#cb12-32" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Fastest load time (no CDN download)</span>
+<span id="cb12-32"><a href="#cb12-32" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>No CDN download required</span>
 <span id="cb12-33"><a href="#cb12-33" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Works offline</span>
 <span id="cb12-34"><a href="#cb12-34" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>No external dependencies</span>
 <span id="cb12-35"><a href="#cb12-35" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Full control over version</span>
@@ -1240,342 +1165,319 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb12-42"><a href="#cb12-42" aria-hidden="true" tabindex="-1"></a>**Use when:**</span>
 <span id="cb12-43"><a href="#cb12-43" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Deploying your own instance</span>
 <span id="cb12-44"><a href="#cb12-44" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Offline use required</span>
-<span id="cb12-45"><a href="#cb12-45" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Optimal performance needed</span>
-<span id="cb12-46"><a href="#cb12-46" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-47"><a href="#cb12-47" aria-hidden="true" tabindex="-1"></a><span class="fu">### praatfan</span></span>
-<span id="cb12-48"><a href="#cb12-48" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-49"><a href="#cb12-49" aria-hidden="true" tabindex="-1"></a>**Source:** GitHub Pages CDN (<span class="in">`https://ucpresearch.github.io/praatfan/`</span>)</span>
-<span id="cb12-50"><a href="#cb12-50" aria-hidden="true" tabindex="-1"></a>**License:** MIT OR Apache-2.0 (dual-licensed)</span>
-<span id="cb12-51"><a href="#cb12-51" aria-hidden="true" tabindex="-1"></a>**Size:** ~5 MB download</span>
-<span id="cb12-52"><a href="#cb12-52" aria-hidden="true" tabindex="-1"></a>**Load time:** 1-3 seconds (depends on connection)</span>
-<span id="cb12-53"><a href="#cb12-53" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-54"><a href="#cb12-54" aria-hidden="true" tabindex="-1"></a>**Description:**</span>
-<span id="cb12-55"><a href="#cb12-55" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-56"><a href="#cb12-56" aria-hidden="true" tabindex="-1"></a>The CDN backend downloads WASM files from GitHub Pages on first load. This is the default for the hosted viewer.</span>
-<span id="cb12-57"><a href="#cb12-57" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-58"><a href="#cb12-58" aria-hidden="true" tabindex="-1"></a>**Setup:**</span>
-<span id="cb12-59"><a href="#cb12-59" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-60"><a href="#cb12-60" aria-hidden="true" tabindex="-1"></a>No setup required — works out of the box.</span>
-<span id="cb12-61"><a href="#cb12-61" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-62"><a href="#cb12-62" aria-hidden="true" tabindex="-1"></a>**Advantages:**</span>
-<span id="cb12-63"><a href="#cb12-63" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>No local setup needed</span>
-<span id="cb12-64"><a href="#cb12-64" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Automatically gets updates</span>
-<span id="cb12-65"><a href="#cb12-65" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Smaller deployment (no WASM in bundle)</span>
-<span id="cb12-66"><a href="#cb12-66" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Same permissive license as local version</span>
-<span id="cb12-67"><a href="#cb12-67" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-68"><a href="#cb12-68" aria-hidden="true" tabindex="-1"></a>**Disadvantages:**</span>
-<span id="cb12-69"><a href="#cb12-69" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Requires internet connection</span>
-<span id="cb12-70"><a href="#cb12-70" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Initial load delay (~2 seconds)</span>
-<span id="cb12-71"><a href="#cb12-71" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>External dependency</span>
-<span id="cb12-72"><a href="#cb12-72" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-73"><a href="#cb12-73" aria-hidden="true" tabindex="-1"></a>**Use when:**</span>
-<span id="cb12-74"><a href="#cb12-74" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Using hosted viewer at ucpresearch.github.io</span>
-<span id="cb12-75"><a href="#cb12-75" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>No local WASM setup available</span>
-<span id="cb12-76"><a href="#cb12-76" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Deployment size needs to be minimal</span>
-<span id="cb12-77"><a href="#cb12-77" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-78"><a href="#cb12-78" aria-hidden="true" tabindex="-1"></a><span class="fu">### praatfan-gpl</span></span>
-<span id="cb12-79"><a href="#cb12-79" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-80"><a href="#cb12-80" aria-hidden="true" tabindex="-1"></a>**Source:** GitHub Pages CDN</span>
-<span id="cb12-81"><a href="#cb12-81" aria-hidden="true" tabindex="-1"></a>**License:** GPL (copyleft)</span>
-<span id="cb12-82"><a href="#cb12-82" aria-hidden="true" tabindex="-1"></a>**Size:** ~5 MB download</span>
-<span id="cb12-83"><a href="#cb12-83" aria-hidden="true" tabindex="-1"></a>**Load time:** 1-3 seconds</span>
-<span id="cb12-84"><a href="#cb12-84" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-85"><a href="#cb12-85" aria-hidden="true" tabindex="-1"></a>**Description:**</span>
-<span id="cb12-86"><a href="#cb12-86" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-87"><a href="#cb12-87" aria-hidden="true" tabindex="-1"></a>GPL-licensed version of praatfan with additional features that require GPL dependencies.</span>
-<span id="cb12-88"><a href="#cb12-88" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-89"><a href="#cb12-89" aria-hidden="true" tabindex="-1"></a>**Important licensing note:**</span>
-<span id="cb12-90"><a href="#cb12-90" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-91"><a href="#cb12-91" aria-hidden="true" tabindex="-1"></a>::: {.callout-warning}</span>
-<span id="cb12-92"><a href="#cb12-92" aria-hidden="true" tabindex="-1"></a><span class="fu">## GPL Licensing Implications</span></span>
-<span id="cb12-93"><a href="#cb12-93" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-94"><a href="#cb12-94" aria-hidden="true" tabindex="-1"></a>The GPL license is "copyleft" — if you distribute modified versions or link to GPL code, your code must also be GPL-licensed. For most users embedding Ozen-web in websites or documents, this doesn't apply. Consult legal counsel if unsure.</span>
-<span id="cb12-95"><a href="#cb12-95" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb12-96"><a href="#cb12-96" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-97"><a href="#cb12-97" aria-hidden="true" tabindex="-1"></a>**Advantages:**</span>
-<span id="cb12-98"><a href="#cb12-98" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Same as <span class="in">`praatfan`</span> CDN backend</span>
-<span id="cb12-99"><a href="#cb12-99" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Access to GPL-only features (if any)</span>
-<span id="cb12-100"><a href="#cb12-100" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-101"><a href="#cb12-101" aria-hidden="true" tabindex="-1"></a>**Disadvantages:**</span>
-<span id="cb12-102"><a href="#cb12-102" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>GPL licensing restrictions</span>
-<span id="cb12-103"><a href="#cb12-103" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Same external dependency as <span class="in">`praatfan`</span></span>
-<span id="cb12-104"><a href="#cb12-104" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-105"><a href="#cb12-105" aria-hidden="true" tabindex="-1"></a>**Use when:**</span>
-<span id="cb12-106"><a href="#cb12-106" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>You specifically need GPL features</span>
-<span id="cb12-107"><a href="#cb12-107" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Your project is already GPL-compatible</span>
-<span id="cb12-108"><a href="#cb12-108" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-109"><a href="#cb12-109" aria-hidden="true" tabindex="-1"></a><span class="fu">## Backend Comparison</span></span>
-<span id="cb12-110"><a href="#cb12-110" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-111"><a href="#cb12-111" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Feature <span class="pp">|</span> praatfan-local <span class="pp">|</span> praatfan (CDN) <span class="pp">|</span> praatfan-gpl <span class="pp">|</span></span>
-<span id="cb12-112"><a href="#cb12-112" aria-hidden="true" tabindex="-1"></a><span class="pp">|---------|----------------|----------------|--------------|</span></span>
-<span id="cb12-113"><a href="#cb12-113" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **License** <span class="pp">|</span> MIT/Apache-2.0 <span class="pp">|</span> MIT/Apache-2.0 <span class="pp">|</span> GPL <span class="pp">|</span></span>
-<span id="cb12-114"><a href="#cb12-114" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **Setup required** <span class="pp">|</span> Yes <span class="pp">|</span> No <span class="pp">|</span> No <span class="pp">|</span></span>
-<span id="cb12-115"><a href="#cb12-115" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **Load time** <span class="pp">|</span> Instant <span class="pp">|</span> 1-3s <span class="pp">|</span> 1-3s <span class="pp">|</span></span>
-<span id="cb12-116"><a href="#cb12-116" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **Offline use** <span class="pp">|</span> ✅ Yes <span class="pp">|</span> ❌ No <span class="pp">|</span> ❌ No <span class="pp">|</span></span>
-<span id="cb12-117"><a href="#cb12-117" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **Deployment size** <span class="pp">|</span> +5 MB <span class="pp">|</span> Minimal <span class="pp">|</span> Minimal <span class="pp">|</span></span>
-<span id="cb12-118"><a href="#cb12-118" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **Updates** <span class="pp">|</span> Manual <span class="pp">|</span> Automatic <span class="pp">|</span> Automatic <span class="pp">|</span></span>
-<span id="cb12-119"><a href="#cb12-119" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **Commercial use** <span class="pp">|</span> ✅ Yes <span class="pp">|</span> ✅ Yes <span class="pp">|</span> ⚠️ GPL terms <span class="pp">|</span></span>
+<span id="cb12-45"><a href="#cb12-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-46"><a href="#cb12-46" aria-hidden="true" tabindex="-1"></a><span class="fu">### praatfan</span></span>
+<span id="cb12-47"><a href="#cb12-47" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-48"><a href="#cb12-48" aria-hidden="true" tabindex="-1"></a>**Source:** GitHub Pages CDN (<span class="in">`https://ucpresearch.github.io/praatfan/`</span>)</span>
+<span id="cb12-49"><a href="#cb12-49" aria-hidden="true" tabindex="-1"></a>**License:** MIT OR Apache-2.0 (dual-licensed)</span>
+<span id="cb12-50"><a href="#cb12-50" aria-hidden="true" tabindex="-1"></a>**Size:** ~5 MB download</span>
+<span id="cb12-51"><a href="#cb12-51" aria-hidden="true" tabindex="-1"></a>**Load time:** Depends on connection speed</span>
+<span id="cb12-52"><a href="#cb12-52" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-53"><a href="#cb12-53" aria-hidden="true" tabindex="-1"></a>**Description:**</span>
+<span id="cb12-54"><a href="#cb12-54" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-55"><a href="#cb12-55" aria-hidden="true" tabindex="-1"></a>The CDN backend downloads WASM files from GitHub Pages on first load. This is the default for the hosted viewer.</span>
+<span id="cb12-56"><a href="#cb12-56" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-57"><a href="#cb12-57" aria-hidden="true" tabindex="-1"></a>**Setup:**</span>
+<span id="cb12-58"><a href="#cb12-58" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-59"><a href="#cb12-59" aria-hidden="true" tabindex="-1"></a>No setup required — works out of the box.</span>
+<span id="cb12-60"><a href="#cb12-60" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-61"><a href="#cb12-61" aria-hidden="true" tabindex="-1"></a>**Advantages:**</span>
+<span id="cb12-62"><a href="#cb12-62" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>No local setup needed</span>
+<span id="cb12-63"><a href="#cb12-63" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Automatically gets updates</span>
+<span id="cb12-64"><a href="#cb12-64" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Smaller deployment (no WASM in bundle)</span>
+<span id="cb12-65"><a href="#cb12-65" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Same permissive license as local version</span>
+<span id="cb12-66"><a href="#cb12-66" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-67"><a href="#cb12-67" aria-hidden="true" tabindex="-1"></a>**Disadvantages:**</span>
+<span id="cb12-68"><a href="#cb12-68" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Requires internet connection</span>
+<span id="cb12-69"><a href="#cb12-69" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Initial load delay</span>
+<span id="cb12-70"><a href="#cb12-70" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>External dependency</span>
+<span id="cb12-71"><a href="#cb12-71" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-72"><a href="#cb12-72" aria-hidden="true" tabindex="-1"></a>**Use when:**</span>
+<span id="cb12-73"><a href="#cb12-73" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Using hosted viewer at ucpresearch.github.io</span>
+<span id="cb12-74"><a href="#cb12-74" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>No local WASM setup available</span>
+<span id="cb12-75"><a href="#cb12-75" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Deployment size needs to be minimal</span>
+<span id="cb12-76"><a href="#cb12-76" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-77"><a href="#cb12-77" aria-hidden="true" tabindex="-1"></a><span class="fu">### praatfan-gpl</span></span>
+<span id="cb12-78"><a href="#cb12-78" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-79"><a href="#cb12-79" aria-hidden="true" tabindex="-1"></a>**Source:** GitHub Pages CDN</span>
+<span id="cb12-80"><a href="#cb12-80" aria-hidden="true" tabindex="-1"></a>**License:** GPL (copyleft)</span>
+<span id="cb12-81"><a href="#cb12-81" aria-hidden="true" tabindex="-1"></a>**Size:** ~5 MB download</span>
+<span id="cb12-82"><a href="#cb12-82" aria-hidden="true" tabindex="-1"></a>**Load time:** Depends on connection speed</span>
+<span id="cb12-83"><a href="#cb12-83" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-84"><a href="#cb12-84" aria-hidden="true" tabindex="-1"></a>**Description:**</span>
+<span id="cb12-85"><a href="#cb12-85" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-86"><a href="#cb12-86" aria-hidden="true" tabindex="-1"></a>GPL-licensed version of praatfan with additional features that require GPL dependencies.</span>
+<span id="cb12-87"><a href="#cb12-87" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-88"><a href="#cb12-88" aria-hidden="true" tabindex="-1"></a>**Important licensing note:**</span>
+<span id="cb12-89"><a href="#cb12-89" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-90"><a href="#cb12-90" aria-hidden="true" tabindex="-1"></a>::: {.callout-warning}</span>
+<span id="cb12-91"><a href="#cb12-91" aria-hidden="true" tabindex="-1"></a><span class="fu">## GPL Licensing Implications</span></span>
+<span id="cb12-92"><a href="#cb12-92" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-93"><a href="#cb12-93" aria-hidden="true" tabindex="-1"></a>The GPL license is "copyleft" — if you distribute modified versions or link to GPL code, your code must also be GPL-licensed. For most users embedding Ozen-web in websites or documents, this doesn't apply. Consult legal counsel if unsure.</span>
+<span id="cb12-94"><a href="#cb12-94" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb12-95"><a href="#cb12-95" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-96"><a href="#cb12-96" aria-hidden="true" tabindex="-1"></a>**Advantages:**</span>
+<span id="cb12-97"><a href="#cb12-97" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Same as <span class="in">`praatfan`</span> CDN backend</span>
+<span id="cb12-98"><a href="#cb12-98" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Access to GPL-only features (if any)</span>
+<span id="cb12-99"><a href="#cb12-99" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-100"><a href="#cb12-100" aria-hidden="true" tabindex="-1"></a>**Disadvantages:**</span>
+<span id="cb12-101"><a href="#cb12-101" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>GPL licensing restrictions</span>
+<span id="cb12-102"><a href="#cb12-102" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Same external dependency as <span class="in">`praatfan`</span></span>
+<span id="cb12-103"><a href="#cb12-103" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-104"><a href="#cb12-104" aria-hidden="true" tabindex="-1"></a>**Use when:**</span>
+<span id="cb12-105"><a href="#cb12-105" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>You specifically need GPL features</span>
+<span id="cb12-106"><a href="#cb12-106" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Your project is already GPL-compatible</span>
+<span id="cb12-107"><a href="#cb12-107" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-108"><a href="#cb12-108" aria-hidden="true" tabindex="-1"></a><span class="fu">## Backend Comparison</span></span>
+<span id="cb12-109"><a href="#cb12-109" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-110"><a href="#cb12-110" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Feature <span class="pp">|</span> praatfan-local <span class="pp">|</span> praatfan (CDN) <span class="pp">|</span> praatfan-gpl <span class="pp">|</span></span>
+<span id="cb12-111"><a href="#cb12-111" aria-hidden="true" tabindex="-1"></a><span class="pp">|---------|----------------|----------------|--------------|</span></span>
+<span id="cb12-112"><a href="#cb12-112" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **License** <span class="pp">|</span> MIT/Apache-2.0 <span class="pp">|</span> MIT/Apache-2.0 <span class="pp">|</span> GPL <span class="pp">|</span></span>
+<span id="cb12-113"><a href="#cb12-113" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **Setup required** <span class="pp">|</span> Yes <span class="pp">|</span> No <span class="pp">|</span> No <span class="pp">|</span></span>
+<span id="cb12-114"><a href="#cb12-114" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **Offline use** <span class="pp">|</span> ✅ Yes <span class="pp">|</span> ❌ No <span class="pp">|</span> ❌ No <span class="pp">|</span></span>
+<span id="cb12-115"><a href="#cb12-115" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **Deployment size** <span class="pp">|</span> +5 MB <span class="pp">|</span> Minimal <span class="pp">|</span> Minimal <span class="pp">|</span></span>
+<span id="cb12-116"><a href="#cb12-116" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **Updates** <span class="pp">|</span> Manual <span class="pp">|</span> Automatic <span class="pp">|</span> Automatic <span class="pp">|</span></span>
+<span id="cb12-117"><a href="#cb12-117" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **Commercial use** <span class="pp">|</span> ✅ Yes <span class="pp">|</span> ✅ Yes <span class="pp">|</span> ⚠️ GPL terms <span class="pp">|</span></span>
+<span id="cb12-118"><a href="#cb12-118" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-119"><a href="#cb12-119" aria-hidden="true" tabindex="-1"></a><span class="fu">## Selecting a Backend</span></span>
 <span id="cb12-120"><a href="#cb12-120" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-121"><a href="#cb12-121" aria-hidden="true" tabindex="-1"></a><span class="fu">## Selecting a Backend</span></span>
+<span id="cb12-121"><a href="#cb12-121" aria-hidden="true" tabindex="-1"></a><span class="fu">### Via UI</span></span>
 <span id="cb12-122"><a href="#cb12-122" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-123"><a href="#cb12-123" aria-hidden="true" tabindex="-1"></a><span class="fu">### Via UI</span></span>
+<span id="cb12-123"><a href="#cb12-123" aria-hidden="true" tabindex="-1"></a>In the main application:</span>
 <span id="cb12-124"><a href="#cb12-124" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-125"><a href="#cb12-125" aria-hidden="true" tabindex="-1"></a>In the main application:</span>
-<span id="cb12-126"><a href="#cb12-126" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-127"><a href="#cb12-127" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Click backend selector dropdown</span>
-<span id="cb12-128"><a href="#cb12-128" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>Choose: praatfan-local, praatfan, or praatfan-gpl</span>
-<span id="cb12-129"><a href="#cb12-129" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>Wait for WASM to initialize</span>
+<span id="cb12-125"><a href="#cb12-125" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Click backend selector dropdown</span>
+<span id="cb12-126"><a href="#cb12-126" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>Choose: praatfan-local, praatfan, or praatfan-gpl</span>
+<span id="cb12-127"><a href="#cb12-127" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>Wait for WASM to initialize</span>
+<span id="cb12-128"><a href="#cb12-128" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-129"><a href="#cb12-129" aria-hidden="true" tabindex="-1"></a>The selection is saved to browser localStorage.</span>
 <span id="cb12-130"><a href="#cb12-130" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-131"><a href="#cb12-131" aria-hidden="true" tabindex="-1"></a>The selection is saved to browser localStorage.</span>
+<span id="cb12-131"><a href="#cb12-131" aria-hidden="true" tabindex="-1"></a><span class="fu">### Via URL Parameter</span></span>
 <span id="cb12-132"><a href="#cb12-132" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-133"><a href="#cb12-133" aria-hidden="true" tabindex="-1"></a><span class="fu">### Via URL Parameter</span></span>
+<span id="cb12-133"><a href="#cb12-133" aria-hidden="true" tabindex="-1"></a>When embedding the viewer:</span>
 <span id="cb12-134"><a href="#cb12-134" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-135"><a href="#cb12-135" aria-hidden="true" tabindex="-1"></a>When embedding the viewer:</span>
-<span id="cb12-136"><a href="#cb12-136" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-137"><a href="#cb12-137" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb12-138"><a href="#cb12-138" aria-hidden="true" tabindex="-1"></a><span class="in">?backend=praatfan-local</span></span>
-<span id="cb12-139"><a href="#cb12-139" aria-hidden="true" tabindex="-1"></a><span class="in">?backend=praatfan</span></span>
-<span id="cb12-140"><a href="#cb12-140" aria-hidden="true" tabindex="-1"></a><span class="in">?backend=praatfan-gpl</span></span>
-<span id="cb12-141"><a href="#cb12-141" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb12-135"><a href="#cb12-135" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb12-136"><a href="#cb12-136" aria-hidden="true" tabindex="-1"></a><span class="in">?backend=praatfan-local</span></span>
+<span id="cb12-137"><a href="#cb12-137" aria-hidden="true" tabindex="-1"></a><span class="in">?backend=praatfan</span></span>
+<span id="cb12-138"><a href="#cb12-138" aria-hidden="true" tabindex="-1"></a><span class="in">?backend=praatfan-gpl</span></span>
+<span id="cb12-139"><a href="#cb12-139" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb12-140"><a href="#cb12-140" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-141"><a href="#cb12-141" aria-hidden="true" tabindex="-1"></a>Example:</span>
 <span id="cb12-142"><a href="#cb12-142" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-143"><a href="#cb12-143" aria-hidden="true" tabindex="-1"></a>Example:</span>
-<span id="cb12-144"><a href="#cb12-144" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-145"><a href="#cb12-145" aria-hidden="true" tabindex="-1"></a><span class="in">```html</span></span>
-<span id="cb12-146"><a href="#cb12-146" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span>iframe src<span class="op">=</span><span class="st">"https://ucpresearch.github.io/ozen-web/viewer?audio=...&amp;backend=praatfan-local"</span><span class="op">&gt;</span></span>
-<span id="cb12-147"><a href="#cb12-147" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;/</span>iframe<span class="op">&gt;</span></span>
-<span id="cb12-148"><a href="#cb12-148" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb12-143"><a href="#cb12-143" aria-hidden="true" tabindex="-1"></a><span class="in">```html</span></span>
+<span id="cb12-144"><a href="#cb12-144" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span>iframe src<span class="op">=</span><span class="st">"https://ucpresearch.github.io/ozen-web/viewer?audio=...&amp;backend=praatfan-local"</span><span class="op">&gt;</span></span>
+<span id="cb12-145"><a href="#cb12-145" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;/</span>iframe<span class="op">&gt;</span></span>
+<span id="cb12-146"><a href="#cb12-146" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb12-147"><a href="#cb12-147" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-148"><a href="#cb12-148" aria-hidden="true" tabindex="-1"></a><span class="fu">### Via Configuration File</span></span>
 <span id="cb12-149"><a href="#cb12-149" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-150"><a href="#cb12-150" aria-hidden="true" tabindex="-1"></a><span class="fu">### Via Configuration File</span></span>
+<span id="cb12-150"><a href="#cb12-150" aria-hidden="true" tabindex="-1"></a>In <span class="in">`static/config.yaml`</span>:</span>
 <span id="cb12-151"><a href="#cb12-151" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-152"><a href="#cb12-152" aria-hidden="true" tabindex="-1"></a>In <span class="in">`static/config.yaml`</span>:</span>
-<span id="cb12-153"><a href="#cb12-153" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-154"><a href="#cb12-154" aria-hidden="true" tabindex="-1"></a><span class="in">```yaml</span></span>
-<span id="cb12-155"><a href="#cb12-155" aria-hidden="true" tabindex="-1"></a><span class="fu">backend</span><span class="kw">:</span><span class="at"> praatfan-local</span><span class="co">  # or praatfan, praatfan-gpl</span></span>
-<span id="cb12-156"><a href="#cb12-156" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb12-152"><a href="#cb12-152" aria-hidden="true" tabindex="-1"></a><span class="in">```yaml</span></span>
+<span id="cb12-153"><a href="#cb12-153" aria-hidden="true" tabindex="-1"></a><span class="fu">backend</span><span class="kw">:</span><span class="at"> praatfan-local</span><span class="co">  # or praatfan, praatfan-gpl</span></span>
+<span id="cb12-154"><a href="#cb12-154" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb12-155"><a href="#cb12-155" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-156"><a href="#cb12-156" aria-hidden="true" tabindex="-1"></a><span class="fu">### Programmatic Selection</span></span>
 <span id="cb12-157"><a href="#cb12-157" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-158"><a href="#cb12-158" aria-hidden="true" tabindex="-1"></a><span class="fu">### Programmatic Selection</span></span>
+<span id="cb12-158"><a href="#cb12-158" aria-hidden="true" tabindex="-1"></a>In code (for custom deployments):</span>
 <span id="cb12-159"><a href="#cb12-159" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-160"><a href="#cb12-160" aria-hidden="true" tabindex="-1"></a>In code (for custom deployments):</span>
-<span id="cb12-161"><a href="#cb12-161" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-162"><a href="#cb12-162" aria-hidden="true" tabindex="-1"></a><span class="in">```javascript</span></span>
-<span id="cb12-163"><a href="#cb12-163" aria-hidden="true" tabindex="-1"></a><span class="kw">import</span> <span class="im">{ initWasm } from '$lib/wasm/acoustic'</span><span class="op">;</span></span>
-<span id="cb12-164"><a href="#cb12-164" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-165"><a href="#cb12-165" aria-hidden="true" tabindex="-1"></a><span class="co">// Initialize specific backend</span></span>
-<span id="cb12-166"><a href="#cb12-166" aria-hidden="true" tabindex="-1"></a>await <span class="fu">initWasm</span><span class="op">(</span><span class="er">'</span>praatfan<span class="op">-</span>local<span class="er">'</span><span class="op">);</span></span>
-<span id="cb12-167"><a href="#cb12-167" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb12-160"><a href="#cb12-160" aria-hidden="true" tabindex="-1"></a><span class="in">```javascript</span></span>
+<span id="cb12-161"><a href="#cb12-161" aria-hidden="true" tabindex="-1"></a><span class="kw">import</span> <span class="im">{ initWasm } from '$lib/wasm/acoustic'</span><span class="op">;</span></span>
+<span id="cb12-162"><a href="#cb12-162" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-163"><a href="#cb12-163" aria-hidden="true" tabindex="-1"></a><span class="co">// Initialize specific backend</span></span>
+<span id="cb12-164"><a href="#cb12-164" aria-hidden="true" tabindex="-1"></a>await <span class="fu">initWasm</span><span class="op">(</span><span class="er">'</span>praatfan<span class="op">-</span>local<span class="er">'</span><span class="op">);</span></span>
+<span id="cb12-165"><a href="#cb12-165" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb12-166"><a href="#cb12-166" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-167"><a href="#cb12-167" aria-hidden="true" tabindex="-1"></a><span class="fu">## Algorithm Compatibility</span></span>
 <span id="cb12-168"><a href="#cb12-168" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-169"><a href="#cb12-169" aria-hidden="true" tabindex="-1"></a><span class="fu">## Algorithm Compatibility</span></span>
+<span id="cb12-169"><a href="#cb12-169" aria-hidden="true" tabindex="-1"></a>**All backends produce identical results** for standard acoustic analyses:</span>
 <span id="cb12-170"><a href="#cb12-170" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-171"><a href="#cb12-171" aria-hidden="true" tabindex="-1"></a>**All backends produce identical results** for standard acoustic analyses:</span>
-<span id="cb12-172"><a href="#cb12-172" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-173"><a href="#cb12-173" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Pitch (F0)</span>
-<span id="cb12-174"><a href="#cb12-174" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Formants (F1-F4) with bandwidths</span>
-<span id="cb12-175"><a href="#cb12-175" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Intensity</span>
-<span id="cb12-176"><a href="#cb12-176" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>HNR (Harmonics-to-Noise Ratio)</span>
-<span id="cb12-177"><a href="#cb12-177" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Center of Gravity (CoG)</span>
-<span id="cb12-178"><a href="#cb12-178" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Spectral Tilt</span>
-<span id="cb12-179"><a href="#cb12-179" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>A1-P0</span>
-<span id="cb12-180"><a href="#cb12-180" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Spectrograms</span>
+<span id="cb12-171"><a href="#cb12-171" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Pitch (F0)</span>
+<span id="cb12-172"><a href="#cb12-172" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Formants (F1-F4) with bandwidths</span>
+<span id="cb12-173"><a href="#cb12-173" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Intensity</span>
+<span id="cb12-174"><a href="#cb12-174" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>HNR (Harmonics-to-Noise Ratio)</span>
+<span id="cb12-175"><a href="#cb12-175" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Center of Gravity (CoG)</span>
+<span id="cb12-176"><a href="#cb12-176" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Spectral Tilt</span>
+<span id="cb12-177"><a href="#cb12-177" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>A1-P0</span>
+<span id="cb12-178"><a href="#cb12-178" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Spectrograms</span>
+<span id="cb12-179"><a href="#cb12-179" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-180"><a href="#cb12-180" aria-hidden="true" tabindex="-1"></a>The backends differ only in licensing and delivery method, not in computational accuracy.</span>
 <span id="cb12-181"><a href="#cb12-181" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-182"><a href="#cb12-182" aria-hidden="true" tabindex="-1"></a>The backends differ only in licensing and delivery method, not in computational accuracy.</span>
+<span id="cb12-182"><a href="#cb12-182" aria-hidden="true" tabindex="-1"></a><span class="fu">## Performance Characteristics</span></span>
 <span id="cb12-183"><a href="#cb12-183" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-184"><a href="#cb12-184" aria-hidden="true" tabindex="-1"></a><span class="fu">## Performance Characteristics</span></span>
+<span id="cb12-184"><a href="#cb12-184" aria-hidden="true" tabindex="-1"></a>All backends have identical analysis performance once loaded. Performance depends on device CPU and connection speed, not backend choice.</span>
 <span id="cb12-185"><a href="#cb12-185" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-186"><a href="#cb12-186" aria-hidden="true" tabindex="-1"></a><span class="fu">### Initialization Time</span></span>
+<span id="cb12-186"><a href="#cb12-186" aria-hidden="true" tabindex="-1"></a><span class="fu">## Setup Guide: Local Backend</span></span>
 <span id="cb12-187"><a href="#cb12-187" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-188"><a href="#cb12-188" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Backend <span class="pp">|</span> First Load <span class="pp">|</span> Subsequent Loads <span class="pp">|</span></span>
-<span id="cb12-189"><a href="#cb12-189" aria-hidden="true" tabindex="-1"></a><span class="pp">|---------|------------|------------------|</span></span>
-<span id="cb12-190"><a href="#cb12-190" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> praatfan-local <span class="pp">|</span> ~200 ms <span class="pp">|</span> ~200 ms <span class="pp">|</span></span>
-<span id="cb12-191"><a href="#cb12-191" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> praatfan (CDN) <span class="pp">|</span> ~2000 ms <span class="pp">|</span> ~200 ms* <span class="pp">|</span></span>
-<span id="cb12-192"><a href="#cb12-192" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> praatfan-gpl <span class="pp">|</span> ~2000 ms <span class="pp">|</span> ~200 ms* <span class="pp">|</span></span>
-<span id="cb12-193"><a href="#cb12-193" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-194"><a href="#cb12-194" aria-hidden="true" tabindex="-1"></a>*If browser-cached</span>
-<span id="cb12-195"><a href="#cb12-195" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-196"><a href="#cb12-196" aria-hidden="true" tabindex="-1"></a><span class="fu">### Analysis Speed</span></span>
-<span id="cb12-197"><a href="#cb12-197" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-198"><a href="#cb12-198" aria-hidden="true" tabindex="-1"></a>All backends have identical analysis performance once loaded:</span>
-<span id="cb12-199"><a href="#cb12-199" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-200"><a href="#cb12-200" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Analysis <span class="pp">|</span> 30s Audio <span class="pp">|</span> Notes <span class="pp">|</span></span>
-<span id="cb12-201"><a href="#cb12-201" aria-hidden="true" tabindex="-1"></a><span class="pp">|----------|-----------|-------|</span></span>
-<span id="cb12-202"><a href="#cb12-202" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Pitch <span class="pp">|</span> ~100 ms <span class="pp">|</span> <span class="pp">|</span></span>
-<span id="cb12-203"><a href="#cb12-203" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Formants <span class="pp">|</span> ~200 ms <span class="pp">|</span> <span class="pp">|</span></span>
-<span id="cb12-204"><a href="#cb12-204" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Intensity <span class="pp">|</span> ~80 ms <span class="pp">|</span> <span class="pp">|</span></span>
-<span id="cb12-205"><a href="#cb12-205" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Spectrogram <span class="pp">|</span> ~300 ms <span class="pp">|</span> 5 kHz max freq <span class="pp">|</span></span>
-<span id="cb12-206"><a href="#cb12-206" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-207"><a href="#cb12-207" aria-hidden="true" tabindex="-1"></a>Performance depends on device CPU, not backend choice.</span>
-<span id="cb12-208"><a href="#cb12-208" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-209"><a href="#cb12-209" aria-hidden="true" tabindex="-1"></a><span class="fu">## Setup Guide: Local Backend</span></span>
+<span id="cb12-188"><a href="#cb12-188" aria-hidden="true" tabindex="-1"></a><span class="fu">### Prerequisites</span></span>
+<span id="cb12-189"><a href="#cb12-189" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-190"><a href="#cb12-190" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Access to praatfan-core-rs repository</span>
+<span id="cb12-191"><a href="#cb12-191" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>OR pre-built WASM package</span>
+<span id="cb12-192"><a href="#cb12-192" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-193"><a href="#cb12-193" aria-hidden="true" tabindex="-1"></a><span class="fu">### Step 1: Obtain WASM Files</span></span>
+<span id="cb12-194"><a href="#cb12-194" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-195"><a href="#cb12-195" aria-hidden="true" tabindex="-1"></a>**Option A: Build from source**</span>
+<span id="cb12-196"><a href="#cb12-196" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-197"><a href="#cb12-197" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
+<span id="cb12-198"><a href="#cb12-198" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> praatfan-core-rs/rust</span>
+<span id="cb12-199"><a href="#cb12-199" aria-hidden="true" tabindex="-1"></a><span class="ex">wasm-pack</span> build <span class="at">--target</span> web</span>
+<span id="cb12-200"><a href="#cb12-200" aria-hidden="true" tabindex="-1"></a><span class="co"># Output in pkg/ directory</span></span>
+<span id="cb12-201"><a href="#cb12-201" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb12-202"><a href="#cb12-202" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-203"><a href="#cb12-203" aria-hidden="true" tabindex="-1"></a>**Option B: Download release**</span>
+<span id="cb12-204"><a href="#cb12-204" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-205"><a href="#cb12-205" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
+<span id="cb12-206"><a href="#cb12-206" aria-hidden="true" tabindex="-1"></a><span class="co"># Download from GitHub releases</span></span>
+<span id="cb12-207"><a href="#cb12-207" aria-hidden="true" tabindex="-1"></a><span class="fu">wget</span> https://github.com/ucpresearch/praatfan-core-rs/releases/latest/download/praatfan-wasm.tar.gz</span>
+<span id="cb12-208"><a href="#cb12-208" aria-hidden="true" tabindex="-1"></a><span class="fu">tar</span> <span class="at">-xzf</span> praatfan-wasm.tar.gz</span>
+<span id="cb12-209"><a href="#cb12-209" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb12-210"><a href="#cb12-210" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-211"><a href="#cb12-211" aria-hidden="true" tabindex="-1"></a><span class="fu">### Prerequisites</span></span>
+<span id="cb12-211"><a href="#cb12-211" aria-hidden="true" tabindex="-1"></a><span class="fu">### Step 2: Copy to Static Directory</span></span>
 <span id="cb12-212"><a href="#cb12-212" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-213"><a href="#cb12-213" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Access to praatfan-core-rs repository</span>
-<span id="cb12-214"><a href="#cb12-214" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>OR pre-built WASM package</span>
-<span id="cb12-215"><a href="#cb12-215" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-216"><a href="#cb12-216" aria-hidden="true" tabindex="-1"></a><span class="fu">### Step 1: Obtain WASM Files</span></span>
-<span id="cb12-217"><a href="#cb12-217" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-218"><a href="#cb12-218" aria-hidden="true" tabindex="-1"></a>**Option A: Build from source**</span>
-<span id="cb12-219"><a href="#cb12-219" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-220"><a href="#cb12-220" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
-<span id="cb12-221"><a href="#cb12-221" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> praatfan-core-rs/rust</span>
-<span id="cb12-222"><a href="#cb12-222" aria-hidden="true" tabindex="-1"></a><span class="ex">wasm-pack</span> build <span class="at">--target</span> web</span>
-<span id="cb12-223"><a href="#cb12-223" aria-hidden="true" tabindex="-1"></a><span class="co"># Output in pkg/ directory</span></span>
-<span id="cb12-224"><a href="#cb12-224" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb12-225"><a href="#cb12-225" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-226"><a href="#cb12-226" aria-hidden="true" tabindex="-1"></a>**Option B: Download release**</span>
-<span id="cb12-227"><a href="#cb12-227" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-228"><a href="#cb12-228" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
-<span id="cb12-229"><a href="#cb12-229" aria-hidden="true" tabindex="-1"></a><span class="co"># Download from GitHub releases</span></span>
-<span id="cb12-230"><a href="#cb12-230" aria-hidden="true" tabindex="-1"></a><span class="fu">wget</span> https://github.com/ucpresearch/praatfan-core-rs/releases/latest/download/praatfan-wasm.tar.gz</span>
-<span id="cb12-231"><a href="#cb12-231" aria-hidden="true" tabindex="-1"></a><span class="fu">tar</span> <span class="at">-xzf</span> praatfan-wasm.tar.gz</span>
-<span id="cb12-232"><a href="#cb12-232" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb12-233"><a href="#cb12-233" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-234"><a href="#cb12-234" aria-hidden="true" tabindex="-1"></a><span class="fu">### Step 2: Copy to Static Directory</span></span>
-<span id="cb12-235"><a href="#cb12-235" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-236"><a href="#cb12-236" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
-<span id="cb12-237"><a href="#cb12-237" aria-hidden="true" tabindex="-1"></a><span class="co"># In Ozen-web project root</span></span>
-<span id="cb12-238"><a href="#cb12-238" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> <span class="at">-p</span> static/wasm/praatfan</span>
-<span id="cb12-239"><a href="#cb12-239" aria-hidden="true" tabindex="-1"></a><span class="fu">cp</span> <span class="at">-r</span> path/to/pkg/<span class="pp">*</span> static/wasm/praatfan/</span>
-<span id="cb12-240"><a href="#cb12-240" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb12-241"><a href="#cb12-241" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-242"><a href="#cb12-242" aria-hidden="true" tabindex="-1"></a><span class="fu">### Step 3: Verify Files</span></span>
-<span id="cb12-243"><a href="#cb12-243" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-244"><a href="#cb12-244" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
-<span id="cb12-245"><a href="#cb12-245" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> static/wasm/praatfan/</span>
-<span id="cb12-246"><a href="#cb12-246" aria-hidden="true" tabindex="-1"></a><span class="co"># Should contain:</span></span>
-<span id="cb12-247"><a href="#cb12-247" aria-hidden="true" tabindex="-1"></a><span class="co"># - praatfan_bg.wasm</span></span>
-<span id="cb12-248"><a href="#cb12-248" aria-hidden="true" tabindex="-1"></a><span class="co"># - praatfan.js</span></span>
-<span id="cb12-249"><a href="#cb12-249" aria-hidden="true" tabindex="-1"></a><span class="co"># - package.json</span></span>
-<span id="cb12-250"><a href="#cb12-250" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb12-213"><a href="#cb12-213" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
+<span id="cb12-214"><a href="#cb12-214" aria-hidden="true" tabindex="-1"></a><span class="co"># In Ozen-web project root</span></span>
+<span id="cb12-215"><a href="#cb12-215" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> <span class="at">-p</span> static/wasm/praatfan</span>
+<span id="cb12-216"><a href="#cb12-216" aria-hidden="true" tabindex="-1"></a><span class="fu">cp</span> <span class="at">-r</span> path/to/pkg/<span class="pp">*</span> static/wasm/praatfan/</span>
+<span id="cb12-217"><a href="#cb12-217" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb12-218"><a href="#cb12-218" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-219"><a href="#cb12-219" aria-hidden="true" tabindex="-1"></a><span class="fu">### Step 3: Verify Files</span></span>
+<span id="cb12-220"><a href="#cb12-220" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-221"><a href="#cb12-221" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
+<span id="cb12-222"><a href="#cb12-222" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> static/wasm/praatfan/</span>
+<span id="cb12-223"><a href="#cb12-223" aria-hidden="true" tabindex="-1"></a><span class="co"># Should contain:</span></span>
+<span id="cb12-224"><a href="#cb12-224" aria-hidden="true" tabindex="-1"></a><span class="co"># - praatfan_bg.wasm</span></span>
+<span id="cb12-225"><a href="#cb12-225" aria-hidden="true" tabindex="-1"></a><span class="co"># - praatfan.js</span></span>
+<span id="cb12-226"><a href="#cb12-226" aria-hidden="true" tabindex="-1"></a><span class="co"># - package.json</span></span>
+<span id="cb12-227"><a href="#cb12-227" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb12-228"><a href="#cb12-228" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-229"><a href="#cb12-229" aria-hidden="true" tabindex="-1"></a><span class="fu">### Step 4: Configure Default Backend</span></span>
+<span id="cb12-230"><a href="#cb12-230" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-231"><a href="#cb12-231" aria-hidden="true" tabindex="-1"></a>In <span class="in">`static/config.yaml`</span>:</span>
+<span id="cb12-232"><a href="#cb12-232" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-233"><a href="#cb12-233" aria-hidden="true" tabindex="-1"></a><span class="in">```yaml</span></span>
+<span id="cb12-234"><a href="#cb12-234" aria-hidden="true" tabindex="-1"></a><span class="fu">backend</span><span class="kw">:</span><span class="at"> praatfan-local</span></span>
+<span id="cb12-235"><a href="#cb12-235" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb12-236"><a href="#cb12-236" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-237"><a href="#cb12-237" aria-hidden="true" tabindex="-1"></a><span class="fu">### Step 5: Test</span></span>
+<span id="cb12-238"><a href="#cb12-238" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-239"><a href="#cb12-239" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
+<span id="cb12-240"><a href="#cb12-240" aria-hidden="true" tabindex="-1"></a><span class="ex">npm</span> run dev</span>
+<span id="cb12-241"><a href="#cb12-241" aria-hidden="true" tabindex="-1"></a><span class="co"># Open http://localhost:5173</span></span>
+<span id="cb12-242"><a href="#cb12-242" aria-hidden="true" tabindex="-1"></a><span class="co"># Check backend selector shows "praatfan-local"</span></span>
+<span id="cb12-243"><a href="#cb12-243" aria-hidden="true" tabindex="-1"></a><span class="co"># Load audio and verify analysis works</span></span>
+<span id="cb12-244"><a href="#cb12-244" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb12-245"><a href="#cb12-245" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-246"><a href="#cb12-246" aria-hidden="true" tabindex="-1"></a><span class="fu">## Troubleshooting</span></span>
+<span id="cb12-247"><a href="#cb12-247" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-248"><a href="#cb12-248" aria-hidden="true" tabindex="-1"></a><span class="fu">### "Failed to initialize WASM"</span></span>
+<span id="cb12-249"><a href="#cb12-249" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-250"><a href="#cb12-250" aria-hidden="true" tabindex="-1"></a>**Problem:** Backend won't load</span>
 <span id="cb12-251"><a href="#cb12-251" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-252"><a href="#cb12-252" aria-hidden="true" tabindex="-1"></a><span class="fu">### Step 4: Configure Default Backend</span></span>
-<span id="cb12-253"><a href="#cb12-253" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-254"><a href="#cb12-254" aria-hidden="true" tabindex="-1"></a>In <span class="in">`static/config.yaml`</span>:</span>
-<span id="cb12-255"><a href="#cb12-255" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-256"><a href="#cb12-256" aria-hidden="true" tabindex="-1"></a><span class="in">```yaml</span></span>
-<span id="cb12-257"><a href="#cb12-257" aria-hidden="true" tabindex="-1"></a><span class="fu">backend</span><span class="kw">:</span><span class="at"> praatfan-local</span></span>
-<span id="cb12-258"><a href="#cb12-258" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb12-259"><a href="#cb12-259" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-260"><a href="#cb12-260" aria-hidden="true" tabindex="-1"></a><span class="fu">### Step 5: Test</span></span>
-<span id="cb12-261"><a href="#cb12-261" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-262"><a href="#cb12-262" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
-<span id="cb12-263"><a href="#cb12-263" aria-hidden="true" tabindex="-1"></a><span class="ex">npm</span> run dev</span>
-<span id="cb12-264"><a href="#cb12-264" aria-hidden="true" tabindex="-1"></a><span class="co"># Open http://localhost:5173</span></span>
-<span id="cb12-265"><a href="#cb12-265" aria-hidden="true" tabindex="-1"></a><span class="co"># Check backend selector shows "praatfan-local"</span></span>
-<span id="cb12-266"><a href="#cb12-266" aria-hidden="true" tabindex="-1"></a><span class="co"># Load audio and verify analysis works</span></span>
-<span id="cb12-267"><a href="#cb12-267" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb12-252"><a href="#cb12-252" aria-hidden="true" tabindex="-1"></a>**Possible causes:**</span>
+<span id="cb12-253"><a href="#cb12-253" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>praatfan-local: Files missing from <span class="in">`static/wasm/praatfan/`</span></span>
+<span id="cb12-254"><a href="#cb12-254" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>praatfan/praatfan-gpl: Network connection issue</span>
+<span id="cb12-255"><a href="#cb12-255" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>All: Browser doesn't support WASM</span>
+<span id="cb12-256"><a href="#cb12-256" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-257"><a href="#cb12-257" aria-hidden="true" tabindex="-1"></a>**Solution:**</span>
+<span id="cb12-258"><a href="#cb12-258" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Check browser console for specific error</span>
+<span id="cb12-259"><a href="#cb12-259" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Verify files exist: <span class="in">`ls static/wasm/praatfan/`</span></span>
+<span id="cb12-260"><a href="#cb12-260" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Test network: <span class="in">`curl https://ucpresearch.github.io/praatfan/praatfan_bg.wasm`</span></span>
+<span id="cb12-261"><a href="#cb12-261" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Update browser (WASM support required)</span>
+<span id="cb12-262"><a href="#cb12-262" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-263"><a href="#cb12-263" aria-hidden="true" tabindex="-1"></a><span class="fu">### Slow Initial Load</span></span>
+<span id="cb12-264"><a href="#cb12-264" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-265"><a href="#cb12-265" aria-hidden="true" tabindex="-1"></a>**Problem:** App takes 5+ seconds to initialize</span>
+<span id="cb12-266"><a href="#cb12-266" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-267"><a href="#cb12-267" aria-hidden="true" tabindex="-1"></a>**Likely cause:** CDN backend with slow connection</span>
 <span id="cb12-268"><a href="#cb12-268" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-269"><a href="#cb12-269" aria-hidden="true" tabindex="-1"></a><span class="fu">## Troubleshooting</span></span>
-<span id="cb12-270"><a href="#cb12-270" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-271"><a href="#cb12-271" aria-hidden="true" tabindex="-1"></a><span class="fu">### "Failed to initialize WASM"</span></span>
-<span id="cb12-272"><a href="#cb12-272" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-273"><a href="#cb12-273" aria-hidden="true" tabindex="-1"></a>**Problem:** Backend won't load</span>
-<span id="cb12-274"><a href="#cb12-274" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-275"><a href="#cb12-275" aria-hidden="true" tabindex="-1"></a>**Possible causes:**</span>
-<span id="cb12-276"><a href="#cb12-276" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>praatfan-local: Files missing from <span class="in">`static/wasm/praatfan/`</span></span>
-<span id="cb12-277"><a href="#cb12-277" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>praatfan/praatfan-gpl: Network connection issue</span>
-<span id="cb12-278"><a href="#cb12-278" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>All: Browser doesn't support WASM</span>
+<span id="cb12-269"><a href="#cb12-269" aria-hidden="true" tabindex="-1"></a>**Solution:**</span>
+<span id="cb12-270"><a href="#cb12-270" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Use praatfan-local for faster load</span>
+<span id="cb12-271"><a href="#cb12-271" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>OR accept initial delay (subsequent loads are fast)</span>
+<span id="cb12-272"><a href="#cb12-272" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Check network speed</span>
+<span id="cb12-273"><a href="#cb12-273" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-274"><a href="#cb12-274" aria-hidden="true" tabindex="-1"></a><span class="fu">### CORS Errors with Local Files</span></span>
+<span id="cb12-275"><a href="#cb12-275" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-276"><a href="#cb12-276" aria-hidden="true" tabindex="-1"></a>**Problem:** "CORS policy blocked" when using praatfan-local</span>
+<span id="cb12-277"><a href="#cb12-277" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-278"><a href="#cb12-278" aria-hidden="true" tabindex="-1"></a>**Cause:** Serving app via file:// protocol</span>
 <span id="cb12-279"><a href="#cb12-279" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb12-280"><a href="#cb12-280" aria-hidden="true" tabindex="-1"></a>**Solution:**</span>
-<span id="cb12-281"><a href="#cb12-281" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Check browser console for specific error</span>
-<span id="cb12-282"><a href="#cb12-282" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Verify files exist: <span class="in">`ls static/wasm/praatfan/`</span></span>
-<span id="cb12-283"><a href="#cb12-283" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Test network: <span class="in">`curl https://ucpresearch.github.io/praatfan/praatfan_bg.wasm`</span></span>
-<span id="cb12-284"><a href="#cb12-284" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Update browser (WASM support required)</span>
+<span id="cb12-281"><a href="#cb12-281" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Use HTTP server (not file://)</span>
+<span id="cb12-282"><a href="#cb12-282" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`npm run dev`</span> or <span class="in">`npm run preview`</span></span>
+<span id="cb12-283"><a href="#cb12-283" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-284"><a href="#cb12-284" aria-hidden="true" tabindex="-1"></a><span class="fu">## Migration Guide</span></span>
 <span id="cb12-285"><a href="#cb12-285" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-286"><a href="#cb12-286" aria-hidden="true" tabindex="-1"></a><span class="fu">### Slow Initial Load</span></span>
+<span id="cb12-286"><a href="#cb12-286" aria-hidden="true" tabindex="-1"></a><span class="fu">### Switching from CDN to Local</span></span>
 <span id="cb12-287"><a href="#cb12-287" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-288"><a href="#cb12-288" aria-hidden="true" tabindex="-1"></a>**Problem:** App takes 5+ seconds to initialize</span>
-<span id="cb12-289"><a href="#cb12-289" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-290"><a href="#cb12-290" aria-hidden="true" tabindex="-1"></a>**Likely cause:** CDN backend with slow connection</span>
-<span id="cb12-291"><a href="#cb12-291" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-292"><a href="#cb12-292" aria-hidden="true" tabindex="-1"></a>**Solution:**</span>
-<span id="cb12-293"><a href="#cb12-293" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Use praatfan-local for faster load</span>
-<span id="cb12-294"><a href="#cb12-294" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>OR accept initial delay (subsequent loads are fast)</span>
-<span id="cb12-295"><a href="#cb12-295" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Check network speed</span>
-<span id="cb12-296"><a href="#cb12-296" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-297"><a href="#cb12-297" aria-hidden="true" tabindex="-1"></a><span class="fu">### CORS Errors with Local Files</span></span>
+<span id="cb12-288"><a href="#cb12-288" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Set up local backend (see setup guide above)</span>
+<span id="cb12-289"><a href="#cb12-289" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>Update config: <span class="in">`backend: praatfan-local`</span></span>
+<span id="cb12-290"><a href="#cb12-290" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>Deploy updated app</span>
+<span id="cb12-291"><a href="#cb12-291" aria-hidden="true" tabindex="-1"></a><span class="ss">4. </span>Users will use local files automatically</span>
+<span id="cb12-292"><a href="#cb12-292" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-293"><a href="#cb12-293" aria-hidden="true" tabindex="-1"></a><span class="fu">### Switching from Local to CDN</span></span>
+<span id="cb12-294"><a href="#cb12-294" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-295"><a href="#cb12-295" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Update config: <span class="in">`backend: praatfan`</span></span>
+<span id="cb12-296"><a href="#cb12-296" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>Deploy</span>
+<span id="cb12-297"><a href="#cb12-297" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>Remove <span class="in">`static/wasm/praatfan/`</span> to save space (optional)</span>
 <span id="cb12-298"><a href="#cb12-298" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-299"><a href="#cb12-299" aria-hidden="true" tabindex="-1"></a>**Problem:** "CORS policy blocked" when using praatfan-local</span>
+<span id="cb12-299"><a href="#cb12-299" aria-hidden="true" tabindex="-1"></a>No data migration needed — backends are fully compatible.</span>
 <span id="cb12-300"><a href="#cb12-300" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-301"><a href="#cb12-301" aria-hidden="true" tabindex="-1"></a>**Cause:** Serving app via file:// protocol</span>
+<span id="cb12-301"><a href="#cb12-301" aria-hidden="true" tabindex="-1"></a><span class="fu">## Licensing Summary</span></span>
 <span id="cb12-302"><a href="#cb12-302" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-303"><a href="#cb12-303" aria-hidden="true" tabindex="-1"></a>**Solution:**</span>
-<span id="cb12-304"><a href="#cb12-304" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Use HTTP server (not file://)</span>
-<span id="cb12-305"><a href="#cb12-305" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`npm run dev`</span> or <span class="in">`npm run preview`</span></span>
-<span id="cb12-306"><a href="#cb12-306" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-307"><a href="#cb12-307" aria-hidden="true" tabindex="-1"></a><span class="fu">## Migration Guide</span></span>
-<span id="cb12-308"><a href="#cb12-308" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-309"><a href="#cb12-309" aria-hidden="true" tabindex="-1"></a><span class="fu">### Switching from CDN to Local</span></span>
+<span id="cb12-303"><a href="#cb12-303" aria-hidden="true" tabindex="-1"></a><span class="fu">### MIT/Apache-2.0 (praatfan-local, praatfan)</span></span>
+<span id="cb12-304"><a href="#cb12-304" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-305"><a href="#cb12-305" aria-hidden="true" tabindex="-1"></a>**Permissions:**</span>
+<span id="cb12-306"><a href="#cb12-306" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>✅ Commercial use</span>
+<span id="cb12-307"><a href="#cb12-307" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>✅ Modification</span>
+<span id="cb12-308"><a href="#cb12-308" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>✅ Distribution</span>
+<span id="cb12-309"><a href="#cb12-309" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>✅ Private use</span>
 <span id="cb12-310"><a href="#cb12-310" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-311"><a href="#cb12-311" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Set up local backend (see setup guide above)</span>
-<span id="cb12-312"><a href="#cb12-312" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>Update config: <span class="in">`backend: praatfan-local`</span></span>
-<span id="cb12-313"><a href="#cb12-313" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>Deploy updated app</span>
-<span id="cb12-314"><a href="#cb12-314" aria-hidden="true" tabindex="-1"></a><span class="ss">4. </span>Users will use local files automatically</span>
-<span id="cb12-315"><a href="#cb12-315" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-316"><a href="#cb12-316" aria-hidden="true" tabindex="-1"></a><span class="fu">### Switching from Local to CDN</span></span>
-<span id="cb12-317"><a href="#cb12-317" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-318"><a href="#cb12-318" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Update config: <span class="in">`backend: praatfan`</span></span>
-<span id="cb12-319"><a href="#cb12-319" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>Deploy</span>
-<span id="cb12-320"><a href="#cb12-320" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>Remove <span class="in">`static/wasm/praatfan/`</span> to save space (optional)</span>
+<span id="cb12-311"><a href="#cb12-311" aria-hidden="true" tabindex="-1"></a>**Conditions:**</span>
+<span id="cb12-312"><a href="#cb12-312" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Include copyright notice</span>
+<span id="cb12-313"><a href="#cb12-313" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Include license text</span>
+<span id="cb12-314"><a href="#cb12-314" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-315"><a href="#cb12-315" aria-hidden="true" tabindex="-1"></a>**Ideal for:**</span>
+<span id="cb12-316"><a href="#cb12-316" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Commercial projects</span>
+<span id="cb12-317"><a href="#cb12-317" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Proprietary software</span>
+<span id="cb12-318"><a href="#cb12-318" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Embedding in closed-source tools</span>
+<span id="cb12-319"><a href="#cb12-319" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-320"><a href="#cb12-320" aria-hidden="true" tabindex="-1"></a><span class="fu">### GPL (praatfan-gpl)</span></span>
 <span id="cb12-321"><a href="#cb12-321" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-322"><a href="#cb12-322" aria-hidden="true" tabindex="-1"></a>No data migration needed — backends are fully compatible.</span>
-<span id="cb12-323"><a href="#cb12-323" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-324"><a href="#cb12-324" aria-hidden="true" tabindex="-1"></a><span class="fu">## Licensing Summary</span></span>
-<span id="cb12-325"><a href="#cb12-325" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-326"><a href="#cb12-326" aria-hidden="true" tabindex="-1"></a><span class="fu">### MIT/Apache-2.0 (praatfan-local, praatfan)</span></span>
+<span id="cb12-322"><a href="#cb12-322" aria-hidden="true" tabindex="-1"></a>**Permissions:**</span>
+<span id="cb12-323"><a href="#cb12-323" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>✅ Commercial use</span>
+<span id="cb12-324"><a href="#cb12-324" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>✅ Modification</span>
+<span id="cb12-325"><a href="#cb12-325" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>✅ Distribution</span>
+<span id="cb12-326"><a href="#cb12-326" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>✅ Private use</span>
 <span id="cb12-327"><a href="#cb12-327" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-328"><a href="#cb12-328" aria-hidden="true" tabindex="-1"></a>**Permissions:**</span>
-<span id="cb12-329"><a href="#cb12-329" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>✅ Commercial use</span>
-<span id="cb12-330"><a href="#cb12-330" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>✅ Modification</span>
-<span id="cb12-331"><a href="#cb12-331" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>✅ Distribution</span>
-<span id="cb12-332"><a href="#cb12-332" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>✅ Private use</span>
+<span id="cb12-328"><a href="#cb12-328" aria-hidden="true" tabindex="-1"></a>**Conditions:**</span>
+<span id="cb12-329"><a href="#cb12-329" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Disclose source code</span>
+<span id="cb12-330"><a href="#cb12-330" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>License under GPL</span>
+<span id="cb12-331"><a href="#cb12-331" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>State changes</span>
+<span id="cb12-332"><a href="#cb12-332" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Include copyright</span>
 <span id="cb12-333"><a href="#cb12-333" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-334"><a href="#cb12-334" aria-hidden="true" tabindex="-1"></a>**Conditions:**</span>
-<span id="cb12-335"><a href="#cb12-335" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Include copyright notice</span>
-<span id="cb12-336"><a href="#cb12-336" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Include license text</span>
-<span id="cb12-337"><a href="#cb12-337" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-338"><a href="#cb12-338" aria-hidden="true" tabindex="-1"></a>**Ideal for:**</span>
-<span id="cb12-339"><a href="#cb12-339" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Commercial projects</span>
-<span id="cb12-340"><a href="#cb12-340" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Proprietary software</span>
-<span id="cb12-341"><a href="#cb12-341" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Embedding in closed-source tools</span>
-<span id="cb12-342"><a href="#cb12-342" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-343"><a href="#cb12-343" aria-hidden="true" tabindex="-1"></a><span class="fu">### GPL (praatfan-gpl)</span></span>
+<span id="cb12-334"><a href="#cb12-334" aria-hidden="true" tabindex="-1"></a>**Ideal for:**</span>
+<span id="cb12-335"><a href="#cb12-335" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Open-source projects</span>
+<span id="cb12-336"><a href="#cb12-336" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>GPL-compatible software</span>
+<span id="cb12-337"><a href="#cb12-337" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>When GPL features are required</span>
+<span id="cb12-338"><a href="#cb12-338" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-339"><a href="#cb12-339" aria-hidden="true" tabindex="-1"></a>::: {.callout-note}</span>
+<span id="cb12-340"><a href="#cb12-340" aria-hidden="true" tabindex="-1"></a><span class="fu">## Embedding and GPL</span></span>
+<span id="cb12-341"><a href="#cb12-341" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-342"><a href="#cb12-342" aria-hidden="true" tabindex="-1"></a>Simply embedding the Ozen-web viewer in a webpage via iframe typically does NOT require your website to be GPL-licensed, as this is considered "mere aggregation." However, consult legal counsel for specific situations.</span>
+<span id="cb12-343"><a href="#cb12-343" aria-hidden="true" tabindex="-1"></a>:::</span>
 <span id="cb12-344"><a href="#cb12-344" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-345"><a href="#cb12-345" aria-hidden="true" tabindex="-1"></a>**Permissions:**</span>
-<span id="cb12-346"><a href="#cb12-346" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>✅ Commercial use</span>
-<span id="cb12-347"><a href="#cb12-347" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>✅ Modification</span>
-<span id="cb12-348"><a href="#cb12-348" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>✅ Distribution</span>
-<span id="cb12-349"><a href="#cb12-349" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>✅ Private use</span>
-<span id="cb12-350"><a href="#cb12-350" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-351"><a href="#cb12-351" aria-hidden="true" tabindex="-1"></a>**Conditions:**</span>
-<span id="cb12-352"><a href="#cb12-352" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Disclose source code</span>
-<span id="cb12-353"><a href="#cb12-353" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>License under GPL</span>
-<span id="cb12-354"><a href="#cb12-354" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>State changes</span>
-<span id="cb12-355"><a href="#cb12-355" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Include copyright</span>
-<span id="cb12-356"><a href="#cb12-356" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-357"><a href="#cb12-357" aria-hidden="true" tabindex="-1"></a>**Ideal for:**</span>
-<span id="cb12-358"><a href="#cb12-358" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Open-source projects</span>
-<span id="cb12-359"><a href="#cb12-359" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>GPL-compatible software</span>
-<span id="cb12-360"><a href="#cb12-360" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>When GPL features are required</span>
-<span id="cb12-361"><a href="#cb12-361" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-362"><a href="#cb12-362" aria-hidden="true" tabindex="-1"></a>::: {.callout-note}</span>
-<span id="cb12-363"><a href="#cb12-363" aria-hidden="true" tabindex="-1"></a><span class="fu">## Embedding and GPL</span></span>
-<span id="cb12-364"><a href="#cb12-364" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-365"><a href="#cb12-365" aria-hidden="true" tabindex="-1"></a>Simply embedding the Ozen-web viewer in a webpage via iframe typically does NOT require your website to be GPL-licensed, as this is considered "mere aggregation." However, consult legal counsel for specific situations.</span>
-<span id="cb12-366"><a href="#cb12-366" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb12-367"><a href="#cb12-367" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-368"><a href="#cb12-368" aria-hidden="true" tabindex="-1"></a><span class="fu">## Future Backends</span></span>
-<span id="cb12-369"><a href="#cb12-369" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-370"><a href="#cb12-370" aria-hidden="true" tabindex="-1"></a>Potential future backend options:</span>
-<span id="cb12-371"><a href="#cb12-371" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-372"><a href="#cb12-372" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**praatfan-minimal** - Smaller WASM (pitch + formants only)</span>
-<span id="cb12-373"><a href="#cb12-373" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**praatfan-gpu** - GPU-accelerated spectrogram computation</span>
-<span id="cb12-374"><a href="#cb12-374" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**praatfan-python** - Pyodide-based backend for Jupyter notebooks</span>
-<span id="cb12-375"><a href="#cb12-375" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-376"><a href="#cb12-376" aria-hidden="true" tabindex="-1"></a><span class="fu">## See Also</span></span>
-<span id="cb12-377"><a href="#cb12-377" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-378"><a href="#cb12-378" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Configuration</span><span class="co">](configuration.html)</span> - Configuring default backend</span>
-<span id="cb12-379"><a href="#cb12-379" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">URL Parameters</span><span class="co">](../embedding/url-parameters.html)</span> - Backend parameter</span>
-<span id="cb12-380"><a href="#cb12-380" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">WASM Integration</span><span class="co">](../development/wasm-integration.html)</span> - Developer guide</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
+<span id="cb12-345"><a href="#cb12-345" aria-hidden="true" tabindex="-1"></a><span class="fu">## Future Backends</span></span>
+<span id="cb12-346"><a href="#cb12-346" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-347"><a href="#cb12-347" aria-hidden="true" tabindex="-1"></a>Potential future backend options:</span>
+<span id="cb12-348"><a href="#cb12-348" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-349"><a href="#cb12-349" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**praatfan-minimal** - Smaller WASM (pitch + formants only)</span>
+<span id="cb12-350"><a href="#cb12-350" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**praatfan-gpu** - GPU-accelerated spectrogram computation</span>
+<span id="cb12-351"><a href="#cb12-351" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**praatfan-python** - Pyodide-based backend for Jupyter notebooks</span>
+<span id="cb12-352"><a href="#cb12-352" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-353"><a href="#cb12-353" aria-hidden="true" tabindex="-1"></a><span class="fu">## See Also</span></span>
+<span id="cb12-354"><a href="#cb12-354" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-355"><a href="#cb12-355" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Configuration</span><span class="co">](configuration.html)</span> - Configuring default backend</span>
+<span id="cb12-356"><a href="#cb12-356" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">URL Parameters</span><span class="co">](../embedding/url-parameters.html)</span> - Backend parameter</span>
+<span id="cb12-357"><a href="#cb12-357" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">WASM Integration</span><span class="co">](../development/wasm-integration.html)</span> - Developer guide</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 <footer class="footer">

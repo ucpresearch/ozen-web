@@ -41,7 +41,7 @@ For efficient rendering at any zoom level, the waveform uses min/max downsamplin
 
 This approach:
 - Preserves all peaks and zero-crossings
-- Renders instantly even for hour-long files
+- Renders for files of any length
 - Shows full detail when zoomed in
 - Prevents aliasing artifacts
 
@@ -121,14 +121,7 @@ colors:
 
 ## Performance
 
-| File Duration | Render Time |
-|---------------|-------------|
-| 5 seconds | < 10 ms |
-| 1 minute | < 20 ms |
-| 1 hour | < 50 ms |
-| 24 hours | < 100 ms |
-
-Waveform rendering is near-instantaneous for all file lengths due to efficient downsampling.
+Waveform rendering uses efficient downsampling for files of any length.
 
 ## Limitations
 

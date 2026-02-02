@@ -5,15 +5,15 @@ subtitle: "High-resolution spectrogram visualization"
 
 ## Overview
 
-The spectrogram displays frequency content over time, computed using Praat-accurate algorithms via WebAssembly. Ozen-web uses a grayscale colormap matching Praat's default appearance, with intelligent resolution scaling for optimal performance.
+The spectrogram displays frequency content over time, computed using Praat-accurate algorithms via WebAssembly. Ozen-web uses a grayscale colormap matching Praat's default appearance, with resolution scaling.
 
 ![Spectrogram with formant overlays](../screenshots/tutorial-03-formant-overlay.png)
 
 ## Key Features
 
-- **Praat-accurate computation** - Uses praatfan WASM for research-grade spectrograms
+- **Praat-accurate computation** - Uses praatfan WASM for spectrograms
 - **Dynamic resolution** - Automatically enhances detail when zoomed in
-- **Efficient caching** - Stores computed spectrograms for instant redraw
+- **Efficient caching** - Stores computed spectrograms for redraw
 - **Configurable frequency range** - Choose 5 kHz, 7.5 kHz, or 10 kHz maximum
 - **Long audio support** - On-demand computation for files over 60 seconds
 
@@ -40,7 +40,7 @@ When zoomed beyond 2x magnification, the spectrogram automatically regenerates a
 - **Long files (>60s)**: Only computes spectrogram for visible window
 :::
 
-This provides optimal detail when examining specific regions while maintaining performance.
+This provides more detail when examining specific regions while maintaining performance.
 
 ### Caching Strategy
 
@@ -61,11 +61,8 @@ if (audioLoaded && visibleDuration <= 60s) {
 
 ### Max Frequency
 
-Control the frequency range displayed:
+Control the frequency range displayed (5,000 Hz, 7,500 Hz, 10,000 Hz)
 
-- **5000 Hz** - Default for adult male speech
-- **7500 Hz** - Suitable for female/child speech
-- **10000 Hz** - Maximum detail for high-frequency analysis
 
 ::: {.callout-tip}
 ## Choosing Max Frequency
@@ -74,8 +71,8 @@ For most speech analysis, 5000 Hz captures all relevant information. Use 7500-10
 
 - Children's voices
 - High-pitched vowels
-- Fricative consonants (s, sh, f)
-- Bird vocalizations
+- Fricative consonants (/s/, /ʃ/, /f/)
+
 :::
 
 ### Spectrogram Parameters
@@ -97,7 +94,7 @@ For recordings longer than 60 seconds:
 2. **When zoomed** to ≤60s visible window: Spectrogram computes for that region
 3. **Debounced**: 300ms delay prevents excessive recomputation during zoom/pan
 
-This allows working with arbitrarily long recordings (hours) without UI freezing.
+This allows working with longer recordings without UI freezing.
 
 ::: {.callout-tip}
 ## Working with Long Files
@@ -177,18 +174,6 @@ The spectrogram uses HTML5 Canvas with ImageData:
 4. Draw to off-screen canvas
 5. Copy visible region to display canvas on zoom/pan
 
-## Performance
-
-| Scenario | Computation Time | Memory |
-|----------|-----------------|---------|
-| 5s audio, 5 kHz | ~100-200 ms | ~2 MB |
-| 30s audio, 5 kHz | ~500-800 ms | ~10 MB |
-| 60s audio, 10 kHz | ~1-2 seconds | ~40 MB |
-| 3600s audio (on-demand) | ~1 second per 60s window | ~40 MB |
-
-::: {.callout-note}
-Times measured on modern desktop (2020+). First computation includes WASM initialization (~200ms).
-:::
 
 ## Troubleshooting
 

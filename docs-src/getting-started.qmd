@@ -1,6 +1,6 @@
 ---
 title: "Getting Started"
-subtitle: "Install and run Ozen-web in 5 minutes"
+subtitle: "Install and run Ozen-web"
 ---
 
 ## Overview
@@ -17,7 +17,7 @@ The fastest way to get started is using the hosted version:
 
 **🌐 [https://ucpresearch.github.io/ozen-web/live/](https://ucpresearch.github.io/ozen-web/live/index.html)**
 
-Simply visit the URL and drag an audio file (WAV, MP3, OGG) to begin analyzing.
+Simply visit the URL and drag an audio file (WAV, FLAC, MP3, OGG) to begin analyzing.
 
 ::: {.callout-tip}
 Bookmark the URL for quick access. All processing happens locally in your browser — no data is uploaded to servers.
@@ -26,13 +26,13 @@ Bookmark the URL for quick access. All processing happens locally in your browse
 ### Loading Your First Audio File
 
 ::: {.tutorial-steps}
-1. **Drag and drop** a WAV, MP3, or OGG file onto the interface
+1. **Drag and drop** a WAV, FLAC, MP3, or OGG file onto the interface
 
    OR
 
    **Click "Load Audio"** button and select a file
 
-2. Wait for the waveform to appear (1-2 seconds for typical files)
+2. Wait for the waveform to appear
 
 3. The spectrogram will load automatically (or zoom in for long files)
 
@@ -91,11 +91,11 @@ Just upload the `build/` folder's contents.
 
 Ozen-web supports multiple WASM backends:
 
-| Backend | Source | License | Speed | Offline |
-|---------|--------|---------|-------|---------|
-| `praatfan-local` | `static/wasm/` | MIT/Apache-2.0 | Fastest | ✅ Yes |
-| `praatfan` | GitHub Pages CDN | MIT/Apache-2.0 | Fast | ❌ No |
-| `praatfan-gpl` | GitHub Pages CDN | GPL | Fast | ❌ No |
+| Backend | Source | License | Offline |
+|---------|--------|---------|---------|
+| `praatfan-local` | `static/wasm/` | MIT/Apache-2.0 | ✅ Yes |
+| `praatfan` | GitHub Pages CDN | MIT/Apache-2.0 | ❌ No |
+| `praatfan-gpl` | GitHub Pages CDN | GPL | ❌ No |
 
 Select the backend using the dropdown in the app interface.
 
@@ -126,9 +126,8 @@ See [Configuration Reference](reference/configuration.html) for all options.
 
 ### Audio File Won't Load
 
-- **Supported formats**: WAV, MP3, OGG (16-bit or 24-bit PCM for WAV)
+- **Supported formats**: WAV, FLAC, MP3, OGG (16-bit or 24-bit PCM for WAV)
 - **File size**: Files >100MB may be slow; try shorter clips
-- **Browser support**: Some browsers have codec limitations (try Chrome/Edge)
 
 ### Long Audio Files Show "Zoom in for spectrogram"
 

@@ -14,7 +14,7 @@ Ozen-web supports multiple WebAssembly (WASM) backends for acoustic analysis, al
 **Source:** Local `static/wasm/praatfan/` directory
 **License:** MIT OR Apache-2.0 (dual-licensed)
 **Size:** ~5 MB
-**Load time:** Instant (no download)
+**Load time:** No download required
 
 **Description:**
 
@@ -29,7 +29,7 @@ cp -r path/to/praatfan-core-rs/rust/pkg/* static/wasm/praatfan/
 ```
 
 **Advantages:**
-- Fastest load time (no CDN download)
+- No CDN download required
 - Works offline
 - No external dependencies
 - Full control over version
@@ -42,14 +42,13 @@ cp -r path/to/praatfan-core-rs/rust/pkg/* static/wasm/praatfan/
 **Use when:**
 - Deploying your own instance
 - Offline use required
-- Optimal performance needed
 
 ### praatfan
 
 **Source:** GitHub Pages CDN (`https://ucpresearch.github.io/praatfan/`)
 **License:** MIT OR Apache-2.0 (dual-licensed)
 **Size:** ~5 MB download
-**Load time:** 1-3 seconds (depends on connection)
+**Load time:** Depends on connection speed
 
 **Description:**
 
@@ -67,7 +66,7 @@ No setup required — works out of the box.
 
 **Disadvantages:**
 - Requires internet connection
-- Initial load delay (~2 seconds)
+- Initial load delay
 - External dependency
 
 **Use when:**
@@ -80,7 +79,7 @@ No setup required — works out of the box.
 **Source:** GitHub Pages CDN
 **License:** GPL (copyleft)
 **Size:** ~5 MB download
-**Load time:** 1-3 seconds
+**Load time:** Depends on connection speed
 
 **Description:**
 
@@ -112,7 +111,6 @@ The GPL license is "copyleft" — if you distribute modified versions or link to
 |---------|----------------|----------------|--------------|
 | **License** | MIT/Apache-2.0 | MIT/Apache-2.0 | GPL |
 | **Setup required** | Yes | No | No |
-| **Load time** | Instant | 1-3s | 1-3s |
 | **Offline use** | ✅ Yes | ❌ No | ❌ No |
 | **Deployment size** | +5 MB | Minimal | Minimal |
 | **Updates** | Manual | Automatic | Automatic |
@@ -183,28 +181,7 @@ The backends differ only in licensing and delivery method, not in computational 
 
 ## Performance Characteristics
 
-### Initialization Time
-
-| Backend | First Load | Subsequent Loads |
-|---------|------------|------------------|
-| praatfan-local | ~200 ms | ~200 ms |
-| praatfan (CDN) | ~2000 ms | ~200 ms* |
-| praatfan-gpl | ~2000 ms | ~200 ms* |
-
-*If browser-cached
-
-### Analysis Speed
-
-All backends have identical analysis performance once loaded:
-
-| Analysis | 30s Audio | Notes |
-|----------|-----------|-------|
-| Pitch | ~100 ms | |
-| Formants | ~200 ms | |
-| Intensity | ~80 ms | |
-| Spectrogram | ~300 ms | 5 kHz max freq |
-
-Performance depends on device CPU, not backend choice.
+All backends have identical analysis performance once loaded. Performance depends on device CPU and connection speed, not backend choice.
 
 ## Setup Guide: Local Backend
 

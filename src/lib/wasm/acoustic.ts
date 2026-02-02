@@ -1,3 +1,28 @@
+/**
+ * WASM Acoustic Analysis Module
+ *
+ * Provides a unified interface to multiple acoustic analysis backends (praatfan).
+ * This abstraction layer handles backend loading, initialization, and provides
+ * wrapper functions that work consistently across different backend implementations.
+ *
+ * Supported backends:
+ * - praatfan-local: Bundled WASM files (offline, fastest load)
+ * - praatfan: Clean-room implementation from GitHub Pages CDN (MIT/Apache-2.0)
+ * - praatfan-gpl: Full Praat reimplementation from CDN (GPL)
+ *
+ * Key responsibilities:
+ * - Dynamic WASM module loading based on selected backend
+ * - Backend API compatibility layer (handles minor API differences)
+ * - Sound object creation and memory management
+ * - Acoustic feature computation (pitch, formants, intensity, etc.)
+ * - Value extraction from computed objects
+ *
+ * IMPORTANT: All Sound and analysis objects returned by this module must be
+ * freed by calling .free() when done to prevent memory leaks in WASM.
+ *
+ * @module wasm/acoustic
+ */
+
 import { writable, get } from 'svelte/store';
 import { base } from '$app/paths';
 import type { AcousticBackend } from '$lib/stores/config';

@@ -235,7 +235,7 @@
     "href": "embedding/overview.html#faq",
     "title": "Embedding Guide",
     "section": "FAQ",
-    "text": "FAQ\nQ: Can I embed the main app (not just viewer)?\nA: The main app works in iframes but is designed for desktop use. The /viewer route is optimized for embedding and mobile.\nQ: Does the embedded viewer support annotations?\nA: The embedded viewer is view-only. For editing, link to the full app or deploy both versions.\nQ: Can I customize the appearance?\nA: Yes, via config.yaml file in the ozen-web/ directory. See Configuration Reference.\nQ: How large can embedded audio files be?\nA: Recommended &lt;100MB for browser memory limits. The viewer handles long files via on-demand analysis.\nQ: Can I embed on Medium, WordPress, etc.?\nA: Yes, if the platform allows custom HTML/iframes. Some platforms block iframes for security.",
+    "text": "FAQ\nQ: Can I embed the main app (not just viewer)?\nA: The main app works in iframes but is designed for desktop use. The /viewer route is designed for embedding and mobile.\nQ: Does the embedded viewer support annotations?\nA: The embedded viewer is view-only. For editing, link to the full app or deploy both versions.\nQ: Can I customize the appearance?\nA: Yes, via config.yaml file in the ozen-web/ directory. See Configuration Reference.\nQ: How large can embedded audio files be?\nA: Recommended &lt;100MB for browser memory limits. The viewer handles long files via on-demand analysis.\nQ: Can I embed on Medium, WordPress, etc.?\nA: Yes, if the platform allows custom HTML/iframes. Some platforms block iframes for security.",
     "crumbs": [
       "Embedding",
       "Embedding Guide"
@@ -376,7 +376,7 @@
     "href": "reference/backends.html#available-backends",
     "title": "Analysis Backends",
     "section": "Available Backends",
-    "text": "Available Backends\n\npraatfan-local\nSource: Local static/wasm/praatfan/ directory License: MIT OR Apache-2.0 (dual-licensed) Size: ~5 MB Load time: Instant (no download)\nDescription:\nThe local backend uses WASM files bundled with your deployment. This is the fastest option since files are served from the same origin as the app.\nSetup:\n# Copy WASM package to static directory\nmkdir -p static/wasm/praatfan\ncp -r path/to/praatfan-core-rs/rust/pkg/* static/wasm/praatfan/\nAdvantages: - Fastest load time (no CDN download) - Works offline - No external dependencies - Full control over version\nDisadvantages: - Requires manual setup - Adds ~5 MB to deployment size - Must update manually for bug fixes\nUse when: - Deploying your own instance - Offline use required - Optimal performance needed\n\n\npraatfan\nSource: GitHub Pages CDN (https://ucpresearch.github.io/praatfan/) License: MIT OR Apache-2.0 (dual-licensed) Size: ~5 MB download Load time: 1-3 seconds (depends on connection)\nDescription:\nThe CDN backend downloads WASM files from GitHub Pages on first load. This is the default for the hosted viewer.\nSetup:\nNo setup required — works out of the box.\nAdvantages: - No local setup needed - Automatically gets updates - Smaller deployment (no WASM in bundle) - Same permissive license as local version\nDisadvantages: - Requires internet connection - Initial load delay (~2 seconds) - External dependency\nUse when: - Using hosted viewer at ucpresearch.github.io - No local WASM setup available - Deployment size needs to be minimal\n\n\npraatfan-gpl\nSource: GitHub Pages CDN License: GPL (copyleft) Size: ~5 MB download Load time: 1-3 seconds\nDescription:\nGPL-licensed version of praatfan with additional features that require GPL dependencies.\nImportant licensing note:\n\n\n\n\n\n\nWarningGPL Licensing Implications\n\n\n\nThe GPL license is “copyleft” — if you distribute modified versions or link to GPL code, your code must also be GPL-licensed. For most users embedding Ozen-web in websites or documents, this doesn’t apply. Consult legal counsel if unsure.\n\n\nAdvantages: - Same as praatfan CDN backend - Access to GPL-only features (if any)\nDisadvantages: - GPL licensing restrictions - Same external dependency as praatfan\nUse when: - You specifically need GPL features - Your project is already GPL-compatible",
+    "text": "Available Backends\n\npraatfan-local\nSource: Local static/wasm/praatfan/ directory License: MIT OR Apache-2.0 (dual-licensed) Size: ~5 MB Load time: No download required\nDescription:\nThe local backend uses WASM files bundled with your deployment. This is the fastest option since files are served from the same origin as the app.\nSetup:\n# Copy WASM package to static directory\nmkdir -p static/wasm/praatfan\ncp -r path/to/praatfan-core-rs/rust/pkg/* static/wasm/praatfan/\nAdvantages: - No CDN download required - Works offline - No external dependencies - Full control over version\nDisadvantages: - Requires manual setup - Adds ~5 MB to deployment size - Must update manually for bug fixes\nUse when: - Deploying your own instance - Offline use required\n\n\npraatfan\nSource: GitHub Pages CDN (https://ucpresearch.github.io/praatfan/) License: MIT OR Apache-2.0 (dual-licensed) Size: ~5 MB download Load time: Depends on connection speed\nDescription:\nThe CDN backend downloads WASM files from GitHub Pages on first load. This is the default for the hosted viewer.\nSetup:\nNo setup required — works out of the box.\nAdvantages: - No local setup needed - Automatically gets updates - Smaller deployment (no WASM in bundle) - Same permissive license as local version\nDisadvantages: - Requires internet connection - Initial load delay - External dependency\nUse when: - Using hosted viewer at ucpresearch.github.io - No local WASM setup available - Deployment size needs to be minimal\n\n\npraatfan-gpl\nSource: GitHub Pages CDN License: GPL (copyleft) Size: ~5 MB download Load time: Depends on connection speed\nDescription:\nGPL-licensed version of praatfan with additional features that require GPL dependencies.\nImportant licensing note:\n\n\n\n\n\n\nWarningGPL Licensing Implications\n\n\n\nThe GPL license is “copyleft” — if you distribute modified versions or link to GPL code, your code must also be GPL-licensed. For most users embedding Ozen-web in websites or documents, this doesn’t apply. Consult legal counsel if unsure.\n\n\nAdvantages: - Same as praatfan CDN backend - Access to GPL-only features (if any)\nDisadvantages: - GPL licensing restrictions - Same external dependency as praatfan\nUse when: - You specifically need GPL features - Your project is already GPL-compatible",
     "crumbs": [
       "Analysis Backends"
     ]
@@ -386,7 +386,7 @@
     "href": "reference/backends.html#backend-comparison",
     "title": "Analysis Backends",
     "section": "Backend Comparison",
-    "text": "Backend Comparison\n\n\n\nFeature\npraatfan-local\npraatfan (CDN)\npraatfan-gpl\n\n\n\n\nLicense\nMIT/Apache-2.0\nMIT/Apache-2.0\nGPL\n\n\nSetup required\nYes\nNo\nNo\n\n\nLoad time\nInstant\n1-3s\n1-3s\n\n\nOffline use\n✅ Yes\n❌ No\n❌ No\n\n\nDeployment size\n+5 MB\nMinimal\nMinimal\n\n\nUpdates\nManual\nAutomatic\nAutomatic\n\n\nCommercial use\n✅ Yes\n✅ Yes\n⚠️ GPL terms",
+    "text": "Backend Comparison\n\n\n\nFeature\npraatfan-local\npraatfan (CDN)\npraatfan-gpl\n\n\n\n\nLicense\nMIT/Apache-2.0\nMIT/Apache-2.0\nGPL\n\n\nSetup required\nYes\nNo\nNo\n\n\nOffline use\n✅ Yes\n❌ No\n❌ No\n\n\nDeployment size\n+5 MB\nMinimal\nMinimal\n\n\nUpdates\nManual\nAutomatic\nAutomatic\n\n\nCommercial use\n✅ Yes\n✅ Yes\n⚠️ GPL terms",
     "crumbs": [
       "Analysis Backends"
     ]
@@ -416,7 +416,7 @@
     "href": "reference/backends.html#performance-characteristics",
     "title": "Analysis Backends",
     "section": "Performance Characteristics",
-    "text": "Performance Characteristics\n\nInitialization Time\n\n\n\nBackend\nFirst Load\nSubsequent Loads\n\n\n\n\npraatfan-local\n~200 ms\n~200 ms\n\n\npraatfan (CDN)\n~2000 ms\n~200 ms*\n\n\npraatfan-gpl\n~2000 ms\n~200 ms*\n\n\n\n*If browser-cached\n\n\nAnalysis Speed\nAll backends have identical analysis performance once loaded:\n\n\n\nAnalysis\n30s Audio\nNotes\n\n\n\n\nPitch\n~100 ms\n\n\n\nFormants\n~200 ms\n\n\n\nIntensity\n~80 ms\n\n\n\nSpectrogram\n~300 ms\n5 kHz max freq\n\n\n\nPerformance depends on device CPU, not backend choice.",
+    "text": "Performance Characteristics\nAll backends have identical analysis performance once loaded. Performance depends on device CPU and connection speed, not backend choice.",
     "crumbs": [
       "Analysis Backends"
     ]
@@ -612,16 +612,6 @@
     ]
   },
   {
-    "objectID": "reference/keyboard-shortcuts.html#browser-specific-notes",
-    "href": "reference/keyboard-shortcuts.html#browser-specific-notes",
-    "title": "Keyboard Shortcuts",
-    "section": "Browser-Specific Notes",
-    "text": "Browser-Specific Notes\n\nChrome/Edge\n\nAll shortcuts work as expected\nBest overall experience\n\n\n\nFirefox\n\nAll shortcuts work\nSlightly different scroll behavior on some platforms\n\n\n\nSafari\n\nAll shortcuts work\nCmd key on macOS instead of Ctrl",
-    "crumbs": [
-      "Keyboard Shortcuts"
-    ]
-  },
-  {
     "objectID": "reference/keyboard-shortcuts.html#mobiletouch",
     "href": "reference/keyboard-shortcuts.html#mobiletouch",
     "title": "Keyboard Shortcuts",
@@ -778,7 +768,7 @@
     "href": "development/setup.html#testing",
     "title": "Development Setup",
     "section": "Testing",
-    "text": "Testing\nCurrently no automated tests. Manual testing workflow:\n\nLoad various audio formats (WAV, MP3, OGG)\nTest all overlay toggles\nCreate annotations, test undo/redo\nAdd data points, export TSV\nTest on Chrome, Firefox, Safari\nTest mobile viewer on phone",
+    "text": "Testing\nCurrently no automated tests. Manual testing workflow:\n\nLoad various audio formats (WAV, FLAC, MP3, OGG)\nTest all overlay toggles\nCreate annotations, test undo/redo\nAdd data points, export TSV\nTest on Chrome, Firefox, Safari\nTest mobile viewer on phone",
     "crumbs": [
       "Development",
       "Development Setup"
@@ -1075,14 +1065,14 @@
     "href": "index.html",
     "title": "Ozen-web",
     "section": "",
-    "text": "Browser-based acoustic analysis and annotation\nA powerful, browser-based tool for phonetic research, built with Svelte and WebAssembly. Analyze pitch, formants, intensity, and more, with various supporting backends.\n\nGet Started View Tutorial Try It"
+    "text": "Browser-based acoustic analysis and annotation\nA browser-based tool for phonetic research, built with Svelte and WebAssembly. Analyze pitch, formants, intensity, and more, with various supporting backends.\n\nGet Started View Tutorial Try It"
   },
   {
     "objectID": "index.html#key-features",
     "href": "index.html#key-features",
     "title": "Ozen-web",
     "section": "Key Features",
-    "text": "Key Features\n\n\n📊 Phonetic Analysis\nPowered by praatfan_rust WebAssembly to provide acoustic measurements: pitch (F0), formants (F1-F4), intensity, HNR, center of gravity, spectral tilt, and more.\n\n\nInteractive Annotation\nFull TextGrid support with multi-tier annotations. Add boundaries, edit labels, snap to higher layer boundaries, with keyboard shortcuts for efficient workflow.\n\n\nMobile-Optimized\nAn alternative touch-friendly viewer-only front end with pinch-to-zoom, drag-to-select, and responsive layout. Aimed for phone-based access to phonetic analysis and embedding in presentations.\n\n\nWorks Offline\nRuns entirely in a browser. No external server required, no data uploaded.\n\n\nData Collection\nDouble-click to add points of intest for data collection with acoustic measurements. Export to TSV with all values and annotation labels for statistical analysis, or ctrl-C / command-C to copy to clipboard.\n\n\nHighly Embeddable\nEmbed the viewer in Quarto documents, R Markdown, Jupyter notebooks, or any web page. URL parameters for pre-configuration and data URL support for self-contained embeds."
+    "text": "Key Features\n\n\n📊 Phonetic Analysis\nPowered by praatfan_rust WebAssembly to provide acoustic measurements: pitch (F0), formants (F1-F4), intensity, HNR, center of gravity, spectral tilt, and more.\n\n\nInteractive Annotation\nFull TextGrid support with multi-tier annotations. Add boundaries, edit labels, snap to higher layer boundaries, with keyboard shortcuts for efficient workflow.\n\n\nMobile-Optimized\nAn alternative touch-friendly viewer-only front end with pinch-to-zoom, drag-to-select, and responsive layout. Aimed for phone-based access to phonetic analysis and embedding in presentations.\n\n\nWorks Offline\nRuns entirely in a browser. No external server required, no data uploaded.\n\n\nData Collection\nDouble-click to add points of interest for data collection with acoustic measurements. Export to TSV with all values and annotation labels for statistical analysis, or ctrl-C / command-C to copy to clipboard.\n\n\nHighly Embeddable\nEmbed the viewer in Quarto documents, R Markdown, Jupyter notebooks, or any web page. URL parameters for pre-configuration and data URL support for self-contained embeds."
   },
   {
     "objectID": "index.html#quick-start",
@@ -1390,7 +1380,7 @@
     "href": "tutorial/06-exporting.html#file-system-access-api-vs.-downloads",
     "title": "6. Exporting",
     "section": "File System Access API vs. Downloads",
-    "text": "File System Access API vs. Downloads\nOzen-web uses two methods for saving files, depending on browser support:\nFile System Access API (Chrome, Edge):\n\nShows native “Save” dialog\nYou choose exact location and filename\nCan overwrite existing files\nFeels like a desktop app\n\nDownload API (Firefox, Safari, older browsers):\n\nFiles save to Downloads folder\nBrowser may add numbers (e.g., data(1).tsv, data(2).tsv)\nYou need to move files manually\n\n\n\n\n\n\n\nTip\n\n\n\nFor best experience, use Chrome or Edge, which support the File System Access API.",
+    "text": "File System Access API vs. Downloads\nOzen-web uses two methods for saving files, depending on browser support:\nFile System Access API:\n\nShows native “Save” dialog\nYou choose exact location and filename\nCan overwrite existing files\n\nDownload API:\n\nFiles save to Downloads folder\nBrowser may add numbers (e.g., data(1).tsv, data(2).tsv)\nYou need to move files manually",
     "crumbs": [
       "Tutorial",
       "Complete Workflow",
@@ -1438,7 +1428,7 @@
     "href": "tutorial/06-exporting.html#troubleshooting",
     "title": "6. Exporting",
     "section": "Troubleshooting",
-    "text": "Troubleshooting\n“Save” button doesn’t appear:\n\nCheck browser permissions (allow file system access)\nTry using a different browser (Chrome/Edge recommended)\n\nFile saves to Downloads instead of chosen location:\n\nYour browser doesn’t support File System Access API\nThis is normal for Firefox/Safari; manually move files after download\n\nTextGrid won’t open in Praat:\n\nEnsure the file extension is .TextGrid (not .txt)\nCheck that the file isn’t empty (open in text editor)\nTry re-exporting from Ozen-web\n\nTSV columns are misaligned in Excel:\n\nEnsure file extension is .tsv (not .txt)\nWhen opening in Excel, choose “Tab” as delimiter\nOr use “Text to Columns” feature after opening\n\nImported TextGrid doesn’t match audio:\n\nVerify audio duration matches TextGrid duration\nCheck that you’re importing the correct TextGrid for this audio file\n\nData points export is empty:\n\nEnsure you’ve added data points (section 5)\nCheck that acoustic overlays are enabled\nVerify data points appear visually on the spectrogram",
+    "text": "Troubleshooting\n“Save” button doesn’t appear:\n\nCheck browser permissions (allow file system access)\nTry using a different browser (Chrome/Edge recommended)\n\nFile saves to Downloads instead of chosen location:\n\nYour browser doesn’t support File System Access API\nManually move files after download\n\nTextGrid won’t open in Praat:\n\nEnsure the file extension is .TextGrid (not .txt)\nCheck that the file isn’t empty (open in text editor)\nTry re-exporting from Ozen-web\n\nTSV columns are misaligned in Excel:\n\nEnsure file extension is .tsv (not .txt)\nWhen opening in Excel, choose “Tab” as delimiter\nOr use “Text to Columns” feature after opening\n\nImported TextGrid doesn’t match audio:\n\nVerify audio duration matches TextGrid duration\nCheck that you’re importing the correct TextGrid for this audio file\n\nData points export is empty:\n\nEnsure you’ve added data points (section 5)\nCheck that acoustic overlays are enabled\nVerify data points appear visually on the spectrogram",
     "crumbs": [
       "Tutorial",
       "Complete Workflow",
@@ -1498,7 +1488,7 @@
     "href": "tutorial/01-loading-audio.html#method-1-drag-and-drop",
     "title": "1. Loading Audio",
     "section": "Method 1: Drag and Drop",
-    "text": "Method 1: Drag and Drop\nThe fastest way to load audio is drag-and-drop:\n\n\nFind an audio file on your computer (WAV, MP3, or OGG format)\nDrag the file over the Ozen-web window\nThe drop zone will highlight with a blue border\n\n\n\nDrag-drop highlighted\n\n\nRelease the mouse button\nWait for loading (1-2 seconds)\n\nProgress indicator appears briefly\nWaveform appears in the display\nSpectrogram loads (or prompts to zoom for long files)\n\n\n\n\nAudio loaded successfully\n\n\n\n\n\n\n\n\n\n\nTip\n\n\n\nYou can drag files from Finder (Mac), File Explorer (Windows), or Nautilus/Dolphin (Linux).",
+    "text": "Method 1: Drag and Drop\nThe fastest way to load audio is drag-and-drop:\n\n\nFind an audio file on your computer (WAV, FLAC, MP3, or OGG format)\nDrag the file over the Ozen-web window\nThe drop zone will highlight with a blue border\n\n\n\nDrag-drop highlighted\n\n\nRelease the mouse button\nWait for loading (1-2 seconds)\n\nProgress indicator appears briefly\nWaveform appears in the display\nSpectrogram loads (or prompts to zoom for long files)\n\n\n\n\nAudio loaded successfully\n\n\n\n\n\n\n\n\n\n\nTip\n\n\n\nYou can drag files from Finder (Mac), File Explorer (Windows), or Nautilus/Dolphin (Linux).",
     "crumbs": [
       "Tutorial",
       "Complete Workflow",
@@ -1582,7 +1572,7 @@
     "href": "tutorial/01-loading-audio.html#troubleshooting",
     "title": "1. Loading Audio",
     "section": "Troubleshooting",
-    "text": "Troubleshooting\nFile won’t load:\n\nCheck the file format (use WAV if unsure)\nEnsure the file isn’t corrupted (try playing in another app)\nCheck browser console (F12) for error messages\n\n“Failed to decode audio” error:\n\nFile may be in an unsupported codec\nConvert to WAV using Audacity, FFmpeg, or Praat\nTry a different browser (Chrome/Edge have best codec support)\n\nMicrophone doesn’t work:\n\nCheck browser permissions (Settings → Privacy → Microphone)\nEnsure microphone is connected and working in other apps\nTry using HTTPS (microphone API requires secure context)\n\nFile loads but no spectrogram:\n\nFor files &gt;60s, zoom in to trigger analysis\nCheck that WASM backend is loaded (see backend selector)\nTry refreshing the page (Ctrl+R)",
+    "text": "Troubleshooting\nFile won’t load:\n\nCheck the file format (use WAV if unsure)\nEnsure the file isn’t corrupted (try playing in another app)\nCheck browser console (F12) for error messages\n\n“Failed to decode audio” error:\n\nFile may be in an unsupported codec\nConvert to WAV using Audacity, FFmpeg, or Praat\n\nMicrophone doesn’t work:\n\nCheck browser permissions (Settings → Privacy → Microphone)\nEnsure microphone is connected and working in other apps\nTry using HTTPS (microphone API requires secure context)\n\nFile loads but no spectrogram:\n\nFor files &gt;60s, zoom in to trigger analysis\nCheck that WASM backend is loaded (see backend selector)\nTry refreshing the page (Ctrl+R)",
     "crumbs": [
       "Tutorial",
       "Complete Workflow",
@@ -1688,7 +1678,7 @@
     "href": "features/spectrogram.html",
     "title": "Spectrogram",
     "section": "",
-    "text": "The spectrogram displays frequency content over time, computed using Praat-accurate algorithms via WebAssembly. Ozen-web uses a grayscale colormap matching Praat’s default appearance, with intelligent resolution scaling for optimal performance.\n\n\n\nSpectrogram with formant overlays",
+    "text": "The spectrogram displays frequency content over time, computed using Praat-accurate algorithms via WebAssembly. Ozen-web uses a grayscale colormap matching Praat’s default appearance, with resolution scaling.\n\n\n\nSpectrogram with formant overlays",
     "crumbs": [
       "Spectrogram"
     ]
@@ -1698,7 +1688,7 @@
     "href": "features/spectrogram.html#overview",
     "title": "Spectrogram",
     "section": "",
-    "text": "The spectrogram displays frequency content over time, computed using Praat-accurate algorithms via WebAssembly. Ozen-web uses a grayscale colormap matching Praat’s default appearance, with intelligent resolution scaling for optimal performance.\n\n\n\nSpectrogram with formant overlays",
+    "text": "The spectrogram displays frequency content over time, computed using Praat-accurate algorithms via WebAssembly. Ozen-web uses a grayscale colormap matching Praat’s default appearance, with resolution scaling.\n\n\n\nSpectrogram with formant overlays",
     "crumbs": [
       "Spectrogram"
     ]
@@ -1708,7 +1698,7 @@
     "href": "features/spectrogram.html#key-features",
     "title": "Spectrogram",
     "section": "Key Features",
-    "text": "Key Features\n\nPraat-accurate computation - Uses praatfan WASM for research-grade spectrograms\nDynamic resolution - Automatically enhances detail when zoomed in\nEfficient caching - Stores computed spectrograms for instant redraw\nConfigurable frequency range - Choose 5 kHz, 7.5 kHz, or 10 kHz maximum\nLong audio support - On-demand computation for files over 60 seconds",
+    "text": "Key Features\n\nPraat-accurate computation - Uses praatfan WASM for spectrograms\nDynamic resolution - Automatically enhances detail when zoomed in\nEfficient caching - Stores computed spectrograms for redraw\nConfigurable frequency range - Choose 5 kHz, 7.5 kHz, or 10 kHz maximum\nLong audio support - On-demand computation for files over 60 seconds",
     "crumbs": [
       "Spectrogram"
     ]
@@ -1718,7 +1708,7 @@
     "href": "features/spectrogram.html#how-it-works",
     "title": "Spectrogram",
     "section": "How It Works",
-    "text": "How It Works\n\nInitial Computation\nWhen audio is loaded, Ozen-web:\n\nComputes full spectrogram via WASM to_spectrogram()\nApplies grayscale colormap → converts to ImageData\nCaches to off-screen canvas for fast redraw\nDisplays visible portion based on current time range\n\n\n\nDynamic Resolution Enhancement\nWhen zoomed beyond 2x magnification, the spectrogram automatically regenerates at higher resolution for the visible window:\n\n\n\n\n\n\nNoteZoom Threshold\n\n\n\n\nBelow 2x zoom: Uses cached full-length spectrogram\nAbove 2x zoom: Regenerates high-res spectrogram for visible region (debounced 300ms)\nLong files (&gt;60s): Only computes spectrogram for visible window\n\n\n\nThis provides optimal detail when examining specific regions while maintaining performance.\n\n\nCaching Strategy\n// Pseudocode\nif (audioLoaded && visibleDuration &lt;= 60s) {\n  if (zoomLevel &gt; 2x) {\n    // High-resolution mode\n    computeSpectrogramForRange(visibleStart, visibleEnd, highResSettings);\n  } else {\n    // Display cached full spectrogram\n    drawCachedSpectrogram(visibleStart, visibleEnd);\n  }\n}",
+    "text": "How It Works\n\nInitial Computation\nWhen audio is loaded, Ozen-web:\n\nComputes full spectrogram via WASM to_spectrogram()\nApplies grayscale colormap → converts to ImageData\nCaches to off-screen canvas for fast redraw\nDisplays visible portion based on current time range\n\n\n\nDynamic Resolution Enhancement\nWhen zoomed beyond 2x magnification, the spectrogram automatically regenerates at higher resolution for the visible window:\n\n\n\n\n\n\nNoteZoom Threshold\n\n\n\n\nBelow 2x zoom: Uses cached full-length spectrogram\nAbove 2x zoom: Regenerates high-res spectrogram for visible region (debounced 300ms)\nLong files (&gt;60s): Only computes spectrogram for visible window\n\n\n\nThis provides more detail when examining specific regions while maintaining performance.\n\n\nCaching Strategy\n// Pseudocode\nif (audioLoaded && visibleDuration &lt;= 60s) {\n  if (zoomLevel &gt; 2x) {\n    // High-resolution mode\n    computeSpectrogramForRange(visibleStart, visibleEnd, highResSettings);\n  } else {\n    // Display cached full spectrogram\n    drawCachedSpectrogram(visibleStart, visibleEnd);\n  }\n}",
     "crumbs": [
       "Spectrogram"
     ]
@@ -1728,7 +1718,7 @@
     "href": "features/spectrogram.html#settings",
     "title": "Spectrogram",
     "section": "Settings",
-    "text": "Settings\n\nMax Frequency\nControl the frequency range displayed:\n\n5000 Hz - Default for adult male speech\n7500 Hz - Suitable for female/child speech\n10000 Hz - Maximum detail for high-frequency analysis\n\n\n\n\n\n\n\nTipChoosing Max Frequency\n\n\n\nFor most speech analysis, 5000 Hz captures all relevant information. Use 7500-10000 Hz when analyzing:\n\nChildren’s voices\nHigh-pitched vowels\nFricative consonants (s, sh, f)\nBird vocalizations\n\n\n\n\n\nSpectrogram Parameters\nDefault settings (configurable via WASM):\n\n\n\nParameter\nDefault\nDescription\n\n\n\n\nWindow length\n5 ms\nTime window for each FFT\n\n\nTime step\n2 ms\nHop size between windows\n\n\nFrequency step\n20 Hz\nFrequency resolution\n\n\nWindow shape\nGaussian\nSpectral windowing function",
+    "text": "Settings\n\nMax Frequency\nControl the frequency range displayed (5,000 Hz, 7,500 Hz, 10,000 Hz)\n\n\n\n\n\n\nTipChoosing Max Frequency\n\n\n\nFor most speech analysis, 5000 Hz captures all relevant information. Use 7500-10000 Hz when analyzing:\n\nChildren’s voices\nHigh-pitched vowels\nFricative consonants (/s/, /ʃ/, /f/)\n\n\n\n\n\nSpectrogram Parameters\nDefault settings (configurable via WASM):\n\n\n\nParameter\nDefault\nDescription\n\n\n\n\nWindow length\n5 ms\nTime window for each FFT\n\n\nTime step\n2 ms\nHop size between windows\n\n\nFrequency step\n20 Hz\nFrequency resolution\n\n\nWindow shape\nGaussian\nSpectral windowing function",
     "crumbs": [
       "Spectrogram"
     ]
@@ -1738,7 +1728,7 @@
     "href": "features/spectrogram.html#long-audio-handling",
     "title": "Spectrogram",
     "section": "Long Audio Handling",
-    "text": "Long Audio Handling\nFor recordings longer than 60 seconds:\n\nOn load: Waveform displays, spectrogram shows “Zoom in for spectrogram” message\nWhen zoomed to ≤60s visible window: Spectrogram computes for that region\nDebounced: 300ms delay prevents excessive recomputation during zoom/pan\n\nThis allows working with arbitrarily long recordings (hours) without UI freezing.\n\n\n\n\n\n\nTipWorking with Long Files\n\n\n\n\nLoad your multi-hour recording\nUse the waveform to navigate to regions of interest\nZoom in to view detailed spectrogram\nSpectrogram automatically appears when window &lt; 60 seconds",
+    "text": "Long Audio Handling\nFor recordings longer than 60 seconds:\n\nOn load: Waveform displays, spectrogram shows “Zoom in for spectrogram” message\nWhen zoomed to ≤60s visible window: Spectrogram computes for that region\nDebounced: 300ms delay prevents excessive recomputation during zoom/pan\n\nThis allows working with longer recordings without UI freezing.\n\n\n\n\n\n\nTipWorking with Long Files\n\n\n\n\nLoad your multi-hour recording\nUse the waveform to navigate to regions of interest\nZoom in to view detailed spectrogram\nSpectrogram automatically appears when window &lt; 60 seconds",
     "crumbs": [
       "Spectrogram"
     ]
@@ -1769,16 +1759,6 @@
     "title": "Spectrogram",
     "section": "Technical Details",
     "text": "Technical Details\n\nComputation Backend\nSpectrograms are computed using the selected WASM backend:\nimport { computeSpectrogram } from '$lib/wasm/acoustic';\n\nconst spectrogram = computeSpectrogram(\n  sound,           // WASM Sound object\n  0.005,          // windowLength (5 ms)\n  5000,           // maxFrequency (Hz)\n  0.002,          // timeStep (2 ms)\n  20              // frequencyStep (Hz)\n);\n\nconst info = getSpectrogramInfo(spectrogram);\n// { nTimes, nFreqs, values, timeStep, freqStep, ... }\n\n\nColormap\nGrayscale mapping matches Praat conventions:\n\nBlack (0): High energy\nWhite (255): Low energy\nLinear scaling between min and max dB values\n\n\n\nCanvas Rendering\nThe spectrogram uses HTML5 Canvas with ImageData:\n\nCompute spectrogram values (dB) via WASM\nApply grayscale colormap: gray = 255 - normalize(dB, min, max)\nCreate ImageData with RGBA values\nDraw to off-screen canvas\nCopy visible region to display canvas on zoom/pan",
-    "crumbs": [
-      "Spectrogram"
-    ]
-  },
-  {
-    "objectID": "features/spectrogram.html#performance",
-    "href": "features/spectrogram.html#performance",
-    "title": "Spectrogram",
-    "section": "Performance",
-    "text": "Performance\n\n\n\nScenario\nComputation Time\nMemory\n\n\n\n\n5s audio, 5 kHz\n~100-200 ms\n~2 MB\n\n\n30s audio, 5 kHz\n~500-800 ms\n~10 MB\n\n\n60s audio, 10 kHz\n~1-2 seconds\n~40 MB\n\n\n3600s audio (on-demand)\n~1 second per 60s window\n~40 MB\n\n\n\n\n\n\n\n\n\nNote\n\n\n\nTimes measured on modern desktop (2020+). First computation includes WASM initialization (~200ms).",
     "crumbs": [
       "Spectrogram"
     ]
@@ -1848,7 +1828,7 @@
     "href": "features/annotations.html#boundary-management",
     "title": "Annotations",
     "section": "Boundary Management",
-    "text": "Boundary Management\n\nAdding Boundaries\nDouble-click method: 1. Double-click on tier at desired time position 2. Boundary appears, splitting the interval\nCursor method: 1. Click on spectrogram to place cursor 2. Double-click on tier at cursor position\n\n\n\n\n\n\nTipQuick Annotation Workflow\n\n\n\n\nPress Space to play audio\nPress Escape when you hear a boundary\nDouble-click tier to add boundary at cursor\nRepeat for all boundaries\n\n\n\n\n\nMoving Boundaries\nDrag and drop: 1. Click and hold boundary marker 2. Drag left or right to new position 3. Release to place\nPrecision: - Zoom in (scroll wheel) for fine-grained adjustment - Cursor position indicator shows exact time\n\n\nBoundary Snapping\nWhen adding boundaries on lower tiers, they can snap to boundaries in upper tiers:\nExample:\nwords:  |  hello  |  world  |\nphones: | h | e | l | o | w | o | r | l | d |\nDouble-clicking near an existing boundary on a different tier will snap to that time, maintaining alignment.\n\n\nRemoving Boundaries\nRight-click menu: 1. Right-click on boundary marker 2. Select “Remove boundary” 3. Adjacent intervals merge\nKeyboard shortcut: - Select boundary (click) - Press Delete or Backspace\n\n\n\n\n\n\nNoteUndo Support\n\n\n\nAll boundary operations (add, move, remove) can be undone with Ctrl+Z (Cmd+Z on Mac).",
+    "text": "Boundary Management\n\nAdding Boundaries\nDouble-click method: 1. Double-click on tier at desired time position 2. Boundary appears, splitting the interval\nCursor method: 1. Click on spectrogram to place cursor 2. Double-click on tier at cursor position\n\n\n\n\n\n\nTipQuick Annotation Workflow\n\n\n\n\nPress Space to play audio\nPress Escape when you hear a boundary\nDouble-click tier to add boundary at cursor\nRepeat for all boundaries\n\n\n\n\n\nMoving Boundaries\nDrag and drop: 1. Click and hold boundary marker 2. Drag left or right to new position 3. Release to place\nPrecision: - Zoom in (scroll wheel) for fine-grained adjustment - Cursor position indicator shows exact time\n\n\nBoundary Snapping\nWhen adding boundaries on lower tiers, they can snap to boundaries in upper tiers. Double-clicking near an existing boundary on a different tier will snap to that time, maintaining alignment. A boundary can then be dragged to a different location, if so desired.\n\n\nRemoving Boundaries\nRight-click menu: 1. Right-click on boundary marker 2. Select “Remove boundary” 3. Adjacent intervals merge\nKeyboard shortcut: - Select boundary (click) - Press Delete or Backspace\n\n\n\n\n\n\nNoteUndo Support\n\n\n\nAll boundary operations (add, move, remove) can be undone with Ctrl+Z (Cmd+Z on Mac).",
     "crumbs": [
       "Annotations"
     ]
@@ -1878,7 +1858,7 @@
     "href": "features/annotations.html#undo-system",
     "title": "Annotations",
     "section": "Undo System",
-    "text": "Undo System\nOzen-web features a unified undo/redo system for annotation operations:\nUndoable operations: - Adding boundaries - Removing boundaries - Moving boundaries - Editing interval text\nNon-undoable operations: - Adding/removing tiers (permanent) - Loading files\n\n\n\n\n\n\nTipUndo History\n\n\n\nThe undo stack stores the entire annotation state before each operation. You can undo multiple operations sequentially to return to any previous state.\n\n\nKeyboard: - Undo: Ctrl+Z (Windows/Linux), Cmd+Z (Mac) - Redo: Ctrl+Y (Windows/Linux), Ctrl+Shift+Z (Mac)",
+    "text": "Undo System\nOzen-web features a unified undo/redo system for annotation operations:\nUndoable operations: - Adding boundaries - Removing boundaries - Moving boundaries - Editing interval text - Adding / removing data points\nNon-undoable operations: - Adding/removing tiers (permanent) - Loading files\n\n\n\n\n\n\nTipUndo History\n\n\n\nThe undo stack stores the entire annotation state before each operation. You can undo multiple operations sequentially to return to any previous state.\n\n\nKeyboard: - Undo: Ctrl+Z (Windows/Linux), Cmd+Z (Mac) - Redo: Ctrl+Y (Windows/Linux), Ctrl+Shift+Z (Mac)",
     "crumbs": [
       "Annotations"
     ]
@@ -1888,17 +1868,7 @@
     "href": "features/annotations.html#textgrid-importexport",
     "title": "Annotations",
     "section": "TextGrid Import/Export",
-    "text": "TextGrid Import/Export\n\nImporting TextGrid\nDrag and drop: 1. Drag .TextGrid file onto interface 2. Annotations load automatically 3. Audio must be loaded separately\nFile picker: 1. Click “Load TextGrid” button 2. Select .TextGrid file 3. Annotations appear on tiers\nSupported formats: - Short TextGrid format (quoted strings) - Long TextGrid format (ooTextFile)\n\n\n\n\n\n\nNoteTextGrid Without Audio\n\n\n\nYou can load a TextGrid without audio to view annotation structure. Load the corresponding audio file afterward to see waveform/spectrogram.\n\n\n\n\nExporting TextGrid\nVia UI button: 1. Click “Export TextGrid” button 2. Choose save location (File System Access API) 3. TextGrid saves in short format\nExport format: - Short TextGrid format (Praat-compatible) - UTF-8 encoding - Interval tiers only (current version)\nFilename: - Default: annotations.TextGrid - Recommended: Match audio filename (e.g., recording.wav → recording.TextGrid)\n\n\n\nExport TextGrid interface",
-    "crumbs": [
-      "Annotations"
-    ]
-  },
-  {
-    "objectID": "features/annotations.html#use-cases",
-    "href": "features/annotations.html#use-cases",
-    "title": "Annotations",
-    "section": "Use Cases",
-    "text": "Use Cases\n\nPhonetic Transcription\nCreate detailed phonetic annotations:\nwords:     | the   | cat   | sat   | on    | the   | mat   |\nphones:    | ð | ə | k | æ | t | s | æ | t | ɑ | n | ð | ə | m | æ | t |\nsyllables: | ðə    | kæt   | sæt   | ɑn    | ðə    | mæt   |\n\n\nProsodic Labeling\nAnnotate intonation and prosody:\nwords:    | Hello  | how    | are    | you    |\ntones:    | H*     | L+H*   | H-     | L%     |\nstress:   | 1      | 0      | 1      | 0      |\n\n\nConversation Analysis\nSegment multi-speaker recordings:\nspeaker_a: | Hello           |        | How are you?    |\nspeaker_b: |        | Hi there!       |        | Fine, thanks. |\noverlap:   |                 | ✓      |                 |\n\n\nEvent Annotation\nMark discrete events:\naudio:     |---------------------------------------------------|\nevents:    | cough  |           | door slam |        | phone ring |\nquality:   |        | good      |           | noisy  |            |",
+    "text": "TextGrid Import/Export\n\nImporting TextGrid\nRequirements: - Audio must be loaded first (the TextGrid import button is only available after loading audio)\nFile picker: 1. Click “Load TextGrid” button 2. Select .TextGrid file 3. Annotations appear on tiers\nSupported formats: - Short TextGrid format (quoted strings) - Long TextGrid format (ooTextFile)\n\n\nExporting TextGrid\nVia UI button: 1. Click “Export TextGrid” button 2. Choose save location (File System Access API) 3. TextGrid saves in short format\nExport format: - Short TextGrid format (Praat-compatible) - UTF-8 encoding - Interval tiers only (current version)\nFilename: - Default: annotations.TextGrid - Recommended: Match audio filename (e.g., recording.wav → recording.TextGrid)\n\n\n\nExport TextGrid interface",
     "crumbs": [
       "Annotations"
     ]
@@ -1988,7 +1958,7 @@
     "href": "features/mobile-viewer.html#touch-gestures",
     "title": "Mobile Viewer",
     "section": "Touch Gestures",
-    "text": "Touch Gestures\n\nTap\nSingle tap on spectrogram: - Places cursor at tap position - Shows values at that time/frequency - Clears selection if any\n\n\nDrag (One Finger)\nHorizontal drag: - Creates time selection (blue highlight) - Drag from start to end time - Release to finalize selection\n\n\nPinch (Two Fingers)\nPinch in/out: - Zoom in (pinch out) - Zoom out (pinch in) - Centered on midpoint between fingers\n\n\nTwo-Finger Drag\nPan horizontally: - Scroll left/right through time - Doesn’t create selection - Use when zoomed in\n\n\n\n\n\n\nTipTouch Workflow\n\n\n\n\nPinch to zoom to desired time scale\nTwo-finger drag to navigate to region of interest\nTap to place cursor and view measurements\nDrag to select and play specific region",
+    "text": "Touch Gestures\n\nTap\nSingle tap on spectrogram: - Places cursor at tap position - Shows values at that time/frequency - Clears selection if any\n\n\nDrag (One Finger)\nHorizontal drag: - Creates time selection (blue highlight) - Drag from start to end time - Release to finalize selection\n\n\nPinch (Two Fingers)\nPinch in/out: - Zoom in (pinch out) - Zoom out (pinch in) - Centered on midpoint between fingers\n\n\nTwo-Finger Drag\nPan horizontally: - Scroll left/right through time - Doesn’t create selection - Use when zoomed in\n\n\nLong press on spectrogram\nCopies the values of the visible overlays at that point.\n\n\n\n\n\n\nTipTouch Workflow\n\n\n\n\nPinch to zoom to desired time scale\nTwo-finger drag to navigate to region of interest\nTap to place cursor and view measurements\nDrag to select and play specific region",
     "crumbs": [
       "Mobile Viewer"
     ]
@@ -2028,7 +1998,7 @@
     "href": "features/mobile-viewer.html#url-audio-loading",
     "title": "Mobile Viewer",
     "section": "URL Audio Loading",
-    "text": "URL Audio Loading\nThe mobile viewer can load audio from URLs, enabling sharing and embedding:\n\nDirect WAV/MP3 URLs\n/viewer?audio=https://example.com/recording.wav\nCORS requirements: - Server must allow cross-origin requests - Set Access-Control-Allow-Origin: * header - Works with GitHub Pages, S3, most CDNs\n\n\nData URLs\nEmbed audio directly in URL (self-contained):\n/viewer?audio=data:audio/wav;base64,UklGR...\nUse cases: - Share analysis without hosting files - Embed in QR codes - Create self-contained examples\nSee Embedding Guide for details.",
+    "text": "URL Audio Loading\nThe mobile viewer can load audio from URLs, enabling sharing and embedding:\n\nDirect Audio URLs\n/viewer?audio=https://example.com/recording.wav\nCORS requirements: - Server must allow cross-origin requests - Set Access-Control-Allow-Origin: * header - Works with GitHub Pages, S3, most CDNs\n\n\nData URLs\nEmbed audio directly in URL (self-contained):\n/viewer?audio=data:audio/wav;base64,UklGR...\nUse cases: - Share analysis without hosting files - Embed in QR codes - Create self-contained examples\nSee Embedding Guide for details.",
     "crumbs": [
       "Mobile Viewer"
     ]
@@ -2038,7 +2008,7 @@
     "href": "features/mobile-viewer.html#embedding-in-web-pages",
     "title": "Mobile Viewer",
     "section": "Embedding in Web Pages",
-    "text": "Embedding in Web Pages\nEmbed the mobile viewer in responsive web pages:\n&lt;iframe src=\"https://ucpresearch.github.io/ozen-web/viewer?audio=...&overlays=pitch,formants\"\n        style=\"width: 100%; height: 600px; border: none;\"&gt;\n&lt;/iframe&gt;\nThe viewer scales appropriately within iframes.",
+    "text": "Embedding in Web Pages\nEmbed the mobile viewer in responsive web pages. Here’s a live example:\n\n\nEmbed code:\n&lt;iframe src=\"https://ucpresearch.github.io/ozen-web/viewer.html?audio=...&overlays=pitch,formants\"\n        style=\"width: 100%; height: 600px; border: none;\"&gt;\n&lt;/iframe&gt;\nThe viewer scales appropriately within iframes.",
     "crumbs": [
       "Mobile Viewer"
     ]
@@ -2058,7 +2028,7 @@
     "href": "features/mobile-viewer.html#performance",
     "title": "Mobile Viewer",
     "section": "Performance",
-    "text": "Performance\nThe mobile viewer is optimized for mobile devices:\n\n\n\nFeature\nMobile Optimization\n\n\n\n\nSpectrogram\nOn-demand computation for visible region\n\n\nWaveform\nDownsampled for fast rendering\n\n\nOverlays\nComputed only when toggled on\n\n\nTouch response\nDebounced for smooth interaction\n\n\n\nBattery usage: - Minimal CPU when static - GPU-accelerated canvas rendering where supported - Pauses computation when app backgrounded",
+    "text": "Performance\nThe mobile viewer works on mobile devices:\n\n\n\nFeature\nMobile Optimization\n\n\n\n\nSpectrogram\nOn-demand computation for visible region\n\n\nWaveform\nDownsampled for fast rendering\n\n\nOverlays\nComputed only when toggled on\n\n\nTouch response\nDebounced for smooth interaction\n\n\n\nBattery usage: - Minimal CPU when static - GPU-accelerated canvas rendering where supported - Pauses computation when app backgrounded",
     "crumbs": [
       "Mobile Viewer"
     ]
@@ -2068,7 +2038,7 @@
     "href": "features/mobile-viewer.html#browser-support",
     "title": "Mobile Viewer",
     "section": "Browser Support",
-    "text": "Browser Support\nTested on:\n\n\n\nPlatform\nBrowser\nSupport\n\n\n\n\niOS 14+\nSafari\n✅ Full\n\n\nAndroid 10+\nChrome\n✅ Full\n\n\nAndroid 10+\nFirefox\n✅ Full\n\n\niPadOS 14+\nSafari\n✅ Full",
+    "text": "Browser Support\nWorks on all modern mobile browsers.",
     "crumbs": [
       "Mobile Viewer"
     ]
@@ -2078,7 +2048,7 @@
     "href": "features/mobile-viewer.html#use-cases",
     "title": "Mobile Viewer",
     "section": "Use Cases",
-    "text": "Use Cases\n\nField Research\n\nLoad recordings on smartphone at research site\nAnalyze pitch and formants on device\nShare findings via URL with colleagues\n\n\n\nClassroom Demonstrations\n\nProject mobile viewer on screen via HDMI\nTouch gestures visible to students\nInteractive phonetics demonstrations\nNo installation required\n\n\n\nConference Presentations\n\nEmbed viewer in conference poster QR code\nAttendees scan and explore examples\nSelf-contained analysis in URL\nWorks offline after initial load\n\n\n\nRemote Consultation\n\nShare analysis URL via email/chat\nRecipient can explore interactively\nNo file transfers needed\nCORS-compatible hosting",
+    "text": "Use Cases\n\n“On the road” acoustic analysis\nTeaching\nStudent engagement in class",
     "crumbs": [
       "Mobile Viewer"
     ]
@@ -2108,7 +2078,7 @@
     "href": "features/acoustic-overlays.html",
     "title": "Acoustic Overlays",
     "section": "",
-    "text": "Acoustic overlays display computed measurements directly on the spectrogram, enabling visual analysis of prosody, voice quality, and spectral properties. All computations use Praat-accurate algorithms via WebAssembly.\n\n\n\nAll acoustic overlays enabled",
+    "text": "Acoustic overlays display computed measurements directly on the spectrogram, enabling visual analysis of prosody, voice quality, and spectral properties. Acoustic measurements are computed via WebAssembly.\n\n\n\nAll acoustic overlays enabled",
     "crumbs": [
       "Acoustic Overlays"
     ]
@@ -2118,7 +2088,7 @@
     "href": "features/acoustic-overlays.html#overview",
     "title": "Acoustic Overlays",
     "section": "",
-    "text": "Acoustic overlays display computed measurements directly on the spectrogram, enabling visual analysis of prosody, voice quality, and spectral properties. All computations use Praat-accurate algorithms via WebAssembly.\n\n\n\nAll acoustic overlays enabled",
+    "text": "Acoustic overlays display computed measurements directly on the spectrogram, enabling visual analysis of prosody, voice quality, and spectral properties. Acoustic measurements are computed via WebAssembly.\n\n\n\nAll acoustic overlays enabled",
     "crumbs": [
       "Acoustic Overlays"
     ]
@@ -2138,7 +2108,7 @@
     "href": "features/acoustic-overlays.html#toggling-overlays",
     "title": "Acoustic Overlays",
     "section": "Toggling Overlays",
-    "text": "Toggling Overlays\n\nVia UI Checkboxes\nClick checkboxes in the overlay panel:\n\nPitch\nFormants\nIntensity\nHNR\nCoG\nSpectral Tilt\nA1-P0\n\nMultiple overlays can be enabled simultaneously.\n\n\nVia Keyboard\nUse number keys to quickly toggle overlays:\n\n\n\nKey\nOverlay\n\n\n\n\nP\nPitch\n\n\nF\nFormants\n\n\nI\nIntensity\n\n\nH\nHNR\n\n\n\n\n\nVia URL Parameters\nPre-configure overlays when embedding:\n&lt;iframe src=\"https://ucpresearch.github.io/ozen-web/?overlays=pitch,formants,intensity\"&gt;\n&lt;/iframe&gt;\nSee URL Parameters for details.",
+    "text": "Toggling Overlays\n\nVia UI Checkboxes\nClick checkboxes in the overlay panel:\n\nPitch\nFormants\nIntensity\nHNR\nCoG\nSpectral Tilt\nA1-P0\n\nMultiple overlays can be enabled simultaneously.\n\n\nVia URL Parameters\nPre-configure overlays when embedding the mobile viewer:\n&lt;iframe src=\"https://ucpresearch.github.io/ozen-web/viewer?overlays=pitch,formants,intensity\"&gt;\n&lt;/iframe&gt;\nSee Mobile Viewer Embedding and URL Parameters for details.",
     "crumbs": [
       "Acoustic Overlays"
     ]
@@ -2158,7 +2128,7 @@
     "href": "features/acoustic-overlays.html#performance",
     "title": "Acoustic Overlays",
     "section": "Performance",
-    "text": "Performance\n\n\n\nOverlay\nComputation Time (30s audio)\n\n\n\n\nPitch\n~100-150 ms\n\n\nFormants\n~200-300 ms\n\n\nIntensity\n~80-120 ms\n\n\nHNR\n~100-150 ms\n\n\nCoG\n~150-200 ms\n\n\nSpectral Tilt\n~150-200 ms\n\n\nA1-P0\n~100-150 ms\n\n\n\nTotal (all overlays): ~1-1.5 seconds for 30s audio\n\n\n\n\n\n\nNote\n\n\n\nOverlays are computed on-demand when toggled. Once computed, values are cached and redrawn instantly.",
+    "text": "Performance\n\n\n\n\n\n\nNote\n\n\n\nOverlays are computed on-demand when toggled. Once computed, values are cached for redrawing.",
     "crumbs": [
       "Acoustic Overlays"
     ]
@@ -2248,7 +2218,7 @@
     "href": "features/waveform.html#downsampling-strategy",
     "title": "Waveform",
     "section": "Downsampling Strategy",
-    "text": "Downsampling Strategy\nFor efficient rendering at any zoom level, the waveform uses min/max downsampling:\n\nDivide visible time range into pixel columns\nFor each pixel column, find min and max sample values\nDraw vertical line from min to max\nFill area creates solid waveform appearance\n\nThis approach: - Preserves all peaks and zero-crossings - Renders instantly even for hour-long files - Shows full detail when zoomed in - Prevents aliasing artifacts",
+    "text": "Downsampling Strategy\nFor efficient rendering at any zoom level, the waveform uses min/max downsampling:\n\nDivide visible time range into pixel columns\nFor each pixel column, find min and max sample values\nDraw vertical line from min to max\nFill area creates solid waveform appearance\n\nThis approach: - Preserves all peaks and zero-crossings - Renders for files of any length - Shows full detail when zoomed in - Prevents aliasing artifacts",
     "crumbs": [
       "Waveform"
     ]
@@ -2288,7 +2258,7 @@
     "href": "features/waveform.html#performance",
     "title": "Waveform",
     "section": "Performance",
-    "text": "Performance\n\n\n\nFile Duration\nRender Time\n\n\n\n\n5 seconds\n&lt; 10 ms\n\n\n1 minute\n&lt; 20 ms\n\n\n1 hour\n&lt; 50 ms\n\n\n24 hours\n&lt; 100 ms\n\n\n\nWaveform rendering is near-instantaneous for all file lengths due to efficient downsampling.",
+    "text": "Performance\nWaveform rendering uses efficient downsampling for files of any length.",
     "crumbs": [
       "Waveform"
     ]
@@ -2318,7 +2288,7 @@
     "href": "features/audio-playback.html",
     "title": "Audio Playback",
     "section": "",
-    "text": "Ozen-web provides high-quality audio playback using the Web Audio API, with support for selection playback, real-time cursor tracking, and keyboard controls.",
+    "text": "Ozen-web provides audio playback using the Web Audio API, with support for selection playback, real-time cursor tracking, and keyboard controls.",
     "crumbs": [
       "Audio Playback"
     ]
@@ -2328,7 +2298,7 @@
     "href": "features/audio-playback.html#overview",
     "title": "Audio Playback",
     "section": "",
-    "text": "Ozen-web provides high-quality audio playback using the Web Audio API, with support for selection playback, real-time cursor tracking, and keyboard controls.",
+    "text": "Ozen-web provides audio playback using the Web Audio API, with support for selection playback, real-time cursor tracking, and keyboard controls.",
     "crumbs": [
       "Audio Playback"
     ]
@@ -2378,7 +2348,7 @@
     "href": "features/audio-playback.html#web-audio-api",
     "title": "Audio Playback",
     "section": "Web Audio API",
-    "text": "Web Audio API\nOzen-web uses the Web Audio API for playback:\n// Internal playback system\nconst audioContext = new AudioContext();\nconst source = audioContext.createBufferSource();\nsource.buffer = audioBuffer;\nsource.connect(audioContext.destination);\nsource.start(0, startTime, duration);\nAdvantages: - Sample-accurate timing - Low latency - Cross-platform consistency - No plugin required\nLimitations: - Requires user gesture to start (browser security) - May require AudioContext resume() on first play",
+    "text": "Web Audio API\nOzen-web uses the Web Audio API for playback:\n// Internal playback system\nconst audioContext = new AudioContext();\nconst source = audioContext.createBufferSource();\nsource.buffer = audioBuffer;\nsource.connect(audioContext.destination);\nsource.start(0, startTime, duration);\nFeatures: - Sample-accurate timing - Cross-platform consistency - No plugin required\nLimitations: - Requires user gesture to start (browser security) - May require AudioContext resume() on first play",
     "crumbs": [
       "Audio Playback"
     ]
@@ -2418,7 +2388,7 @@
     "href": "features/audio-playback.html#browser-compatibility",
     "title": "Audio Playback",
     "section": "Browser Compatibility",
-    "text": "Browser Compatibility\nWeb Audio API is supported in all modern browsers:\n\n\n\nBrowser\nSupport\nNotes\n\n\n\n\nChrome 90+\n✅ Full\nBest performance\n\n\nFirefox 88+\n✅ Full\n\n\n\nSafari 14+\n✅ Full\nMay require user gesture\n\n\nEdge 90+\n✅ Full\nChromium-based",
+    "text": "Browser Compatibility\nWeb Audio API is supported in all modern browsers.",
     "crumbs": [
       "Audio Playback"
     ]
@@ -2458,7 +2428,7 @@
     "href": "features/overview.html",
     "title": "Features Overview",
     "section": "",
-    "text": "Ozen-web is a comprehensive browser-based tool for acoustic analysis and annotation. This page provides an overview of all major features with links to detailed documentation.",
+    "text": "Ozen-web is a browser-based tool for acoustic analysis and annotation. This page provides an overview of all major features with links to detailed documentation.",
     "crumbs": [
       "Features Overview"
     ]
@@ -2468,7 +2438,7 @@
     "href": "features/overview.html#introduction",
     "title": "Features Overview",
     "section": "",
-    "text": "Ozen-web is a comprehensive browser-based tool for acoustic analysis and annotation. This page provides an overview of all major features with links to detailed documentation.",
+    "text": "Ozen-web is a browser-based tool for acoustic analysis and annotation. This page provides an overview of all major features with links to detailed documentation.",
     "crumbs": [
       "Features Overview"
     ]
@@ -2478,7 +2448,7 @@
     "href": "features/overview.html#core-features",
     "title": "Features Overview",
     "section": "Core Features",
-    "text": "Core Features\n\nAudio Loading & Recording\nLoad audio from multiple sources:\n\nDrag & drop audio files (WAV, MP3, OGG, FLAC)\nFile picker dialog\nMicrophone recording with real-time visualization\nRemote URL loading (CORS-enabled)\nData URL embedding for self-contained iframes\n\nSee: Getting Started Guide\n\n\nVisualization\nWaveform Display:\n\nReal-time amplitude visualization\nSynchronized with spectrogram\nResponsive to zoom and pan\nEfficient downsampling for long files\n\nSpectrogram Display:\n\nPraat-style grayscale spectrogram\nAdjustable frequency range (5/7.5/10 kHz)\nDynamic resolution enhancement when zoomed\nCached rendering for smooth performance\n\nSee: Spectrogram Documentation | Waveform Documentation\n\n\n\nMain interface overview\n\n\n\n\nAcoustic Analysis\nOzen-web provides research-grade acoustic measurements using Praat-compatible algorithms:\nAvailable overlays:\n\n\n\n\n\n\n\n\nFeature\nDescription\nUse Cases\n\n\n\n\nPitch (F0)\nFundamental frequency tracking\nIntonation, stress, tone analysis\n\n\nFormants (F1-F4)\nResonance frequencies\nVowel identification, articulation\n\n\nIntensity\nSound pressure level\nProminence, stress patterns\n\n\nHNR\nHarmonics-to-Noise Ratio\nVoice quality, breathiness, creakiness\n\n\nCoG\nSpectral Center of Gravity\nFricative classification\n\n\nSpectral Tilt\nHigh/low frequency balance\nVoice quality, consonant manner\n\n\nA1-P0\nHarmonic amplitude measure\nNasality, open quotient\n\n\n\nAll measurements are computed using praatfan WebAssembly, providing Praat-accurate results in the browser.\nSee: Acoustic Overlays Documentation | Tutorial: Acoustic Analysis\n\n\n\nSpectrogram with all acoustic overlays\n\n\n\n\nAnnotations\nMulti-tier TextGrid-compatible annotation system:\n\nCreate unlimited annotation tiers\nAdd, move, and remove boundaries\nEdit interval labels with keyboard shortcuts\nBoundary snapping between tiers\nFull Praat TextGrid import/export (both short and long formats)\nInterval and point tier support\n\nEfficient workflow:\n\nDouble-click to add boundaries\nDrag to adjust timing\nRight-click context menus\nKeyboard shortcuts for tier selection (1-5 keys)\nUnified undo/redo (Ctrl+Z / Ctrl+Y)\n\nSee: Annotations Documentation | Tutorial: Annotations\n\n\n\nMulti-tier annotation example\n\n\n\n\nData Points\nPoint-and-click acoustic measurement collection:\nData points allow collecting comprehensive acoustic measurements at specific time/frequency locations:\nFeatures:\n\nDouble-click on spectrogram to add points\nAutomatic capture of all acoustic values (F0, F1-F4, intensity, HNR, etc.)\nInherits labels from ALL annotation tiers at that time\nDrag to adjust position\nExport to TSV for statistical analysis\nImport TSV to restore data points\n\nExport format (TSV):\ntime    freq    pitch   f1  f2  f3  f4  intensity   phones  words\n0.234   1500    156 678 1234    2890    3654    72  i   see\n0.567   1200    234 543 987 2567    3234    68  u   two\nPerfect for building datasets for R, Python, SPSS, or Excel analysis.\nSee: Data Points Documentation | Tutorial: Data Collection\n\n\n\nData points on spectrogram\n\n\n\n\nAudio Playback\nFlexible playback controls:\n\nPlay selected region (Space key)\nPlay visible window (Tab key)\nPlay from cursor to end\nReal-time cursor tracking during playback\nPause and resume\nStop and deselect (Escape key)\n\nSee: Audio Playback Documentation\n\n\nMobile Viewer\nTouch-optimized interface at /viewer route:\n\nTouch gestures:\n\nTap → Place cursor\nDrag → Select region\nTwo-finger drag → Pan view\nPinch → Zoom in/out\n\nCompact layout for small screens\nLandscape mode optimization\nSafe area support for notched phones\nSettings drawer for overlay toggles\nFloating play button\nURL parameters for pre-configuration\n\nEmbedding support:\n\nIframe-compatible\nPre-load audio via ?audio= parameter\nConfigure overlays via ?overlays= parameter\nCORS-enabled remote loading\nData URL support for self-contained embeds\n\nSee: Mobile Viewer Documentation | Embedding Guide\n\n\n\nMobile viewer in landscape mode",
+    "text": "Core Features\n\nAudio Loading & Recording\nLoad audio from multiple sources:\n\nDrag & drop audio files (WAV, FLAC, MP3, OGG)\nFile picker dialog\nMicrophone recording with real-time visualization\nRemote URL loading (CORS-enabled)\nData URL embedding for self-contained iframes\n\nSee: Getting Started Guide\n\n\nVisualization\nWaveform Display:\n\nAmplitude visualization\nSynchronized with spectrogram\nResponsive to zoom and pan\nDownsampling for long file processing (until zoom)\n\nSpectrogram Display:\n\nPraat-style grayscale spectrogram\nAdjustable frequency range (5/7.5/10 kHz)\nDynamic resolution enhancement when zoomed\nCached rendering for smooth performance\n\nSee: Spectrogram Documentation | Waveform Documentation\n\n\n\nMain interface overview\n\n\n\n\nAcoustic Analysis\nOzen-web provides acoustic measurements using Praat-compatible algorithms:\nAvailable overlays:\n\n\n\nFeature\nDescription\n\n\n\n\nPitch (F0)\nFundamental frequency tracking\n\n\nFormants (F1-F4)\nResonance frequencies\n\n\nIntensity\nSound pressure level\n\n\nHNR\nHarmonics-to-Noise Ratio\n\n\nCoG\nSpectral Center of Gravity\n\n\nSpectral Tilt\nHigh/low frequency balance\n\n\nA1-P0\nHarmonic amplitude measure\n\n\n\nAll measurements are computed using praatfan WebAssembly.\nSee: Acoustic Overlays Documentation | Tutorial: Acoustic Analysis\n\n\n\nSpectrogram with all acoustic overlays\n\n\n\n\nAnnotations\nMulti-tier TextGrid-compatible annotation system:\n\nCreate unlimited annotation tiers\nAdd, move, and remove boundaries\nEdit interval labels with keyboard shortcuts\nBoundary snapping between tiers\nFull Praat TextGrid import/export (both short and long formats)\nInterval and point tier support\n\nEfficient workflow:\n\nDouble-click to add boundaries\nDrag to adjust timing\nRight-click context menus\nKeyboard shortcuts for tier selection (1-5 keys)\nUnified undo/redo (Ctrl+Z / Ctrl+Y)\n\nSee: Annotations Documentation | Tutorial: Annotations\n\n\n\nMulti-tier annotation example\n\n\n\n\nData Points\nPoint-and-click acoustic measurement collection:\nData points allow collecting comprehensive acoustic measurements at specific time/frequency locations:\nFeatures:\n\nDouble-click on spectrogram to add points\nAutomatic capture of all acoustic values (F0, F1-F4, intensity, HNR, etc.)\nInherits labels from ALL annotation tiers at that time\nDrag to adjust position\nExport to TSV for statistical analysis\nImport TSV to restore data points\n\nExport format (TSV):\ntime    freq    pitch   f1  f2  f3  f4  intensity   phones  words\n0.234   1500    156 678 1234    2890    3654    72  i   see\n0.567   1200    234 543 987 2567    3234    68  u   two\nPerfect for building datasets for R, Python, SPSS, or Excel analysis.\nSee: Data Points Documentation | Tutorial: Data Collection\n\n\n\nData points on spectrogram\n\n\n\n\nAudio Playback\nFlexible playback controls:\n\nPlay selected region (Space key)\nPlay visible window (Tab key)\nPlay from cursor to end\nReal-time cursor tracking during playback\nPause and resume\nStop and deselect (Escape key)\n\nSee: Audio Playback Documentation\n\n\nMobile Viewer\nTouch-optimized interface at /viewer route:\n\nTouch gestures:\n\nTap → Place cursor\nDrag → Select region\nTwo-finger drag → Pan view\nPinch → Zoom in/out\nLong-press → Copy selected position visible properties\n\nCompact layout for small screens\nLandscape mode optimization\nSafe area support for notched phones\nSettings drawer for overlay toggles\nFloating play button\nURL parameters for pre-configuration\n\nEmbedding support:\n\nIframe-compatible\nPre-load audio via ?audio= parameter\nConfigure overlays via ?overlays= parameter\nCORS-enabled remote loading\nData URL support for self-contained embeds\n\nSee: Mobile Viewer Documentation | Embedding Guide\n\n\n\nMobile viewer in landscape mode",
     "crumbs": [
       "Features Overview"
     ]
@@ -2488,7 +2458,7 @@
     "href": "features/overview.html#advanced-features",
     "title": "Features Overview",
     "section": "Advanced Features",
-    "text": "Advanced Features\n\nLong Audio Handling\nFor files &gt;60 seconds:\nOzen-web uses an intelligent on-demand analysis strategy to prevent UI freezing:\n\nOn load: Waveform displays immediately, spectrogram shows “Zoom in for spectrogram”\nWhen zoomed: Analysis runs for visible window only (≤60s)\nOn-demand: Results update automatically as you pan/zoom\nDebounced: 300ms delay prevents excessive recomputation\n\nThis allows working with arbitrarily long recordings (hours of audio) while maintaining responsive UI.\nWhy 60 seconds?\n\nBrowser memory constraints\nReal-time user experience (analysis must complete in &lt;1s)\nBalance between convenience and performance\n\nSee: Getting Started: Troubleshooting\n\n\nMultiple WASM Backends\nChoose from multiple acoustic analysis backends:\n\n\n\n\n\n\n\n\n\n\nBackend\nSource\nLicense\nLoad Time\nOffline\n\n\n\n\npraatfan-local\nBundled (static/wasm/)\nMIT/Apache-2.0\nFastest (~100ms)\n✅ Yes\n\n\npraatfan\nGitHub Pages CDN\nMIT/Apache-2.0\nFast (~500ms)\n❌ No\n\n\npraatfan-gpl\nGitHub Pages CDN\nGPL\nFast (~500ms)\n❌ No\n\n\n\nAll backends provide identical Praat-compatible results. Select via dropdown in the app interface.\nSee: WASM Backends Reference\n\n\nConfiguration\nCustomize via config.yaml:\n# Example configuration\nbackend: \"praatfan-local\"\nmaxFrequency: 5000\nshowPitch: true\nshowFormants: true\ntheme: \"dark\"\n\n# Pitch settings\npitchFloor: 75\npitchCeiling: 600\n\n# Formant settings\nmaxFormants: 5\nmaxFormantFrequency: 5500\n\n# Colors\npitchColor: \"#0000FF\"\nformantColor: \"#FF0000\"\nSee: Configuration Reference\n\n\nUnified Undo/Redo\nSingle undo stack for all editable operations:\n\nAdding/removing/moving boundaries\nEditing interval labels\nAdding/removing/moving data points\nChronological order across all operation types\n\nKeyboard shortcuts:\n\nCtrl+Z (Cmd+Z on Mac) — Undo\nCtrl+Y or Ctrl+Shift+Z — Redo\n\nNon-undoable operations (by design):\n\nAdding/removing tiers\nLoading audio/TextGrid files\n\nSee: Tutorial: Annotations",
+    "text": "Advanced Features\n\nLong Audio Handling\nFor files &gt;60 seconds:\nOzen-web uses an intelligent on-demand analysis strategy to prevent UI freezing:\n\nOn load: Waveform displays immediately, spectrogram shows “Zoom in for spectrogram”\nWhen zoomed: Analysis runs for visible window only (≤60s)\nOn-demand: Results update automatically as you pan/zoom\nDebounced: 300ms delay prevents excessive recomputation\n\nThis allows working with arbitrarily long recordings (hours of audio) while maintaining responsive UI.\nWhy 60 seconds?\n\nBrowser memory constraints\nReal-time user experience (analysis must complete in &lt;1s)\nBalance between convenience and performance\n\nSee: Getting Started: Troubleshooting\n\n\nMultiple WASM Backends\nChoose from multiple acoustic analysis backends:\n\n\n\n\n\n\n\n\n\nBackend\nSource\nLicense\nOffline\n\n\n\n\npraatfan-local\nBundled (static/wasm/)\nMIT/Apache-2.0\n✅ Yes\n\n\npraatfan\nGitHub Pages CDN\nMIT/Apache-2.0\n❌ No\n\n\npraatfan-gpl\nGitHub Pages CDN\nGPL\n❌ No\n\n\n\nPraatfan-local and praatfan are identical, and approximate praatfan-gpl, which was built to be very similar to Praat. Select via dropdown in the app interface.\nSee: WASM Backends Reference\n\n\nConfiguration\nCustomize via config.yaml:\n# Example configuration\nbackend: \"praatfan-local\"\nmaxFrequency: 5000\nshowPitch: true\nshowFormants: true\ntheme: \"dark\"\n\n# Pitch settings\npitchFloor: 75\npitchCeiling: 600\n\n# Formant settings\nmaxFormants: 5\nmaxFormantFrequency: 5500\n\n# Colors\npitchColor: \"#0000FF\"\nformantColor: \"#FF0000\"\nSee: Configuration Reference\n\n\nUnified Undo/Redo\nSingle undo stack for all editable operations:\n\nAdding/removing/moving boundaries\nEditing interval labels\nAdding/removing/moving data points\nChronological order across all operation types\n\nKeyboard shortcuts:\n\nCtrl+Z (Cmd+Z on Mac) — Undo\nCtrl+Y or Ctrl+Shift+Z — Redo\n\nNon-undoable operations (by design):\n\nAdding/removing tiers\nLoading audio/TextGrid files\n\nSee: Tutorial: Annotations",
     "crumbs": [
       "Features Overview"
     ]
@@ -2498,7 +2468,7 @@
     "href": "features/overview.html#platform-features",
     "title": "Features Overview",
     "section": "Platform Features",
-    "text": "Platform Features\n\nOffline & PWA Support\nWorks completely offline:\n\nAll processing happens locally in browser\nNo data uploaded to servers\nAfter initial load, works without internet (with local backend)\nPWA-ready with app icons for home screen installation\n\n\n\nBrowser Compatibility\nRecommended browsers:\n\n✅ Chrome/Edge 90+ (best support)\n✅ Firefox 88+\n✅ Safari 15+ (macOS/iOS)\n✅ Mobile browsers (iOS Safari, Chrome Android)\n\nRequirements:\n\nWebAssembly support\nWeb Audio API\nCanvas API\nES6 modules\n\n\n\nPrivacy\n100% local processing:\n\nAudio never leaves your browser\nNo analytics or tracking\nNo server-side processing\nSuitable for sensitive/confidential data",
+    "text": "Platform Features\n\nOffline & PWA Support\nWorks completely offline:\n\nAll processing happens locally in browser\nNo data uploaded to servers\nAfter initial load, works without internet (with local backend)\nPWA-ready with app icons for home screen installation\n\n\n\nBrowser Compatibility\nShould work as well on all modern browsers\nRequirements:\n\nWebAssembly support\nWeb Audio API\nCanvas API\nES6 modules\n\n\n\nPrivacy\n100% local processing:\n\nAudio never leaves your browser\nNo analytics or tracking\nNo server-side processing",
     "crumbs": [
       "Features Overview"
     ]
@@ -2508,17 +2478,7 @@
     "href": "features/overview.html#file-format-support",
     "title": "Features Overview",
     "section": "File Format Support",
-    "text": "File Format Support\n\nImport Formats\n\n\n\nFormat\nExtension\nNotes\n\n\n\n\nAudio\n.wav, .mp3, .ogg, .flac, .m4a\nBrowser-dependent\n\n\nTextGrid\n.TextGrid\nBoth short and long formats\n\n\nData Points\n.tsv\nTab-separated values\n\n\nConfiguration\n.yaml\nOptional app configuration\n\n\n\n\n\nExport Formats\n\n\n\nFormat\nContent\nUse Case\n\n\n\n\nTextGrid\nAnnotations (all tiers)\nPraat, R, Python\n\n\nTSV\nData points + acoustic values\nStatistical analysis\n\n\nWAV\nAudio (16-bit PCM)\nSave recordings, share clips\n\n\n\nSee: File Formats Reference",
-    "crumbs": [
-      "Features Overview"
-    ]
-  },
-  {
-    "objectID": "features/overview.html#comparison-with-desktop-tools",
-    "href": "features/overview.html#comparison-with-desktop-tools",
-    "title": "Features Overview",
-    "section": "Comparison with Desktop Tools",
-    "text": "Comparison with Desktop Tools\n\n\n\n\n\n\n\n\n\nFeature\nOzen-web\nPraat\nDesktop Ozen\n\n\n\n\nInstallation\nNone (browser)\nRequired\nRequired\n\n\nPlatform\nAny OS with browser\nOS-specific builds\nWindows/Mac/Linux\n\n\nPrivacy\n100% local\n100% local\n100% local\n\n\nOffline\n✅ Yes (with local backend)\n✅ Yes\n✅ Yes\n\n\nMobile\n✅ Optimized\n❌ No\n❌ No\n\n\nEmbedding\n✅ Iframe support\n❌ No\n❌ No\n\n\nAccuracy\nPraat algorithms (WASM)\nPraat native code\nPraat algorithms (Python)\n\n\nScripting\n❌ No\n✅ Yes\n⚠️ Limited\n\n\nBatch Processing\n❌ No\n✅ Yes\n✅ Yes",
+    "text": "File Format Support\n\nImport Formats\n\n\n\nFormat\nExtension\nNotes\n\n\n\n\nAudio\n.wav, .flac, .mp3, .ogg\nCould be browser-dependent\n\n\nTextGrid\n.TextGrid\nBoth short and long formats\n\n\nData Points\n.tsv\nTab-separated values\n\n\nConfiguration\n.yaml\nOptional app configuration\n\n\n\n\n\nExport Formats\n\n\n\nFormat\nContent\nUse Case\n\n\n\n\nTextGrid\nAnnotations (all tiers)\nPraat, R, Python\n\n\nTSV\nData points + acoustic values\nStatistical analysis\n\n\nWAV\nAudio (16-bit PCM)\nSave recordings, share clips\n\n\n\nSee: File Formats Reference",
     "crumbs": [
       "Features Overview"
     ]
@@ -2528,7 +2488,7 @@
     "href": "features/overview.html#use-cases",
     "title": "Features Overview",
     "section": "Use Cases",
-    "text": "Use Cases\nResearch:\n\nVowel formant analysis (F1/F2 plots)\nPitch contour studies (intonation, tone)\nVoice quality assessment (HNR, spectral tilt)\nConsonant acoustics (VOT, CoG, duration)\n\nTeaching:\n\nEmbed interactive spectrograms in lecture slides\nQuarto/R Markdown integration\nNo software installation required for students\nInteractive demonstrations\n\nLanguage Documentation:\n\nField recording transcription\nTime-aligned corpus creation\nOffline capability for field sites\nMobile device support for fieldwork\n\nClinical:\n\nSpeech therapy progress tracking\nVoice quality visualization\nShareable annotated samples\nPatient education\n\nPodcasting & Audio Production:\n\nVisualize speech clarity\nIdentify problem areas\nMark edit points with sub-second precision\nExport annotations for editing software",
+    "text": "Use Cases\nResearch:\n\nVowel formant analysis (F1/F2 plots)\nPitch contour studies (intonation, tone)\nVoice quality assessment (HNR, spectral tilt)\nConsonant acoustics (VOT, CoG, duration)\n\nTeaching:\n\nEmbed interactive spectrograms in lecture slides\nQuarto/R Markdown integration\nNo software installation required for students\nInteractive demonstrations",
     "crumbs": [
       "Features Overview"
     ]
@@ -2578,7 +2538,7 @@
     "href": "features/data-points.html#adding-data-points",
     "title": "Data Points",
     "section": "Adding Data Points",
-    "text": "Adding Data Points\n\nVia Double-Click\n\nEnable desired overlays (pitch, formants, etc.)\nDouble-click on spectrogram at target location\nYellow dashed line appears at that time\nValues panel shows measurements at that point\n\n\n\n\n\n\n\nTipTargeting Specific Frequencies\n\n\n\nThe vertical position of your double-click doesn’t affect measurements — it only sets the time position. All acoustic values (pitch, formants, intensity, etc.) are computed at that time point automatically.\n\n\n\n\nVia Keyboard\n\nClick to place cursor at desired time\nPress D key to add data point at cursor",
+    "text": "Adding Data Points\n\nVia Double-Click\n\nEnable desired overlays (pitch, formants, etc.)\nDouble-click on spectrogram at target location\nYellow dashed line appears at that time\nValues panel shows measurements at that point\n\n\n\n\n\n\n\nTipTargeting Specific Frequencies\n\n\n\nThe vertical position of your double-click doesn’t affect measurements — it only sets the time position. All acoustic values (pitch, formants, intensity, etc.) are computed at that time point automatically.",
     "crumbs": [
       "Data Points"
     ]
@@ -2598,7 +2558,7 @@
     "href": "features/data-points.html#removing-data-points",
     "title": "Data Points",
     "section": "Removing Data Points",
-    "text": "Removing Data Points\nRight-click menu: 1. Right-click on data point marker 2. Select “Remove data point”\nKeyboard: 1. Click data point to select 2. Press Delete or Backspace",
+    "text": "Removing Data Points\nRight-click menu: 1. Right-click on data point marker 2. Select “Remove data point”",
     "crumbs": [
       "Data Points"
     ]
@@ -2628,7 +2588,7 @@
     "href": "features/data-points.html#tsv-export",
     "title": "Data Points",
     "section": "TSV Export",
-    "text": "TSV Export\nExport all data points to tab-separated values format for statistical analysis.\n\nExport Process\n\nClick “Export Data Points” button\nChoose save location\nFile saves as data-points.tsv\n\n\n\nTSV Format\nHeader row:\ntime    freq    pitch   intensity   f1  f2  f3  f4  b1  b2  b3  b4  hnr cog spectral_tilt   a1_p0   label_words label_phones\nData rows:\n1.234   720 245 68  720 1240    2650    3500    80  110 150 200 15.3    5420    -2.1    -5.4    \"cat\"   \"æ\"\n1.567   850 250 70  850 1180    2580    3450    85  105 145 195 16.1    5380    -1.9    -4.8    \"sat\"   \"æ\"\nNotes: - Tab-separated (TSV), not comma - Missing values: empty field - Text labels: quoted strings - Decimal separator: period (.)\n\n\nImport into R\n# Read TSV file\ndata &lt;- read.table(\"data-points.tsv\", header=TRUE, sep=\"\\t\", quote=\"\\\"\")\n\n# Plot F1 vs F2 vowel space\nlibrary(ggplot2)\nggplot(data, aes(x=f2, y=f1, label=label_phones)) +\n  geom_text() +\n  scale_x_reverse() +\n  scale_y_reverse() +\n  labs(title=\"Vowel Space\", x=\"F2 (Hz)\", y=\"F1 (Hz)\")\n\n\nImport into Python/Pandas\nimport pandas as pd\nimport matplotlib.pyplot as plt\n\n# Read TSV file\ndf = pd.read_csv(\"data-points.tsv\", sep='\\t')\n\n# Plot F1 vs F2\nplt.scatter(df['f2'], df['f1'])\nplt.gca().invert_xaxis()\nplt.gca().invert_yaxis()\nplt.xlabel('F2 (Hz)')\nplt.ylabel('F1 (Hz)')\nplt.title('Vowel Space')\nplt.show()\n\n\nImport into Praat\n# Read table\ntable = Read Table from tab-separated file: \"data-points.tsv\"\n\n# Extract columns\nselectObject: table\nf1 = Get column index: \"f1\"\nf2 = Get column index: \"f2\"\n\n# Plot\nScatter plot: \"f2\", 0, 3000, \"f1\", 0, 1000, \"label_phones\", 12, \"yes\", \"+\"",
+    "text": "TSV Export\nExport all data points to tab-separated values format for statistical analysis.\n\nExport Process\n\nClick “Export Data Points” button\nChoose save location\nFile saves as data-points.tsv\n\nQuick copy to clipboard: - Press Ctrl+C (Windows/Linux) or Cmd+C (Mac) to copy all data points as TSV to clipboard - Paste directly into spreadsheet software or text editor - No file dialog needed\n\n\nTSV Format\nHeader row:\ntime    freq    pitch   intensity   f1  f2  f3  f4  b1  b2  b3  b4  hnr cog spectral_tilt   a1_p0   label_words label_phones\nData rows:\n1.234   720 245 68  720 1240    2650    3500    80  110 150 200 15.3    5420    -2.1    -5.4    \"cat\"   \"æ\"\n1.567   850 250 70  850 1180    2580    3450    85  105 145 195 16.1    5380    -1.9    -4.8    \"sat\"   \"æ\"\nNotes: - Tab-separated (TSV), not comma - Missing values: empty field - Text labels: quoted strings - Decimal separator: period (.)\n\n\nImport into R\n# Read TSV file\ndata &lt;- read.table(\"data-points.tsv\", header=TRUE, sep=\"\\t\", quote=\"\\\"\")\n\n# Plot F1 vs F2 vowel space\nlibrary(ggplot2)\nggplot(data, aes(x=f2, y=f1, label=label_phones)) +\n  geom_text() +\n  scale_x_reverse() +\n  scale_y_reverse() +\n  labs(title=\"Vowel Space\", x=\"F2 (Hz)\", y=\"F1 (Hz)\")\n\n\nImport into Python/Pandas\nimport pandas as pd\nimport matplotlib.pyplot as plt\n\n# Read TSV file\ndf = pd.read_csv(\"data-points.tsv\", sep='\\t')\n\n# Plot F1 vs F2\nplt.scatter(df['f2'], df['f1'])\nplt.gca().invert_xaxis()\nplt.gca().invert_yaxis()\nplt.xlabel('F2 (Hz)')\nplt.ylabel('F1 (Hz)')\nplt.title('Vowel Space')\nplt.show()\n\n\nImport into Praat\n# Read table\ntable = Read Table from tab-separated file: \"data-points.tsv\"\n\n# Extract columns\nselectObject: table\nf1 = Get column index: \"f1\"\nf2 = Get column index: \"f2\"\n\n# Plot\nScatter plot: \"f2\", 0, 3000, \"f1\", 0, 1000, \"label_phones\", 12, \"yes\", \"+\"",
     "crumbs": [
       "Data Points"
     ]
@@ -2668,7 +2628,7 @@
     "href": "features/data-points.html#keyboard-workflow",
     "title": "Data Points",
     "section": "Keyboard Workflow",
-    "text": "Keyboard Workflow\nEfficient keyboard-driven data collection:\n\n\n\nKey\nAction\n\n\n\n\nDouble-click spectrogram\nAdd data point\n\n\nD\nAdd data point at cursor\n\n\nClick data point\nSelect\n\n\nDelete / Backspace\nRemove selected point\n\n\nCtrl+Z / Cmd+Z\nUndo add/move/remove\n\n\nCtrl+Y / Cmd+Shift+Z\nRedo\n\n\n\nRapid collection: 1. Play audio (Space) 2. Pause at target (Space) 3. Press D to add point 4. Repeat",
+    "text": "Keyboard Workflow\nEfficient keyboard-driven data collection:\n\n\n\nKey\nAction\n\n\n\n\nDouble-click spectrogram\nAdd data point\n\n\nClick data point\nSelect\n\n\nCtrl+Z / Cmd+Z\nUndo add/move/remove\n\n\nCtrl+Y / Cmd+Shift+Z\nRedo\n\n\n\nRapid collection: 1. Play audio (Space) 2. Pause at target (Space) 3. Double-click spectrogram to add point 4. Repeat",
     "crumbs": [
       "Data Points"
     ]
@@ -2678,7 +2638,7 @@
     "href": "features/data-points.html#integration-with-annotations",
     "title": "Data Points",
     "section": "Integration with Annotations",
-    "text": "Integration with Annotations\nData points automatically integrate with annotation tiers:\nExample scenario:\nAnnotations:\n  words:  | the   | cat   | sat   |\n  phones: | ð | ə | k | æ | t | s | æ | t |\n\nData Points:\n  Point 1 at 0.5s → captures \"the\", \"ə\"\n  Point 2 at 1.2s → captures \"cat\", \"æ\"\n  Point 3 at 1.8s → captures \"sat\", \"æ\"\nTSV output:\ntime   f1   f2   label_words  label_phones\n0.5    520  1720  \"the\"        \"ə\"\n1.2    720  1240  \"cat\"        \"æ\"\n1.8    850  1180  \"sat\"        \"æ\"\nThis enables within-category statistical analysis: “Compare F1 for all /æ/ tokens”",
+    "text": "Integration with Annotations\nData points automatically integrate with annotation tiers:\nExample scenario:\nAnnotations:\n  words:  | the   | cat       | sat       |\n  phones: | ð | ə | k | æ | t | s | æ | t |\n\nData Points:\n  Point 1 at 0.5s → captures \"the\", \"ə\"\n  Point 2 at 1.2s → captures \"cat\", \"æ\"\n  Point 3 at 1.8s → captures \"sat\", \"æ\"\nTSV output:\ntime   f1   f2   label_words  label_phones\n0.5    520  1720  \"the\"        \"ə\"\n1.2    720  1240  \"cat\"        \"æ\"\n1.8    850  1180  \"sat\"        \"æ\"\nThis enables within-category statistical analysis: “Compare F1 for all /æ/ tokens”",
     "crumbs": [
       "Data Points"
     ]
@@ -2688,7 +2648,7 @@
     "href": "features/data-points.html#performance",
     "title": "Data Points",
     "section": "Performance",
-    "text": "Performance\n\n\n\nOperation\nTime\n\n\n\n\nAdd point\n&lt; 10 ms\n\n\nMove point\n&lt; 10 ms\n\n\nRemove point\n&lt; 10 ms\n\n\nExport 100 points\n&lt; 100 ms\n\n\nImport 100 points\n&lt; 100 ms\n\n\n\nData point operations are near-instantaneous, enabling rapid collection workflows.",
+    "text": "Performance\nData point operations enable rapid collection workflows.",
     "crumbs": [
       "Data Points"
     ]
@@ -2742,7 +2702,7 @@
     "href": "getting-started.html#option-1-use-hosted-version",
     "title": "Getting Started",
     "section": "Option 1: Use Hosted Version",
-    "text": "Option 1: Use Hosted Version\nThe fastest way to get started is using the hosted version:\n🌐 https://ucpresearch.github.io/ozen-web/live/\nSimply visit the URL and drag an audio file (WAV, MP3, OGG) to begin analyzing.\n\n\n\n\n\n\nTip\n\n\n\nBookmark the URL for quick access. All processing happens locally in your browser — no data is uploaded to servers.\n\n\n\nLoading Your First Audio File\n\n\nDrag and drop a WAV, MP3, or OGG file onto the interface\nOR\nClick “Load Audio” button and select a file\nWait for the waveform to appear (1-2 seconds for typical files)\nThe spectrogram will load automatically (or zoom in for long files)\nEnable acoustic overlays using checkboxes: Pitch, Formants, Intensity\n\n\n\nDon’t have an audio file handy? Record directly in the browser by clicking the microphone icon 🎤 (requires microphone permission).\n\n\n\nWhat’s Next?\n\nFollow the Complete Tutorial for a guided walkthrough\nExplore Features Documentation for detailed feature guides\nCheck Keyboard Shortcuts for efficient workflow"
+    "text": "Option 1: Use Hosted Version\nThe fastest way to get started is using the hosted version:\n🌐 https://ucpresearch.github.io/ozen-web/live/\nSimply visit the URL and drag an audio file (WAV, FLAC, MP3, OGG) to begin analyzing.\n\n\n\n\n\n\nTip\n\n\n\nBookmark the URL for quick access. All processing happens locally in your browser — no data is uploaded to servers.\n\n\n\nLoading Your First Audio File\n\n\nDrag and drop a WAV, FLAC, MP3, or OGG file onto the interface\nOR\nClick “Load Audio” button and select a file\nWait for the waveform to appear\nThe spectrogram will load automatically (or zoom in for long files)\nEnable acoustic overlays using checkboxes: Pitch, Formants, Intensity\n\n\n\nDon’t have an audio file handy? Record directly in the browser by clicking the microphone icon 🎤 (requires microphone permission).\n\n\n\nWhat’s Next?\n\nFollow the Complete Tutorial for a guided walkthrough\nExplore Features Documentation for detailed feature guides\nCheck Keyboard Shortcuts for efficient workflow"
   },
   {
     "objectID": "getting-started.html#option-2-run-locally",
@@ -2763,14 +2723,14 @@
     "href": "getting-started.html#configuration",
     "title": "Getting Started",
     "section": "Configuration",
-    "text": "Configuration\n\nBackend Selection\nOzen-web supports multiple WASM backends:\n\n\n\n\n\n\n\n\n\n\nBackend\nSource\nLicense\nSpeed\nOffline\n\n\n\n\npraatfan-local\nstatic/wasm/\nMIT/Apache-2.0\nFastest\n✅ Yes\n\n\npraatfan\nGitHub Pages CDN\nMIT/Apache-2.0\nFast\n❌ No\n\n\npraatfan-gpl\nGitHub Pages CDN\nGPL\nFast\n❌ No\n\n\n\nSelect the backend using the dropdown in the app interface.\nSee WASM Backends Reference for detailed comparison.\n\n\nCustom Configuration\nCreate static/config.yaml to customize default settings:\n# Example configuration\nbackend: \"praatfan-local\"\nmaxFrequency: 5000\nshowPitch: true\nshowFormants: true\ntheme: \"dark\"\nSee Configuration Reference for all options."
+    "text": "Configuration\n\nBackend Selection\nOzen-web supports multiple WASM backends:\n\n\n\nBackend\nSource\nLicense\nOffline\n\n\n\n\npraatfan-local\nstatic/wasm/\nMIT/Apache-2.0\n✅ Yes\n\n\npraatfan\nGitHub Pages CDN\nMIT/Apache-2.0\n❌ No\n\n\npraatfan-gpl\nGitHub Pages CDN\nGPL\n❌ No\n\n\n\nSelect the backend using the dropdown in the app interface.\nSee WASM Backends Reference for detailed comparison.\n\n\nCustom Configuration\nCreate static/config.yaml to customize default settings:\n# Example configuration\nbackend: \"praatfan-local\"\nmaxFrequency: 5000\nshowPitch: true\nshowFormants: true\ntheme: \"dark\"\nSee Configuration Reference for all options."
   },
   {
     "objectID": "getting-started.html#troubleshooting",
     "href": "getting-started.html#troubleshooting",
     "title": "Getting Started",
     "section": "Troubleshooting",
-    "text": "Troubleshooting\n\nWASM Fails to Load\n\nCheck backend selection: Try switching between backends in the dropdown\nClear browser cache: Hard refresh with Ctrl+Shift+R (Cmd+Shift+R on Mac)\nCheck browser console: Open DevTools (F12) → Console tab for error messages\n\n\n\nAudio File Won’t Load\n\nSupported formats: WAV, MP3, OGG (16-bit or 24-bit PCM for WAV)\nFile size: Files &gt;100MB may be slow; try shorter clips\nBrowser support: Some browsers have codec limitations (try Chrome/Edge)\n\n\n\nLong Audio Files Show “Zoom in for spectrogram”\nThis is expected behavior for files &gt;60 seconds. Zoom in to a window ≤60s to trigger analysis.\nSee Features: Long Audio Handling for details."
+    "text": "Troubleshooting\n\nWASM Fails to Load\n\nCheck backend selection: Try switching between backends in the dropdown\nClear browser cache: Hard refresh with Ctrl+Shift+R (Cmd+Shift+R on Mac)\nCheck browser console: Open DevTools (F12) → Console tab for error messages\n\n\n\nAudio File Won’t Load\n\nSupported formats: WAV, FLAC, MP3, OGG (16-bit or 24-bit PCM for WAV)\nFile size: Files &gt;100MB may be slow; try shorter clips\n\n\n\nLong Audio Files Show “Zoom in for spectrogram”\nThis is expected behavior for files &gt;60 seconds. Zoom in to a window ≤60s to trigger analysis.\nSee Features: Long Audio Handling for details."
   },
   {
     "objectID": "getting-started.html#getting-help",
@@ -2827,7 +2787,7 @@
     "href": "tutorial/04-annotations.html#creating-your-first-tier",
     "title": "4. Annotations",
     "section": "Creating Your First Tier",
-    "text": "Creating Your First Tier\n\n\nClick the “+ Add Tier” button (usually below the spectrogram)\n\n\n\nAdd tier button\n\n\nEnter a tier name in the dialog:\n\nExamples: “phones”, “words”, “syllables”\nNames should be descriptive and lowercase\n\nSelect tier type:\n\nInterval tier (most common) — Divides time into labeled segments\nPoint tier — Marks specific time points (less common)\n\nClick “Create”\nA new tier appears below the spectrogram\n\n\n\n\n\n\n\n\nTip\n\n\n\nCreate multiple tiers for different levels of analysis (e.g., “words” tier above “phones” tier).",
+    "text": "Creating Your First Tier\n\n\nClick the “+ Add Tier” button (usually below the spectrogram)\n\n\n\nAdd tier button\n\n\nEnter a tier name in the dialog:\n\nExamples: “phones”, “words”, “syllables”\nNames should be descriptive and lowercase\n\nPress Enter or click OK\nA new tier appears below the spectrogram\n\n\n\n\n\n\n\n\nTip\n\n\n\nCreate multiple tiers for different levels of analysis (e.g., “words” tier above “phones” tier).",
     "crumbs": [
       "Tutorial",
       "Complete Workflow",
@@ -2935,7 +2895,7 @@
     "href": "tutorial/04-annotations.html#example-workflow",
     "title": "4. Annotations",
     "section": "Example Workflow",
-    "text": "Example Workflow\nLet’s annotate a short phrase: “hello world”\n\n\nLoad audio (section 1) with someone saying “hello world”\nAdd a “words” tier\nZoom to see the full phrase\nDouble-click at the start of “hello” to add a boundary\nDouble-click between “hello” and “world” to add a boundary\nDouble-click at the end of “world” to add a boundary\nNow you have three intervals:\n\nSilence before “hello”\n“hello”\n“world”\nSilence after (implicit, extends to end)\n\nDouble-click the first interval and type “hello”, press Enter\nDouble-click the second interval and type “world”, press Enter\nAdd a “phones” tier\nZoom in on “hello”\nAdd boundaries and labels for each phone:\n\n/h/ [h]\n/ɛ/ [ɛ] or [e]\n/l/ [l]\n/oʊ/ [oʊ] or [o]\n\nRepeat for “world”:\n\n/w/ [w]\n/ɝ/ [ɝ] or [ər]\n/l/ [l]\n/d/ [d]\n\n\n\n\n\n\nCompleted annotation example",
+    "text": "Example Workflow\nLet’s annotate a short phrase: “hello world”\n\n\nLoad audio (section 1) with someone saying “hello world”\nAdd a “words” tier\nZoom to see the full phrase\nDouble-click at the start of “hello” to add a boundary\nDouble-click between “hello” and “world” to add a boundary\nDouble-click at the end of “world” to add a boundary\nNow you have three intervals:\n\nSilence before “hello”\n“hello”\n“world”\nSilence after (implicit, extends to end)\n\nDouble-click the first interval and type “hello”, press Enter\nDouble-click the second interval and type “world”, press Enter\nAdd a “phones” tier\nZoom in on “hello”\nAdd boundaries and labels for each phone:\n\n/h/ [h]\n/ɛ/ [ɛ]\n/l/ [l]\n/oʊ/ [oʊ]\n\nRepeat for “world”:\n\n/w/ [w]\n/ɝ/ [ɝ]\n/l/ [l]\n/d/ [d]\n\n\n\n\n\n\nCompleted annotation example",
     "crumbs": [
       "Tutorial",
       "Complete Workflow",
@@ -3283,7 +3243,7 @@
     "href": "tutorial/05-data-collection.html#viewing-data-point-values",
     "title": "5. Data Collection",
     "section": "Viewing Data Point Values",
-    "text": "Viewing Data Point Values\nEach data point captures all acoustic measurements:\n\n\nClick on a data point line to select it\nThe values panel updates to show measurements at that point:\n\nTime: 0.452 s\nFreq: 1234 Hz (where you clicked)\nPitch: 234 Hz\nF1: 523 Hz\nF2: 1987 Hz\nF3: 2743 Hz\nF4: 3543 Hz\nIntensity: 68 dB\nHNR: 12.3 dB\nCoG: 3456 Hz\nLabels: phones=“a”, words=“cat”\n\n\n\n\nData point values panel\n\n\n\n\n\n\n\n\n\n\nNote\n\n\n\nThe “Freq” value is where you clicked, not a measured acoustic property. It’s useful for reference but typically not used in analysis.",
+    "text": "Viewing Data Point Values\nEach data point captures all acoustic measurements:\n\n\nClick on a data point line to select it\nThe values panel updates to show measurements at that point:\n\nTime: 0.452 s\nFreq: 1234 Hz (where you clicked)\nPitch: 234 Hz\nF1: 923 Hz\nF2: 1987 Hz\nF3: 2743 Hz\nIntensity: 68 dB\nHNR: 1.3 dB\nCoG: 3986 Hz\nLabels: phones=“æ”, words=“cat”\n\n\n\n\nData point values panel\n\n\n\n\n\n\n\n\n\n\nNote\n\n\n\nThe “Freq” value is where you clicked, not a measured acoustic property. It’s useful for reference but typically not used in analysis.",
     "crumbs": [
       "Tutorial",
       "Complete Workflow",
@@ -3319,7 +3279,7 @@
     "href": "tutorial/05-data-collection.html#example-workflow-measuring-vowels",
     "title": "5. Data Collection",
     "section": "Example Workflow: Measuring Vowels",
-    "text": "Example Workflow: Measuring Vowels\nLet’s collect formant data for all vowels in a sentence:\n\n\nLoad audio with a sentence (e.g., “see two cats”)\nEnable Formants overlay (checkbox)\nOptionally annotate vowels with a “phones” tier (section 4)\nZoom in on the first vowel (“ee” in “see”)\nFind the vowel midpoint (where formants are stable)\nDouble-click at the midpoint\nA data point appears\nRepeat for each vowel:\n\n“ee” in “see” (high F2, low F1)\n“oo” in “two” (low F2, low F1)\n“a” in “cats” (mid F1, mid F2)\n\nExport to TSV (section 6) for analysis\n\n\n\n\n\nMultiple data points on vowels",
+    "text": "Example Workflow: Measuring Vowels\nLet’s collect formant data for all vowels in a sentence:\n\n\nLoad audio with a sentence (e.g., “see two cats”)\nEnable Formants overlay (checkbox)\nOptionally annotate vowels with a “phones” tier (section 4)\nZoom in on the first vowel (“ee” in “see”)\nFind the vowel midpoint (where formants are stable)\nDouble-click at the midpoint\nA data point appears\nRepeat for each vowel:\n\n[i] in “see” (high F2, low F1)\n[u] in “two” (low F2, low F1)\n[æ] in “cats” (mid F1, mid F2)\n\nExport to TSV (section 6) for analysis\n\n\n\n\n\nMultiple data points on vowels",
     "crumbs": [
       "Tutorial",
       "Complete Workflow",
@@ -3331,7 +3291,7 @@
     "href": "tutorial/05-data-collection.html#data-points-and-annotations",
     "title": "5. Data Collection",
     "section": "Data Points and Annotations",
-    "text": "Data Points and Annotations\nData points automatically capture labels from ALL annotation tiers at that time:\nExample:\nIf you have tiers:\n\nphones tier: interval “a” from 0.4-0.6s\nwords tier: interval “cat” from 0.3-0.7s\nstress tier: interval “1” from 0.3-0.7s\n\nAnd you add a data point at time 0.5s:\nThe exported TSV will include:\ntime    freq    pitch   f1      f2      phones  words   stress\n0.500   1500    234     698     1234    a       cat     1\nThis is extremely powerful for statistical analysis in R or Python!\n\n\n\n\n\n\nTip\n\n\n\nAnnotate your audio first (section 4), then add data points. This way, each data point inherits contextual labels automatically.",
+    "text": "Data Points and Annotations\nData points automatically capture labels from ALL annotation tiers at that time:\nExample:\nIf you have tiers:\n\nphones tier: interval “æ” from 0.4-0.6s\nwords tier: interval “cat” from 0.3-0.7s\n\nAnd you add a data point at time 0.5s:\nThe exported TSV will include:\ntime    freq    pitch   f1      f2      phones  words\n0.500   1500    234     698     1852    æ       cat\n\n\n\n\n\n\nTip\n\n\n\nAnnotate your audio first (section 4), then add data points. This way, each data point inherits contextual labels automatically.",
     "crumbs": [
       "Tutorial",
       "Complete Workflow",
@@ -3343,7 +3303,7 @@
     "href": "tutorial/05-data-collection.html#use-cases",
     "title": "5. Data Collection",
     "section": "Use Cases",
-    "text": "Use Cases\nVowel formant analysis:\n\nAdd data points at the midpoint of each vowel\nExport TSV with F1, F2, F3, vowel label\nPlot vowel space in R (F1 vs F2)\n\nVOT (Voice Onset Time) measurement:\n\nAdd data points at burst and voicing onset for stops\nExport TSV with times\nCalculate VOT = voicing_time - burst_time\n\nPitch contour studies:\n\nAdd data points at regular intervals (every 50ms)\nExport pitch values\nAnalyze intonation patterns\n\nConsonant acoustics:\n\nAdd data points at fricative midpoints\nExport CoG, spectral tilt\nCompare sibilants [s] vs [ʃ]",
+    "text": "Use Cases\nVowel formant analysis:\n\nAdd data points at the midpoint of each vowel\nExport TSV with F1, F2, F3, vowel label\nPlot vowel space in R (F1 vs F2)\n\nVOT (Voice Onset Time) measurement:\n\nAdd data points at burst and voicing onset for stops\nExport TSV with times\nCalculate VOT = voicing_time - burst_time\n\nConsonant acoustics:\n\nAdd data points at fricative midpoints\nExport CoG, spectral tilt\nCompare sibilants [s] vs [ʃ]",
     "crumbs": [
       "Tutorial",
       "Complete Workflow",
@@ -3367,7 +3327,7 @@
     "href": "tutorial/05-data-collection.html#troubleshooting",
     "title": "5. Data Collection",
     "section": "Troubleshooting",
-    "text": "Troubleshooting\nDouble-click adds boundary instead of data point:\n\nEnsure you’re clicking on the spectrogram, not on an annotation tier\nAnnotation tiers are below the spectrogram; click in the colored frequency display\n\nData point appears but values show “—”:\n\nEnable the relevant overlays (Pitch, Formants, etc.)\nEnsure WASM backend is loaded (check backend selector)\nWait for analysis to compute (1-2 seconds after zoom)\n\nCan’t move data point:\n\nEnsure you’re clicking and dragging the line, not near it\nTry clicking on the marker circle at the top of the line\n\nData point values seem wrong:\n\nCheck you clicked at the correct time and frequency\nVerify the acoustic overlays show reasonable values\nFor formants, ensure you’re clicking in a vowel, not a consonant\n\nToo many data points, display is cluttered:\n\nRemove unnecessary points (right-click → Remove)\nZoom out to see overall distribution\nExport and start fresh if needed",
+    "text": "Troubleshooting\nDouble-click adds boundary instead of data point:\n\nEnsure you’re clicking on the spectrogram, not on an annotation tier\nAnnotation tiers are below the spectrogram; click in the colored frequency display\n\nData point appears but values show “—”:\n\nEnable the relevant overlays (Pitch, Formants, etc.)\nEnsure WASM backend is loaded (check backend selector)\nWait for analysis to compute (1-2 seconds after zoom)\n\nCan’t move data point:\n\nEnsure you’re clicking and dragging the line, not near it\nTry clicking on the marker circle at the top of the line\n\nData point values seem wrong:\n\nCheck you clicked at the correct time and frequency\nVerify the acoustic overlays show reasonable values\nFor formants, ensure you’re clicking in a vowel, not a consonant\n\nToo many data points, display is cluttered:\n\nRemove unnecessary points (right-click → Remove)\nZoom out to see overall distribution\nExport and start fresh if needed\n\n\n\n\n\n\n\nTipQuick Copy to Clipboard\n\n\n\nPress Ctrl+C (Windows/Linux) or Cmd+C (Mac) to instantly copy all data points as TSV to your clipboard. Then paste directly into Excel, R, or any text editor. No export dialog needed!",
     "crumbs": [
       "Tutorial",
       "Complete Workflow",
@@ -3487,7 +3447,7 @@
     "href": "development/architecture.html#component-hierarchy",
     "title": "Architecture",
     "section": "Component Hierarchy",
-    "text": "Component Hierarchy\ngraph TD\n    A[+layout.svelte] --&gt; B[+page.svelte Main App]\n    A --&gt; C[viewer/+page.svelte Mobile Viewer]\n\n    B --&gt; D[FileDropZone]\n    B --&gt; E[Waveform]\n    B --&gt; F[Spectrogram]\n    B --&gt; G[AnnotationEditor]\n    B --&gt; H[ValuesPanel]\n    B --&gt; I[TimeAxis]\n\n    G --&gt; J[Tier x N]\n\n    F -.overlay.-&gt; K[Pitch overlay]\n    F -.overlay.-&gt; L[Formant overlay]\n    F -.overlay.-&gt; M[Data points]\n\n    C --&gt; N[Compact ValuesPanel]\n    C --&gt; O[Spectrogram read-only]\n    C --&gt; P[Touch gesture layer]\n\nComponent Responsibilities\nLayout Components:\n\n\n\n\n\n\n\n\nComponent\nFile\nPurpose\n\n\n\n\nApp shell\n+layout.svelte\nHTML structure, global styles, WASM initialization\n\n\nMain app\n+page.svelte\nDesktop UI orchestration, toolbar, panels\n\n\nMobile viewer\nviewer/+page.svelte\nTouch-optimized view-only interface\n\n\n\nCore Visualization:\n\n\n\n\n\n\n\n\nComponent\nFile\nResponsibility\n\n\n\n\nWaveform\nWaveform.svelte\nAmplitude display, downsampling, synchronized cursor\n\n\nSpectrogram\nSpectrogram.svelte\nTime-frequency visualization, overlay rendering, interaction\n\n\nTimeAxis\nTimeAxis.svelte\nTime ruler with tick marks and labels\n\n\n\nAnnotation & Data:\n\n\n\n\n\n\n\n\nComponent\nFile\nResponsibility\n\n\n\n\nAnnotationEditor\nAnnotationEditor.svelte\nTier container, add/remove tiers, toolbar\n\n\nTier\nTier.svelte\nIndividual tier display, boundary editing, text input\n\n\nValuesPanel\nValuesPanel.svelte\nReal-time acoustic measurements at cursor\n\n\n\nUtilities:\n\n\n\n\n\n\n\n\nComponent\nFile\nResponsibility\n\n\n\n\nFileDropZone\nFileDropZone.svelte\nDrag-drop and file picker for audio/TextGrid\n\n\nModal\nModal.svelte\nReusable modal dialog container",
+    "text": "Component Hierarchy\ngraph TD\n    A[+layout.svelte] --&gt; B[+page.svelte Main App]\n    A --&gt; C[viewer/+page.svelte Mobile Viewer]\n\n    B --&gt; D[FileDropZone]\n    B --&gt; E[Waveform]\n    B --&gt; F[Spectrogram]\n    B --&gt; G[AnnotationEditor]\n    B --&gt; H[ValuesPanel]\n    B --&gt; I[TimeAxis]\n\n    G --&gt; J[Tier x N]\n\n    F -.overlay.-&gt; K[Pitch overlay]\n    F -.overlay.-&gt; L[Formant overlay]\n    F -.overlay.-&gt; M[Data points]\n\n    C --&gt; N[Compact ValuesPanel]\n    C --&gt; O[Spectrogram read-only]\n    C --&gt; P[Touch gesture layer]\n\nComponent Responsibilities\nLayout Components:\n\n\n\n\n\n\n\n\nComponent\nFile\nPurpose\n\n\n\n\nApp shell\n+layout.svelte\nHTML structure, global styles, WASM initialization\n\n\nMain app\n+page.svelte\nDesktop UI orchestration, toolbar, panels\n\n\nMobile viewer\nviewer/+page.svelte\nTouch-optimized view-only interface\n\n\n\nCore Visualization:\n\n\n\n\n\n\n\n\nComponent\nFile\nResponsibility\n\n\n\n\nWaveform\nWaveform.svelte\nAmplitude display, downsampling, synchronized cursor\n\n\nSpectrogram\nSpectrogram.svelte\nTime-frequency visualization, overlay rendering, interaction\n\n\nTimeAxis\nTimeAxis.svelte\nTime ruler with tick marks and labels\n\n\n\nAnnotation & Data:\n\n\n\n\n\n\n\n\nComponent\nFile\nResponsibility\n\n\n\n\nAnnotationEditor\nAnnotationEditor.svelte\nTier container, add/remove tiers, toolbar\n\n\nTier\nTier.svelte\nIndividual tier display, boundary editing, text input\n\n\nValuesPanel\nValuesPanel.svelte\nReal-time acoustic measurements at cursor\n\n\n\nUtilities:\n\n\n\n\n\n\n\n\nComponent\nFile\nResponsibility\n\n\n\n\nFileDropZone\nFileDropZone.svelte\nDrag-drop and file picker for audio files\n\n\nModal\nModal.svelte\nReusable modal dialog container",
     "crumbs": [
       "Development",
       "Architecture"
@@ -3891,7 +3851,7 @@
     "href": "reference/file-formats.html#browser-compatibility",
     "title": "File Formats",
     "section": "Browser Compatibility",
-    "text": "Browser Compatibility\n\nSupported Audio Formats by Browser\n\n\n\nFormat\nChrome\nFirefox\nSafari\nEdge\n\n\n\n\nWAV\n✅\n✅\n✅\n✅\n\n\nMP3\n✅\n✅\n✅\n✅\n\n\nOGG\n✅\n✅\n❌\n✅\n\n\n\nNote: Safari does not support OGG Vorbis. Use WAV or MP3 for maximum compatibility.\n\n\nFile API Support\nAll modern browsers support: - File picker (input type=“file”) - Drag and drop - File System Access API (save files)\nMinimum versions: - Chrome 90+ - Firefox 88+ - Safari 14+ - Edge 90+",
+    "text": "Browser Compatibility\nAll modern browsers support: - File picker (input type=“file”) - Drag and drop - File System Access API (save files) - WAV, FLAC, MP3 audio formats - OGG support varies by browser",
     "crumbs": [
       "File Formats"
     ]
@@ -4073,7 +4033,7 @@
     "href": "embedding/basic-usage.html#simple-iframe-embedding",
     "title": "Basic Embedding",
     "section": "Simple iframe Embedding",
-    "text": "Simple iframe Embedding\n\nBasic Example\nEmbed the hosted viewer directly:\n&lt;iframe src=\"https://ucpresearch.github.io/ozen-web/viewer\"\n        width=\"800\"\n        height=\"600\"\n        style=\"border: 1px solid #ccc;\"&gt;\n&lt;/iframe&gt;\nThis embeds the mobile viewer interface with an empty file drop zone.\n\n\nWith Audio Pre-loaded\nLoad audio automatically via URL parameter:\n&lt;iframe src=\"https://ucpresearch.github.io/ozen-web/viewer?audio=https://example.com/audio.wav\"\n        width=\"800\"\n        height=\"600\"\n        style=\"border: none;\"&gt;\n&lt;/iframe&gt;\nRequirements: - Audio file must be accessible via HTTPS - Server must enable CORS (see below) - Supported formats: WAV, MP3, OGG\n\n\nWith Overlays Configured\nPre-enable acoustic overlays:\n&lt;iframe src=\"https://ucpresearch.github.io/ozen-web/viewer?audio=https://example.com/audio.wav&overlays=pitch,formants,intensity\"\n        width=\"800\"\n        height=\"600\"\n        style=\"border: none;\"&gt;\n&lt;/iframe&gt;\nOverlay options: - pitch - Fundamental frequency track - formants - F1-F4 formants - intensity - Intensity track - hnr - Harmonics-to-noise ratio - cog - Center of gravity - spectral_tilt - Spectral tilt - a1_p0 - A1-P0 measure\nMultiple overlays separated by commas.",
+    "text": "Simple iframe Embedding\n\nBasic Example\nEmbed the hosted viewer directly:\n&lt;iframe src=\"https://ucpresearch.github.io/ozen-web/viewer\"\n        width=\"800\"\n        height=\"600\"\n        style=\"border: 1px solid #ccc;\"&gt;\n&lt;/iframe&gt;\nThis embeds the mobile viewer interface with an empty file drop zone.\n\n\nWith Audio Pre-loaded\nLoad audio automatically via URL parameter:\n&lt;iframe src=\"https://ucpresearch.github.io/ozen-web/viewer?audio=https://example.com/audio.wav\"\n        width=\"800\"\n        height=\"600\"\n        style=\"border: none;\"&gt;\n&lt;/iframe&gt;\nRequirements: - Audio file must be accessible via HTTPS - Server must enable CORS (see below) - Supported formats: WAV, FLAC, MP3, OGG\n\n\nWith Overlays Configured\nPre-enable acoustic overlays:\n&lt;iframe src=\"https://ucpresearch.github.io/ozen-web/viewer?audio=https://example.com/audio.wav&overlays=pitch,formants,intensity\"\n        width=\"800\"\n        height=\"600\"\n        style=\"border: none;\"&gt;\n&lt;/iframe&gt;\nOverlay options: - pitch - Fundamental frequency track - formants - F1-F4 formants - intensity - Intensity track - hnr - Harmonics-to-noise ratio - cog - Center of gravity - spectral_tilt - Spectral tilt - a1_p0 - A1-P0 measure\nMultiple overlays separated by commas.",
     "crumbs": [
       "Embedding",
       "Basic Embedding"

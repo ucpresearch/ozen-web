@@ -377,7 +377,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>The fastest way to load audio is drag-and-drop:</p>
 <div class="tutorial-steps">
 <ol type="1">
-<li><p><strong>Find an audio file</strong> on your computer (WAV, MP3, or OGG format)</p></li>
+<li><p><strong>Find an audio file</strong> on your computer (WAV, FLAC, MP3, or OGG format)</p></li>
 <li><p><strong>Drag the file</strong> over the Ozen-web window</p>
 <p>The drop zone will highlight with a blue border</p>
 <div class="quarto-figure quarto-figure-center">
@@ -604,7 +604,6 @@ Warning
 <ul>
 <li>File may be in an unsupported codec</li>
 <li>Convert to WAV using Audacity, FFmpeg, or Praat</li>
-<li>Try a different browser (Chrome/Edge have best codec support)</li>
 </ul>
 <p><strong>Microphone doesn’t work:</strong></p>
 <ul>
@@ -1144,7 +1143,7 @@ Warning
 <span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>The fastest way to load audio is drag-and-drop:</span>
 <span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>::: {.tutorial-steps}</span>
-<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**Find an audio file** on your computer (WAV, MP3, or OGG format)</span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**Find an audio file** on your computer (WAV, FLAC, MP3, or OGG format)</span>
 <span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>**Drag the file** over the Ozen-web window</span>
 <span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a></span>
@@ -1278,43 +1277,42 @@ Warning
 <span id="cb1-161"><a href="#cb1-161" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-162"><a href="#cb1-162" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>File may be in an unsupported codec</span>
 <span id="cb1-163"><a href="#cb1-163" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Convert to WAV using Audacity, FFmpeg, or Praat</span>
-<span id="cb1-164"><a href="#cb1-164" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Try a different browser (Chrome/Edge have best codec support)</span>
-<span id="cb1-165"><a href="#cb1-165" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-166"><a href="#cb1-166" aria-hidden="true" tabindex="-1"></a>**Microphone doesn't work:**</span>
-<span id="cb1-167"><a href="#cb1-167" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-168"><a href="#cb1-168" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Check browser permissions (Settings → Privacy → Microphone)</span>
-<span id="cb1-169"><a href="#cb1-169" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Ensure microphone is connected and working in other apps</span>
-<span id="cb1-170"><a href="#cb1-170" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Try using HTTPS (microphone API requires secure context)</span>
-<span id="cb1-171"><a href="#cb1-171" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-172"><a href="#cb1-172" aria-hidden="true" tabindex="-1"></a>**File loads but no spectrogram:**</span>
-<span id="cb1-173"><a href="#cb1-173" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-174"><a href="#cb1-174" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>For files &gt;60s, zoom in to trigger analysis</span>
-<span id="cb1-175"><a href="#cb1-175" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Check that WASM backend is loaded (see backend selector)</span>
-<span id="cb1-176"><a href="#cb1-176" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Try refreshing the page (Ctrl+R)</span>
-<span id="cb1-177"><a href="#cb1-177" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-178"><a href="#cb1-178" aria-hidden="true" tabindex="-1"></a><span class="fu">## Practice Exercise</span></span>
-<span id="cb1-179"><a href="#cb1-179" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-180"><a href="#cb1-180" aria-hidden="true" tabindex="-1"></a>Before moving to the next section, try:</span>
-<span id="cb1-181"><a href="#cb1-181" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-182"><a href="#cb1-182" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Load an audio file using drag-and-drop</span>
-<span id="cb1-183"><a href="#cb1-183" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>Load a different file using the file picker</span>
-<span id="cb1-184"><a href="#cb1-184" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>Record 5 seconds of speech using the microphone</span>
-<span id="cb1-185"><a href="#cb1-185" aria-hidden="true" tabindex="-1"></a><span class="ss">4. </span>Observe the differences in waveform appearance</span>
-<span id="cb1-186"><a href="#cb1-186" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-187"><a href="#cb1-187" aria-hidden="true" tabindex="-1"></a>::: {.callout-try}</span>
-<span id="cb1-188"><a href="#cb1-188" aria-hidden="true" tabindex="-1"></a>**Challenge:** Record yourself saying "hello" three times with different intonations (statement, question, excited). Notice how the pitch contours differ in the waveform.</span>
-<span id="cb1-189"><a href="#cb1-189" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb1-190"><a href="#cb1-190" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-191"><a href="#cb1-191" aria-hidden="true" tabindex="-1"></a><span class="fu">## What's Next?</span></span>
-<span id="cb1-192"><a href="#cb1-192" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-193"><a href="#cb1-193" aria-hidden="true" tabindex="-1"></a>Now that you have audio loaded, let's learn how to navigate and explore it.</span>
-<span id="cb1-194"><a href="#cb1-194" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-195"><a href="#cb1-195" aria-hidden="true" tabindex="-1"></a>**Next:** <span class="co">[</span><span class="ot">2. Exploring Audio</span><span class="co">](02-exploring-audio.html)</span> →</span>
-<span id="cb1-196"><a href="#cb1-196" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-197"><a href="#cb1-197" aria-hidden="true" tabindex="-1"></a>---</span>
-<span id="cb1-198"><a href="#cb1-198" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-199"><a href="#cb1-199" aria-hidden="true" tabindex="-1"></a>**Navigation:**</span>
-<span id="cb1-200"><a href="#cb1-200" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="ot">← Back to Tutorial Overview</span><span class="co">](index.html)</span> | <span class="co">[</span><span class="ot">Next: Exploring Audio →</span><span class="co">](02-exploring-audio.html)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
+<span id="cb1-164"><a href="#cb1-164" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-165"><a href="#cb1-165" aria-hidden="true" tabindex="-1"></a>**Microphone doesn't work:**</span>
+<span id="cb1-166"><a href="#cb1-166" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-167"><a href="#cb1-167" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Check browser permissions (Settings → Privacy → Microphone)</span>
+<span id="cb1-168"><a href="#cb1-168" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Ensure microphone is connected and working in other apps</span>
+<span id="cb1-169"><a href="#cb1-169" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Try using HTTPS (microphone API requires secure context)</span>
+<span id="cb1-170"><a href="#cb1-170" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-171"><a href="#cb1-171" aria-hidden="true" tabindex="-1"></a>**File loads but no spectrogram:**</span>
+<span id="cb1-172"><a href="#cb1-172" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-173"><a href="#cb1-173" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>For files &gt;60s, zoom in to trigger analysis</span>
+<span id="cb1-174"><a href="#cb1-174" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Check that WASM backend is loaded (see backend selector)</span>
+<span id="cb1-175"><a href="#cb1-175" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Try refreshing the page (Ctrl+R)</span>
+<span id="cb1-176"><a href="#cb1-176" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-177"><a href="#cb1-177" aria-hidden="true" tabindex="-1"></a><span class="fu">## Practice Exercise</span></span>
+<span id="cb1-178"><a href="#cb1-178" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-179"><a href="#cb1-179" aria-hidden="true" tabindex="-1"></a>Before moving to the next section, try:</span>
+<span id="cb1-180"><a href="#cb1-180" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-181"><a href="#cb1-181" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Load an audio file using drag-and-drop</span>
+<span id="cb1-182"><a href="#cb1-182" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>Load a different file using the file picker</span>
+<span id="cb1-183"><a href="#cb1-183" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>Record 5 seconds of speech using the microphone</span>
+<span id="cb1-184"><a href="#cb1-184" aria-hidden="true" tabindex="-1"></a><span class="ss">4. </span>Observe the differences in waveform appearance</span>
+<span id="cb1-185"><a href="#cb1-185" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-186"><a href="#cb1-186" aria-hidden="true" tabindex="-1"></a>::: {.callout-try}</span>
+<span id="cb1-187"><a href="#cb1-187" aria-hidden="true" tabindex="-1"></a>**Challenge:** Record yourself saying "hello" three times with different intonations (statement, question, excited). Notice how the pitch contours differ in the waveform.</span>
+<span id="cb1-188"><a href="#cb1-188" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb1-189"><a href="#cb1-189" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-190"><a href="#cb1-190" aria-hidden="true" tabindex="-1"></a><span class="fu">## What's Next?</span></span>
+<span id="cb1-191"><a href="#cb1-191" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-192"><a href="#cb1-192" aria-hidden="true" tabindex="-1"></a>Now that you have audio loaded, let's learn how to navigate and explore it.</span>
+<span id="cb1-193"><a href="#cb1-193" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-194"><a href="#cb1-194" aria-hidden="true" tabindex="-1"></a>**Next:** <span class="co">[</span><span class="ot">2. Exploring Audio</span><span class="co">](02-exploring-audio.html)</span> →</span>
+<span id="cb1-195"><a href="#cb1-195" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-196"><a href="#cb1-196" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb1-197"><a href="#cb1-197" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-198"><a href="#cb1-198" aria-hidden="true" tabindex="-1"></a>**Navigation:**</span>
+<span id="cb1-199"><a href="#cb1-199" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="ot">← Back to Tutorial Overview</span><span class="co">](index.html)</span> | <span class="co">[</span><span class="ot">Next: Exploring Audio →</span><span class="co">](02-exploring-audio.html)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 <footer class="footer">
