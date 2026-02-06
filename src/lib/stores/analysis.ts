@@ -111,75 +111,79 @@ export async function runAnalysis(): Promise<void> {
 			analysisProgress.set(10);
 			const pitch = computePitch(sound, params.timeStep, params.pitchFloor, params.pitchCeiling);
 
-			// Intensity analysis
-			analysisProgress.set(25);
-			const intensity = computeIntensity(sound, params.pitchFloor, params.timeStep);
+			// eslint-disable-next-line @typescript-eslint/no-explicit-any
+			let intensity: any, formant: any, harmonicity: any, spectrogram: any;
+			try {
+				// Intensity analysis
+				analysisProgress.set(25);
+				intensity = computeIntensity(sound, params.pitchFloor, params.timeStep);
 
-			// Formant analysis - use preset's maxFormant for voice type
-			analysisProgress.set(40);
-			const formant = computeFormant(
-				sound,
-				params.timeStep,
-				params.numFormants,
-				preset.maxFormant,
-				0.025,
-				50.0
-			);
+				// Formant analysis - use preset's maxFormant for voice type
+				analysisProgress.set(40);
+				formant = computeFormant(
+					sound,
+					params.timeStep,
+					params.numFormants,
+					preset.maxFormant,
+					0.025,
+					50.0
+				);
 
-			// Harmonicity analysis
-			analysisProgress.set(55);
-			const harmonicity = computeHarmonicity(sound, params.timeStep, params.pitchFloor, 0.1, 4.5);
+				// Harmonicity analysis
+				analysisProgress.set(55);
+				harmonicity = computeHarmonicity(sound, params.timeStep, params.pitchFloor, 0.1, 4.5);
 
-			// Extract values using abstraction layer
-			analysisProgress.set(70);
-			const times: number[] = Array.from(getPitchTimes(pitch));
-			const pitchValues: number[] = Array.from(getPitchValues(pitch));
+				// Extract values using abstraction layer
+				analysisProgress.set(70);
+				const times: number[] = Array.from(getPitchTimes(pitch));
+				const pitchValues: number[] = Array.from(getPitchValues(pitch));
 
-			// Spectrogram
-			analysisProgress.set(75);
-			const spectrogram = computeSpectrogram(sound, 0.005, 5000, 0.002, 20.0);
+				// Spectrogram
+				analysisProgress.set(75);
+				spectrogram = computeSpectrogram(sound, 0.005, 5000, 0.002, 20.0);
 
-			// Compute spectral measures (CoG, Spectral Tilt, A1-P0)
-			analysisProgress.set(85);
-			const spectralMeasures = computeSpectralMeasures(buffer, sr, times, pitchValues, wasm);
+				// Compute spectral measures (CoG, Spectral Tilt, A1-P0)
+				analysisProgress.set(85);
+				const spectralMeasures = computeSpectralMeasures(buffer, sr, times, pitchValues, wasm);
 
-			// Get spectrogram info
-			const spectrogramInfo = getSpectrogramInfo(spectrogram);
+				// Get spectrogram info
+				const spectrogramInfo = getSpectrogramInfo(spectrogram);
 
-			analysisProgress.set(95);
-			const results: AnalysisResults = {
-				times,
-				pitch: pitchValues.map((v: number) => (isNaN(v) || v === 0 ? null : v)),
-				intensity: times.map((t: number) => {
-					const v = getIntensityAtTime(intensity, t);
-					return isNaN(v) ? null : v;
-				}),
-				formants: {
-					f1: times.map(t => nullIfNaN(getFormantAtTime(formant, 1, t))),
-					f2: times.map(t => nullIfNaN(getFormantAtTime(formant, 2, t))),
-					f3: times.map(t => nullIfNaN(getFormantAtTime(formant, 3, t))),
-					f4: times.map(t => nullIfNaN(getFormantAtTime(formant, 4, t))),
-					b1: times.map(t => nullIfNaN(getBandwidthAtTime(formant, 1, t))),
-					b2: times.map(t => nullIfNaN(getBandwidthAtTime(formant, 2, t))),
-					b3: times.map(t => nullIfNaN(getBandwidthAtTime(formant, 3, t))),
-					b4: times.map(t => nullIfNaN(getBandwidthAtTime(formant, 4, t)))
-				},
-				harmonicity: times.map(t => nullIfNaN(getHarmonicityAtTime(harmonicity, t))),
-				cog: spectralMeasures.cog,
-				spectralTilt: spectralMeasures.spectralTilt,
-				a1p0: spectralMeasures.a1p0,
-				spectrogram: spectrogramInfo
-			};
+				analysisProgress.set(95);
+				const results: AnalysisResults = {
+					times,
+					pitch: pitchValues.map((v: number) => (isNaN(v) || v === 0 ? null : v)),
+					intensity: times.map((t: number) => {
+						const v = getIntensityAtTime(intensity, t);
+						return isNaN(v) ? null : v;
+					}),
+					formants: {
+						f1: times.map(t => nullIfNaN(getFormantAtTime(formant, 1, t))),
+						f2: times.map(t => nullIfNaN(getFormantAtTime(formant, 2, t))),
+						f3: times.map(t => nullIfNaN(getFormantAtTime(formant, 3, t))),
+						f4: times.map(t => nullIfNaN(getFormantAtTime(formant, 4, t))),
+						b1: times.map(t => nullIfNaN(getBandwidthAtTime(formant, 1, t))),
+						b2: times.map(t => nullIfNaN(getBandwidthAtTime(formant, 2, t))),
+						b3: times.map(t => nullIfNaN(getBandwidthAtTime(formant, 3, t))),
+						b4: times.map(t => nullIfNaN(getBandwidthAtTime(formant, 4, t)))
+					},
+					harmonicity: times.map(t => nullIfNaN(getHarmonicityAtTime(harmonicity, t))),
+					cog: spectralMeasures.cog,
+					spectralTilt: spectralMeasures.spectralTilt,
+					a1p0: spectralMeasures.a1p0,
+					spectrogram: spectrogramInfo
+				};
 
-			// Free WASM objects
-			pitch.free();
-			intensity.free();
-			formant.free();
-			harmonicity.free();
-			spectrogram.free();
-
-			analysisProgress.set(100);
-			analysisResults.set(results);
+				analysisProgress.set(100);
+				analysisResults.set(results);
+			} finally {
+				// Free WASM objects even if an exception occurred
+				pitch.free();
+				try { intensity?.free(); } catch (_) { /* already freed or never created */ }
+				try { formant?.free(); } catch (_) { /* already freed or never created */ }
+				try { harmonicity?.free(); } catch (_) { /* already freed or never created */ }
+				try { spectrogram?.free(); } catch (_) { /* already freed or never created */ }
+			}
 		} finally {
 			sound.free();
 		}
@@ -238,78 +242,82 @@ export async function runAnalysisForRange(startTime: number, endTime: number): P
 			analysisProgress.set(15);
 			const pitch = computePitch(sound, params.timeStep, params.pitchFloor, params.pitchCeiling);
 
-			// Intensity analysis
-			analysisProgress.set(30);
-			const intensity = computeIntensity(sound, params.pitchFloor, params.timeStep);
+			// eslint-disable-next-line @typescript-eslint/no-explicit-any
+			let intensity: any, formant: any, harmonicity: any, spectrogram: any;
+			try {
+				// Intensity analysis
+				analysisProgress.set(30);
+				intensity = computeIntensity(sound, params.pitchFloor, params.timeStep);
 
-			// Formant analysis
-			analysisProgress.set(45);
-			const formant = computeFormant(
-				sound,
-				params.timeStep,
-				params.numFormants,
-				preset.maxFormant,
-				0.025,
-				50.0
-			);
+				// Formant analysis
+				analysisProgress.set(45);
+				formant = computeFormant(
+					sound,
+					params.timeStep,
+					params.numFormants,
+					preset.maxFormant,
+					0.025,
+					50.0
+				);
 
-			// Harmonicity analysis
-			analysisProgress.set(60);
-			const harmonicity = computeHarmonicity(sound, params.timeStep, params.pitchFloor, 0.1, 4.5);
+				// Harmonicity analysis
+				analysisProgress.set(60);
+				harmonicity = computeHarmonicity(sound, params.timeStep, params.pitchFloor, 0.1, 4.5);
 
-			// Extract values - adjust times to absolute positions
-			analysisProgress.set(75);
-			const relativeTimes: number[] = Array.from(getPitchTimes(pitch));
-			const times = relativeTimes.map(t => t + paddedStart);
-			const pitchValues: number[] = Array.from(getPitchValues(pitch));
+				// Extract values - adjust times to absolute positions
+				analysisProgress.set(75);
+				const relativeTimes: number[] = Array.from(getPitchTimes(pitch));
+				const times = relativeTimes.map(t => t + paddedStart);
+				const pitchValues: number[] = Array.from(getPitchValues(pitch));
 
-			// Spectrogram
-			analysisProgress.set(85);
-			const spectrogram = computeSpectrogram(sound, 0.005, 5000, 0.002, 20.0);
+				// Spectrogram
+				analysisProgress.set(85);
+				spectrogram = computeSpectrogram(sound, 0.005, 5000, 0.002, 20.0);
 
-			// Spectral measures
-			const spectralMeasures = computeSpectralMeasures(rangeBuffer, sr, relativeTimes, pitchValues, wasm);
+				// Spectral measures
+				const spectralMeasures = computeSpectralMeasures(rangeBuffer, sr, relativeTimes, pitchValues, wasm);
 
-			// Get spectrogram info and adjust time range
-			const spectrogramInfo = getSpectrogramInfo(spectrogram);
-			spectrogramInfo.timeMin = paddedStart;
-			spectrogramInfo.timeMax = paddedEnd;
+				// Get spectrogram info and adjust time range
+				const spectrogramInfo = getSpectrogramInfo(spectrogram);
+				spectrogramInfo.timeMin = paddedStart;
+				spectrogramInfo.timeMax = paddedEnd;
 
-			analysisProgress.set(95);
-			const results: AnalysisResults = {
-				times,
-				pitch: pitchValues.map((v: number) => (isNaN(v) || v === 0 ? null : v)),
-				intensity: times.map((t: number, i: number) => {
-					const v = getIntensityAtTime(intensity, relativeTimes[i]);
-					return isNaN(v) ? null : v;
-				}),
-				formants: {
-					f1: relativeTimes.map(t => nullIfNaN(getFormantAtTime(formant, 1, t))),
-					f2: relativeTimes.map(t => nullIfNaN(getFormantAtTime(formant, 2, t))),
-					f3: relativeTimes.map(t => nullIfNaN(getFormantAtTime(formant, 3, t))),
-					f4: relativeTimes.map(t => nullIfNaN(getFormantAtTime(formant, 4, t))),
-					b1: relativeTimes.map(t => nullIfNaN(getBandwidthAtTime(formant, 1, t))),
-					b2: relativeTimes.map(t => nullIfNaN(getBandwidthAtTime(formant, 2, t))),
-					b3: relativeTimes.map(t => nullIfNaN(getBandwidthAtTime(formant, 3, t))),
-					b4: relativeTimes.map(t => nullIfNaN(getBandwidthAtTime(formant, 4, t)))
-				},
-				harmonicity: relativeTimes.map(t => nullIfNaN(getHarmonicityAtTime(harmonicity, t))),
-				cog: spectralMeasures.cog,
-				spectralTilt: spectralMeasures.spectralTilt,
-				a1p0: spectralMeasures.a1p0,
-				spectrogram: spectrogramInfo
-			};
+				analysisProgress.set(95);
+				const results: AnalysisResults = {
+					times,
+					pitch: pitchValues.map((v: number) => (isNaN(v) || v === 0 ? null : v)),
+					intensity: times.map((t: number, i: number) => {
+						const v = getIntensityAtTime(intensity, relativeTimes[i]);
+						return isNaN(v) ? null : v;
+					}),
+					formants: {
+						f1: relativeTimes.map(t => nullIfNaN(getFormantAtTime(formant, 1, t))),
+						f2: relativeTimes.map(t => nullIfNaN(getFormantAtTime(formant, 2, t))),
+						f3: relativeTimes.map(t => nullIfNaN(getFormantAtTime(formant, 3, t))),
+						f4: relativeTimes.map(t => nullIfNaN(getFormantAtTime(formant, 4, t))),
+						b1: relativeTimes.map(t => nullIfNaN(getBandwidthAtTime(formant, 1, t))),
+						b2: relativeTimes.map(t => nullIfNaN(getBandwidthAtTime(formant, 2, t))),
+						b3: relativeTimes.map(t => nullIfNaN(getBandwidthAtTime(formant, 3, t))),
+						b4: relativeTimes.map(t => nullIfNaN(getBandwidthAtTime(formant, 4, t)))
+					},
+					harmonicity: relativeTimes.map(t => nullIfNaN(getHarmonicityAtTime(harmonicity, t))),
+					cog: spectralMeasures.cog,
+					spectralTilt: spectralMeasures.spectralTilt,
+					a1p0: spectralMeasures.a1p0,
+					spectrogram: spectrogramInfo
+				};
 
-			// Free WASM objects
-			pitch.free();
-			intensity.free();
-			formant.free();
-			harmonicity.free();
-			spectrogram.free();
-
-			analysisProgress.set(100);
-			analysisResults.set(results);
-			console.log(`Analysis completed for range ${startTime.toFixed(1)}s - ${endTime.toFixed(1)}s`);
+				analysisProgress.set(100);
+				analysisResults.set(results);
+				console.log(`Analysis completed for range ${startTime.toFixed(1)}s - ${endTime.toFixed(1)}s`);
+			} finally {
+				// Free WASM objects even if an exception occurred
+				pitch.free();
+				try { intensity?.free(); } catch (_) { /* already freed or never created */ }
+				try { formant?.free(); } catch (_) { /* already freed or never created */ }
+				try { harmonicity?.free(); } catch (_) { /* already freed or never created */ }
+				try { spectrogram?.free(); } catch (_) { /* already freed or never created */ }
+			}
 		} finally {
 			sound.free();
 		}
@@ -358,13 +366,15 @@ function computeSpectralMeasures(
 			continue;
 		}
 
+		let segmentSound = null;
+		let spectrum = null;
 		try {
 			// Create a short sound segment
 			const segment = buffer.slice(startSample, endSample);
-			const segmentSound = new wasm.Sound(segment, sr);
+			segmentSound = new wasm.Sound(segment, sr);
 
 			// Get spectrum (fast=true for power-of-2 FFT)
-			const spectrum = computeSpectrum(segmentSound, true);
+			spectrum = computeSpectrum(segmentSound, true);
 
 			// Compute Center of Gravity (power = 2 for standard CoG)
 			const cogValue = spectrum.get_center_of_gravity(2.0);
@@ -400,14 +410,15 @@ function computeSpectralMeasures(
 			} else {
 				a1p0.push(null);
 			}
-
-			spectrum.free();
-			segmentSound.free();
 		} catch (e) {
 			// If spectrum computation fails, push nulls
 			cog.push(null);
 			spectralTilt.push(null);
 			a1p0.push(null);
+		} finally {
+			// Always free WASM objects to prevent memory leaks
+			try { spectrum?.free(); } catch (_) { /* ignore */ }
+			try { segmentSound?.free(); } catch (_) { /* ignore */ }
 		}
 	}
 

@@ -198,6 +198,7 @@ export function removeBoundary(intervalIndex: number): void {
 
 	const tier = currentTiers[tierIdx];
 	if (tier.type !== 'interval') return;
+	if (intervalIndex >= tier.intervals.length) return;
 
 	saveUndo();
 
@@ -262,6 +263,7 @@ export function moveBoundary(intervalIndex: number, newTime: number): void {
 	if (intervalIndex <= 0) return;
 
 	const tier = currentTiers[tierIdx];
+	if (intervalIndex >= tier.intervals.length) return;
 	const prev = tier.intervals[intervalIndex - 1];
 	const current = tier.intervals[intervalIndex];
 

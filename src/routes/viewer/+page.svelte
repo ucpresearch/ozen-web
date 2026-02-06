@@ -657,6 +657,7 @@
 				const leftMargin = 45;
 				const rightMargin = 45;
 				const plotWidth = rect.width - leftMargin - rightMargin;
+				if (plotWidth <= 0) return start;
 				const relX = x - leftMargin;
 				return start + (relX / plotWidth) * (end - start);
 			},

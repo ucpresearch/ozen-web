@@ -180,6 +180,7 @@ function collectAcousticValues(time: number): Record<string, number | null> {
 
 	// Find the closest time index
 	const { times } = results;
+	if (!times || times.length === 0) return {};
 	let closestIdx = 0;
 	let minDiff = Infinity;
 

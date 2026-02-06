@@ -244,6 +244,11 @@
 			// Create zoomed canvas
 			const result = createSpectrogramImage(zoomedData);
 			if (result) {
+				// Release old zoomed canvas memory before replacing
+				if (zoomedSpectrogramCanvas) {
+					zoomedSpectrogramCanvas.width = 0;
+					zoomedSpectrogramCanvas.height = 0;
+				}
 				zoomedSpectrogramCanvas = result.canvas;
 				zoomedTimeRange = { start: paddedStart, end: paddedEnd };
 			}
@@ -321,6 +326,11 @@
 			// Assign spectrogramCanvas at top level so Svelte can track the change
 			const result = createSpectrogramImage(spectrogramData);
 			if (result) {
+				// Release old canvas memory before replacing
+				if (spectrogramCanvas) {
+					spectrogramCanvas.width = 0;
+					spectrogramCanvas.height = 0;
+				}
 				spectrogramImageData = result.imageData;
 				spectrogramCanvas = result.canvas;
 			}
@@ -384,6 +394,7 @@
 		}
 
 		// Pre-render to a cached canvas for fast drawing
+		// Reuse existing offscreen canvas or create new one to avoid memory buildup
 		const canvas = document.createElement('canvas');
 		canvas.width = nTimes;
 		canvas.height = nFreqs;
@@ -933,6 +944,7 @@
 	}
 
 	function xPlotToTime(x: number, start: number, end: number): number {
+		if (plotWidth <= 0) return start;
 		return start + ((x - leftMargin) / plotWidth) * (end - start);
 	}
 

@@ -231,6 +231,7 @@
 	}
 
 	function xPlotToTime(x: number, start: number, end: number): number {
+		if (plotWidth <= 0) return start;
 		return start + ((x - leftMargin) / plotWidth) * (end - start);
 	}
 

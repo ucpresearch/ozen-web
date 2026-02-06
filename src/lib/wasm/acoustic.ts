@@ -41,6 +41,9 @@ export const currentBackend = writable<AcousticBackend | null>(null);
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 let wasmModule: any = null;
 
+// Guard against concurrent initWasm() calls
+let initPromise: Promise<void> | null = null;
+
 // WASM module URLs for each backend (remote backends)
 const REMOTE_BACKEND_URLS: Record<string, string> = {
 	'praatfan-gpl': 'https://ucpresearch.github.io/praatfan-core-rs/pkg/praatfan_gpl.js',
@@ -77,31 +80,50 @@ export async function initWasm(backend: AcousticBackend = 'praatfan-local'): Pro
 		return;
 	}
 
+	// If an init is already in progress, wait for it
+	if (initPromise) {
+		await initPromise;
+		// After waiting, check if the desired backend is now loaded
+		if (get(currentBackend) === backend && wasmModule) {
+			return;
+		}
+	}
+
 	// Mark as not ready during reload
 	wasmReady.set(false);
 	wasmModule = null;
 
-	try {
-		const url = getBackendUrl(backend);
-		console.log(`Loading WASM module from ${url}...`);
+	initPromise = (async () => {
+		try {
+			const url = getBackendUrl(backend);
+			console.log(`Loading WASM module from ${url}...`);
 
-		// Load WASM module from GitHub Pages CDN
-		const wasm = await import(/* @vite-ignore */ url);
-		await wasm.default();
+			// Load WASM module from GitHub Pages CDN
+			const wasm = await import(/* @vite-ignore */ url);
+			await wasm.default();
 
-		// praatfan (clean) has an init() function that must be called
-		if ((backend === 'praatfan' || backend === 'praatfan-local') && typeof wasm.init === 'function') {
-			wasm.init();
+			// praatfan (clean) has an init() function that must be called
+			if ((backend === 'praatfan' || backend === 'praatfan-local') && typeof wasm.init === 'function') {
+				wasm.init();
+			}
+
+			wasmModule = wasm;
+			currentBackend.set(backend);
+			wasmReady.set(true);
+			console.log(`WASM acoustic analysis module initialized (${backend})`);
+		} catch (e) {
+			// Reset state so user can retry
+			wasmModule = null;
+			currentBackend.set(null);
+			wasmReady.set(false);
+			console.error('Failed to initialize WASM module:', e);
+			throw e;
+		} finally {
+			initPromise = null;
 		}
+	})();
 
-		wasmModule = wasm;
-		currentBackend.set(backend);
-		wasmReady.set(true);
-		console.log(`WASM acoustic analysis module initialized (${backend})`);
-	} catch (e) {
-		console.error('Failed to initialize WASM module:', e);
-		throw e;
-	}
+	await initPromise;
 }
 
 /**
@@ -425,42 +447,45 @@ export async function computeAcoustics(
 	try {
 		// Compute all analyses on full-resolution samples
 		const pitch = computePitch(sound, timeStep, pitchFloor, pitchCeiling);
-		const intensity = computeIntensity(sound, pitchFloor, timeStep);
-		const formant = computeFormant(sound, timeStep, 5, maxFormant, 0.025, 50.0);
-		const harmonicity = computeHarmonicity(sound, timeStep, pitchFloor, 0.1, 4.5);
-		const spectrogram = computeSpectrogram(sound, 0.005, 5000, 0.005, 20.0);
 
-		// Extract values using abstraction layer
-		const times = Array.from(getPitchTimes(pitch));
-		const pitchValues = Array.from(getPitchValues(pitch));
-		const spectrogramInfo = getSpectrogramInfo(spectrogram);
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		let intensity: any, formant: any, harmonicity: any, spectrogram: any;
+		try {
+			intensity = computeIntensity(sound, pitchFloor, timeStep);
+			formant = computeFormant(sound, timeStep, 5, maxFormant, 0.025, 50.0);
+			harmonicity = computeHarmonicity(sound, timeStep, pitchFloor, 0.1, 4.5);
+			spectrogram = computeSpectrogram(sound, 0.005, 5000, 0.005, 20.0);
 
-		const result = {
-			times,
-			pitch: pitchValues,
-			intensity: times.map(t => getIntensityAtTime(intensity, t)),
-			formants: {
-				f1: times.map(t => getFormantAtTime(formant, 1, t)),
-				f2: times.map(t => getFormantAtTime(formant, 2, t)),
-				f3: times.map(t => getFormantAtTime(formant, 3, t)),
-				f4: times.map(t => getFormantAtTime(formant, 4, t)),
-				b1: times.map(t => getBandwidthAtTime(formant, 1, t)),
-				b2: times.map(t => getBandwidthAtTime(formant, 2, t)),
-				b3: times.map(t => getBandwidthAtTime(formant, 3, t)),
-				b4: times.map(t => getBandwidthAtTime(formant, 4, t)),
-			},
-			harmonicity: times.map(t => getHarmonicityAtTime(harmonicity, t)),
-			spectrogram: spectrogramInfo
-		};
+			// Extract values using abstraction layer
+			const times = Array.from(getPitchTimes(pitch));
+			const pitchValues = Array.from(getPitchValues(pitch));
+			const spectrogramInfo = getSpectrogramInfo(spectrogram);
 
-		// Free WASM objects
-		pitch.free();
-		intensity.free();
-		formant.free();
-		harmonicity.free();
-		spectrogram.free();
-
-		return result;
+			return {
+				times,
+				pitch: pitchValues,
+				intensity: times.map(t => getIntensityAtTime(intensity, t)),
+				formants: {
+					f1: times.map(t => getFormantAtTime(formant, 1, t)),
+					f2: times.map(t => getFormantAtTime(formant, 2, t)),
+					f3: times.map(t => getFormantAtTime(formant, 3, t)),
+					f4: times.map(t => getFormantAtTime(formant, 4, t)),
+					b1: times.map(t => getBandwidthAtTime(formant, 1, t)),
+					b2: times.map(t => getBandwidthAtTime(formant, 2, t)),
+					b3: times.map(t => getBandwidthAtTime(formant, 3, t)),
+					b4: times.map(t => getBandwidthAtTime(formant, 4, t)),
+				},
+				harmonicity: times.map(t => getHarmonicityAtTime(harmonicity, t)),
+				spectrogram: spectrogramInfo
+			};
+		} finally {
+			// Free WASM objects even if an exception occurred
+			pitch.free();
+			try { intensity?.free(); } catch (_) { /* ignore */ }
+			try { formant?.free(); } catch (_) { /* ignore */ }
+			try { harmonicity?.free(); } catch (_) { /* ignore */ }
+			try { spectrogram?.free(); } catch (_) { /* ignore */ }
+		}
 	} finally {
 		sound.free();
 	}

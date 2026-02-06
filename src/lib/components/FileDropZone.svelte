@@ -10,6 +10,7 @@
 	// Recording state
 	let isRecording = false;
 	let mediaRecorder: MediaRecorder | null = null;
+	let mediaStream: MediaStream | null = null;
 	let recordedChunks: Blob[] = [];
 	let recordingTime = 0;
 	let recordingTimer: ReturnType<typeof setInterval> | null = null;
@@ -21,6 +22,11 @@
 		}
 		if (mediaRecorder && isRecording) {
 			mediaRecorder.stop();
+		}
+		// Ensure microphone stream is released
+		if (mediaStream) {
+			mediaStream.getTracks().forEach(track => track.stop());
+			mediaStream = null;
 		}
 	});
 
@@ -65,6 +71,7 @@
 					autoGainControl: false
 				}
 			});
+			mediaStream = stream;
 
 			// Initialize recording state
 			recordedChunks = [];
@@ -81,6 +88,7 @@
 			mediaRecorder.onstop = async () => {
 				// Release microphone
 				stream.getTracks().forEach(track => track.stop());
+				mediaStream = null;
 
 				// Convert recorded chunks to blob and pass to parent
 				const blob = new Blob(recordedChunks, { type: 'audio/webm' });

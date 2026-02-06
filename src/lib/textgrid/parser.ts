@@ -59,20 +59,17 @@ export function parseTextGrid(content: string): { tiers: Tier[]; xmin: number; x
 		return match ? match[1].trim() : line.trim();
 	}
 
-	// Helper to extract number
-	function extractNumber(line: string): number {
-		const val = extractValue(line);
-		return parseFloat(val);
-	}
-
-	// Helper to extract string (removes quotes)
+	// Helper to extract string (removes quotes and unescapes doubled quotes)
 	function extractString(line: string): string {
 		const val = extractValue(line);
-		return val.replace(/^"|"$/g, '');
+		return val.replace(/^"|"$/g, '').replace(/""/g, '"');
 	}
 
 	// Detect format (short vs long)
 	const firstLine = nextLine();
+	if (!firstLine) {
+		throw new Error('Empty or invalid TextGrid file');
+	}
 	const isShortFormat = firstLine === '"ooTextFile"' || !firstLine.includes('=');
 
 	// Reset
@@ -95,11 +92,13 @@ function parseShortFormat(lines: string[]): { tiers: Tier[]; xmin: number; xmax:
 	}
 
 	function readString(): string {
-		return nextLine().replace(/^"|"$/g, '');
+		return nextLine().replace(/^"|"$/g, '').replace(/""/g, '"');
 	}
 
 	function readNumber(): number {
-		return parseFloat(nextLine());
+		const val = parseFloat(nextLine());
+		if (isNaN(val)) throw new Error('Invalid number in TextGrid file');
+		return val;
 	}
 
 	// File type header
@@ -158,11 +157,13 @@ function parseLongFormat(lines: string[]): { tiers: Tier[]; xmin: number; xmax: 
 	}
 
 	function extractNumber(line: string): number {
-		return parseFloat(extractValue(line));
+		const val = parseFloat(extractValue(line));
+		if (isNaN(val)) throw new Error(`Invalid number in TextGrid file: ${line}`);
+		return val;
 	}
 
 	function extractString(line: string): string {
-		return extractValue(line).replace(/^"|"$/g, '');
+		return extractValue(line).replace(/^"|"$/g, '').replace(/""/g, '"');
 	}
 
 	// Skip headers

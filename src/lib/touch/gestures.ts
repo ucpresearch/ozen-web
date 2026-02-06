@@ -143,7 +143,7 @@ export function attachGestureHandlers(
 			const pointers = Array.from(activePointers.values());
 
 			// Handle pinch zoom
-			if (initialPinchDistance !== null) {
+			if (initialPinchDistance !== null && initialPinchDistance > 0) {
 				const currentDistance = getDistance(pointers[0], pointers[1]);
 				const scale = currentDistance / initialPinchDistance;
 
@@ -161,6 +161,7 @@ export function attachGestureHandlers(
 				const deltaX = centerX - lastPanX;
 				if (Math.abs(deltaX) > 2) {
 					const rect = element.getBoundingClientRect();
+					if (rect.width <= 0) return;
 					const visibleDuration = callbacks.getVisibleDuration();
 					const deltaTime = (deltaX / rect.width) * visibleDuration;
 					callbacks.onPan(-deltaTime);
