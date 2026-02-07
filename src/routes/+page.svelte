@@ -1236,4 +1236,158 @@
 		font-size: 0.75rem;
 		color: var(--color-text-muted);
 	}
+
+	/* ═══════════════════════════════════════════════════════════════════════
+	   PRINT STYLES
+	   Ctrl+P → prints waveform, spectrogram, time axis, and annotation tiers.
+	   Hides all UI chrome (buttons, checkboxes, values panel, status bar).
+	   Forces light theme on annotation tiers for paper readability.
+	   ═══════════════════════════════════════════════════════════════════════ */
+	@media print {
+		/* Page setup */
+		@page {
+			margin: 1cm;
+		}
+
+		/* --- Hide UI chrome --- */
+		.overlay-controls,
+		.status-bar {
+			display: none !important;
+		}
+
+		/* Keep filename in toolbar, hide everything else */
+		.toolbar {
+			border: none !important;
+			padding: 0.25rem 0 !important;
+			background: transparent !important;
+		}
+
+		.open-btn,
+		.play-btn,
+		.stop-btn,
+		.record-btn,
+		.save-btn,
+		.settings-btn,
+		.theme-btn {
+			display: none !important;
+		}
+
+		.toolbar-center,
+		.toolbar-right {
+			display: none !important;
+		}
+
+		.filename {
+			color: #000 !important;
+			margin: 0 !important;
+		}
+
+		/* Hide values panel sidebar */
+		:global(.values-panel) {
+			display: none !important;
+		}
+
+		/* Hide annotation toolbar (Import/Export/Undo/Redo) */
+		:global(.annotation-toolbar) {
+			display: none !important;
+		}
+
+		/* Hide spectrogram interactive controls */
+		:global(.zoom-controls),
+		:global(.play-selection-btn) {
+			display: none !important;
+		}
+
+		/* Hide cursors and hover indicators in tiers */
+		:global(.tier-container .cursor),
+		:global(.tier-container .hover-cursor) {
+			display: none !important;
+		}
+
+		/* --- Layout: convert flex viewport to flowing block --- */
+		main {
+			height: auto !important;
+		}
+
+		.app-container {
+			height: auto !important;
+		}
+
+		.main-content {
+			display: block !important;
+			overflow: visible !important;
+		}
+
+		.displays {
+			overflow: visible !important;
+		}
+
+		/* --- Panel sizing --- */
+		.display-panel {
+			border-bottom: 1px solid #ccc !important;
+		}
+
+		.waveform-panel {
+			height: 100px !important;
+		}
+
+		.spectrogram-panel {
+			height: 350px !important;
+			flex: none !important;
+		}
+
+		.annotation-panel {
+			height: auto !important;
+			max-height: none !important;
+			flex: none !important;
+		}
+
+		/* --- Print-friendly annotation tiers --- */
+		:global(.annotation-editor) {
+			background: white !important;
+		}
+
+		:global(.tiers-container) {
+			overflow: visible !important;
+		}
+
+		:global(.tier-row) {
+			min-height: 35px !important;
+		}
+
+		:global(.tier-container) {
+			background: white !important;
+			border-bottom: 1px solid #ccc !important;
+		}
+
+		:global(.tier-container.selected) {
+			background: white !important;
+		}
+
+		:global(.tier-label) {
+			color: #333 !important;
+		}
+
+		:global(.margin-area) {
+			background: #f5f5f5 !important;
+		}
+
+		:global(.interval) {
+			border-right: 1px solid #999 !important;
+		}
+
+		:global(.interval-text) {
+			color: #000 !important;
+			background: transparent !important;
+			border-color: transparent !important;
+		}
+
+		:global(.interval-duration) {
+			color: #666 !important;
+		}
+
+		:global(.boundary::before) {
+			background: #333 !important;
+		}
+	}
 </style>
