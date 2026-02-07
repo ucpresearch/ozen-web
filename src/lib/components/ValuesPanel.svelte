@@ -123,6 +123,7 @@
 	$: cog = $analysisResults?.cog ? getValueAtTime($analysisResults.cog, $analysisResults.times, time) : null;
 	$: spectralTilt = $analysisResults?.spectralTilt ? getValueAtTime($analysisResults.spectralTilt, $analysisResults.times, time) : null;
 	$: a1p0 = $analysisResults?.a1p0 ? getValueAtTime($analysisResults.a1p0, $analysisResults.times, time) : null;
+	$: nmr = $analysisResults?.nmr ? getValueAtTime($analysisResults.nmr, $analysisResults.times, time) : null;
 	$: intervalsInfo = getIntervalsAtTime(time);
 </script>
 
@@ -194,6 +195,10 @@
 			<div class="value-row">
 				<span class="label nasal-label">A1-P0</span>
 				<span class="value">{formatDb(a1p0)}</span>
+			</div>
+			<div class="value-row">
+				<span class="label nmr-label">NMR</span>
+				<span class="value">{nmr !== null ? nmr.toFixed(3) : '—'}</span>
 			</div>
 		</div>
 	</div>
@@ -302,6 +307,11 @@
 	.nasal-label {
 		color: #fb7185;
 		background: rgba(251, 113, 133, 0.15);
+	}
+
+	.nmr-label {
+		color: #a0522d;
+		background: rgba(160, 82, 45, 0.15);
 	}
 
 	.f-label {

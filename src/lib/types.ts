@@ -86,6 +86,7 @@ export interface AnalysisResults {
 	cog: (number | null)[];
 	spectralTilt: (number | null)[];
 	a1p0: (number | null)[];
+	nmr: (number | null)[];
 	spectrogram: SpectrogramData;
 }
 

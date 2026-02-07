@@ -49,6 +49,7 @@
 	let showCoG = false;         // Center of Gravity (spectral centroid)
 	let showSpectralTilt = false; // High vs low frequency balance
 	let showA1P0 = false;        // Nasal measure (A1 minus P0)
+	let showNMR = false;         // Nasal Murmur Ratio
 
 	// ─────────────────────────────────────────────────────────────────────────────
 	// UI State
@@ -460,6 +461,7 @@
 			showCoG = true;
 			showSpectralTilt = true;
 			showA1P0 = true;
+			showNMR = true;
 			console.log('Overlays: all enabled');
 			return;
 		}
@@ -480,6 +482,7 @@
 		showCoG = false;
 		showSpectralTilt = false;
 		showA1P0 = false;
+		showNMR = false;
 
 		// Enable specified overlays
 		for (const overlay of overlays) {
@@ -509,6 +512,9 @@
 				case 'a1p0':
 				case 'a1-p0':
 					showA1P0 = true;
+					break;
+				case 'nmr':
+					showNMR = true;
 					break;
 				default:
 					console.warn(`Unknown overlay: ${overlay}`);
@@ -770,7 +776,7 @@
 	$: cursorValues = (() => {
 		if (!$analysisResults) return null;
 
-		const { times, pitch, intensity, formants, harmonicity, cog, spectralTilt, a1p0 } = $analysisResults;
+		const { times, pitch, intensity, formants, harmonicity, cog, spectralTilt, a1p0, nmr } = $analysisResults;
 		const cursor = $cursorPosition;
 
 		// Find closest time index
@@ -794,7 +800,8 @@
 			hnr: harmonicity[closestIdx],
 			cog: cog ? cog[closestIdx] : null,
 			spectralTilt: spectralTilt ? spectralTilt[closestIdx] : null,
-			a1p0: a1p0 ? a1p0[closestIdx] : null
+			a1p0: a1p0 ? a1p0[closestIdx] : null,
+			nmr: nmr ? nmr[closestIdx] : null
 		};
 	})();
 
@@ -909,6 +916,11 @@
 		// Only include A1-P0 if visible
 		if (showA1P0 && cursorValues.a1p0 !== null && cursorValues.a1p0 !== undefined) {
 			parts.push(`A1-P0: ${cursorValues.a1p0.toFixed(1)} dB`);
+		}
+
+		// Only include NMR if visible
+		if (showNMR && cursorValues.nmr !== null && cursorValues.nmr !== undefined) {
+			parts.push(`NMR: ${cursorValues.nmr.toFixed(3)}`);
 		}
 
 		const text = parts.join(', ');
@@ -1188,6 +1200,12 @@
 							<span class="value-num">{formatHz(cursorValues.cog)}</span>
 						</span>
 					{/if}
+					{#if cursorValues.nmr !== null}
+						<span class="value-item nmr">
+							<span class="value-label">NMR:</span>
+							<span class="value-num">{cursorValues.nmr.toFixed(3)}</span>
+						</span>
+					{/if}
 				</div>
 			{/if}
 		</div>
@@ -1212,6 +1230,7 @@
 					{showCoG}
 					{showSpectralTilt}
 					{showA1P0}
+					{showNMR}
 					showDataPoints={false}
 					maxFreq={maxFrequency}
 				/>
@@ -1290,6 +1309,10 @@
 				<label class="toggle-row">
 					<input type="checkbox" bind:checked={showA1P0} />
 					<span class="toggle-label a1p0">A1-P0</span>
+				</label>
+				<label class="toggle-row">
+					<input type="checkbox" bind:checked={showNMR} />
+					<span class="toggle-label nmr">NMR</span>
 				</label>
 
 				<h4>Display</h4>
@@ -1706,6 +1729,10 @@
 		color: #c084fc;
 	}
 
+	.value-item.nmr .value-num {
+		color: #a0522d;
+	}
+
 	.value-item.selection {
 		padding: 0.1rem 0.3rem;
 		background: rgba(74, 158, 255, 0.15);
@@ -1947,6 +1974,11 @@
 	.toggle-label.a1p0 {
 		color: #fb7185;
 		background: rgba(251, 113, 133, 0.15);
+	}
+
+	.toggle-label.nmr {
+		color: #a0522d;
+		background: rgba(160, 82, 45, 0.15);
 	}
 
 	.select-row {

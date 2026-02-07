@@ -54,6 +54,7 @@
 	export let showCoG = false;
 	export let showSpectralTilt = false;
 	export let showA1P0 = false;
+	export let showNMR = false;
 	export let showDataPoints = true;
 	export let maxFreq = 5000;
 
@@ -131,6 +132,7 @@
 		showCoG,
 		showSpectralTilt,
 		showA1P0,
+		showNMR,
 		showDataPoints,
 		showZoomMessage
 	];
@@ -533,6 +535,9 @@
 			if (showA1P0) {
 				drawA1P0Overlay(start, end);
 			}
+			if (showNMR) {
+				drawNMROverlay(start, end);
+			}
 		}
 
 		// Draw data points
@@ -873,6 +878,43 @@
 		}
 
 		ctx.stroke();
+	}
+
+	function drawNMROverlay(start: number, end: number) {
+		if (!ctx || !$analysisResults || !$analysisResults.nmr) return;
+
+		const { times, nmr } = $analysisResults;
+
+		ctx.strokeStyle = '#a0522d';
+		ctx.lineWidth = 2;
+		ctx.setLineDash([6, 3]);
+		ctx.beginPath();
+
+		let started = false;
+
+		for (let i = 0; i < times.length; i++) {
+			const t = times[i];
+			const val = nmr[i];
+
+			if (t < start || t > end) continue;
+			if (val === null) {
+				started = false;
+				continue;
+			}
+
+			const x = timeToXPlot(t, start, end);
+			const y = height - val * height * 0.8 - height * 0.1;
+
+			if (!started) {
+				ctx.moveTo(x, y);
+				started = true;
+			} else {
+				ctx.lineTo(x, y);
+			}
+		}
+
+		ctx.stroke();
+		ctx.setLineDash([]);
 	}
 
 	function drawDataPointsOverlay(start: number, end: number) {

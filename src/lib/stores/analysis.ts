@@ -171,6 +171,7 @@ export async function runAnalysis(): Promise<void> {
 					cog: spectralMeasures.cog,
 					spectralTilt: spectralMeasures.spectralTilt,
 					a1p0: spectralMeasures.a1p0,
+					nmr: spectralMeasures.nmr,
 					spectrogram: spectrogramInfo
 				};
 
@@ -304,6 +305,7 @@ export async function runAnalysisForRange(startTime: number, endTime: number): P
 					cog: spectralMeasures.cog,
 					spectralTilt: spectralMeasures.spectralTilt,
 					a1p0: spectralMeasures.a1p0,
+					nmr: spectralMeasures.nmr,
 					spectrogram: spectrogramInfo
 				};
 
@@ -342,7 +344,7 @@ function computeSpectralMeasures(
 	pitchValues: number[],
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	wasm: any
-): { cog: (number | null)[]; spectralTilt: (number | null)[]; a1p0: (number | null)[] } {
+): { cog: (number | null)[]; spectralTilt: (number | null)[]; a1p0: (number | null)[]; nmr: (number | null)[] } {
 	const windowDuration = 0.025; // 25ms window
 	const halfWindow = windowDuration / 2;
 	const windowSamples = Math.floor(windowDuration * sr);
@@ -350,6 +352,7 @@ function computeSpectralMeasures(
 	const cog: (number | null)[] = [];
 	const spectralTilt: (number | null)[] = [];
 	const a1p0: (number | null)[] = [];
+	const nmr: (number | null)[] = [];
 
 	for (let i = 0; i < times.length; i++) {
 		const t = times[i];
@@ -363,6 +366,7 @@ function computeSpectralMeasures(
 			cog.push(null);
 			spectralTilt.push(null);
 			a1p0.push(null);
+			nmr.push(null);
 			continue;
 		}
 
@@ -392,6 +396,15 @@ function computeSpectralMeasures(
 				spectralTilt.push(null);
 			}
 
+			// Compute NMR (Nasal Murmur Ratio): energy(0-500Hz) / energy(0-5000Hz)
+			const bandTotal = spectrum.get_band_energy(0, 5000);
+			if (bandTotal > 0 && bandLow > 0) {
+				const nmrValue = bandLow / bandTotal;
+				nmr.push(isNaN(nmrValue) ? null : nmrValue);
+			} else {
+				nmr.push(null);
+			}
+
 			// Compute A1-P0 nasal ratio: amplitude at F0 minus nasal pole amplitude
 			// A1 is at F0 frequency (first harmonic), P0 is in the ~250 Hz nasal region
 			// Same as Ozen Python implementation
@@ -415,6 +428,7 @@ function computeSpectralMeasures(
 			cog.push(null);
 			spectralTilt.push(null);
 			a1p0.push(null);
+			nmr.push(null);
 		} finally {
 			// Always free WASM objects to prevent memory leaks
 			try { spectrum?.free(); } catch (_) { /* ignore */ }
@@ -422,7 +436,7 @@ function computeSpectralMeasures(
 		}
 	}
 
-	return { cog, spectralTilt, a1p0 };
+	return { cog, spectralTilt, a1p0, nmr };
 }
 
 /**

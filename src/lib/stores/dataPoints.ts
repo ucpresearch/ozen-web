@@ -207,7 +207,8 @@ function collectAcousticValues(time: number): Record<string, number | null> {
 		HNR: results.harmonicity[closestIdx],
 		CoG: results.cog[closestIdx],
 		SpectralTilt: results.spectralTilt[closestIdx],
-		'A1-P0': results.a1p0[closestIdx]
+		'A1-P0': results.a1p0[closestIdx],
+		NMR: results.nmr ? results.nmr[closestIdx] : null
 	};
 }
 
@@ -246,6 +247,7 @@ export interface ExportOptions {
 	showCoG?: boolean;
 	showSpectralTilt?: boolean;
 	showA1P0?: boolean;
+	showNMR?: boolean;
 }
 
 /**
@@ -282,6 +284,8 @@ function filterAcousticKeys(allKeys: string[], options?: ExportOptions): string[
 			if (options.showSpectralTilt) filtered.push(key);
 		} else if (keyLower === 'a1p0' || keyLower === 'a1-p0') {
 			if (options.showA1P0) filtered.push(key);
+		} else if (keyLower === 'nmr') {
+			if (options.showNMR) filtered.push(key);
 		} else {
 			// Unknown key - include if any overlay is visible (safe default)
 			filtered.push(key);

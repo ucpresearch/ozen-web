@@ -160,7 +160,8 @@
 			showHNR,
 			showCoG,
 			showSpectralTilt,
-			showA1P0
+			showA1P0,
+			showNMR
 		});
 
 		try {
@@ -528,6 +529,7 @@
 	let showCoG = false;
 	let showSpectralTilt = false;
 	let showA1P0 = false;
+	let showNMR = false;
 	let showDataPoints = true;
 
 	// Spectrogram settings
@@ -587,7 +589,8 @@
 			showHNR,
 			showCoG,
 			showSpectralTilt,
-			showA1P0
+			showA1P0,
+			showNMR
 		});
 
 		// Generate default filename from audio file name
@@ -793,6 +796,10 @@
 					<input type="checkbox" bind:checked={showA1P0} />
 					<span class="toggle-label a1p0">A1-P0</span>
 				</label>
+				<label class="overlay-toggle" title="Nasal Murmur Ratio - low-freq energy (0-500Hz) / total energy (0-5000Hz)">
+					<input type="checkbox" bind:checked={showNMR} />
+					<span class="toggle-label nmr">NMR</span>
+				</label>
 				<span class="controls-separator"></span>
 				<label class="overlay-toggle" title="Data collection points - double-click to add, right-click to remove">
 					<input type="checkbox" bind:checked={showDataPoints} />
@@ -847,7 +854,7 @@
 						<Waveform />
 					</div>
 					<div class="display-panel spectrogram-panel">
-						<Spectrogram {showPitch} {showFormants} {showIntensity} {showHNR} {showCoG} {showSpectralTilt} {showA1P0} {showDataPoints} maxFreq={maxFrequency} />
+						<Spectrogram {showPitch} {showFormants} {showIntensity} {showHNR} {showCoG} {showSpectralTilt} {showA1P0} {showNMR} {showDataPoints} maxFreq={maxFrequency} />
 					</div>
 					<div class="time-axis-panel">
 						<TimeAxis />
@@ -1103,6 +1110,11 @@
 	.toggle-label.a1p0 {
 		color: #fb7185;
 		background: rgba(251, 113, 133, 0.15);
+	}
+
+	.toggle-label.nmr {
+		color: #a0522d;
+		background: rgba(160, 82, 45, 0.15);
 	}
 
 	.toggle-label.points {
