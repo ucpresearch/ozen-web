@@ -1,4 +1,4 @@
-/* @ts-self-types="./praatfan.d.ts" */
+/* @ts-self-types="./praatfan_rust.d.ts" */
 
 /**
  * Formant analysis result.
@@ -727,6 +727,7 @@ export class Spectrogram {
     }
     /**
      * Get power value at a specific time frame and frequency bin.
+     * Returns NaN if indices are out of bounds.
      * @param {number} time_frame
      * @param {number} freq_bin
      * @returns {number}
@@ -975,7 +976,7 @@ function __wbg_get_imports() {
     };
     return {
         __proto__: null,
-        "./praatfan_bg.js": import0,
+        "./praatfan_rust_bg.js": import0,
     };
 }
 
@@ -1200,7 +1201,7 @@ async function __wbg_init(module_or_path) {
     }
 
     if (module_or_path === undefined) {
-        module_or_path = new URL('praatfan_bg.wasm', import.meta.url);
+        module_or_path = new URL('praatfan_rust_bg.wasm', import.meta.url);
     }
     const imports = __wbg_get_imports();
 

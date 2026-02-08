@@ -56,7 +56,7 @@ const REMOTE_BACKEND_URLS: Record<string, string> = {
 function getBackendUrl(backend: AcousticBackend): string {
 	if (backend === 'praatfan-local') {
 		// Use SvelteKit's base path for subdirectory deployments
-		return `${base}/wasm/praatfan/praatfan.js`;
+		return `${base}/wasm/praatfan/praatfan_rust.js`;
 	}
 	return REMOTE_BACKEND_URLS[backend];
 }

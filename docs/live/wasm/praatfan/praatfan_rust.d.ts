@@ -339,6 +339,7 @@ export class Spectrogram {
     get_time_from_frame(frame: number): number;
     /**
      * Get power value at a specific time frame and frequency bin.
+     * Returns NaN if indices are out of bounds.
      */
     get_value_at(time_frame: number, freq_bin: number): number;
     /**
