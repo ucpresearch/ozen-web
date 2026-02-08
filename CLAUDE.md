@@ -29,8 +29,9 @@ Built with Svelte/SvelteKit, supporting multiple WASM backends for Praat-accurat
 npm install
 
 # Copy local WASM package from praatfan-core-clean
+# Note: upstream builds as praatfan_rust* — keep those filenames (WASM binary has baked-in import refs)
 mkdir -p static/wasm/praatfan
-cp -r ../praatfan-core-clean/rust/pkg/* static/wasm/praatfan/
+cp ../praatfan-core-clean/rust/pkg/praatfan_rust* static/wasm/praatfan/
 
 # Start dev server
 npm run dev
@@ -146,7 +147,7 @@ All shared state lives in `src/lib/stores/`. Components subscribe to stores and 
 Key stores:
 - `audio.ts` - Audio buffer (Float64Array), sample rate, filename
 - `view.ts` - Time range, cursor position, selection, hover position
-- `analysis.ts` - Computed pitch, formants, intensity, HNR, CoG, spectral tilt
+- `analysis.ts` - Computed pitch, formants, intensity, HNR, CoG, spectral tilt, NMR
 - `annotations.ts` - Annotation tiers with intervals and boundaries
 - `dataPoints.ts` - Data collection points with acoustic measurements
 - `undoManager.ts` - Unified undo/redo for annotations and data points
@@ -200,7 +201,7 @@ export function someOperation(): void {
 - Pitch: Blue line with dots
 - Formants: Red dots (F1-F4)
 - Intensity: Green line
-- HNR/CoG/Spectral Tilt: Additional colored tracks
+- HNR/CoG/Spectral Tilt/NMR: Additional colored tracks
 - Data Points: Yellow dashed lines with markers
 - Cursor: Red vertical line
 - Selection: Semi-transparent blue rectangle
@@ -216,7 +217,7 @@ Data points allow collecting acoustic measurements at specific time/frequency lo
 
 Each point automatically captures:
 - Time and frequency position
-- Pitch, Intensity, F1-F4, B1-B4, HNR, CoG, Spectral Tilt, A1-P0
+- Pitch, Intensity, F1-F4, B1-B4, HNR, CoG, Spectral Tilt, A1-P0, NMR
 - Text from all annotation tiers at that time
 
 ### Analysis Backends
@@ -225,7 +226,7 @@ The app supports multiple WASM backends (`src/lib/wasm/acoustic.ts`):
 
 | Backend | Source | License |
 |---------|--------|---------|
-| `praatfan-local` | `static/wasm/praatfan/` | MIT/Apache-2.0 (default) |
+| `praatfan-local` | `static/wasm/praatfan/praatfan_rust.*` | MIT/Apache-2.0 (default) |
 | `praatfan` | GitHub Pages CDN | MIT/Apache-2.0 |
 | `praatfan-gpl` | GitHub Pages CDN | GPL |
 
@@ -262,6 +263,7 @@ This allows working with arbitrarily long recordings without UI freezing.
 - [x] CoG (Center of Gravity)
 - [x] Spectral Tilt
 - [x] A1-P0 (nasal measure)
+- [x] NMR (Nasal Murmur Ratio)
 
 ### Annotations
 - [x] TextGrid import (short and long formats)
@@ -292,6 +294,7 @@ This allows working with arbitrarily long recordings without UI freezing.
 - [x] Backend selector (praatfan-local, praatfan, praatfan-gpl)
 - [x] Long audio support (>60s files: on-demand analysis when zoomed)
 - [x] PWA icons for home screen installation
+- [x] Print styles for clean Ctrl+P export
 
 ### Mobile Viewer (`/viewer` route)
 - [x] Touch-optimized view-only mode
@@ -364,13 +367,19 @@ const times = getPitchTimes(pitch);    // Float64Array
 const values = getPitchValues(pitch);  // Float64Array
 const info = getSpectrogramInfo(spectrogram);  // { nTimes, nFreqs, values, ... }
 
-// IMPORTANT: Free WASM objects when done
-sound.free();
-pitch.free();
-spectrogram.free();
+// IMPORTANT: Free WASM objects when done — use try-finally to prevent leaks on exceptions
+try {
+    // ... use objects ...
+} finally {
+    sound.free();
+    pitch.free();
+    spectrogram.free();
+}
 ```
 
 **Important:** Always use the abstraction functions (`computePitch`, `getSpectrogramInfo`, etc.) instead of calling WASM methods directly. This ensures compatibility across all backends.
+
+**Important:** Always wrap WASM object usage in try-finally blocks to ensure `.free()` is called even if exceptions occur. Declare WASM variables outside the try block so they're accessible in finally.
 
 ## Embedding in Quarto/R Markdown
 
@@ -455,7 +464,7 @@ python scripts/create-iframe.py audio.wav --overlays pitch,formants --height 80%
 | Parameter | Type | Default | Description |
 |-----------|------|---------|-------------|
 | `audio_path` | string | required | Path to audio file (relative to current directory) |
-| `overlays` | string | `"pitch,formants"` | Comma-separated overlays: `pitch`, `formants`, `intensity`, `hnr`, `cog`, `spectraltilt`, `a1p0`, or `all` |
+| `overlays` | string | `"pitch,formants"` | Comma-separated overlays: `pitch`, `formants`, `intensity`, `hnr`, `cog`, `spectraltilt`, `a1p0`, `nmr`, or `all` |
 | `viewer_url` | string | `"./ozen-web/viewer.html"` | Path to viewer.html |
 | `height` | int/string | `600` | Iframe height: number (pixels) or string (`"80%"`, `"90vh"`) |
 
@@ -742,7 +751,7 @@ cd scripts/screenshots && npm run capture:dev  # Terminal 2
 ## Related Projects
 
 - [ozen](../ozen) - Desktop version (Python/PyQt6)
-- [praatfan-core-rs](../praatfan-core-rs) - Rust acoustic analysis library with WASM support
+- [praatfan-core-clean](../praatfan-core-clean) - Rust acoustic analysis library with WASM support
 
 ## Resources
 
