@@ -8,7 +8,8 @@
     "build:docs": "npm run build && rm -rf docs/live && cp -r build docs/live",
     "preview": "vite preview",
     "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
-    "check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch"
+    "check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
+    "screenshots": "npm run build && node scripts/capture-screenshots.js"
   },
   "devDependencies": {
     "@sveltejs/adapter-static": "^3.0.0",
