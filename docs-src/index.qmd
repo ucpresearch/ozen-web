@@ -135,7 +135,7 @@ See the [Getting Started Guide](getting-started.html) for detailed installation 
 Try the interactive viewer below. This example shows a spectrogram with pitch and formant overlays:
 
 ::: {.viewer-embed}
-<iframe src="https://ucpresearch.github.io/ozen-web/viewer?overlays=pitch,formants" title="Ozen-web Interactive Demo"></iframe>
+<iframe src="https://ucpresearch.github.io/ozen-web/live/viewer?overlays=pitch,formants" title="Ozen-web Interactive Demo"></iframe>
 :::
 
 ::: {.callout-note}

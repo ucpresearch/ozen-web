@@ -21,20 +21,16 @@
     <lastmod>2026-02-02T10:59:17.400Z</lastmod>
   </url>
   <url>
-    <loc>https://ucpresearch.github.io/ozen-web/development/setup.html</loc>
-    <lastmod>2026-02-02T10:26:02.679Z</lastmod>
+    <loc>https://ucpresearch.github.io/ozen-web/development/wasm-integration.html</loc>
+    <lastmod>2026-02-01T14:17:55.081Z</lastmod>
   </url>
   <url>
-    <loc>https://ucpresearch.github.io/ozen-web/development/contributing.html</loc>
-    <lastmod>2026-02-01T14:17:55.073Z</lastmod>
-  </url>
-  <url>
-    <loc>https://ucpresearch.github.io/ozen-web/development/stores.html</loc>
-    <lastmod>2026-02-01T14:17:55.060Z</lastmod>
+    <loc>https://ucpresearch.github.io/ozen-web/development/architecture.html</loc>
+    <lastmod>2026-02-02T11:12:27.802Z</lastmod>
   </url>
   <url>
     <loc>https://ucpresearch.github.io/ozen-web/index.html</loc>
-    <lastmod>2026-02-02T10:20:20.292Z</lastmod>
+    <lastmod>2026-04-11T05:12:53.211Z</lastmod>
   </url>
   <url>
     <loc>https://ucpresearch.github.io/ozen-web/tutorial/03-acoustic-analysis.html</loc>
@@ -49,44 +45,40 @@
     <lastmod>2026-02-02T10:24:47.635Z</lastmod>
   </url>
   <url>
-    <loc>https://ucpresearch.github.io/ozen-web/COMPLETION_CHECKLIST.html</loc>
-    <lastmod>2026-02-01T14:17:55.004Z</lastmod>
-  </url>
-  <url>
-    <loc>https://ucpresearch.github.io/ozen-web/features/spectrogram.html</loc>
-    <lastmod>2026-02-02T07:11:23.454Z</lastmod>
-  </url>
-  <url>
-    <loc>https://ucpresearch.github.io/ozen-web/features/annotations.html</loc>
-    <lastmod>2026-02-02T11:56:38.855Z</lastmod>
-  </url>
-  <url>
-    <loc>https://ucpresearch.github.io/ozen-web/features/mobile-viewer.html</loc>
-    <lastmod>2026-02-02T12:47:35.998Z</lastmod>
-  </url>
-  <url>
-    <loc>https://ucpresearch.github.io/ozen-web/features/acoustic-overlays.html</loc>
-    <lastmod>2026-02-02T12:42:55.218Z</lastmod>
-  </url>
-  <url>
-    <loc>https://ucpresearch.github.io/ozen-web/features/waveform.html</loc>
-    <lastmod>2026-02-02T10:21:03.058Z</lastmod>
-  </url>
-  <url>
-    <loc>https://ucpresearch.github.io/ozen-web/features/audio-playback.html</loc>
-    <lastmod>2026-02-02T10:23:15.354Z</lastmod>
-  </url>
-  <url>
-    <loc>https://ucpresearch.github.io/ozen-web/features/overview.html</loc>
-    <lastmod>2026-02-02T10:25:53.262Z</lastmod>
+    <loc>https://ucpresearch.github.io/ozen-web/getting-started.html</loc>
+    <lastmod>2026-02-02T10:24:42.854Z</lastmod>
   </url>
   <url>
     <loc>https://ucpresearch.github.io/ozen-web/features/data-points.html</loc>
     <lastmod>2026-02-02T12:18:19.821Z</lastmod>
   </url>
   <url>
-    <loc>https://ucpresearch.github.io/ozen-web/getting-started.html</loc>
-    <lastmod>2026-02-02T10:24:42.854Z</lastmod>
+    <loc>https://ucpresearch.github.io/ozen-web/features/overview.html</loc>
+    <lastmod>2026-02-02T10:25:53.262Z</lastmod>
+  </url>
+  <url>
+    <loc>https://ucpresearch.github.io/ozen-web/features/audio-playback.html</loc>
+    <lastmod>2026-02-02T10:23:15.354Z</lastmod>
+  </url>
+  <url>
+    <loc>https://ucpresearch.github.io/ozen-web/features/waveform.html</loc>
+    <lastmod>2026-02-02T10:21:03.058Z</lastmod>
+  </url>
+  <url>
+    <loc>https://ucpresearch.github.io/ozen-web/features/acoustic-overlays.html</loc>
+    <lastmod>2026-02-02T12:42:55.218Z</lastmod>
+  </url>
+  <url>
+    <loc>https://ucpresearch.github.io/ozen-web/features/mobile-viewer.html</loc>
+    <lastmod>2026-02-02T12:47:35.998Z</lastmod>
+  </url>
+  <url>
+    <loc>https://ucpresearch.github.io/ozen-web/features/annotations.html</loc>
+    <lastmod>2026-02-02T11:56:38.855Z</lastmod>
+  </url>
+  <url>
+    <loc>https://ucpresearch.github.io/ozen-web/features/spectrogram.html</loc>
+    <lastmod>2026-02-02T07:11:23.454Z</lastmod>
   </url>
   <url>
     <loc>https://ucpresearch.github.io/ozen-web/tutorial/04-annotations.html</loc>
@@ -105,20 +97,16 @@
     <lastmod>2026-02-02T12:18:04.603Z</lastmod>
   </url>
   <url>
-    <loc>https://ucpresearch.github.io/ozen-web/GITHUB_PAGES_SETUP.html</loc>
-    <lastmod>2026-02-01T14:17:55.053Z</lastmod>
+    <loc>https://ucpresearch.github.io/ozen-web/development/stores.html</loc>
+    <lastmod>2026-02-01T14:17:55.060Z</lastmod>
   </url>
   <url>
-    <loc>https://ucpresearch.github.io/ozen-web/development/architecture.html</loc>
-    <lastmod>2026-02-02T11:12:27.802Z</lastmod>
+    <loc>https://ucpresearch.github.io/ozen-web/development/contributing.html</loc>
+    <lastmod>2026-02-01T14:17:55.073Z</lastmod>
   </url>
   <url>
-    <loc>https://ucpresearch.github.io/ozen-web/development/wasm-integration.html</loc>
-    <lastmod>2026-02-01T14:17:55.081Z</lastmod>
-  </url>
-  <url>
-    <loc>https://ucpresearch.github.io/ozen-web/BUILD_SYNC.html</loc>
-    <lastmod>2026-02-01T14:17:55.094Z</lastmod>
+    <loc>https://ucpresearch.github.io/ozen-web/development/setup.html</loc>
+    <lastmod>2026-02-02T10:26:02.679Z</lastmod>
   </url>
   <url>
     <loc>https://ucpresearch.github.io/ozen-web/reference/file-formats.html</loc>
