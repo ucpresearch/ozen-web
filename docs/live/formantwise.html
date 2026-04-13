@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" type="image/png" sizes="32x32" href="./favicon-32.png" />
+		<link rel="icon" type="image/png" sizes="192x192" href="./icon-192.png" />
+		<link rel="apple-touch-icon" sizes="180x180" href="./apple-touch-icon.png" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta name="description" content="Ozen - Web-based acoustic analysis and annotation tool" />
+		<title>Ozen</title>
+		
+		<link href="./_app/immutable/assets/0.QRMuVOZc.css" rel="stylesheet">
+		<link href="./_app/immutable/assets/5.wK-wenKD.css" rel="stylesheet">
+		<link rel="modulepreload" href="./_app/immutable/entry/start.CWaOgziz.js">
+		<link rel="modulepreload" href="./_app/immutable/chunks/DGUikrWS.js">
+		<link rel="modulepreload" href="./_app/immutable/chunks/DguWNBkp.js">
+		<link rel="modulepreload" href="./_app/immutable/chunks/BITzXIhC.js">
+		<link rel="modulepreload" href="./_app/immutable/chunks/BEnqsvfv.js">
+		<link rel="modulepreload" href="./_app/immutable/entry/app.CBnEnxC4.js">
+		<link rel="modulepreload" href="./_app/immutable/chunks/SMfwIlj-.js">
+		<link rel="modulepreload" href="./_app/immutable/nodes/0.DCYsNE_v.js">
+		<link rel="modulepreload" href="./_app/immutable/chunks/BdQGpBmo.js">
+		<link rel="modulepreload" href="./_app/immutable/nodes/2.BImJIqPN.js">
+		<link rel="modulepreload" href="./_app/immutable/chunks/ObYZRYMn.js">
+		<link rel="modulepreload" href="./_app/immutable/nodes/5.CTH_0u2U.js">
+		<link rel="modulepreload" href="./_app/immutable/chunks/D0QH3NT1.js">
+		<link rel="modulepreload" href="./_app/immutable/chunks/B-GUjM8u.js">
+		<link rel="modulepreload" href="./_app/immutable/chunks/BCzacECA.js"><title>Formantwise - Vowel Formant Extraction</title><!-- HEAD_svelte-1i406wz_START --><!-- HEAD_svelte-1i406wz_END -->
+	</head>
+	<body data-sveltekit-preload-data="hover">
+		<div style="display: contents">     <div class="page svelte-h2zabv"><header class="page-header svelte-h2zabv"><div class="header-left svelte-h2zabv" data-svelte-h="svelte-dk2f3v"><a href="./" class="back-link svelte-h2zabv" title="Back to Ozen">Ozen</a> <span class="header-sep svelte-h2zabv">/</span> <h1 class="svelte-h2zabv">Formantwise</h1></div> <div class="header-right svelte-h2zabv"><span class="status loading svelte-h2zabv" data-svelte-h="svelte-1no5z7l">Loading WASM...</span> <button class="theme-btn svelte-h2zabv" title="Toggle theme"><svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><path d="M12 3a9 9 0 109 9c0-.46-.04-.92-.1-1.36a5.389 5.389 0 01-4.4 2.26 5.403 5.403 0 01-3.14-9.8c-.44-.06-.9-.1-1.36-.1z"></path></svg></button></div></header> <main class="content"><p class="disclaimer svelte-h2zabv" data-svelte-h="svelte-r7dws2">This uses the web version of Formantwise, still under active development. Questions and feedback welcome. Speaker gmean, floor, and ceiling estimates may differ slightly from the Python and Rust versions due to browser audio decoding differences, and should be recorded alongside the extraction. Default TSV filenames contain this information, and JSON download files contain this information and additional details that can help reproduce the results.</p>  <section class="section svelte-h2zabv"><h2 class="svelte-h2zabv" data-svelte-h="svelte-a7iem7">1. Audio</h2>  <div class="drop-zone svelte-h2zabv"><input type="file" accept=".wav,.flac,.mp3,.ogg" multiple id="audio-input" class="svelte-h2zabv"> <label for="audio-input" class="drop-label svelte-h2zabv" data-svelte-h="svelte-oqkydc">Drop audio file(s) here or click to browse</label></div> </section>  <section class="section svelte-h2zabv"><h2 class="svelte-h2zabv" data-svelte-h="svelte-1e0blog">2. Intervals</h2>  <div class="drop-zone svelte-h2zabv"><input type="file" accept=".csv,.tsv,.txt,.TextGrid" id="interval-input" class="svelte-h2zabv"> <label for="interval-input" class="drop-label svelte-h2zabv" data-svelte-h="svelte-1g37v4f">Drop CSV/TSV/TextGrid here or click to browse</label></div>  </section>  <section class="section svelte-h2zabv"><h2 class="svelte-h2zabv" data-svelte-h="svelte-zwbdi6">3. Speaker parameters</h2> <div class="params-grid svelte-h2zabv"><div class="form-row svelte-h2zabv"><label for="gmean" title="Geometric mean of F1, F2, and F3" class="svelte-h2zabv" data-svelte-h="svelte-bk8tk7">Gmean:</label> <input id="gmean" type="number" placeholder="auto" class="num-input svelte-h2zabv" title="Geometric mean of F1, F2, and F3" value=""> <span class="unit svelte-h2zabv" data-svelte-h="svelte-d0ejfh">Hz</span> <button class="estimate-btn svelte-h2zabv" disabled>Estimate</button></div> <div class="form-row svelte-h2zabv"><label for="fmin" class="svelte-h2zabv" data-svelte-h="svelte-kib4lf">Formant min:</label> <input id="fmin" type="number" class="num-input svelte-h2zabv" value="4500"> <span class="unit svelte-h2zabv" data-svelte-h="svelte-d0ejfh">Hz</span> <label for="fmax" class="svelte-h2zabv" data-svelte-h="svelte-1s66wd6">Max:</label> <input id="fmax" type="number" class="num-input svelte-h2zabv" value="6500"> <span class="unit svelte-h2zabv" data-svelte-h="svelte-d0ejfh">Hz</span></div></div></section>  <section class="section svelte-h2zabv"><h2 class="svelte-h2zabv" data-svelte-h="svelte-11sq3ym">4. Analysis parameters</h2> <div class="params-grid svelte-h2zabv"><div class="form-row svelte-h2zabv"><label for="points-preset" class="svelte-h2zabv" data-svelte-h="svelte-1jn9dt2">Points:</label> <select id="points-preset" class="svelte-h2zabv"><option value="50" data-svelte-h="svelte-s97lez">50 (midpoint)</option><option value="stable" data-svelte-h="svelte-1gcb60m">stable</option><option value="50,stable" data-svelte-h="svelte-1khhepe">50, stable</option><option value="20,50,80" data-svelte-h="svelte-1qj85ng">20, 50, 80</option><option value="custom" data-svelte-h="svelte-15u4c16">Custom</option></select> </div> </div></section>   <section class="section run-section svelte-h2zabv"><button class="run-btn svelte-h2zabv" disabled>Run Formantwise</button> </section>  </main> </div> 
+			
+			<script>
+				{
+					__sveltekit_1lfcynq = {
+						base: location.protocol === "data:" ? "" : new URL(".", location.href).pathname.slice(0, -1)
+					};
+
+					const element = document.currentScript.parentElement;
+
+					Promise.all([
+						import("./_app/immutable/entry/start.CWaOgziz.js"),
+						import("./_app/immutable/entry/app.CBnEnxC4.js")
+					]).then(([kit, app]) => {
+						kit.start(app, element, {
+							node_ids: [0, 2, 5],
+							data: [null,null,null],
+							form: null,
+							error: null
+						});
+					});
+				}
+			</script>
+		</div>
+	</body>
+</html>
