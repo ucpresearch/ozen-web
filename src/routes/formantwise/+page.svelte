@@ -689,7 +689,6 @@
 										<th>F2</th>
 										<th>F3</th>
 										<th>F0</th>
-										<th>conf</th>
 									</tr>
 								</thead>
 								<tbody>
@@ -758,12 +757,12 @@
 		if (pt.type === 'stable') {
 			return ['stable', vs.stable_time.toFixed(3), vs.onset.toFixed(3), vs.offset.toFixed(3),
 				vs.f1_mid.toFixed(1), vs.f2_mid.toFixed(1), vs.f3_mid.toFixed(1),
-				vs.f0_mid.toFixed(1), vs.confidence.toFixed(2)];
+				vs.f0_mid.toFixed(1)];
 		}
 		if (pt.value === 50) {
 			return ['50', vs.midpoint.toFixed(3), vs.onset.toFixed(3), vs.offset.toFixed(3),
 				vs.f1_mp.toFixed(1), vs.f2_mp.toFixed(1), vs.f3_mp.toFixed(1),
-				vs.f0_mid.toFixed(1), vs.confidence.toFixed(2)];
+				vs.f0_mid.toFixed(1)];
 		}
 		// Other percentages: nearest frame
 		const t = vs.onset + (vs.offset - vs.onset) * (pt.value / 100);
@@ -774,10 +773,10 @@
 			}
 			return [String(pt.value), t.toFixed(3), vs.onset.toFixed(3), vs.offset.toFixed(3),
 				best.f1.toFixed(1), best.f2.toFixed(1), best.f3.toFixed(1),
-				best.f0.toFixed(1), best.confidence.toFixed(2)];
+				best.f0.toFixed(1)];
 		}
 		return [String(pt.value), t.toFixed(3), vs.onset.toFixed(3), vs.offset.toFixed(3),
-			'', '', '', '', ''];
+			'', '', '', ''];
 	}
 </script>
 

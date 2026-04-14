@@ -107,7 +107,7 @@ export function parsePointsSpec(spec: string): MeasurementPoint[] {
 /** Measurement columns in output TSV. */
 const MEASUREMENT_COLS = [
 	'point', 'time', 'onset', 'offset', 'duration',
-	'F1', 'F2', 'F3', 'B1', 'B2', 'B3', 'F0', 'confidence'
+	'F1', 'F2', 'F3', 'B1', 'B2', 'B3', 'F0'
 ];
 
 /**
@@ -176,7 +176,7 @@ function getMeasurement(
 			fmt(vs.onset), fmt(vs.offset), fmt(vs.duration),
 			fmt(vs.f1_mid), fmt(vs.f2_mid), fmt(vs.f3_mid),
 			fmt(vs.b1_mid), fmt(vs.b2_mid), fmt(vs.b3_mid),
-			fmt(vs.f0_mid), fmt(vs.confidence)
+			fmt(vs.f0_mid)
 		];
 	}
 
@@ -192,7 +192,7 @@ function getMeasurement(
 			fmt(vs.onset), fmt(vs.offset), fmt(vs.duration),
 			fmt(vs.f1_mp), fmt(vs.f2_mp), fmt(vs.f3_mp),
 			fmt(vs.b1_mp), fmt(vs.b2_mp), fmt(vs.b3_mp),
-			fmt(vs.f0_mid), fmt(vs.confidence)
+			fmt(vs.f0_mid)
 		];
 	}
 
@@ -205,7 +205,7 @@ function getMeasurement(
 			fmt(vs.onset), fmt(vs.offset), fmt(vs.duration),
 			fmt(fr.f1), fmt(fr.f2), fmt(fr.f3),
 			fmt(fr.b1), fmt(fr.b2), fmt(fr.b3),
-			fmt(fr.f0), fmt(fr.confidence)
+			fmt(fr.f0)
 		];
 	}
 
@@ -213,7 +213,7 @@ function getMeasurement(
 	return [
 		String(pct), fmt(targetTime),
 		fmt(vs.onset), fmt(vs.offset), fmt(vs.duration),
-		'', '', '', '', '', '', '', ''
+		'', '', '', '', '', '', ''
 	];
 }
 

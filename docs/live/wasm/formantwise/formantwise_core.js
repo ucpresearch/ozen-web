@@ -87,10 +87,44 @@ export function run_formantwise_intervals(samples, sample_rate, intervals_flat, 
     return takeFromExternrefTable0(ret[0]);
 }
 
+/**
+ * Run the formantwise pipeline with user-supplied intervals and formant priors.
+ *
+ * # Arguments
+ * * `samples` - Audio samples as `&[f64]` (mono, full resolution)
+ * * `sample_rate` - Sample rate in Hz
+ * * `intervals_flat` - Flat array of `[start1, end1, start2, end2, ...]`
+ * * `priors_flat` - Flat array of `[f1_1, f2_1, f3_1, f1_2, f2_2, f3_2, ...]`.
+ *   Pass empty array for no priors. Use 0.0 for missing values.
+ * * `config_json` - JSON string with partial config overrides (use `"{}"` for defaults)
+ * * `progress_cb` - Optional JS function called with `(fraction: number, stage: string)`
+ * @param {Float64Array} samples
+ * @param {number} sample_rate
+ * @param {Float64Array} intervals_flat
+ * @param {Float64Array} priors_flat
+ * @param {string} config_json
+ * @param {Function | null} [progress_cb]
+ * @returns {any}
+ */
+export function run_formantwise_intervals_with_priors(samples, sample_rate, intervals_flat, priors_flat, config_json, progress_cb) {
+    const ptr0 = passArrayF64ToWasm0(samples, wasm.__wbindgen_malloc);
+    const len0 = WASM_VECTOR_LEN;
+    const ptr1 = passArrayF64ToWasm0(intervals_flat, wasm.__wbindgen_malloc);
+    const len1 = WASM_VECTOR_LEN;
+    const ptr2 = passArrayF64ToWasm0(priors_flat, wasm.__wbindgen_malloc);
+    const len2 = WASM_VECTOR_LEN;
+    const ptr3 = passStringToWasm0(config_json, wasm.__wbindgen_malloc, wasm.__wbindgen_realloc);
+    const len3 = WASM_VECTOR_LEN;
+    const ret = wasm.run_formantwise_intervals_with_priors(ptr0, len0, sample_rate, ptr1, len1, ptr2, len2, ptr3, len3, isLikeNone(progress_cb) ? 0 : addToExternrefTable0(progress_cb));
+    if (ret[2]) {
+        throw takeFromExternrefTable0(ret[1]);
+    }
+    return takeFromExternrefTable0(ret[0]);
+}
 function __wbg_get_imports() {
     const import0 = {
         __proto__: null,
-        __wbg_Error_2e59b1b37a9a34c3: function(arg0, arg1) {
+        __wbg_Error_960c155d3d49e4c2: function(arg0, arg1) {
             const ret = Error(getStringFromWasm0(arg0, arg1));
             return ret;
         },
@@ -101,10 +135,10 @@ function __wbg_get_imports() {
             getDataViewMemory0().setInt32(arg0 + 4 * 1, len1, true);
             getDataViewMemory0().setInt32(arg0 + 4 * 0, ptr1, true);
         },
-        __wbg___wbindgen_throw_81fc77679af83bc6: function(arg0, arg1) {
+        __wbg___wbindgen_throw_6b64449b9b9ed33c: function(arg0, arg1) {
             throw new Error(getStringFromWasm0(arg0, arg1));
         },
-        __wbg_call_368fa9c372d473ba: function() { return handleError(function (arg0, arg1, arg2, arg3) {
+        __wbg_call_bb28efe6b2f55b86: function() { return handleError(function (arg0, arg1, arg2, arg3) {
             const ret = arg0.call(arg1, arg2, arg3);
             return ret;
         }, arguments); },
@@ -123,19 +157,19 @@ function __wbg_get_imports() {
             const ret = new Error();
             return ret;
         },
-        __wbg_new_4f9fafbb3909af72: function() {
-            const ret = new Object();
-            return ret;
-        },
-        __wbg_new_f3c9df4f38f3f798: function() {
+        __wbg_new_682678e2f47e32bc: function() {
             const ret = new Array();
             return ret;
         },
+        __wbg_new_aa8d0fa9762c29bd: function() {
+            const ret = new Object();
+            return ret;
+        },
+        __wbg_set_3bf1de9fab0cd644: function(arg0, arg1, arg2) {
+            arg0[arg1 >>> 0] = arg2;
+        },
         __wbg_set_6be42768c690e380: function(arg0, arg1, arg2) {
             arg0[arg1] = arg2;
-        },
-        __wbg_set_6c60b2e8ad0e9383: function(arg0, arg1, arg2) {
-            arg0[arg1 >>> 0] = arg2;
         },
         __wbg_stack_3b0d974bbf31e44f: function(arg0, arg1) {
             const ret = arg1.stack;

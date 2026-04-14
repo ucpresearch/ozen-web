@@ -39,6 +39,20 @@ export function run_formantwise(samples: Float64Array, sample_rate: number, conf
  */
 export function run_formantwise_intervals(samples: Float64Array, sample_rate: number, intervals_flat: Float64Array, config_json: string, progress_cb?: Function | null): any;
 
+/**
+ * Run the formantwise pipeline with user-supplied intervals and formant priors.
+ *
+ * # Arguments
+ * * `samples` - Audio samples as `&[f64]` (mono, full resolution)
+ * * `sample_rate` - Sample rate in Hz
+ * * `intervals_flat` - Flat array of `[start1, end1, start2, end2, ...]`
+ * * `priors_flat` - Flat array of `[f1_1, f2_1, f3_1, f1_2, f2_2, f3_2, ...]`.
+ *   Pass empty array for no priors. Use 0.0 for missing values.
+ * * `config_json` - JSON string with partial config overrides (use `"{}"` for defaults)
+ * * `progress_cb` - Optional JS function called with `(fraction: number, stage: string)`
+ */
+export function run_formantwise_intervals_with_priors(samples: Float64Array, sample_rate: number, intervals_flat: Float64Array, priors_flat: Float64Array, config_json: string, progress_cb?: Function | null): any;
+
 export type InitInput = RequestInfo | URL | Response | BufferSource | WebAssembly.Module;
 
 export interface InitOutput {
@@ -47,6 +61,7 @@ export interface InitOutput {
     readonly init: () => void;
     readonly run_formantwise: (a: number, b: number, c: number, d: number, e: number, f: number) => [number, number, number];
     readonly run_formantwise_intervals: (a: number, b: number, c: number, d: number, e: number, f: number, g: number, h: number) => [number, number, number];
+    readonly run_formantwise_intervals_with_priors: (a: number, b: number, c: number, d: number, e: number, f: number, g: number, h: number, i: number, j: number) => [number, number, number];
     readonly __wbindgen_malloc: (a: number, b: number) => number;
     readonly __wbindgen_realloc: (a: number, b: number, c: number, d: number) => number;
     readonly __wbindgen_exn_store: (a: number) => void;
