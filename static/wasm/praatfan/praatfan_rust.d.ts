@@ -152,6 +152,14 @@ export class Pitch {
      */
     pitch_floor(): number;
     /**
+     * Get per-frame raw autocorrelation peak strengths (range 0-1).
+     *
+     * Returns the maximum normalized autocorrelation value among all peaks
+     * in each frame, before any adjustments. Higher = stronger periodicity.
+     * Purely local and file-length independent.
+     */
+    raw_ac_strengths(): Float64Array;
+    /**
      * Get strength (correlation) values for all frames.
      */
     strengths(): Float64Array;
@@ -439,11 +447,9 @@ export interface InitOutput {
     readonly memory: WebAssembly.Memory;
     readonly __wbg_formant_free: (a: number, b: number) => void;
     readonly __wbg_harmonicity_free: (a: number, b: number) => void;
-    readonly __wbg_intensity_free: (a: number, b: number) => void;
     readonly __wbg_pitch_free: (a: number, b: number) => void;
     readonly __wbg_sound_free: (a: number, b: number) => void;
     readonly __wbg_spectrogram_free: (a: number, b: number) => void;
-    readonly __wbg_spectrum_free: (a: number, b: number) => void;
     readonly formant_bandwidth_values: (a: number, b: number) => [number, number];
     readonly formant_formant_values: (a: number, b: number) => [number, number];
     readonly formant_get_bandwidth_at_frame: (a: number, b: number, c: number) => number;
@@ -455,33 +461,24 @@ export interface InitOutput {
     readonly formant_times: (a: number) => [number, number];
     readonly harmonicity_get_time_from_frame: (a: number, b: number) => number;
     readonly harmonicity_get_value_in_frame: (a: number, b: number) => number;
-    readonly harmonicity_n_frames: (a: number) => number;
     readonly harmonicity_time_step: (a: number) => number;
     readonly harmonicity_times: (a: number) => [number, number];
     readonly harmonicity_values: (a: number) => [number, number];
-    readonly init: () => void;
     readonly intensity_get_maximum: (a: number) => number;
     readonly intensity_get_mean: (a: number) => number;
     readonly intensity_get_minimum: (a: number) => number;
-    readonly intensity_get_time_from_frame: (a: number, b: number) => number;
-    readonly intensity_get_value_in_frame: (a: number, b: number) => number;
-    readonly intensity_n_frames: (a: number) => number;
-    readonly intensity_time_step: (a: number) => number;
-    readonly intensity_times: (a: number) => [number, number];
-    readonly intensity_values: (a: number) => [number, number];
     readonly pitch_get_time_from_frame: (a: number, b: number) => number;
     readonly pitch_get_value_in_frame: (a: number, b: number) => number;
     readonly pitch_n_frames: (a: number) => number;
     readonly pitch_pitch_ceiling: (a: number) => number;
     readonly pitch_pitch_floor: (a: number) => number;
+    readonly pitch_raw_ac_strengths: (a: number) => [number, number];
     readonly pitch_strengths: (a: number) => [number, number];
-    readonly pitch_time_step: (a: number) => number;
     readonly pitch_times: (a: number) => [number, number];
     readonly pitch_values: (a: number) => [number, number];
     readonly sound_duration: (a: number) => number;
     readonly sound_from_wav: (a: number, b: number) => [number, number, number];
     readonly sound_from_wav_channel: (a: number, b: number, c: number) => [number, number, number];
-    readonly sound_n_samples: (a: number) => number;
     readonly sound_new: (a: number, b: number, c: number) => number;
     readonly sound_sample_rate: (a: number) => number;
     readonly sound_samples: (a: number) => [number, number];
@@ -494,30 +491,42 @@ export interface InitOutput {
     readonly sound_to_spectrogram: (a: number, b: number, c: number, d: number, e: number) => number;
     readonly sound_to_spectrum: (a: number, b: number) => number;
     readonly spectrogram_freq_max: (a: number) => number;
-    readonly spectrogram_freq_min: (a: number) => number;
     readonly spectrogram_freq_step: (a: number) => number;
     readonly spectrogram_frequencies: (a: number) => [number, number];
     readonly spectrogram_get_freq_from_bin: (a: number, b: number) => number;
     readonly spectrogram_get_time_from_frame: (a: number, b: number) => number;
     readonly spectrogram_get_value_at: (a: number, b: number, c: number) => number;
-    readonly spectrogram_n_freqs: (a: number) => number;
     readonly spectrogram_n_times: (a: number) => number;
     readonly spectrogram_time_max: (a: number) => number;
     readonly spectrogram_time_min: (a: number) => number;
     readonly spectrogram_time_step: (a: number) => number;
     readonly spectrogram_times: (a: number) => [number, number];
     readonly spectrogram_values: (a: number) => [number, number];
-    readonly spectrum_df: (a: number) => number;
     readonly spectrum_get_band_energy: (a: number, b: number, c: number) => number;
     readonly spectrum_get_center_of_gravity: (a: number, b: number) => number;
     readonly spectrum_get_freq_from_bin: (a: number, b: number) => number;
     readonly spectrum_get_kurtosis: (a: number, b: number) => number;
     readonly spectrum_get_skewness: (a: number, b: number) => number;
     readonly spectrum_get_standard_deviation: (a: number, b: number) => number;
-    readonly spectrum_imag: (a: number) => [number, number];
+    readonly init: () => void;
+    readonly intensity_get_time_from_frame: (a: number, b: number) => number;
+    readonly harmonicity_n_frames: (a: number) => number;
+    readonly intensity_n_frames: (a: number) => number;
+    readonly intensity_time_step: (a: number) => number;
+    readonly pitch_time_step: (a: number) => number;
+    readonly sound_n_samples: (a: number) => number;
+    readonly spectrogram_freq_min: (a: number) => number;
+    readonly spectrogram_n_freqs: (a: number) => number;
+    readonly spectrum_df: (a: number) => number;
     readonly spectrum_max_frequency: (a: number) => number;
     readonly spectrum_n_bins: (a: number) => number;
+    readonly intensity_get_value_in_frame: (a: number, b: number) => number;
+    readonly __wbg_intensity_free: (a: number, b: number) => void;
+    readonly __wbg_spectrum_free: (a: number, b: number) => void;
+    readonly intensity_values: (a: number) => [number, number];
+    readonly intensity_times: (a: number) => [number, number];
     readonly spectrum_real: (a: number) => [number, number];
+    readonly spectrum_imag: (a: number) => [number, number];
     readonly __wbindgen_free: (a: number, b: number, c: number) => void;
     readonly __wbindgen_malloc: (a: number, b: number) => number;
     readonly __wbindgen_realloc: (a: number, b: number, c: number, d: number) => number;
